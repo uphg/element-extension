@@ -3,19 +3,27 @@ import { Form as ElForm, FormItem as ElFormItem, Input as ElInput } from "elemen
 import { isArray } from "../../utils"
 import renderInput from './render-input'
 
-type inputTypes = 'text' | 'password' | 'textarea' | ''
+type inputTypes = 'button' | 'radio' | 'checkbox' | 'text' | 'password' | 'textarea' | 'number' | 'select' | 'cascader' | 'date' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'switch' | 'slider' | 'file' | 'upload'
 
-type BaseFileds = {
-  [key: string]: {
-    type?: inputTypes
+type BaseFiledProps = {
+  label: string,
+  type?: inputTypes,
+  options?: {
+    key: string,
+    value: string | number | boolean,
+    disabled?: boolean
   }
 }
 
-type ArrayFileds = []
+type BaseFileds = {
+  [key: string]: BaseFiledProps
+}
+
+type ArrayFileds = (BaseFiledProps & { key: string })[]
 
 type Fileds = BaseFileds | ArrayFileds
 
-function initFormData(baseFileds, filedsIsArray) {
+function initFormData(baseFileds: Fileds, filedsIsArray: boolean) {
   const result = {}
   const fileds = filedsIsArray ? baseFileds : Object.keys(baseFileds)
   fileds.forEach((value, _key) => {
