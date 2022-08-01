@@ -1,7 +1,7 @@
 import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
 import { useInput } from "../../composables/use-input"
-import inputProps from "../../shared/input-props"
+import { inputProps } from "../../shared/input-props"
 
 const formItemProps = {
   ...inputProps,
@@ -58,7 +58,7 @@ export default defineComponent({
         size: props.size
       },
       scopedSlots: {
-        header: () => context.slots.header()
+        header: () => context.slots.header?.()
       }
     }, [
       context.slots.itemPrefix && context.slots.itemPrefix(),

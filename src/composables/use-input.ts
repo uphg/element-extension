@@ -1,56 +1,88 @@
 import {
-  Button as ElButton,
-  Input as ElInput,
-  Select as ElSelect,
-  Cascader as ElCascader,
-  Option as ElOption,
-  RadioGroup as ElRadioGroup,
-  Radio as ElRadio,
-  CheckboxGroup as ElCheckboxGroup,
-  Checkbox as ElCheckbox,
-  InputNumber as ElInputNumber,
-  Switch as ElSwitch,
-  Slider as ElSlider,
-  TimeSelect as ElTimeSelect,
-  DatePicker as ElDatePicker,
-  Upload as ElUpload
+  Button,
+  Input,
+  Select,
+  Cascader,
+  Option,
+  RadioGroup,
+  Radio,
+  CheckboxGroup,
+  Checkbox,
+  InputNumber,
+  Switch,
+  Slider,
+  TimeSelect,
+  DatePicker,
+  Upload,
+  Component,
 } from 'element-ui'
-import { h, ref } from 'vue'
+import { h, ref, SetupContext } from 'vue'
 import { toString, find, omitBy } from '../utils'
 import { InputProps } from '../shared/input-props'
+// import { ElementUIComponent } from 'element-ui/types/component'
+// import { ElButton } from 'element-ui/types/button'
+// import { ElInput } from 'element-ui/types/input'
+// import { ElSelect } from 'element-ui/types/select'
+// import { ElCalendar } from 'element-ui/types/calendar'
+// import { ElOption } from 'element-ui/types/option'
+// import { ElRadioGroup } from 'element-ui/types/radio-group'
+// import { ElRadio } from 'element-ui/types/radio'
+// import { ElCheckboxGroup } from 'element-ui/types/checkbox-group'
+// import { ElCheckbox } from 'element-ui/types/checkbox'
+// import { ElInputNumber } from 'element-ui/types/input-number'
+// import { ElSwitch } from 'element-ui/types/switch'
+// import { ElSlider } from 'element-ui/types/slider'
+// import { ElTimeSelect } from 'element-ui/types/time-select'
+// import { ElDatePicker } from 'element-ui/types/date-picker'
+import { ElUpload, ElUploadInternalFileDetail } from 'element-ui/types/upload'
+import Vue from 'vue/types/umd'
 
-export function useInput<T>(props: T, context, options = { onKeyup: null, onInput: null }) {
-  const { onKeyup } = options
+type useInputParamsOptions = {
+  onKeyup?: (event: any) => void;
+  onInput?: (event: any) => void;
+}
+
+interface BaseProps extends InputProps {
+  exclude?: string | number | RegExp  
+}
+
+type InputValue = string | boolean | number | Date | Date[] | string[]
+
+// type InputComponents = Vue | HTMLElement | ElButton | ElInput | ElSelect | ElCalendar | ElOption | ElRadioGroup | ElRadio | ElCheckboxGroup | ElCheckbox | ElInputNumber | ElSwitch | ElSlider | ElTimeSelect | ElDatePicker | ElUpload
+
+
+export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
+  const { onKeyup } = options || {}
   const { emit } = context
 
   const nativeOn = omitBy({ keyup: onKeyup }, (item) => !item)
 
-  const inputRef = ref(null)
+  const inputRef = ref<any>(null)
 
-  function onClick(event) {
+  function onClick(event: Event | MouseEvent | TouchEvent | InputEvent) {
     emit('click', event)
   }
 
-  const onInput = options.onInput ? options.onInput : props.exclude ? (value) => {
-    const newVal = toString(value).replace(props.exclude, '')
+  const onInput = options?.onInput ? options.onInput : props.exclude ? (value: InputValue) => {
+    const newVal = toString(value).replace(props.exclude as RegExp, '')
     emit('input', newVal)
-  } : (value) => {
+  } : (value: InputValue) => {
     emit('input', value)
   }
 
-  function onChange(value) {
+  function onChange(value: InputValue) {
     emit('change', value)
   }
 
-  function onVisibleChange() {
+  function onVisibleChange(value: InputValue) {
     emit('visible-change', value)
   }
 
-  function onBlur(value) {
+  function onBlur(value: InputValue) {
     emit('blur', value)
   }
 
-  function onFocus(event) {
+  function onFocus(event: InputValue) {
     emit('focus', event)
   }
 
@@ -59,32 +91,33 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
   }
 
   function focus() {
-    inputRef.value.focus()
+    inputRef.value?.focus()
   }
 
   function blur() {
-    inputRef.value.blur()
+    inputRef.value?.blur()
   }
 
   function select() {
-    inputRef.value.select()
+    // @ts-ignore
+    inputRef.value?.select()
   }
 
-  function setRef(el) {
+  const setRef = function(el: HTMLInputElement) {
     inputRef.value = el
-  }
+  } as unknown as string
 
   const inputMap = [{
     type: 'button',
     expose: {
       click() {
-        inputRef.value.$el.click()
+        inputRef.value?.$el.click()
       },
       focus() {
-        inputRef.value.$el.focus()
+        inputRef.value?.$el.focus()
       }
     },
-    render: () => h(ElButton, {
+    render: () => h(Button, {
       ref: setRef,
       props: {
         type: props.hue,
@@ -98,10 +131,10 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
         blur: onBlur,
         ...nativeOn
       },
-    }, [props.text ? props.text : context.slots?.default()])
+    }, [props.text ? props.text : context.slots.default?.()])
   }, {
     type: 'radio',
-    render: () => h(ElRadioGroup, {
+    render: () => h(RadioGroup, {
       props: {
         value: props.value,
         disabled: props.disabled,
@@ -110,8 +143,8 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
         input: onInput,
         change: onChange
       }
-    }, props.options.map(
-      (item) => h(ElRadio, {
+    }, props.options?.map(
+      (item) => h(Radio, {
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -121,7 +154,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     ))
   }, {
     type: 'checkbox',
-    render: () => h(ElCheckboxGroup, {
+    render: () => h(CheckboxGroup, {
       props: {
         value: props.value,
         disabled: props.disabled,
@@ -130,8 +163,8 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
         input: onInput,
         change: onChange
       }
-    }, props.options.map(
-      (item) => h(ElCheckbox, {
+    }, props.options?.map(
+      (item) => h(Checkbox, {
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -146,7 +179,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
       blur,
       select
     },
-    render: () => h(ElInput, {
+    render: () => h(Input, {
       ref: setRef,
       props: {
         type: props.type,
@@ -189,13 +222,13 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     expose: {
       focus,
       blur() {
-        const number = inputRef.value.$el
+        const number = inputRef.value?.$el
         const input = number.querySelector('.el-input__inner')
         input.blur()
       },
       select
     },
-    render: () => h(ElInputNumber, {
+    render: () => h(InputNumber, {
       ref: setRef,
       props: {
         value: props.value,
@@ -212,7 +245,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
         name: context.attrs.name,
       },
       on: {
-        input(newVal) {
+        input(newVal: string | number) {
           if (props.value === newVal) return
           onInput(newVal)
         },
@@ -226,7 +259,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
       focus,
       blur
     },
-    render: () => h(ElSelect, {
+    render: () => h(Select, {
       ref: setRef,
       props: {
         value: props.value,
@@ -248,8 +281,8 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
         clear: onClear
       },
       nativeOn
-    }, props.options.map(
-      (item) => h(ElOption, {
+    }, props.options?.map(
+      (item) => h(Option, {
         props: {
           label: item.label,
           value: item.value,
@@ -260,7 +293,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     ))
   }, {
     type: 'cascader',
-    render: () => h(ElCascader, {
+    render: () => h(Cascader, {
       props: {
         value: props.value,
         disabled: props.disabled,
@@ -284,7 +317,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     expose: {
       focus
     },
-    render: () => h(ElDatePicker, {
+    render: () => h(DatePicker, {
       ref: setRef,
       props: {
         value: props.value,
@@ -321,7 +354,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     })
   }, {
     type: 'time',
-    render: () => h(ElTimeSelect, {
+    render: () => h(TimeSelect, {
       props: {
         value: props.value,
         pickerOptions: props.pickerOptions,
@@ -338,7 +371,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     expose: {
       focus
     },
-    render: () => h(ElSwitch, {
+    render: () => h(Switch, {
       ref: setRef,
       props: {
         value: props.value,
@@ -362,7 +395,7 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
     })
   }, {
     type: 'slider',
-    render: () => h(ElSlider, {
+    render: () => h(Slider, {
       props: {
         value: props.value,
         disabled: props.disabled,
@@ -379,14 +412,14 @@ export function useInput<T>(props: T, context, options = { onKeyup: null, onInpu
       clearFiles() {
         inputRef.value.clearFiles()
       },
-      abort(file) {
+      abort(file: ElUploadInternalFileDetail) {
         inputRef.value.abort(file)
       },
       submit() {
         inputRef.value.submit()
       }
     },
-    render: () => h(ElUpload, {
+    render: () => h(Upload, {
       ref: setRef,
       props: {
         value: props.value,

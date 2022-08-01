@@ -3,6 +3,18 @@ import { Form as ElForm, FormItem as ElFormItem, Input as ElInput } from "elemen
 import { isArray } from "../../utils"
 import renderInput from './render-input'
 
+type inputTypes = 'text' | 'password' | 'textarea' | ''
+
+type BaseFileds = {
+  [key: string]: {
+    type?: inputTypes
+  }
+}
+
+type ArrayFileds = []
+
+type Fileds = BaseFileds | ArrayFileds
+
 function initFormData(baseFileds, filedsIsArray) {
   const result = {}
   const fileds = filedsIsArray ? baseFileds : Object.keys(baseFileds)

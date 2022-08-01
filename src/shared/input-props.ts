@@ -1,18 +1,19 @@
-import { PropType } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 import { ElUpload, FileListItem } from "element-ui/types/upload"
 import { CascaderOption } from "element-ui/types/cascader-panel"
 import { DatePickerOptions } from "element-ui/types/date-picker"
 import { TimePickerOptions } from "element-ui/types/time-picker"
 import { TimeSelectOptions } from "element-ui/types/time-select"
 
-type FormItemOptions = {
-  value: any,
-  label: string
+type InputOptions = {
+  value: any;
+  label: string;
+  disabled?: boolean;
 }
 
 function noop() { }
 
-const inputProps = {
+export const inputProps = {
   value: {
     type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
     default: ''
@@ -218,7 +219,7 @@ const inputProps = {
     type: Boolean as PropType<boolean>,
     default: true
   },
-  options: [Array] as PropType<FormItemOptions[] | CascaderOption[]>,
+  options: [Array] as PropType<InputOptions[] | CascaderOption[]>,
   pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
   hue: {
     type: String as PropType<string>,
@@ -227,6 +228,4 @@ const inputProps = {
   exclude: [RegExp, String, Number] as PropType<RegExp | string | number>,
 }
 
-export type InputProps = typeof inputProps
-
-export default inputProps
+export type InputProps = ExtractPropTypes<typeof inputProps>
