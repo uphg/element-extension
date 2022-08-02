@@ -1,106 +1,49 @@
-import { h, ref } from "vue"
-import { Form as ElForm, FormItem as ElFormItem, Input as ElInput } from "element-ui"
+import { defineComponent, ExtractPropTypes, h, PropType, ref } from "vue"
+import { Form, FormItem, Input } from "element-ui"
 import { isArray } from "../../utils"
 import renderInput from './render-input'
+import { FormulateFileds, FormulateFiled, FormulateBaseFiled } from '../../types/formulate'
+import { InputValue } from "../../types/input"
+import { FormRules } from '../../types/form'
 
-type inputTypes = 'button' | 'radio' | 'checkbox' | 'text' | 'password' | 'textarea' | 'number' | 'select' | 'cascader' | 'date' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'switch' | 'slider' | 'file' | 'upload'
+type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
-type BaseFiledProps = {
-  label: string,
-  type?: inputTypes,
-  options?: {
-    key: string,
-    value: string | number | boolean,
-    disabled?: boolean
-  }
-}
-
-type BaseFileds = {
-  [key: string]: BaseFiledProps
-}
-
-type ArrayFileds = (BaseFiledProps & { key: string })[]
-
-type Fileds = BaseFileds | ArrayFileds
-
-function initFormData(baseFileds: Fileds, filedsIsArray: boolean) {
-  const result = {}
-  const fileds = filedsIsArray ? baseFileds : Object.keys(baseFileds)
-  fileds.forEach((value, _key) => {
-    const key = filedsIsArray ? value.key : value
-    const type = filedsIsArray ? value.type : baseFileds[value]?.type
-    if (!key) return
-    switch (type) {
-      case 'checkbox':
-      case 'file':
-      case 'upload':
-        result[key] = []
-        break;
-      case 'switch':
-        result[key] = false
-        break;
-      default:
-        if (/^\$/.test(key)) {
-          break
-        }
-        result[key] = ''
-    }
-  })
-  return result
-}
-
-function mapFileds(baseFileds, callback, filedsIsArray) {
-  const fileds = filedsIsArray ? baseFileds : Object.keys(baseFileds)
-
-  return fileds.map((value, index) => {
-    let item
-    if (filedsIsArray) {
-      item = value
-    } else {
-      if (value === '$footer') {
-        const filed = baseFileds[value]
-        if (isArray(filed)) {
-          item = filed
-        } else {
-          item = mapFileds(filed, null, false)
-        }
-      } else if (/^\$/.test(value)) {
-        item = { ...baseFileds[value], type: value.replace('$', '') }
-      } else {
-        item = { ...baseFileds[value], key: value }
-      }
-    }
-    callback && callback(item, index)
-    return item
-  })
-}
-
-export default {
-  name: 'SFormulate',
-  props: {
-    data: [Object],
-    fileds: [Array, Object],
-    labelPosition: String,
-    labelWidth: String,
-    labelSuffix: {
-      type: String,
-      default: ''
-    },
-    validateOnRuleChange: false, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
-    withValidate: Boolean, // 是否开启验证
-    withEnterNext: Boolean, // 是否开启回车换行
-    errorFormat: Function, // 错误提示格式，errorFormat({ type, key, label })
-    size: String,
+const formulateDataProps = {
+  fileds: [Array, Object] as PropType<FormulateFileds>,
+  labelPosition: String,
+  labelWidth: String,
+  labelSuffix: {
+    type: String,
+    default: ''
   },
+  validateOnRuleChange: Boolean, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
+  withValidate: Boolean, // 是否开启验证
+  withEnterNext: Boolean, // 是否开启回车换行
+  errorFormat: Function, // 错误提示格式，errorFormat({ type, key, label })
+  size: String,
+}
+
+const formulateProps = {
+  data: [Object] as PropType<FormulateDataProps>,
+  ...formulateDataProps,
+}
+
+export default defineComponent({
+  name: 'SFormulate',
+  props: formulateProps,
   setup(_props, context) {
     const props = _props.data ? _props.data : _props
     const filedsIsArray = isArray(props.fileds)
 
-    const formRef = ref(null)
-    const rules = ref({})
+    const formRef = ref<any>(null)
+    const rules = ref<FormRules>({})
+
+    if (!props.fileds) {
+      throw new Error('[SimElement] "fileds" attribute is required');
+    }
 
     const formData = ref(initFormData(props.fileds, filedsIsArray))
-    const fileds = mapFileds(props.fileds, (item) => {
+    const fileds: FormulateFiled[] = mapFileds(props.fileds, (item) => {
       const { type, key, label, rules: _rules } = item
       if (_rules) {
         rules.value[key] = _rules
@@ -158,7 +101,8 @@ export default {
       submit,
     })
 
-    return () => h(ElForm, {
+    return () => h(Form, {
+      // @ts-ignore
       ref: (el) => formRef.value = el,
       props: {
         rules: rules.value,
@@ -168,7 +112,7 @@ export default {
         labelSuffix: props.labelSuffix,
         validateOnRuleChange: props.validateOnRuleChange,
       }
-    }, fileds.map((item) => h(ElFormItem, {
+    }, fileds.map((item) => h(FormItem, {
       props: {
         label: item.label,
         prop: item.key,
@@ -179,4 +123,64 @@ export default {
       : [renderInput(item, { formRef, formData, context })]))
     )
   }
+})
+
+function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
+  const result: { [key: string]: InputValue } = {}
+  const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
+  fileds.forEach((value, _key) => {
+    const key = filedsIsArray ? (value as FormulateFiled).key : value as string
+    const type = filedsIsArray
+      ? (value as FormulateFiled).type
+      : (baseFileds as { [key: string]: FormulateBaseFiled; })[value as string]?.type
+    if (!key) return
+    switch (type) {
+      case 'checkbox':
+      case 'file':
+      case 'upload':
+        result[key] = []
+        break;
+      case 'switch':
+        result[key] = false
+        break;
+      default:
+        if (/^\$/.test(key)) {
+          break
+        }
+        result[key] = ''
+    }
+  })
+  return result
+}
+
+function mapFileds(
+  baseFileds: FormulateFileds,
+  callback: ((item: string, index: number) => void) | null,
+  filedsIsArray: boolean
+): FormulateFiled[] {
+  const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
+
+  return fileds.map((value, index) => {
+    let item
+    if (filedsIsArray) {
+      item = value
+    } else {
+      if (value === '$footer') {
+        const filed = baseFileds[value]
+        if (isArray(filed)) {
+          item = filed
+        } else {
+          item = mapFileds(filed, null, false)
+        }
+      } else if (typeof value === 'string') {
+        const temp = baseFileds[value]
+        item = /^\$/.test(value)
+          ? { ...temp, type: value.replace('$', '') }
+          // @ts-ignore
+          : { ...temp, key: value }
+      }
+    }
+    callback && callback(item, index)
+    return item
+  })
 }

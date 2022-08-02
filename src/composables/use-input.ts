@@ -35,7 +35,7 @@ import { InputProps } from '../shared/input-props'
 // import { ElTimeSelect } from 'element-ui/types/time-select'
 // import { ElDatePicker } from 'element-ui/types/date-picker'
 import { ElUpload, ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import Vue from 'vue/types/umd'
+import { InputValue } from '../types/input'
 
 type useInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -46,7 +46,7 @@ interface BaseProps extends InputProps {
   exclude?: string | number | RegExp  
 }
 
-type InputValue = string | boolean | number | Date | Date[] | string[]
+
 
 // type InputComponents = Vue | HTMLElement | ElButton | ElInput | ElSelect | ElCalendar | ElOption | ElRadioGroup | ElRadio | ElCheckboxGroup | ElCheckbox | ElInputNumber | ElSwitch | ElSlider | ElTimeSelect | ElDatePicker | ElUpload
 

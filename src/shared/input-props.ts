@@ -4,12 +4,7 @@ import { CascaderOption } from "element-ui/types/cascader-panel"
 import { DatePickerOptions } from "element-ui/types/date-picker"
 import { TimePickerOptions } from "element-ui/types/time-picker"
 import { TimeSelectOptions } from "element-ui/types/time-select"
-
-type InputOptions = {
-  value: any;
-  label: string;
-  disabled?: boolean;
-}
+import { InputOptions } from '../types/input'
 
 function noop() { }
 
