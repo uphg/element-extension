@@ -1,5 +1,5 @@
 import { defineComponent, h, PropType, ref } from 'vue'
-import { Form as ElForm } from 'element-ui'
+import { Form } from 'element-ui'
 
 const formProps = {
   model: {
@@ -19,7 +19,7 @@ const formProps = {
   validateOnRuleChange: {
     type: Boolean as PropType<boolean>,
     default: false
-  }, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
+  }, // 是否在 rules 属性改变后立即触发一次验证，Element 默认 true
 
   // customize props
   withValidate: Boolean as PropType<boolean>, // 是否开启验证
@@ -30,7 +30,7 @@ export default defineComponent({
   name: 'SForm',
   props: formProps,
   setup(props, context) {
-    return () => h(ElForm, {
+    return () => h(Form, {
       props: {
         model: props.model,
         // rules: props.rules,

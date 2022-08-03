@@ -13,8 +13,7 @@ import {
   Slider,
   TimeSelect,
   DatePicker,
-  Upload,
-  Component,
+  Upload
 } from 'element-ui'
 import { h, ref, SetupContext } from 'vue'
 import { toString, find, omitBy } from '../utils'

@@ -1,8 +1,9 @@
 import { defineComponent, ExtractPropTypes, h, PropType, ref } from "vue"
-import { Form, FormItem, Input } from "element-ui"
+import { Form, FormItem } from "element-ui"
+import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 import { isArray } from "../../utils"
 import renderInput from './render-input'
-import { FormulateFileds, FormulateFiled, FormulateBaseFiled } from '../../types/formulate'
+import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, ErrorFormat } from '../../types/formulate'
 import { InputValue } from "../../types/input"
 import { FormRules } from '../../types/form'
 
@@ -10,17 +11,17 @@ type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
 const formulateDataProps = {
   fileds: [Array, Object] as PropType<FormulateFileds>,
-  labelPosition: String,
-  labelWidth: String,
+  labelPosition: String as PropType<string>,
+  labelWidth: String as PropType<string>,
   labelSuffix: {
-    type: String,
+    type: String as PropType<string>,
     default: ''
   },
-  validateOnRuleChange: Boolean, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
-  withValidate: Boolean, // 是否开启验证
-  withEnterNext: Boolean, // 是否开启回车换行
-  errorFormat: Function, // 错误提示格式，errorFormat({ type, key, label })
-  size: String,
+  validateOnRuleChange: Boolean as PropType<boolean>, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
+  withValidate: Boolean as PropType<boolean>, // 是否开启验证
+  withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
+  errorFormat: Function as PropType<ErrorFormat>, // 错误提示格式，errorFormat({ type, key, label })
+  size: String as PropType<string>,
 }
 
 const formulateProps = {
@@ -36,15 +37,15 @@ export default defineComponent({
     const filedsIsArray = isArray(props.fileds)
 
     const formRef = ref<any>(null)
-    const rules = ref<FormRules>({})
+    const rules = ref<FormRules | { [key: string]: [] }>({})
 
     if (!props.fileds) {
       throw new Error('[SimElement] "fileds" attribute is required');
     }
 
     const formData = ref(initFormData(props.fileds, filedsIsArray))
-    const fileds: FormulateFiled[] = mapFileds(props.fileds, (item) => {
-      const { type, key, label, rules: _rules } = item
+    const fileds = mapFileds(props.fileds, (item) => {
+      const { type, key, label, rules: _rules } = item as FormulateFiled
       if (_rules) {
         rules.value[key] = _rules
       } else if (props.withValidate && props.errorFormat) {
@@ -52,23 +53,25 @@ export default defineComponent({
       }
     }, filedsIsArray)
 
-    function validate(callback) {
+    type FormData = typeof formData.value
+
+    function validate(callback: ValidateCallback) {
       formRef.value.validate(callback)
     }
 
-    function validateField(props, callback) {
-      formRef.value.clearValidate(props, callback)
+    function validateField(props: string | string[], callback?: ValidateFieldCallback) {
+      formRef.value.validateField(props, callback)
     }
 
     function resetFields() {
-      formRef.value.clearValidate()
+      formRef.value.resetFields()
     }
 
-    function clearValidate(props) {
+    function clearValidate(props?: string | string[]) {
       formRef.value.clearValidate(props)
     }
 
-    function setFormData(obj) {
+    function setFormData(obj: FormData) {
       const keys = Object.keys(obj)
       keys.forEach((key) => {
         formData.value[key] = obj[key]
@@ -78,9 +81,9 @@ export default defineComponent({
     function getFormData() {
       return formData.value
     }
-
-    function submit(callback) {
-      formRef.value.validate((valid, errors) => {
+    
+    function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
+      formRef.value.validate((valid: boolean, errors: object) => {
         callback(formData.value, { valid, errors })
       })
     }
@@ -112,7 +115,7 @@ export default defineComponent({
         labelSuffix: props.labelSuffix,
         validateOnRuleChange: props.validateOnRuleChange,
       }
-    }, fileds.map((item) => h(FormItem, {
+    }, (fileds as FormulateFiled[])?.map((item) => h(FormItem, {
       props: {
         label: item.label,
         prop: item.key,
@@ -153,33 +156,35 @@ function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
   return result
 }
 
+type MapFiledsCallbackParamsItem = FormulateFiled | FormulateBaseFiled | FormulateFiled[] | string | null
+
 function mapFileds(
   baseFileds: FormulateFileds,
-  callback: ((item: string, index: number) => void) | null,
+  callback: ((item: MapFiledsCallbackParamsItem, index: number) => void) | null,
   filedsIsArray: boolean
-): FormulateFiled[] {
+): MapFiledsCallbackParamsItem[] | MapFiledsCallbackParamsItem {
   const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
 
   return fileds.map((value, index) => {
-    let item
+    let item: MapFiledsCallbackParamsItem = null
     if (filedsIsArray) {
       item = value
     } else {
       if (value === '$footer') {
-        const filed = baseFileds[value]
+        const filed = (baseFileds as FormulateFullFileds)[value] as FormulateFiled[]
         if (isArray(filed)) {
           item = filed
-        } else {
-          item = mapFileds(filed, null, false)
+        } else if (filed) {
+          item = mapFileds(filed, null, false) as MapFiledsCallbackParamsItem 
         }
       } else if (typeof value === 'string') {
-        const temp = baseFileds[value]
+        const temp = (baseFileds as FormulateFullFileds)[value]
         item = /^\$/.test(value)
           ? { ...temp, type: value.replace('$', '') }
-          // @ts-ignore
           : { ...temp, key: value }
       }
     }
+    
     callback && callback(item, index)
     return item
   })
