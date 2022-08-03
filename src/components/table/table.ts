@@ -3,17 +3,32 @@ import type { VNodeData } from "vue"
 import { Table as ElTable, TableColumn as ElTableColumn, Link as ElLink, Button as ElButton } from "element-ui"
 import { rowCallbackParams } from "element-ui/types/table"
 import { find } from "../../utils"
+import { TableColumnOptions, TableColumnProps } from "../../types/table"
 
-type TableColumnOptions = {
-  value: any,
-  label: string
-}
+export default defineComponent({
+  name: 'STable',
+  props: {
+    columns: {
+      type: Array as PropType<Array<TableColumnProps>>,
+      default: () => []
+    },
+    data: {
+      type: Array as PropType<Array<TableColumnProps>>,
+      default: () => []
+    },
+    stripe: Boolean,
+  },
+  setup(props, context) {
+    return () => h(ElTable, {
+      props: {
+        data: props.data,
+        stripe: props.stripe
+      }
+    }, props.columns.map(item => h(ElTableColumn, handleColumnsData(item)))
+    )
+  }
+})
 
-interface TableColumnProps {
-  options?: TableColumnOptions[];
-  children?: TableColumnProps[];
-  [key: string]: any;
-}
 
 function handleColumnsData(props: TableColumnProps) {
   if (!props) return
@@ -70,27 +85,3 @@ function renderChildrenNode(item: TableColumnProps, scope: rowCallbackParams) {
     }, [item.text])
   }
 }
-
-export default defineComponent({
-  name: 'STable',
-  props: {
-    columns: {
-      type: Array as PropType<Array<TableColumnProps>>,
-      default: () => []
-    },
-    data: {
-      type: Array as PropType<Array<TableColumnProps>>,
-      default: () => []
-    },
-    stripe: Boolean,
-  },
-  setup(props, context) {
-    return () => h(ElTable, {
-      props: {
-        data: props.data,
-        stripe: props.stripe
-      }
-    }, props.columns.map(item => h(ElTableColumn, handleColumnsData(item)))
-    )
-  }
-})

@@ -1,4 +1,25 @@
-import * as SElement from './index.modules'
+import { formGlobalFieldsKey } from '../shared/form-providers'
+import { VueConstructor } from 'vue/types/vue'
 
-export * from './index.modules'
-export { SElement as default }
+import Input from './input/index'
+import Form from './form'
+import FormItem from './form-item'
+import Formulate from './formulate'
+import Table from './table'
+
+function install(Vue: VueConstructor) {
+  [Input, Form, FormItem, Formulate, Table].forEach((item) => {
+    // @ts-ignore
+    Vue.use(item)
+  })
+}
+
+export {
+  install,
+  Input,
+  Form,
+  FormItem,
+  Formulate,
+  Table,
+  formGlobalFieldsKey
+}

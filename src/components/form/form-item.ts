@@ -5,7 +5,7 @@ import { inputProps } from "../../shared/input-props"
 
 const formItemProps = {
   ...inputProps,
-  
+
   // form item attributes
   label: String as PropType<string>,
   labelWidth: String as PropType<string>,
@@ -62,7 +62,7 @@ export default defineComponent({
       }
     }, [
       context.slots.itemPrefix && context.slots.itemPrefix(),
-      render(),
+      context.slots.default?.() || render(),
       context.slots.itemSuffix && context.slots.itemSuffix(),
     ])
   }

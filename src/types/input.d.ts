@@ -6,4 +6,5 @@ export type InputOptions = {
   value: InputValue;
   label: string;
   disabled?: boolean;
+  name?: string;
 }

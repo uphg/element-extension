@@ -8,7 +8,7 @@ const formProps = {
   },
   rules: {
     type: [Object, Array] as PropType<object|Array<unknown>>,
-    default: () => ([])
+    default: () => ({})
   },
   labelPosition: String as PropType<string>,
   labelWidth: String as PropType<string>,
@@ -18,7 +18,7 @@ const formProps = {
   },
   validateOnRuleChange: {
     type: Boolean as PropType<boolean>,
-    default: false
+    default: true
   }, // 是否在 rules 属性改变后立即触发一次验证，Element 默认 true
 
   // customize props
@@ -30,10 +30,15 @@ export default defineComponent({
   name: 'SForm',
   props: formProps,
   setup(props, context) {
+
+    context.expose({
+      validate() { }
+    })
+
     return () => h(Form, {
       props: {
         model: props.model,
-        // rules: props.rules,
+        rules: props.rules,
         labelPosition: props.labelPosition,
         labelWidth: props.labelWidth,
         labelSuffix: props.labelSuffix,

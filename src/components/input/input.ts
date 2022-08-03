@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 import { useInput } from "../../composables/use-input"
-import { inputProps, InputProps } from "../../shared/input-props"
+import { inputProps } from "../../shared/input-props"
 
 export default defineComponent({
   name: 'SInput',

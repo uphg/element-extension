@@ -34,7 +34,7 @@ import { InputProps } from '../shared/input-props'
 // import { ElTimeSelect } from 'element-ui/types/time-select'
 // import { ElDatePicker } from 'element-ui/types/date-picker'
 import { ElUpload, ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { InputValue } from '../types/input'
+import { InputOptions, InputValue } from '../types/input'
 
 type useInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -163,12 +163,15 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
         change: onChange
       }
     }, props.options?.map(
-      (item) => h(Checkbox, {
+      (item: InputOptions) => h(Checkbox, {
         props: {
           label: item.value,
           disabled: item.disabled,
           size: props.size,
         },
+        attrs: {
+          name: item.name
+        }
       }, [item.label])
     ))
   }, {
