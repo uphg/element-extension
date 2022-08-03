@@ -1,5 +1,5 @@
 import './styles/index.scss'
-import 'element-ui/packages/theme-chalk/src/common/transition.scss'
+import 'element-ui/packages/theme-chalk/lib/base.css'
 import App from './App.vue'
 import Vue from 'vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
