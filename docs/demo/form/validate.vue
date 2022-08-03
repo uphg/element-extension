@@ -115,6 +115,7 @@ const rules = {
 function submitForm(payload: MouseEvent) {
   console.log('表单提交成功')
   formRef.value?.validate((valid) => {
+    console.log(222)
     if (valid) {
       alert('submit!');
     } else {

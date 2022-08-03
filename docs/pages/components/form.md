@@ -22,7 +22,7 @@ form/validate
 
 <script lang="ts">
 export default {
-  name: 'DocsInput'
+  name: 'DocsForm'
 }
 </script>
 
@@ -30,3 +30,12 @@ export default {
 import FormBase from 'docs/demo/form/base.vue'
 import FormValidate from 'docs/demo/form/validate.vue'
 </script>
+
+<style>
+.demo-form .el-form {
+  width: 460px;
+}
+.demo-form .el-select {
+  width: 100%;
+}
+</style>

@@ -1,7 +1,6 @@
-import Vue from 'vue'
+import Vue, { h } from 'vue'
 import VueRouter, { type RouteConfig } from 'vue-router';
 import Layout from 'docs/layout/index.vue'
-
 Vue.use(VueRouter)
 
 const routes: RouteConfig[] = [

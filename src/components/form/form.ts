@@ -1,5 +1,6 @@
 import { defineComponent, h, PropType, ref } from 'vue'
 import { Form } from 'element-ui'
+import { ElForm, ValidateCallback, ValidateFieldCallback } from 'element-ui/types/form'
 
 const formProps = {
   model: {
@@ -30,12 +31,33 @@ export default defineComponent({
   name: 'SForm',
   props: formProps,
   setup(props, context) {
+    const formRef = ref<ElForm | null>(null)
+
+    function validate(callback: ValidateCallback) {
+      formRef.value?.validate(callback)
+    }
+
+    function validateField(props: string | string[], callback?: ValidateFieldCallback) {
+      formRef.value?.validateField(props, callback)
+    }
+
+    function resetFields() {
+      formRef.value?.resetFields()
+    }
+
+    function clearValidate(props?: string | string[]) {
+      formRef.value?.clearValidate(props)
+    }
 
     context.expose({
-      validate() { }
+      validate,
+      validateField,
+      resetFields,
+      clearValidate
     })
-
+    // @ts-ignore
     return () => h(Form, {
+      ref: (el: any) => { formRef.value = el },
       props: {
         model: props.model,
         rules: props.rules,

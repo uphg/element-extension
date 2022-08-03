@@ -1,7 +1,7 @@
 <template>
   <div class="sim-code">
     <div class="demo">
-      <component :is="part" />
+      <component :is="componentIs" />
     </div>
     <el-collapse-transition>
       <div v-show="visible" class="code-source language-vue" v-html="decodeURIComponent(source)" />
@@ -18,11 +18,12 @@ export default {
   components: { ElCollapseTransition },
   props: {
     source: String,
+    componentName: String,
     part: [Object]
   },
-  setup() {
+  setup(props) {
     const visible = ref(false)
-    return { visible }
+    return { visible, componentIs: { ...props.part, name: props.componentName } }
   }
 }
 </script>

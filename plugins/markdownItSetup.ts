@@ -11,7 +11,6 @@ function getComponentName(sourceFile) {
 }
 
 function markdownItSetup(md) {
-  console.log('md 插件运行')
   md.use(mdContainer, 'code', {
     validate(params) {
       return !!params.trim().match(/^code\s*(.*)$/)
@@ -33,8 +32,11 @@ function markdownItSetup(md) {
         }
 
         const componentName = getComponentName(sourceFile)
-
-        return `<s-code source="${encodeURIComponent(
+        const names = sourceFile.split('/')
+        return `<s-code
+          class="demo-${names[0]}"
+          component-name="${componentName}"
+          source="${encodeURIComponent(
           highlight(source, 'vue')
         )}"
           :part="${componentName}"
