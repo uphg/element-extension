@@ -5,7 +5,7 @@ import { isArray } from "../../utils"
 import renderInput from './render-input'
 import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, ErrorFormat } from '../../types/formulate'
 import { InputValue } from "../../types/input"
-import { FormRules } from '../../types/form'
+import { FormRules, FormData } from '../../types/form'
 
 type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
@@ -42,8 +42,6 @@ export default defineComponent({
     if (!props.fileds) {
       throw new Error('[SimElement] "fileds" attribute is required');
     }
-
-    type FormData = typeof formData.value
 
     const formData = ref(initFormData(props.fileds, filedsIsArray))
     const fileds = mapFileds(props.fileds, (item) => {

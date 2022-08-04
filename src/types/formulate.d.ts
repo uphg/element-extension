@@ -1,5 +1,6 @@
 import { FormRule } from './form';
-import { InputTypes, InputOptions } from './input'
+import { InputTypes, InputValue, InputOptions } from './input'
+import { InputProps } from '../../shared/input-props'
 
 export interface FormulateBaseFiled {
   label: string;
@@ -7,6 +8,7 @@ export interface FormulateBaseFiled {
   rules?: FormRule;
   required?: boolean;
   options?: InputOptions;
+  [key: string]: any;
 }
 
 export interface FormulateFiled extends FormulateBaseFiled {
@@ -23,3 +25,10 @@ export type FormulateFileds = FormulateFullFileds | FormulateFiled[]
 export interface ErrorFormat {
   (options: { type?: string, key: string, label: string }): FormRule | []
 }
+
+export interface FormulatePublicInputProps {
+  vIf(formData: { [key: string]: InputValue }): boolean | undefined
+}
+
+export type PartialInputProps = Partial<InputProps & FormulatePublicInputProps>
+

@@ -1,24 +1,30 @@
 import {
-  Button as ElButton,
-  Input as ElInput,
-  Select as ElSelect,
-  Cascader as ElCascader,
-  Option as ElOption,
-  RadioGroup as ElRadioGroup,
-  Radio as ElRadio,
-  CheckboxGroup as ElCheckboxGroup,
+  Button as Button,
+  Input as Input,
+  Select as Select,
+  Cascader as Cascader,
+  Option as Option,
+  RadioGroup as RadioGroup,
+  Radio as Radio,
+  CheckboxGroup as CheckboxGroup,
   Checkbox as ElCheckbox,
   InputNumber as ElInputNumber,
-  Switch as ElSwitch,
-  Slider as ElSlider,
-  TimeSelect as ElTimeSelect,
-  DatePicker as ElDatePicker,
-  Upload as ElUpload
+  Switch as Switch,
+  Slider as Slider,
+  TimeSelect as TimeSelect,
+  DatePicker as DatePicker,
+  Upload as Upload
 } from 'element-ui'
-import { h } from 'vue'
+import { h, Ref, SetupContext } from 'vue'
 import { isArray } from '../../utils'
+import { PartialInputProps } from '../../types/formulate'
+import { FormData } from '../../types/form'
+import { InputOptions } from 'src/types/input'
+import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
+import { ElForm } from 'element-ui/types/form'
 
-function renderInput(props: any, { formRef, formData, context }) {
+function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElement | ElForm>, formData: Ref<FormData>, context: SetupContext<{}> }) {
+  const { formRef, formData, context } = _options
   if (props.vIf && typeof props.vIf === 'function' && !props.vIf(formData.value)) {
     return null
   }
@@ -26,7 +32,7 @@ function renderInput(props: any, { formRef, formData, context }) {
     case 'text':
     case 'password':
     case 'textarea':
-      return h(ElInput, {
+      return h(Input, {
         props: {
           type: props.type,
           value: formData.value[props.key],
@@ -45,7 +51,7 @@ function renderInput(props: any, { formRef, formData, context }) {
           maxlength: props.maxlength,
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
@@ -74,7 +80,7 @@ function renderInput(props: any, { formRef, formData, context }) {
         }
       })
     case 'radio':
-      return h(ElRadioGroup, {
+      return h(RadioGroup, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -85,7 +91,7 @@ function renderInput(props: any, { formRef, formData, context }) {
           }
         }
       }, props.options.map(
-        (item) => h(ElRadio, {
+        (item: InputOptions) => h(Radio, {
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -93,18 +99,18 @@ function renderInput(props: any, { formRef, formData, context }) {
         }, [item.label])
       ))
     case 'checkbox':
-      return h(ElCheckboxGroup, {
+      return h(CheckboxGroup, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
       }, props.options.map(
-        (item) => h(ElCheckbox, {
+        (item: InputOptions) => h(ElCheckbox, {
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -112,19 +118,19 @@ function renderInput(props: any, { formRef, formData, context }) {
         }, [item.label])
       ))
     case 'select':
-      return h(ElSelect, {
+      return h(Select, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
           placeholder: props.placeholder
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
       }, props.options.map(
-        (item) => h(ElOption, {
+        (item: InputOptions) => h(Option, {
           props: {
             label: item.label,
             value: item.value,
@@ -133,7 +139,7 @@ function renderInput(props: any, { formRef, formData, context }) {
         })
       ))
     case 'cascader':
-      return h(ElCascader, {
+      return h(Cascader, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -145,13 +151,13 @@ function renderInput(props: any, { formRef, formData, context }) {
           placeholder: props.placeholder
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
       })
     case 'switch':
-      return h(ElSwitch, {
+      return h(Switch, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -168,19 +174,19 @@ function renderInput(props: any, { formRef, formData, context }) {
           placeholder: props.placeholder
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
       })
     case 'slider':
-      return h(ElSwitch, {
+      return h(Switch, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
@@ -194,7 +200,7 @@ function renderInput(props: any, { formRef, formData, context }) {
     case 'monthrange':
     case 'datetime':
     case 'datetimerange':
-      return h(ElDatePicker, {
+      return h(DatePicker, {
         props: {
           value: formData.value[props.key],
           type: props.type,
@@ -221,7 +227,7 @@ function renderInput(props: any, { formRef, formData, context }) {
           placeholder: props.placeholder,
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
@@ -229,7 +235,7 @@ function renderInput(props: any, { formRef, formData, context }) {
 
     case 'file':
     case 'upload':
-      return h(ElUpload, {
+      return h(Upload, {
         props: {
           disabled: props.disabled,
           action: props.action,
@@ -242,7 +248,7 @@ function renderInput(props: any, { formRef, formData, context }) {
           accept: props.accept, // accept="image/png, image/jpeg"
           onPreview: props.onPreview,
           onRemove: props.onRemove,
-          onSuccess: (response, file, fileList) => {
+          onSuccess: (response: any, file: ElUploadInternalFileDetail, fileList: ElUploadInternalFileDetail[]) => {
             formData.value[props.key] = fileList
             props.onSuccess && props.onSuccess(response, file, fileList)
           },
@@ -261,7 +267,7 @@ function renderInput(props: any, { formRef, formData, context }) {
         }
       }, [
         ...(
-          props.slots ? props.slots : [h(ElButton, {
+          props.slots ? props.slots : [h(Button, {
             props: {
               type: 'primary',
               size: 'small',
@@ -280,7 +286,7 @@ function renderInput(props: any, { formRef, formData, context }) {
       )
     case 'button':
     case 'submit':
-      return h(ElButton, {
+      return h(Button, {
         props: {
           text: props.text,
           disabled: props.disabled,
@@ -288,10 +294,10 @@ function renderInput(props: any, { formRef, formData, context }) {
         },
         on: {
           click: props.type === 'submit' ? () => {
-            formRef.value.validate((valid) => {
+            (formRef.value as ElForm).validate((valid: boolean) => {
               valid && props.onSubmit ? props.onSubmit(formData.value) : context.emit('submit', formData.value)
             })
-          } : (event) => {
+          } : (event: MouseEvent) => {
             props.onClick(event)
           }
         }

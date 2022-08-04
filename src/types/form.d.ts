@@ -13,3 +13,6 @@ export type FormRules = {
   [key: string]: FormRule
 }
 
+export type FormData = {
+  [key: string]: InputValue
+}
