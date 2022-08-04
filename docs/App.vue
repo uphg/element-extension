@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <router-view/>
+    <SConfigProvider>
+      <router-view/>
+    </SConfigProvider>
   </div>
 </template>
 
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import SConfigProvider from './components/s-config-provider'
 </script>
 
 <style scoped>

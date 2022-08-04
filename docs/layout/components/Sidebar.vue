@@ -20,6 +20,7 @@ const sidebars = [
       { title: 'Button 按钮', link: '/components/button' },
       { title: 'Input 输入框', link: '/components/input' },
       { title: 'Form 表单', link: '/components/form' },
+      { title: 'Formulate 定制表单', link: '/components/formulate' },
     ]
   }
 ]

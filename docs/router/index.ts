@@ -7,12 +7,12 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     component: Layout,
-    // redirect: '',
+    redirect: '/test',
     children: [
       {
-        path: '',
-        name: 'Home',
-        component: () => import('docs/pages/home.vue')
+        path: 'test',
+        name: 'Test',
+        component: () => import('docs/pages/test.vue')
       }
     ]
   },
@@ -49,6 +49,11 @@ const routes: RouteConfig[] = [
         path: 'form',
         name: 'ComponentsForm',
         component: () => import('docs/pages/components/form.md')
+      },
+      {
+        path: 'formulate',
+        name: 'ComponentsFormulate',
+        component: () => import('docs/pages/components/formulate.md')
       }
     ]
   },

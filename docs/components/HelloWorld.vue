@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 
 defineProps<{ msg: string }>()
+
+const config = inject('s-config')
+
+console.log('config')
+console.log(config)
 
 const count = ref(0)
 </script>
