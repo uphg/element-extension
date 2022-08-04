@@ -43,6 +43,8 @@ export default defineComponent({
       throw new Error('[SimElement] "fileds" attribute is required');
     }
 
+    type FormData = typeof formData.value
+
     const formData = ref(initFormData(props.fileds, filedsIsArray))
     const fileds = mapFileds(props.fileds, (item) => {
       const { type, key, label, rules: _rules } = item as FormulateFiled
@@ -52,8 +54,6 @@ export default defineComponent({
         rules.value[key] = props.errorFormat({ type, key, label })
       }
     }, filedsIsArray)
-
-    type FormData = typeof formData.value
 
     function validate(callback: ValidateCallback) {
       formRef.value.validate(callback)
@@ -71,14 +71,14 @@ export default defineComponent({
       formRef.value.clearValidate(props)
     }
 
-    function setFormData(obj: FormData) {
+    function setValues(obj: FormData) {
       const keys = Object.keys(obj)
       keys.forEach((key) => {
         formData.value[key] = obj[key]
       })
     }
 
-    function getFormData() {
+    function getValues() {
       return formData.value
     }
     
@@ -89,18 +89,15 @@ export default defineComponent({
     }
 
     context.expose({
+      get formData() {
+        return formData.value
+      },
       validate,
       validateField,
       resetFields,
       clearValidate,
-      get formData() {
-        return formData.value
-      },
-      set formData(obj) {
-        setFormData(obj)
-      },
-      setFormData,
-      getFormData,
+      setValues,
+      getValues,
       submit,
     })
 

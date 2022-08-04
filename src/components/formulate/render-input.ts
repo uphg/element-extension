@@ -18,7 +18,10 @@ import {
 import { h } from 'vue'
 import { isArray } from '../../utils'
 
-function renderInput(props, { formRef, formData, context }) {
+function renderInput(props: any, { formRef, formData, context }) {
+  if (props.vIf && typeof props.vIf === 'function' && !props.vIf(formData.value)) {
+    return null
+  }
   switch (props.type || 'text') {
     case 'text':
     case 'password':
@@ -64,7 +67,7 @@ function renderInput(props, { formRef, formData, context }) {
           name: props.name,
         },
         on: {
-          input(newVal) {
+          input(newVal: any) {
             if (props.value === newVal) return
             formData.value[props.key] = newVal
           }
@@ -77,7 +80,7 @@ function renderInput(props, { formRef, formData, context }) {
           disabled: props.disabled,
         },
         on: {
-          input(value) {
+          input(value: any) {
             formData.value[props.key] = value
           }
         }
