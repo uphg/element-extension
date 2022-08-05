@@ -23,7 +23,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "2.7.8",
+    "vue": "2.7.8"
   },
   "devDependencies": {
     "pinia": "^2.0.17",
