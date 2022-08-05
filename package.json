@@ -1,7 +1,19 @@
 {
-  "name": "vue2-md-starter",
-  "private": true,
-  "version": "0.0.0",
+  "name": "sim-element",
+  "version": "0.0.11",
+  "description": "Reactive, component-oriented view layer for modern web interfaces.",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,11 +23,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "pinia": "^2.0.17",
     "vue": "2.7.8",
-    "vue-router": "3.5.4"
   },
   "devDependencies": {
+    "pinia": "^2.0.17",
+    "vue-router": "3.5.4",
     "@types/node": "^18.6.2",
     "@vitejs/plugin-vue2": "1.1.2",
     "@vue/runtime-dom": "^3.2.37",
