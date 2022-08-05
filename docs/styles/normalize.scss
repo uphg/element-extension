@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -15,8 +17,9 @@ body {
   margin: 0;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
   line-height: 24px;
+  min-height: 100vh;
+  overflow-y: scroll;
 }
 
 h1 {

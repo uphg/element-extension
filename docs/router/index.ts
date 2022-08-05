@@ -56,11 +56,6 @@ const routes: RouteConfig[] = [
         component: () => import('docs/pages/components/formulate.md')
       }
     ]
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ 'docs/pages/About.vue')
   }
 ]
 

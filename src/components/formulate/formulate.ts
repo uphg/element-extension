@@ -99,27 +99,34 @@ export default defineComponent({
       submit,
     })
 
-    return () => h(Form, {
-      // @ts-ignore
-      ref: (el) => formRef.value = el,
-      props: {
-        rules: rules.value,
-        model: formData.value,
-        labelPosition: props.labelPosition,
-        labelWidth: props.labelWidth,
-        labelSuffix: props.labelSuffix,
-        validateOnRuleChange: props.validateOnRuleChange,
-      }
-    }, (fileds as FormulateFiled[])?.map((item) => h(FormItem, {
-      props: {
-        label: item.label,
-        prop: item.key,
-        required: item.required
-      }
-    }, isArray(item)
-      ? item.map(piece => renderInput(piece, { formRef, formData, context }))
-      : [renderInput(item, { formRef, formData, context })]))
-    )
+    return () =>  {
+      
+      return h(Form, {
+        // @ts-ignore
+        ref: (el) => formRef.value = el,
+        props: {
+          rules: rules.value,
+          model: formData.value,
+          labelPosition: props.labelPosition,
+          labelWidth: props.labelWidth,
+          labelSuffix: props.labelSuffix,
+          validateOnRuleChange: props.validateOnRuleChange,
+        }
+      }, (fileds as FormulateFiled[])?.map((item) => item.vIf && !item.vIf(formData.value)
+          ? null
+          : h(FormItem, {
+            props: {
+              label: item.label,
+              prop: item.key,
+              required: item.required
+            }
+          }, isArray(item)
+            ? item.map(piece => renderInput(piece, { formRef, formData, context }))
+            : [renderInput(item, { formRef, formData, context })]
+          )
+        )
+      )
+    }
   }
 })
 

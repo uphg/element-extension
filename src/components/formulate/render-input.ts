@@ -27,9 +27,9 @@ import renderDate from './render-date'
 
 function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElement | ElForm>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { formRef, formData, context } = _options
-  if (props.vIf && typeof props.vIf === 'function' && !props.vIf(formData.value)) {
-    return null
-  }
+  // if (props.vIf && typeof props.vIf === 'function' && !props.vIf(formData.value)) {
+  //   return null
+  // }
   switch (props.type || 'text') {
     case 'text':
     case 'password':
@@ -82,6 +82,9 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         }
       })
     case 'radio':
+      if (!props.options) {
+        throw new Error('[SimElement] "options" attribute is required when type="radio"');
+      }
       return h(RadioGroup, {
         props: {
           value: formData.value[props.key],
@@ -101,6 +104,9 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         }, [item.label])
       ))
     case 'checkbox':
+      if (!props.options) {
+        throw new Error('[SimElement] "options" attribute is required when type="checkbox"');
+      }
       return h(CheckboxGroup, {
         props: {
           value: formData.value[props.key],
@@ -119,7 +125,11 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           },
         }, [item.label])
       ))
+
     case 'select':
+      if (!props.options) {
+        throw new Error('[SimElement] "options" attribute is required when type="select"');
+      }
       return h(Select, {
         props: {
           value: formData.value[props.key],
@@ -140,6 +150,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         })
       ))
+
     case 'cascader':
       return h(Cascader, {
         props: {
@@ -158,6 +169,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       })
+
     case 'switch':
       return h(Switch, {
         props: {
@@ -181,6 +193,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       })
+
     case 'slider':
       return h(Slider, {
         props: {
@@ -193,6 +206,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       })
+
     case 'date':
     case 'year':
     case 'month':
@@ -259,8 +273,10 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
     case 'time':
     case 'time-select':
       return renderDate(props, _options, 2)
+
     case 'time-picker':
       return renderDate(props, _options, 3)
+
     case 'button':
       return h(Button, {
         props: {
