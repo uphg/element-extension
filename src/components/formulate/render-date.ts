@@ -17,11 +17,8 @@ function renderDate(
   const { formRef, formData, context } = _options
   const renderType = type || 0
 
-  return h(renderType === 1
-      ? DatePicker
-      : (renderType === 2
-        ? TimeSelect
-        : TimePicker), {
+  return h(renderType === 1 ? DatePicker : (renderType === 2 ? TimeSelect : TimePicker), {
+    ref: props.ref,
     props: {
       value: formData.value[props.key],
       type: props.type,

@@ -35,6 +35,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
     case 'password':
     case 'textarea':
       return h(Input, {
+        ref: props.ref,
         props: {
           type: props.type,
           value: formData.value[props.key],
@@ -60,6 +61,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
       })
     case 'number':
       return h(InputNumber, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -86,6 +88,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         throw new Error('[SimElement] "options" attribute is required when type="radio"');
       }
       return h(RadioGroup, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -108,6 +111,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         throw new Error('[SimElement] "options" attribute is required when type="checkbox"');
       }
       return h(CheckboxGroup, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -131,6 +135,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         throw new Error('[SimElement] "options" attribute is required when type="select"');
       }
       return h(Select, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -153,6 +158,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
 
     case 'cascader':
       return h(Cascader, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -172,6 +178,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
 
     case 'switch':
       return h(Switch, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -196,6 +203,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
 
     case 'slider':
       return h(Slider, {
+        ref: props.ref,
         props: {
           value: formData.value[props.key],
           disabled: props.disabled
@@ -221,6 +229,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
     case 'file':
     case 'upload':
       return h(Upload, {
+        ref: props.ref,
         props: {
           disabled: props.disabled,
           action: props.action,
@@ -279,6 +288,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
 
     case 'button':
       return h(Button, {
+        ref: props.ref,
         props: {
           disabled: props.disabled,
           type: props.hue
