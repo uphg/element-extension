@@ -1,19 +1,20 @@
 import {
-  Button as Button,
-  Input as Input,
-  Select as Select,
-  Cascader as Cascader,
-  Option as Option,
-  RadioGroup as RadioGroup,
-  Radio as Radio,
-  CheckboxGroup as CheckboxGroup,
-  Checkbox as ElCheckbox,
-  InputNumber as ElInputNumber,
-  Switch as Switch,
-  Slider as Slider,
-  TimeSelect as TimeSelect,
-  DatePicker as DatePicker,
-  Upload as Upload
+  Button,
+  Input,
+  Select,
+  Cascader,
+  Option,
+  RadioGroup,
+  Radio,
+  CheckboxGroup,
+  Checkbox,
+  InputNumber,
+  Switch,
+  Slider,
+  TimeSelect,
+  DatePicker,
+  Upload,
+  TimePicker
 } from 'element-ui'
 import { h, Ref, SetupContext } from 'vue'
 import { isArray } from '../../utils'
@@ -22,6 +23,7 @@ import { FormData } from '../../types/form'
 import { InputOptions } from 'src/types/input'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
+import renderDate from './render-date'
 
 function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElement | ElForm>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { formRef, formData, context } = _options
@@ -57,7 +59,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         }
       })
     case 'number':
-      return h(ElInputNumber, {
+      return h(InputNumber, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
@@ -110,7 +112,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: InputOptions) => h(ElCheckbox, {
+        (item: InputOptions) => h(Checkbox, {
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -180,7 +182,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         }
       })
     case 'slider':
-      return h(Switch, {
+      return h(Slider, {
         props: {
           value: formData.value[props.key],
           disabled: props.disabled
@@ -200,38 +202,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
     case 'monthrange':
     case 'datetime':
     case 'datetimerange':
-      return h(DatePicker, {
-        props: {
-          value: formData.value[props.key],
-          type: props.type,
-          format: props.format,
-          valueFormat: props.valueFormat,
-          readonly: props.readonly,
-          startPlaceholder: props.startPlaceholder,
-          endPlaceholder: props.endPlaceholder,
-          prefixIcon: props.prefixIcon,
-          clearIcon: props.clearIcon,
-          disabled: props.disabled,
-          clearable: props.clearable,
-          popperClass: props.popperClass,
-          editable: props.editable,
-          align: props.align,
-          defaultValue: props.defaultValue,
-          defaultTime: props.defaultTime,
-          rangeSeparator: props.rangeSeparator,
-          pickerOptions: props.pickerOptions,
-          unlinkPanels: props.unlinkPanels,
-          validateEvent: props.validateEvent,
-          // 原生属性
-          name: props.name,
-          placeholder: props.placeholder,
-        },
-        on: {
-          input(value: any) {
-            formData.value[props.key] = value
-          }
-        }
-      })
+      return renderDate(props, _options, 1)
 
     case 'file':
     case 'upload':
@@ -284,20 +255,20 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         }, [props.tip])])
       ]
       )
+
+    case 'time':
+    case 'time-select':
+      return renderDate(props, _options, 2)
+    case 'time-picker':
+      return renderDate(props, _options, 3)
     case 'button':
-    case 'submit':
       return h(Button, {
         props: {
-          text: props.text,
           disabled: props.disabled,
           type: props.hue
         },
         on: {
-          click: props.type === 'submit' ? () => {
-            (formRef.value as ElForm).validate((valid: boolean) => {
-              valid && props.onSubmit ? props.onSubmit(formData.value) : context.emit('submit', formData.value)
-            })
-          } : (event: MouseEvent) => {
+          click(event: MouseEvent) {
             props.onClick(event)
           }
         }
