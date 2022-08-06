@@ -27,6 +27,7 @@
         placeholder="选择日期"
         v-model="formData.date1"
       />
+      <span>-</span>
       <s-form-item
         prop="date2"
         type="time"
@@ -99,7 +100,7 @@ const rules = {
     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
   ],
   date2: [
-    { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+    { required: true, message: '请选择时间', trigger: 'change' }
   ],
   type: [
     { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }

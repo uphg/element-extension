@@ -8,10 +8,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-const formulateRef = ref(null)
+const formulateRef = ref<any>(null)
 
 const data = ref({
   labelWidth: "100px",
@@ -42,7 +42,7 @@ const data = ref({
       type: 'switch'
     },
     deliveryAddress: {
-      vIf: (formData) => formData.delivery, 
+      vIf: (formData: { [key: string]: any }) => formData.delivery, 
       label: '配送地址'
     },
     type: {
@@ -69,35 +69,18 @@ const data = ref({
       label: '活动形式',
       type: 'textarea',
       rules: [{ required: true, message: '请填写活动形式', trigger: 'blur' }]
-    },
-    files: {
-      label: '宣传文件',
-      type: 'file',
-      action: 'https://jsonplaceholder.typicode.com/posts/',
-      button: { text: '我要上传', hue: 'success', size: 'small', plain: true },
-      tips: ['只能上传jpg/png文件，且不超过500kb']
     }
   }
 })
 
 function onSubmit() {
-  formulateRef.value?.submit((formData, { valid, errors }) => {
-    console.log(formData, valid, errors)
+  formulateRef.value?.submit((formData: any, options: { valid: boolean, errors: object }) => {
+    console.log(formData, options)
   })
 }
 
 function onReset() {
-  console.log('点击重置')
-  formulateRef.value?.setValues({
-    name: '',
-    region: '',
-    date: '',
-    delivery: false,
-    deliveryAddress: '',
-    type: [],
-    resource: '',
-    desc: ''
-  })
+  formulateRef.value?.resetFields()
 }
 </script>
 

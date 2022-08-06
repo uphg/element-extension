@@ -4,6 +4,8 @@
 
 ## 基本用法
 
+FormItem 组件的默认 `type="text"`，添加 input 输入框只需要 绑定 v-model
+
 :::code
 
 form/base

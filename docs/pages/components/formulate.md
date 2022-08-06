@@ -22,9 +22,20 @@ formulate/validate
 
 :::
 
+## 文件上传组件
+
+使用上传组件时，可以设置默认按钮格式和提示内容
+
+:::code
+
+formulate/file
+
+:::
+
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
 import FormulateValidate from 'docs/demo/formulate/validate.vue'
+import FormulateFile from 'docs/demo/formulate/file.vue'
 </script>
 
 <style>
