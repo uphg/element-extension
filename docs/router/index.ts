@@ -36,16 +36,6 @@ const routes: RouteConfig[] = [
     redirect: '/components/hello-world',
     children: [
       {
-        path: 'button',
-        name: 'ComponentsButton',
-        component: () => import('docs/pages/components/button.md')
-      },
-      {
-        path: 'input',
-        name: 'ComponentsInput',
-        component: () => import('docs/pages/components/input.md')
-      },
-      {
         path: 'form',
         name: 'ComponentsForm',
         component: () => import('docs/pages/components/form.md')

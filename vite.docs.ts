@@ -8,6 +8,10 @@ const toPath = (p) => `${path.resolve(__dirname, p)}/`
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/sim-element/',
+  build: {
+    outDir: 'dist-docs'
+  },
   resolve: {
     alias: [
       {
