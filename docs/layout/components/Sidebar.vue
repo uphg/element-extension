@@ -1,6 +1,7 @@
 <template>
   <aside class="sidebar">
-    <SidebarGroup v-for="item in sidebars" :title="item.title" :children="item.children" />
+    <h2 class="sidebar-logo">Sim Element</h2>
+    <SidebarGroup v-for="item, index in sidebars" :key="index" :title="item.title" :children="item.children" />
   </aside>
 </template>
 
@@ -11,14 +12,12 @@ const sidebars = [
   {
     title: '开发指南',
     children: [
-      { title: '安装', link: '/docs/install' }
+      { title: '快速开始', link: '/docs/quick-start' }
     ]
   },
   {
     title: '组件',
     children: [
-      { title: 'Button 按钮', link: '/components/button' },
-      { title: 'Input 输入框', link: '/components/input' },
       { title: 'Form 表单', link: '/components/form' },
       { title: 'Formulate 定制表单', link: '/components/formulate' },
     ]
@@ -43,6 +42,11 @@ const sidebars = [
   }
   @media (min-width: 960px) {
     transform: translate(0);
+  }
+  .sidebar-logo {
+    font-weight: 400;
+    margin: 0;
+    padding: 76px 16px 12px;
   }
 }
 </style>

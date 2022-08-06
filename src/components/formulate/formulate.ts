@@ -10,7 +10,15 @@ import { FormRules, FormData } from '../../types/form'
 type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
 const formulateDataProps = {
-  fileds: [Array, Object] as PropType<FormulateFileds>,
+  rules: Object as PropType<FormRules>,
+  inline: Boolean as PropType<boolean>,
+  inlineMessage: Boolean as PropType<boolean>,
+  showMessage: {
+    type: Boolean as PropType<boolean>,
+    default: true
+  },
+  statusIcon: Boolean,
+  disabled: Boolean as PropType<boolean>,
   labelPosition: String as PropType<string>,
   labelWidth: String as PropType<string>,
   labelSuffix: {
@@ -18,6 +26,12 @@ const formulateDataProps = {
     default: ''
   },
   validateOnRuleChange: Boolean as PropType<boolean>, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
+  hideRequiredAsterisk: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  
+  fileds: [Array, Object] as PropType<FormulateFileds>,
   withValidate: Boolean as PropType<boolean>, // 是否开启验证
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
   errorFormat: Function as PropType<ErrorFormat>, // 错误提示格式，errorFormat({ type, key, label })
@@ -28,6 +42,8 @@ const formulateProps = {
   data: [Object] as PropType<FormulateDataProps>,
   ...formulateDataProps,
 }
+
+type FormulateProps = ExtractPropTypes<typeof formulateProps>
 
 export default defineComponent({
   name: 'SFormulate',
@@ -45,11 +61,11 @@ export default defineComponent({
 
     const formData = ref(initFormData(props.fileds, filedsIsArray))
     const fileds = mapFileds(props.fileds, (item) => {
-      const { type, key, label, rules: _rules } = item as FormulateFiled
-      if (_rules) {
+      const { key, rules: _rules } = item as FormulateFiled
+      if (props.rules && props.rules?.[key]) {
+        rules.value[key] = props.rules?.[key]
+      } else if (_rules) {
         rules.value[key] = _rules
-      } else if (props.withValidate && props.errorFormat) {
-        rules.value[key] = props.errorFormat({ type, key, label })
       }
     }, filedsIsArray)
 
@@ -99,34 +115,39 @@ export default defineComponent({
       submit,
     })
 
-    return () =>  {
-      
-      return h(Form, {
-        // @ts-ignore
-        ref: (el) => formRef.value = el,
-        props: {
-          rules: rules.value,
-          model: formData.value,
-          labelPosition: props.labelPosition,
-          labelWidth: props.labelWidth,
-          labelSuffix: props.labelSuffix,
-          validateOnRuleChange: props.validateOnRuleChange,
-        }
-      }, (fileds as FormulateFiled[])?.map((item) => item.vIf && !item.vIf(formData.value)
-          ? null
-          : h(FormItem, {
-            props: {
-              label: item.label,
-              prop: item.key,
-              required: item.required
-            }
-          }, isArray(item)
-            ? item.map(piece => renderInput(piece, { formRef, formData, context }))
-            : [renderInput(item, { formRef, formData, context })]
-          )
+    return () => h(Form, {
+      // @ts-ignore
+      ref: (el) => formRef.value = el,
+      props: {
+        rules: rules.value,
+        model: formData.value,
+        labelPosition: props.labelPosition,
+        labelWidth: props.labelWidth,
+        labelSuffix: props.labelSuffix,
+        validateOnRuleChange: props.validateOnRuleChange,
+      }
+    }, (fileds as FormulateFiled[])?.map((item) => item.vIf && !item.vIf(formData.value)
+        ? null
+        : h(FormItem, {
+          props: {
+            label: item.label,
+            labelWidth: item.labelWidth,
+            prop: item.prop || item.key,
+            required: item.required,
+            rules: item.rules,
+            error: item.error,
+            validateStatus: item.validateStatus,
+            for: item.for,
+            inlineMessage: item.inlineMessage,
+            showMessage: item.showMessage,
+            size: item.size
+          }
+        }, isArray(item)
+          ? item.map(piece => renderInput(piece, { formRef, formData, context }))
+          : [renderInput(item, { formRef, formData, context })]
         )
       )
-    }
+    )
   }
 })
 

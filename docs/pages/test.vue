@@ -1,6 +1,8 @@
 <template>
   <div class="test">
-    <HelloWorld msg="hi" />
+    <SConfigProvider>
+      <HelloWorld msg="hi" />
+    </SConfigProvider>
   </div>
 </template>
 

@@ -28,6 +28,6 @@
 }
 .container {
   flex: 1;
-  padding: 2.5rem 1rem;
+  padding: 2.5rem 1.5rem;
 }
 </style>

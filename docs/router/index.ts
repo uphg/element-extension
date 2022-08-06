@@ -20,12 +20,12 @@ const routes: RouteConfig[] = [
     path: '/docs',
     name: 'Docs',
     component: Layout,
-    redirect: '/docs/install',
+    redirect: '/docs/quick-start',
     children: [
       {
-        path: 'install',
-        name: 'DocsInstall',
-        component: () => import('docs/pages/docs/install.md')
+        path: 'quick-start',
+        name: 'DocsQuickStart',
+        component: () => import('docs/pages/docs/quick-start.md')
       }
     ]
   },

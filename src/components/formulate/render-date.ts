@@ -14,7 +14,7 @@ function renderDate(
   },
   type: 1 | 2 | 3 // 1: date, 2: time-select, 3: time-picker
 ) {
-  const { formRef, formData, context } = _options
+  const { formData, context } = _options
   const renderType = type || 0
 
   return h(renderType === 1 ? DatePicker : (renderType === 2 ? TimeSelect : TimePicker), {
@@ -41,6 +41,9 @@ function renderDate(
       unlinkPanels: props.unlinkPanels,
       arrowControl: props.arrowControl,
       isRange: props.isRange,
+      size: props.size,
+      validateEvent: props.validateEvent,
+      timeArrowControl: props.timeArrowControl,
       
       // 原生属性
       name: props.name,

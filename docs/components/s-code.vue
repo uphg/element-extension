@@ -42,9 +42,11 @@ export default {
 }
 
 .code-source {
+  max-width: 755px;
   border-top: 1px solid rgba(60, 60, 60, .12);
   background-color: #282c34;
   color: #fff;
+  overflow-x: auto;
 }
 
 :deep(.code-source) {

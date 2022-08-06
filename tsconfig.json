@@ -13,8 +13,7 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "paths": {
-      "src/*": ["./src/*"],
-      "docs/*": ["./docs/*"]
+      "src/*": ["./src/*"]
     }
   },
   "include": [

@@ -263,19 +263,22 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         ...(
           props.slots ? props.slots : [h(Button, {
             props: {
-              type: 'primary',
-              size: 'small',
+              type: props.button?.hue || 'primary',
+              size: props.button?.size || 'small',
+              plain: props.button?.plain,
+              round: props.button?.round,
+              circle: props.button?.circle,
+              icon: props.button?.icon
             }
-          }, ['点击上传'])]
+          }, [props.button?.text])]
         ),
-        props.tip && h('div', {
-          class: props.tipClass || 'el-upload__tip',
-          slot: 'tip',
-        }, isArray(props.tip) ? props.tip.map((item) => h('div', {
-          class: props.tipItemClass || 'el-upload__tip-item',
-        }, [item])) : [h('div', {
-          class: props.tipItemClass || 'el-upload__tip-item'
-        }, [props.tip])])
+        props.tips && h('div', {
+            class: props.tipClass || 'el-upload__tip',
+            slot: 'tip',
+          }, props.tips.map((item: string) => h('div', {
+            class: props.tipItemClass || 'el-upload__tip-item',
+          }, [item]))
+        )
       ]
       )
 

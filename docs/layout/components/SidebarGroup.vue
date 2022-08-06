@@ -24,6 +24,7 @@ const props = defineProps({
   font-size: 14px;
 }
 .title {
+  font-weight: 400;
   margin: 0;
   padding: 6px 16px;
   font-size: 16px;
