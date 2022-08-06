@@ -7,14 +7,14 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/test',
-    children: [
-      {
-        path: 'test',
-        name: 'Test',
-        component: () => import('docs/pages/test.vue')
-      }
-    ]
+    redirect: '/docs',
+    // children: [
+    //   {
+    //     path: 'test',
+    //     name: 'Test',
+    //     component: () => import('docs/pages/test.vue')
+    //   }
+    // ]
   },
   {
     path: '/docs',
