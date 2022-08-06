@@ -3,7 +3,7 @@ import { Form, FormItem } from "element-ui"
 import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 import { isArray } from "../../utils"
 import renderInput from './render-input'
-import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, ErrorFormat } from '../../types/formulate'
+import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, MapRules } from '../../types/formulate'
 import { InputValue } from "../../types/input"
 import { FormRules, FormData } from '../../types/form'
 
@@ -32,9 +32,8 @@ const formulateDataProps = {
   },
   
   fileds: [Array, Object] as PropType<FormulateFileds>,
-  withValidate: Boolean as PropType<boolean>, // 是否开启验证
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
-  errorFormat: Function as PropType<ErrorFormat>, // 错误提示格式，errorFormat({ type, key, label })
+  mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
   size: String as PropType<string>,
 }
 
@@ -61,11 +60,17 @@ export default defineComponent({
 
     const formData = ref(initFormData(props.fileds, filedsIsArray))
     const fileds = mapFileds(props.fileds, (item) => {
-      const { key, rules: _rules } = item as FormulateFiled
-      if (props.rules && props.rules?.[key]) {
-        rules.value[key] = props.rules?.[key]
-      } else if (_rules) {
+      const { type, key, label, rules: _rules } = item as FormulateFiled
+      if (_rules) {
         rules.value[key] = _rules
+      } else if (props.rules && props.rules?.[key]) {
+        rules.value[key] = props.rules?.[key]
+      } else if (props.mapRules) {
+        if (typeof props.mapRules !== 'function') {
+          throw new Error('[SimElement] "mapRules" must be a function and return an array')
+        }
+        const rule = props.mapRules({ type, key, label })
+        rule && rule.length && (rules.value[key] = rule) 
       }
     }, filedsIsArray)
 
@@ -161,6 +166,7 @@ function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
       : (baseFileds as { [key: string]: FormulateBaseFiled; })[value as string]?.type
     if (!key) return
     switch (type) {
+      case 'cascader':
       case 'checkbox':
       case 'file':
       case 'upload':

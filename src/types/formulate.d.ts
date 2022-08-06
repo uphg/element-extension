@@ -25,7 +25,7 @@ export type FormulateFullFileds = {
 
 export type FormulateFileds = FormulateFullFileds | FormulateFiled[]
 
-export interface ErrorFormat {
+export interface MapRules {
   (options: { type?: string, key: string, label: string }): FormRule | []
 }
 
