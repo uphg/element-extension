@@ -14,5 +14,5 @@ export type FormRules = {
 }
 
 export type FormData = {
-  [key: string]: InputValue
+  [key: string]: CustomInputValue
 }

@@ -4,7 +4,7 @@ import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 import { isArray } from "../../utils"
 import renderInput from './render-input'
 import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, MapRules } from '../../types/formulate'
-import { InputValue } from "../../types/input"
+import { CustomInputValue } from "../../types/custom-input"
 import { FormRules, FormData } from '../../types/form'
 
 type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
@@ -158,7 +158,7 @@ export default defineComponent({
 })
 
 function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
-  const result: { [key: string]: InputValue } = {}
+  const result: { [key: string]: CustomInputValue } = {}
   const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
   fileds.forEach((value, _key) => {
     const key = filedsIsArray ? (value as FormulateFiled).key : value as string

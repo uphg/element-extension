@@ -1,10 +1,10 @@
 import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
-import { useInput } from "../../composables/use-input"
-import { inputProps } from "../../shared/input-props"
+import { useCustomInput } from "./use-custom-input"
+import { customInputProps } from "./custom-input-props"
 
 const formItemProps = {
-  ...inputProps,
+  ...customInputProps,
 
   // form item attributes
   label: String as PropType<string>,
@@ -34,7 +34,7 @@ export default defineComponent({
   name: 'SFormItem',
   props: formItemProps,
   setup(props, context) {
-    const { render, expose } = useInput(props, context, {
+    const { render, expose } = useCustomInput(props, context, {
       onKeyup(event) {
         if (event.keyCode !== 13) return
         // 执行回车

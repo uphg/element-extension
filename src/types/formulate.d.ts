@@ -1,16 +1,16 @@
 import { SimElementComponent } from './component'
 import { FormData, FormRule } from './form';
-import { InputTypes, InputValue, InputOptions } from './input'
+import { CustomInputTypes, CustomInputValue, CustomInputOptions } from './input'
 import { InputProps } from '../../shared/input-props'
 import { ElementUIComponentSize } from 'element-ui/types/component';
 import { FormItemLabelPosition, ValidateCallback, ValidateFieldCallback } from 'element-ui/types/form';
 
 export interface FormulateBaseFiled {
   label: string;
-  type?: InputTypes | string;
+  type?: CustomInputTypes | string;
   rules?: FormRule;
   required?: boolean;
-  options?: InputOptions;
+  options?: CustomInputOptions;
   [key: string]: any;
 }
 
@@ -30,7 +30,7 @@ export interface MapRules {
 }
 
 export interface FormulatePublicInputProps {
-  vIf(formData: { [key: string]: InputValue }): boolean | undefined
+  vIf(formData: { [key: string]: CustomInputValue }): boolean | undefined
 }
 
 export type PartialInputProps = Partial<InputProps & FormulatePublicInputProps>

@@ -20,7 +20,7 @@ import { h, Ref, SetupContext } from 'vue'
 import { isArray } from '../../utils'
 import { PartialInputProps } from '../../types/formulate'
 import { FormData } from '../../types/form'
-import { InputOptions } from 'src/types/input'
+import { CustomInputOptions } from 'src/types/custom-input'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
 import renderDate from './render-date'
@@ -99,7 +99,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: InputOptions) => h(Radio, {
+        (item: CustomInputOptions) => h(Radio, {
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -122,7 +122,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: InputOptions) => h(Checkbox, {
+        (item: CustomInputOptions) => h(Checkbox, {
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -147,7 +147,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: InputOptions) => h(Option, {
+        (item: CustomInputOptions) => h(Option, {
           props: {
             label: item.label,
             value: item.value,

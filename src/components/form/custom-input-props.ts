@@ -4,11 +4,11 @@ import { CascaderOption } from "element-ui/types/cascader-panel"
 import { DatePickerOptions } from "element-ui/types/date-picker"
 import { TimePickerOptions } from "element-ui/types/time-picker"
 import { TimeSelectOptions } from "element-ui/types/time-select"
-import { CustomInputOptions } from '../types/custom-input'
+import { CustomInputOptions } from '../../types/custom-input'
 
 function noop() { }
 
-export const inputProps = {
+export const customInputProps = {
   value: {
     type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
     default: ''
@@ -268,4 +268,4 @@ export const inputProps = {
   exclude: [RegExp, String, Number] as PropType<RegExp | string | number>,
 }
 
-export type InputProps = ExtractPropTypes<typeof inputProps>
+export type InputProps = ExtractPropTypes<typeof customInputProps>

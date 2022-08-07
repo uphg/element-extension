@@ -17,10 +17,10 @@ import {
   TimePicker
 } from 'element-ui'
 import { h, ref, SetupContext } from 'vue'
-import { toString, find, omitBy } from '../utils'
-import { InputProps } from '../shared/input-props'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { InputOptions, InputValue } from '../types/input'
+import { toString, find, omitBy } from '../../utils'
+import { InputProps } from '../../shared/input-props'
+import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
 
 type useInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -31,7 +31,7 @@ interface BaseProps extends InputProps {
   exclude?: string | number | RegExp  
 }
 
-export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
+export function useCustomInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
   const { onKeyup } = options || {}
   const { emit } = context
 
@@ -43,26 +43,26 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
     emit('click', event)
   }
 
-  const onInput = options?.onInput ? options.onInput : props.exclude ? (value: InputValue) => {
+  const onInput = options?.onInput ? options.onInput : props.exclude ? (value: CustomInputValue) => {
     const newVal = toString(value).replace(props.exclude as RegExp, '')
     emit('input', newVal)
-  } : (value: InputValue) => {
+  } : (value: CustomInputValue) => {
     emit('input', value)
   }
 
-  function onChange(value: InputValue) {
+  function onChange(value: CustomInputValue) {
     emit('change', value)
   }
 
-  function onVisibleChange(value: InputValue) {
+  function onVisibleChange(value: CustomInputValue) {
     emit('visible-change', value)
   }
 
-  function onBlur(value: InputValue) {
+  function onBlur(value: CustomInputValue) {
     emit('blur', value)
   }
 
-  function onFocus(event: InputValue) {
+  function onFocus(event: CustomInputValue) {
     emit('focus', event)
   }
 
@@ -145,7 +145,7 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
         change: onChange
       }
     }, props.options?.map(
-      (item: InputOptions, index) => h(Checkbox, {
+      (item: CustomInputOptions, index) => h(Checkbox, {
         key: `sim.checkbox.options.${index}`,
         props: {
           label: item.value,
