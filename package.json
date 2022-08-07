@@ -18,9 +18,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "dev:docs": "vite --config vite.docs.ts",
-    "build:docs": "vite build --config vite.docs.ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vite --config vite.docs.ts",
+    "docs:build": "vite build --config vite.docs.ts"
   },
   "peerDependencies": {
     "vue": "2.7.8",
