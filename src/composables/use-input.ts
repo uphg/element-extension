@@ -124,7 +124,8 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
         change: onChange
       }
     }, props.options?.map(
-      (item) => h(Radio, {
+      (item, index) => h(Radio, {
+        key: `sim.radio.options.${index}`,
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -144,7 +145,8 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
         change: onChange
       }
     }, props.options?.map(
-      (item: InputOptions) => h(Checkbox, {
+      (item: InputOptions, index) => h(Checkbox, {
+        key: `sim.checkbox.options.${index}`,
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -265,7 +267,8 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
       },
       nativeOn
     }, props.options?.map(
-      (item) => h(Option, {
+      (item, index) => h(Option, {
+        key: `sim.select.options.${index}`,
         props: {
           label: item.label,
           value: item.value,
@@ -360,8 +363,23 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
     type: 'slider',
     render: () => h(Slider, {
       props: {
-        value: props.value,
+        value: props.value || 0,
         disabled: props.disabled,
+        min: props.min,
+        max: props.max,
+        step: props.step,
+        showInput: props.showInput,
+        showInputControls: props.showInputControls,
+        inputSize: props.inputSize,
+        showStops: props.showStops,
+        showTooltip: props.showTooltip,
+        formatTooltip: props.formatTooltip,
+        range: props.range,
+        vertical: props.vertical,
+        height: props.height,
+        debounce: props.debounce,
+        tooltipClass: props.tooltipClass,
+        marks: props.marks,
         size: props.size,
       },
       on: {

@@ -173,6 +173,11 @@ function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
       case 'upload':
         result[key] = []
         break;
+      case 'slider':
+      case 'number':
+      case 'input-number':
+        result[key] = 0
+        break;
       case 'switch':
         result[key] = false
         break;

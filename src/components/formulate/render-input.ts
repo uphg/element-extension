@@ -206,7 +206,23 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
         ref: props.ref,
         props: {
           value: formData.value[props.key],
-          disabled: props.disabled
+          min: props.min,
+          max: props.max,
+          step: props.step,
+          showInput: props.showInput,
+          showInputControls: props.showInputControls,
+          inputSize: props.inputSize,
+          showStops: props.showStops,
+          showTooltip: props.showTooltip,
+          formatTooltip: props.formatTooltip,
+          disabled: props.disabled,
+          range: props.range,
+          vertical: props.vertical,
+          height: props.height,
+          debounce: props.debounce,
+          label: props.label,
+          tooltipClass: props.tooltipClass,
+          marks: props.marks
         },
         on: {
           input(value: any) {

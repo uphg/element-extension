@@ -28,20 +28,14 @@ export const inputProps = {
   minlength: [String, Number] as PropType<string | number>,
   showWordLimit: Boolean as PropType<boolean>,
   multiple: Boolean as PropType<boolean>,
-
-  // input - number
-  max: {
-    type: Number as PropType<number>,
-    default: Infinity
-  },
-  min: {
-    type: Number as PropType<number>,
-    default: -Infinity
-  },
+  max: Number as PropType<number>,
+  min: Number as PropType<number>,
   step: {
     type: Number as PropType<number>,
-    default: 1
+    default: 1 // input-number & slider
   },
+
+  // input - number
   stepStrictly: {
     type: Boolean as PropType<boolean>,
     default: false
@@ -215,6 +209,50 @@ export const inputProps = {
     type: Function as PropType<ElUpload['onExceed']>,
     default: noop
   },
+
+  // slider
+  // value - default: 0
+  // min - default: 0
+  // max - default: 100
+  // step - default: 1
+  showInput: {
+    type: Boolean,
+    default: false
+  },
+  showInputControls: {
+    type: Boolean,
+    default: true
+  },
+  inputSize: {
+    type: String,
+    default: 'small'
+  },
+  showStops: {
+    type: Boolean,
+    default: false
+  },
+  showTooltip: {
+    type: Boolean,
+    default: true
+  },
+  formatTooltip: Function,
+  range: {
+    type: Boolean,
+    default: false
+  },
+  vertical: {
+    type: Boolean,
+    default: false
+  },
+  height: {
+    type: String
+  },
+  debounce: {
+    type: Number,
+    default: 300
+  },
+  tooltipClass: String,
+  marks: Object,
 
   // other options
   validateEvent: {
