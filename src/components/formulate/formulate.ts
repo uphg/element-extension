@@ -131,9 +131,10 @@ export default defineComponent({
         labelSuffix: props.labelSuffix,
         validateOnRuleChange: props.validateOnRuleChange,
       }
-    }, (fileds as FormulateFiled[])?.map((item) => item.vIf && !item.vIf(formData.value)
+    }, (fileds as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
         ? null
         : h(FormItem, {
+          key: `SForm.item.${index}`,
           props: {
             label: item.label,
             labelWidth: item.labelWidth,
