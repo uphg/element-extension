@@ -107,6 +107,13 @@ export const inputProps = {
   },
   unlinkPanels: Boolean as PropType<boolean>,
 
+  // DatePicker
+  timeArrowControl: Boolean,
+
+  // TimePicker
+  isRange: Boolean,
+  arrowControl: Boolean,
+
   // switch
   width: {
     type: Number as PropType<number>,

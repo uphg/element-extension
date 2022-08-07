@@ -21,7 +21,7 @@ function renderDate(
     ref: props.ref,
     props: {
       value: formData.value[props.key],
-      type: props.type,
+      ...(renderType === 1 ? { type: props.type } : {}),
       format: props.format,
       valueFormat: props.valueFormat,
       readonly: props.readonly,

@@ -13,27 +13,13 @@ import {
   Slider,
   TimeSelect,
   DatePicker,
-  Upload
+  Upload,
+  TimePicker
 } from 'element-ui'
 import { h, ref, SetupContext } from 'vue'
 import { toString, find, omitBy } from '../utils'
 import { InputProps } from '../shared/input-props'
-// import { ElementUIComponent } from 'element-ui/types/component'
-// import { ElButton } from 'element-ui/types/button'
-// import { ElInput } from 'element-ui/types/input'
-// import { ElSelect } from 'element-ui/types/select'
-// import { ElCalendar } from 'element-ui/types/calendar'
-// import { ElOption } from 'element-ui/types/option'
-// import { ElRadioGroup } from 'element-ui/types/radio-group'
-// import { ElRadio } from 'element-ui/types/radio'
-// import { ElCheckboxGroup } from 'element-ui/types/checkbox-group'
-// import { ElCheckbox } from 'element-ui/types/checkbox'
-// import { ElInputNumber } from 'element-ui/types/input-number'
-// import { ElSwitch } from 'element-ui/types/switch'
-// import { ElSlider } from 'element-ui/types/slider'
-// import { ElTimeSelect } from 'element-ui/types/time-select'
-// import { ElDatePicker } from 'element-ui/types/date-picker'
-import { ElUpload, ElUploadInternalFileDetail } from 'element-ui/types/upload'
+import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { InputOptions, InputValue } from '../types/input'
 
 type useInputParamsOptions = {
@@ -45,11 +31,6 @@ interface BaseProps extends InputProps {
   exclude?: string | number | RegExp  
 }
 
-
-
-// type InputComponents = Vue | HTMLElement | ElButton | ElInput | ElSelect | ElCalendar | ElOption | ElRadioGroup | ElRadio | ElCheckboxGroup | ElCheckbox | ElInputNumber | ElSwitch | ElSlider | ElTimeSelect | ElDatePicker | ElUpload
-
-
 export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
   const { onKeyup } = options || {}
   const { emit } = context
@@ -58,7 +39,7 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
 
   const inputRef = ref<any>(null)
 
-  function onClick(event: Event | MouseEvent | TouchEvent | InputEvent) {
+  function onClick(event: MouseEvent | InputEvent) {
     emit('click', event)
   }
 
@@ -319,41 +300,7 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
     expose: {
       focus
     },
-    render: () => h(DatePicker, {
-      ref: setRef,
-      props: {
-        value: props.value,
-        type: props.type,
-        format: props.format,
-        valueFormat: props.valueFormat,
-        readonly: props.readonly,
-        startPlaceholder: props.startPlaceholder,
-        endPlaceholder: props.endPlaceholder,
-        prefixIcon: props.prefixIcon,
-        clearIcon: props.clearIcon,
-        disabled: props.disabled,
-        clearable: props.clearable,
-        popperClass: props.popperClass,
-        editable: props.editable,
-        align: props.align,
-        defaultValue: props.defaultValue,
-        defaultTime: props.defaultTime,
-        rangeSeparator: props.rangeSeparator,
-        pickerOptions: props.pickerOptions,
-        unlinkPanels: props.unlinkPanels,
-        validateEvent: props.validateEvent,
-        size: props.size,
-        // 原生属性
-        name: context.attrs.name,
-        placeholder: context.attrs.placeholder,
-      },
-      on: {
-        input: onInput,
-        change: onChange,
-        blur: onBlur,
-        focus: onFocus
-      }
-    })
+    render: () => h(DatePicker, getDataAttrs())
   }, {
     type: 'time',
     render: () => h(TimeSelect, {
@@ -368,6 +315,20 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
         change: onChange
       }
     })
+  }, {
+    // 时间选择器
+    type: ['time', 'time-select'],
+    expose: {
+      focus
+    },
+    render: () => h(TimeSelect, getDataAttrs(true))
+  }, {
+    // 时间范围选择器
+    type: ['timerange', 'time-picker'],
+    expose: {
+      focus
+    },
+    render: () => h(TimePicker, getDataAttrs(true))
   }, {
     type: 'switch',
     expose: {
@@ -466,6 +427,50 @@ export function useInput<T extends BaseProps>(props: T, context: SetupContext<{}
       }, context.slots.tip())
     ])
   }]
+
+  const getDataAttrs = (isTime: boolean = false) => ({
+    ref: setRef,
+    props: {
+      value: props.value,
+      ...(isTime ? {} : { type: props.type }),
+      format: props.format,
+      valueFormat: props.valueFormat,
+      readonly: props.readonly,
+      startPlaceholder: props.startPlaceholder,
+      endPlaceholder: props.endPlaceholder,
+      prefixIcon: props.prefixIcon,
+      clearIcon: props.clearIcon,
+      disabled: props.disabled,
+      clearable: props.clearable,
+      popperClass: props.popperClass,
+      editable: props.editable,
+      align: props.align,
+      defaultValue: props.defaultValue,
+      defaultTime: props.defaultTime,
+      rangeSeparator: props.rangeSeparator,
+      pickerOptions: props.pickerOptions,
+      unlinkPanels: props.unlinkPanels,
+      size: props.size,
+      validateEvent: props.validateEvent,
+
+      // ElTimePicker
+      isRange: props.isRange,
+      arrowControl: props.arrowControl,
+
+      // ElDatePicker
+      timeArrowControl: props.timeArrowControl,
+
+      // 原生属性
+      name: context.attrs.name,
+      placeholder: context.attrs.placeholder,
+    },
+    on: {
+      input: onInput,
+      change: onChange,
+      blur: onBlur,
+      focus: onFocus
+    }
+  })
 
   const template = find(inputMap, ({ type }) => (
     typeof type === 'string' ? props.type === type : type.indexOf(props.type) !== -1
