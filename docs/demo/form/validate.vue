@@ -42,6 +42,12 @@
       v-model="formData.delivery"
     />
     <s-form-item
+      v-if="formData.delivery"
+      label="配送地址"
+      prop="deliveryAddress"
+      v-model="formData.deliveryAddress"
+    />
+    <s-form-item
       label="活动性质"
       prop="type"
       v-model="formData.type"
@@ -83,6 +89,7 @@ const formData = ref({
   date1: '',
   date2: '',
   delivery: false,
+  deliveryAddress: '',
   type: [],
   resource: '',
   desc: ''
