@@ -1,7 +1,7 @@
 import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
 import { useCustomInput } from "./use-custom-input"
-import { customInputProps } from "./custom-input-props"
+import { customInputProps } from "../../shared/custom-input-props"
 
 const formItemProps = {
   ...customInputProps,

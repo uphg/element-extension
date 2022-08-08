@@ -19,7 +19,7 @@ import {
 import { h, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { toString, find, omitBy } from '../../utils'
-import { InputProps } from '../../shared/input-props'
+import { CustomInputProps } from '../../shared/custom-input-props'
 import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
 
 type useInputParamsOptions = {
@@ -27,7 +27,7 @@ type useInputParamsOptions = {
   onInput?: (event: any) => void;
 }
 
-interface BaseProps extends InputProps {
+interface BaseProps extends CustomInputProps {
   exclude?: string | number | RegExp  
 }
 
