@@ -57,8 +57,9 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           input(value: any) {
             formData.value[props.key] = value
           }
-        }
-      })
+        },
+        scopedSlots: props.scopedSlots
+      }, props?.children)
     case 'number':
       return h(InputNumber, {
         ref: props.ref,
@@ -153,7 +154,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
             value: item.value,
             disabled: item.disabled,
           }
-        })
+        }, item.children)
       ))
 
     case 'cascader':
@@ -173,7 +174,8 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           input(value: any) {
             formData.value[props.key] = value
           }
-        }
+        },
+        scopedSlots: props.scopedSlots
       })
 
     case 'switch':
@@ -274,10 +276,11 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           limit: props.limit,
           onExceed: props.onExceed,
           name: props.name
-        }
+        },
+        scopedSlots: props.scopedSlots
       }, [
         ...(
-          props.slots ? props.slots : [h(Button, {
+          props.children ? props.children : props.button && [h(Button, {
             props: {
               type: props.button?.hue || 'primary',
               size: props.button?.size || 'small',
@@ -316,8 +319,9 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           click(event: MouseEvent) {
             props.onClick(event)
           }
-        }
-      }, [props.text && props.text])
+        },
+        scopedSlots: props.scopedSlots
+      }, props?.children?.length || [props.text])
   }
 }
 
