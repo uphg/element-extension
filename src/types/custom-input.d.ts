@@ -1,4 +1,5 @@
-import { VNode } from "vue";
+import { VNode, VNodeChildren, ScopedSlot } from "vue";
+// import { ScopedSlot } from "vue/types/vnode";
 
 export type CustomInputTypes = 'button' | 'radio' | 'checkbox' | 'text' | 'password' | 'textarea' | 'number' | 'select' | 'cascader' | 'date' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'switch' | 'slider' | 'file' | 'upload'
 
@@ -9,7 +10,7 @@ export type CustomInputOptions = {
   label: string;
   disabled?: boolean;
   name?: string;
-  children?: VNode[]
+  children?: (VNode | VNodeChildren | ScopedSlot)[]
 }
 
 type InputComponents = Vue | HTMLElement | ElButton | ElInput | ElSelect | ElCalendar | ElOption | ElRadioGroup | ElRadio | ElCheckboxGroup | ElCheckbox | ElInputNumber | ElSwitch | ElSlider | ElTimeSelect | ElDatePicker | ElUpload

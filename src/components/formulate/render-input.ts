@@ -100,7 +100,8 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: CustomInputOptions) => h(Radio, {
+        (item: CustomInputOptions, index: number) => h(Radio, {
+          key: `sim.radio.options.${index}`,
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -123,7 +124,8 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: CustomInputOptions) => h(Checkbox, {
+        (item: CustomInputOptions, index: number) => h(Checkbox, {
+          key: `sim.checkbox.options.${index}`,
           props: {
             label: item.value,
             disabled: item.disabled,
@@ -148,7 +150,8 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           }
         }
       }, props.options.map(
-        (item: CustomInputOptions) => h(Option, {
+        (item: CustomInputOptions, index: number) => h(Option, {
+          key: `sim.select.options.${index}`,
           props: {
             label: item.label,
             value: item.value,

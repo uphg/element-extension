@@ -155,7 +155,7 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
         attrs: {
           name: item.name
         }
-      }, [item.label])
+      }, [item.label]) || null
     ))
   }, {
     type: ['text', 'password', 'textarea'],
