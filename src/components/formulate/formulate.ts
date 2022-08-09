@@ -148,9 +148,16 @@ export default defineComponent({
             showMessage: item.showMessage,
             size: item.size
           }
-        }, isArray(item)
-          ? item.map(piece => renderInput(piece, { formRef, formData, context }))
-          : [renderInput(item, { formRef, formData, context })]
+        }, 
+          [
+            item.itemPrefix,
+            ...(
+              isArray(item)
+              ? item.map(piece => renderInput(piece, { formRef, formData, context }))
+              : [renderInput(item, { formRef, formData, context })]
+            ),
+            item.itemSuffix,
+          ]
         )
       )
     )

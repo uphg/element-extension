@@ -61,9 +61,9 @@ export default defineComponent({
         header: () => context.slots.header?.()
       }
     }, [
-      context.slots.itemPrefix && context.slots.itemPrefix(),
+      context.slots.itemPrefix?.(),
       context.slots.default?.() || render(),
-      context.slots.itemSuffix && context.slots.itemSuffix(),
+      context.slots.itemSuffix?.(),
     ])
   }
 })

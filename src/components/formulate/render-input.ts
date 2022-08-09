@@ -46,10 +46,11 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           showWordLimit: props.showWordLimit,
           showPassword: props.showPassword,
           rows: props.rows,
-          placeholder: props.placeholder,
           autosize: props.autosize
         },
         attrs: {
+          placeholder: props.placeholder,
+          name: props.name,
           minlength: props.minlength,
           maxlength: props.maxlength,
         },
@@ -74,6 +75,8 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           size: props.size,
           min: props.min,
           max: props.max,
+        },
+        attrs: {
           placeholder: props.placeholder,
           name: props.name,
         },
@@ -196,8 +199,7 @@ function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElem
           inactiveColor: props.inactiveColor,
           activeValue: props.activeValue,
           inactiveValue: props.inactiveValue,
-          validateEvent: props.validateEvent,
-          placeholder: props.placeholder
+          validateEvent: props.validateEvent
         },
         on: {
           input(value: any) {

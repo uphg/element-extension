@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, h } from 'vue';
 
 const formulateRef = ref<any>(null)
 
@@ -18,6 +18,7 @@ const data = ref({
   fileds: {
     name: {
       label: '活动名称',
+      placeholder: '请输入活动名称',
       rules: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
     },
     region: {
@@ -69,7 +70,8 @@ const data = ref({
         { label: '线上品牌商赞助', value: 0 },
         { label: '线下场地免费', value: 1 },
       ],
-      rules: [{ required: true, message: '请选择活动资源', trigger: 'change' }]
+      rules: [{ required: true, message: '请选择活动资源', trigger: 'change' }],
+      itemSuffix: h('div', 'hi'),
     },
     desc: {
       label: '活动形式',
