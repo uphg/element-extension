@@ -11,13 +11,9 @@ import {
   InputNumber,
   Switch,
   Slider,
-  TimeSelect,
-  DatePicker,
-  Upload,
-  TimePicker
+  Upload
 } from 'element-ui'
 import { h, Ref, SetupContext } from 'vue'
-import { isArray } from '../../utils'
 import { PartialInputProps } from '../../types/formulate'
 import { FormData } from '../../types/form'
 import { CustomInputOptions } from 'src/types/custom-input'
@@ -27,9 +23,6 @@ import renderDate from './render-date'
 
 function renderInput(props: PartialInputProps, _options: { formRef: Ref<HTMLElement | ElForm>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { formRef, formData, context } = _options
-  // if (props.vIf && typeof props.vIf === 'function' && !props.vIf(formData.value)) {
-  //   return null
-  // }
   switch (props.type || 'text') {
     case 'text':
     case 'password':

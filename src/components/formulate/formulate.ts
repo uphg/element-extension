@@ -1,4 +1,4 @@
-import { defineComponent, ExtractPropTypes, h, PropType, ref } from "vue"
+import { defineComponent, ExtractPropTypes, h, PropType, ref, VNodeChildren } from "vue"
 import { Form, FormItem } from "element-ui"
 import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 import { isArray } from "../../utils"
@@ -107,6 +107,27 @@ export default defineComponent({
       })
     }
 
+    function renderFormItem(item: FormulateFiled, index: number, children?: VNodeChildren) {
+      return h(FormItem, {
+        key: `SForm.item.${index}`,
+        props: {
+          label: item.label,
+          labelWidth: item.labelWidth,
+          prop: item.prop || item.key,
+          required: item.required,
+          rules: item.rules,
+          error: item.error,
+          validateStatus: item.validateStatus,
+          for: item.for,
+          inlineMessage: item.inlineMessage,
+          showMessage: item.showMessage,
+          size: item.size
+        }
+      }, 
+        [item.itemPrefix, ...(children as Array<VNodeChildren>), item.itemSuffix]
+      )
+    }
+
     context.expose({
       get formData() {
         return formData.value
@@ -121,43 +142,26 @@ export default defineComponent({
     })
 
     return () => h(Form, {
-      // @ts-ignore
-      ref: (el) => formRef.value = el,
-      props: {
-        rules: rules.value,
-        model: formData.value,
-        labelPosition: props.labelPosition,
-        labelWidth: props.labelWidth,
-        labelSuffix: props.labelSuffix,
-        validateOnRuleChange: props.validateOnRuleChange,
-      }
-    }, (fileds as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
+        // @ts-ignore
+        ref: (el) => formRef.value = el,
+        props: {
+          rules: rules.value,
+          model: formData.value,
+          labelPosition: props.labelPosition,
+          labelWidth: props.labelWidth,
+          labelSuffix: props.labelSuffix,
+          validateOnRuleChange: props.validateOnRuleChange,
+        }
+      },
+      (fileds as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
         ? null
-        : h(FormItem, {
-          key: `SForm.item.${index}`,
-          props: {
-            label: item.label,
-            labelWidth: item.labelWidth,
-            prop: item.prop || item.key,
-            required: item.required,
-            rules: item.rules,
-            error: item.error,
-            validateStatus: item.validateStatus,
-            for: item.for,
-            inlineMessage: item.inlineMessage,
-            showMessage: item.showMessage,
-            size: item.size
-          }
-        }, 
-          [
-            item.itemPrefix,
-            ...(
-              isArray(item)
-              ? item.map(piece => renderInput(piece, { formRef, formData, context }))
-              : [renderInput(item, { formRef, formData, context })]
-            ),
-            item.itemSuffix,
-          ]
+        : renderFormItem(item, index, 
+          (isArray(item)
+            ? item.map(
+                (piece, i) => renderFormItem(piece, i, [renderInput(piece, { formRef, formData, context })]) 
+              )
+            : [renderInput(item, { formRef, formData, context })]
+          )
         )
       )
     )
