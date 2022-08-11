@@ -26,7 +26,7 @@ const rules = {
 const data = ref({
   labelWidth: "100px",
   rules,
-  fileds: {
+  fields: {
     name: {
       label: '活动名称',
     },

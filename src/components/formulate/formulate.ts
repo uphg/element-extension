@@ -1,9 +1,9 @@
-import { defineComponent, ExtractPropTypes, h, PropType, ref, VNodeChildren } from "vue"
+import { computed, defineComponent, ExtractPropTypes, h, PropType, ref, VNodeChildren } from "vue"
 import { Form, FormItem } from "element-ui"
 import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
-import { isArray } from "../../utils"
+import { isArray, isObject } from "../../utils"
 import renderInput from './render-input'
-import { FormulateFileds, FormulateFiled, FormulateBaseFiled, FormulateFullFileds, MapRules } from '../../types/formulate'
+import { FormulateFields, FormulateFiled, FormulateBaseFiled, FormulateFullFields, MapRules } from '../../types/formulate'
 import { CustomInputValue } from "../../types/custom-input"
 import { FormRules, FormData } from '../../types/form'
 
@@ -31,7 +31,7 @@ const formulateDataProps = {
     default: false
   },
   
-  fileds: [Array, Object] as PropType<FormulateFileds>,
+  fields: [Array, Object] as PropType<FormulateFields>,
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
   mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
   size: String as PropType<string>,
@@ -42,27 +42,28 @@ const formulateProps = {
   ...formulateDataProps,
 }
 
-type FormulateProps = ExtractPropTypes<typeof formulateProps>
+export type FormulateProps = ExtractPropTypes<typeof formulateProps>
 
 export default defineComponent({
   name: 'SFormulate',
   props: formulateProps,
   setup(_props, context) {
     const props = _props.data ? _props.data : _props
-    const filedsIsArray = isArray(props.fileds)
+    const fieldsIsArray = isArray(props.fields)
 
-    const formRef = ref<any>(null)
+    const _elFormRef = ref<any>(null)
+    const elFormRef = computed(() => _elFormRef.value) 
     const rules = ref<FormRules | { [key: string]: [] }>({})
 
-    if (!props.fileds) {
-      throw new Error('[SimElement] "fileds" attribute is required');
+    if (!props.fields) {
+      throw new Error('[SimElement] "fields" attribute is required');
     }
 
-    const formData = ref(initFormData(props.fileds, filedsIsArray))
-    const fileds = mapFileds(props.fileds, (item) => {
+    const formData = ref(initFormData(props.fields, fieldsIsArray))
+    const fields = mapFields(props.fields, (item) => {
       const { type, key, label, rules: _rules } = item as FormulateFiled
-      if (_rules) {
-        rules.value[key] = _rules
+      if (_rules && isObject(_rules)) {
+        rules.value[key] = isArray(_rules) ?  _rules : [_rules]
       } else if (props.rules && props.rules?.[key]) {
         rules.value[key] = props.rules?.[key]
       } else if (props.mapRules) {
@@ -72,22 +73,22 @@ export default defineComponent({
         const rule = props.mapRules({ type, key, label })
         rule && rule.length && (rules.value[key] = rule) 
       }
-    }, filedsIsArray)
+    }, fieldsIsArray)
 
     function validate(callback: ValidateCallback) {
-      formRef.value.validate(callback)
+      elFormRef.value.validate(callback)
     }
 
     function validateField(props: string | string[], callback?: ValidateFieldCallback) {
-      formRef.value.validateField(props, callback)
+      elFormRef.value.validateField(props, callback)
     }
 
     function resetFields() {
-      formRef.value.resetFields()
+      elFormRef.value.resetFields()
     }
 
     function clearValidate(props?: string | string[]) {
-      formRef.value.clearValidate(props)
+      elFormRef.value.clearValidate(props)
     }
 
     function setValues(obj: FormData) {
@@ -102,7 +103,7 @@ export default defineComponent({
     }
     
     function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
-      formRef.value.validate((valid: boolean, errors: object) => {
+      elFormRef.value.validate((valid: boolean, errors: object) => {
         callback(formData.value, { valid, errors })
       })
     }
@@ -139,28 +140,31 @@ export default defineComponent({
       setValues,
       getValues,
       submit,
+      get elFormRef() {
+        return elFormRef.value
+      }
     })
 
     return () => h(Form, {
         // @ts-ignore
-        ref: (el) => formRef.value = el,
+        ref: (el) => _elFormRef.value = el,
         props: {
           rules: rules.value,
           model: formData.value,
+          inline: props.inline,
           labelPosition: props.labelPosition,
           labelWidth: props.labelWidth,
           labelSuffix: props.labelSuffix,
           validateOnRuleChange: props.validateOnRuleChange,
+          size: props.size
         }
       },
-      (fileds as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
+      (fields as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
         ? null
         : renderFormItem(item, index, 
           (isArray(item)
-            ? item.map(
-                (piece, i) => renderFormItem(piece, i, [renderInput(piece, { formRef, formData, context })]) 
-              )
-            : [renderInput(item, { formRef, formData, context })]
+            ? item.map((piece, i) => renderInput(piece, { elFormRef, formData, context }))
+            : [renderInput(item, { elFormRef, formData, context })]
           )
         )
       )
@@ -168,14 +172,14 @@ export default defineComponent({
   }
 })
 
-function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
+function initFormData(baseFields: FormulateFields, fieldsIsArray: boolean) {
   const result: { [key: string]: CustomInputValue } = {}
-  const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
-  fileds.forEach((value, _key) => {
-    const key = filedsIsArray ? (value as FormulateFiled).key : value as string
-    const type = filedsIsArray
+  const fields = (fieldsIsArray ? baseFields : Object.keys(baseFields)) as FormulateFiled[] | string[] 
+  fields.forEach((value, _key) => {
+    const key = fieldsIsArray ? (value as FormulateFiled).key : value as string
+    const type = fieldsIsArray
       ? (value as FormulateFiled).type
-      : (baseFileds as { [key: string]: FormulateBaseFiled; })[value as string]?.type
+      : (baseFields as { [key: string]: FormulateBaseFiled; })[value as string]?.type
     if (!key) return
     switch (type) {
       case 'cascader':
@@ -202,29 +206,29 @@ function initFormData(baseFileds: FormulateFileds, filedsIsArray: boolean) {
   return result
 }
 
-type MapFiledsCallbackParamsItem = FormulateFiled | FormulateBaseFiled | FormulateFiled[] | string | null
+type MapFieldsCallbackParamsItem = FormulateFiled | FormulateBaseFiled | FormulateFiled[] | string | null
 
-function mapFileds(
-  baseFileds: FormulateFileds,
-  callback: ((item: MapFiledsCallbackParamsItem, index: number) => void) | null,
-  filedsIsArray: boolean
-): MapFiledsCallbackParamsItem[] | MapFiledsCallbackParamsItem {
-  const fileds = (filedsIsArray ? baseFileds : Object.keys(baseFileds)) as FormulateFiled[] | string[] 
+function mapFields(
+  baseFields: FormulateFields,
+  callback: ((item: MapFieldsCallbackParamsItem, index: number) => void) | null,
+  fieldsIsArray: boolean
+): MapFieldsCallbackParamsItem[] | MapFieldsCallbackParamsItem {
+  const fields = (fieldsIsArray ? baseFields : Object.keys(baseFields)) as FormulateFiled[] | string[] 
 
-  return fileds.map((value, index) => {
-    let item: MapFiledsCallbackParamsItem = null
-    if (filedsIsArray) {
+  return fields.map((value, index) => {
+    let item: MapFieldsCallbackParamsItem = null
+    if (fieldsIsArray) {
       item = value
     } else {
       if (value === '$footer') {
-        const filed = (baseFileds as FormulateFullFileds)[value] as FormulateFiled[]
+        const filed = (baseFields as FormulateFullFields)[value] as FormulateFiled[]
         if (isArray(filed)) {
           item = filed
         } else if (filed) {
-          item = mapFileds(filed, null, false) as MapFiledsCallbackParamsItem 
+          item = mapFields(filed, null, false) as MapFieldsCallbackParamsItem 
         }
       } else if (typeof value === 'string') {
-        const temp = (baseFileds as FormulateFullFileds)[value]
+        const temp = (baseFields as FormulateFullFields)[value]
         item = /^\$/.test(value)
           ? { ...temp, type: value.replace('$', '') }
           : { ...temp, key: value }

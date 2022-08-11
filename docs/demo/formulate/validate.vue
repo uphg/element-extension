@@ -15,7 +15,7 @@ const formulateRef = ref<any>(null)
 
 const data = ref({
   labelWidth: "100px",
-  fileds: {
+  fields: {
     name: {
       label: '活动名称',
       placeholder: '请输入活动名称',

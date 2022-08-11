@@ -18,12 +18,12 @@ export interface FormulateFiled extends FormulateBaseFiled {
   key: string;
 }
 
-export type FormulateFullFileds = {
+export type FormulateFullFields = {
   [key: string]: FormulateBaseFiled;
   $footer?: FormulateBaseFiled | FormulateFiled[]
 }
 
-export type FormulateFileds = FormulateFullFileds | FormulateFiled[]
+export type FormulateFields = FormulateFullFields | FormulateFiled[]
 
 export interface MapRules {
   (options: { type?: string, key: string, label: string }): FormRule | []

@@ -7,7 +7,7 @@ import { ref } from 'vue';
 
 const data = ref({
   labelWidth: "100px",
-  fileds: {
+  fields: {
     username: { label: '用户名' },
     password: { label: '密码', showPassword: true },
   }
