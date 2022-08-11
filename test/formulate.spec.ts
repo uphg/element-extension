@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { Formulate } from '../src/index'
-import { isArray } from '../src/utils'
 
 describe('form', () => {
 
