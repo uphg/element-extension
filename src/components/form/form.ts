@@ -1,12 +1,12 @@
-import { defineComponent, h, PropType, ref } from 'vue'
+import { defineComponent, h, PropType, Ref, ref } from 'vue'
 import { Form } from 'element-ui'
 import { ElForm, ValidateCallback, ValidateFieldCallback } from 'element-ui/types/form'
+import { pick } from '../../utils'
+
+const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
 const formProps = {
-  model: {
-    type: Object as PropType<object>,
-    default: () => ({})
-  },
+  model: Object as PropType<object>,
   rules: {
     type: [Object, Array] as PropType<object|Array<unknown>>,
     default: () => ({})
@@ -17,55 +17,64 @@ const formProps = {
     type: String as PropType<string>,
     default: ''
   },
-  validateOnRuleChange: {
+  
+  inline: Boolean as PropType<boolean>,
+  inlineMessage: Boolean as PropType<boolean>,
+  statusIcon: Boolean as PropType<boolean>,
+  showMessage: {
     type: Boolean as PropType<boolean>,
     default: true
-  }, // 是否在 rules 属性改变后立即触发一次验证，Element 默认 true
+  },
+  size: String as PropType<string>,
+  disabled: Boolean as PropType<boolean>,
+  validateOnRuleChange: {
+    type: Boolean as PropType<boolean>,
+    default: true // el 默认 true
+  },
+  hideRequiredAsterisk: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  }
 
   // customize props
-  withValidate: Boolean as PropType<boolean>, // 是否开启验证
-  withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
+  // withValidate: Boolean as PropType<boolean>, // 是否开启验证
+  // withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
 }
 
 export default defineComponent({
   name: 'SForm',
   props: formProps,
   setup(props, context) {
-    const formRef = ref<ElForm | null>(null)
+    const elFormRef = ref<ElForm | null>(null)
 
     function validate(callback: ValidateCallback) {
-      formRef.value?.validate(callback)
+      elFormRef.value?.validate(callback)
     }
 
     function validateField(props: string | string[], callback?: ValidateFieldCallback) {
-      formRef.value?.validateField(props, callback)
+      elFormRef.value?.validateField(props, callback)
     }
 
-    function resetFields() {
-      formRef.value?.resetFields()
-    }
+    // function resetFields() {
+    //   elFormRef.value?.resetFields()
+    // }
 
     function clearValidate(props?: string | string[]) {
-      formRef.value?.clearValidate(props)
+      elFormRef.value?.clearValidate(props)
     }
 
     context.expose({
       validate,
       validateField,
-      resetFields,
-      clearValidate
+      clearValidate,
+      get elFormRef() {
+        return elFormRef.value
+      }
     })
     // @ts-ignore
     return () => h(Form, {
-      ref: (el: any) => { formRef.value = el },
-      props: {
-        model: props.model,
-        rules: props.rules,
-        labelPosition: props.labelPosition,
-        labelWidth: props.labelWidth,
-        labelSuffix: props.labelSuffix,
-        validateOnRuleChange: props.validateOnRuleChange,
-      },
+      ref: (el: ElForm) => { elFormRef.value = el },
+      props: pick(props, propNames),
       scopedSlots: {
         default: () => context.slots.default?.()
       }

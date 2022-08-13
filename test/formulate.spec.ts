@@ -97,7 +97,7 @@ describe('form', () => {
     expect(wrapper.find('.el-form-item--mini').exists()).toBeTruthy()
   })
 
-  it('show message', () => {
+  it('show message', async () => {
     const errorMessage = '请输入活动名称'
     const data = {
       fields: {
@@ -118,16 +118,16 @@ describe('form', () => {
         data,
       },
     })
-    wrapper.vm.submit((formData: { [key: string]: any }, options:{ valid: boolean }) => {
+    wrapper.vm.submit(async (formData: { [key: string]: any }, options:{ valid: boolean }) => {
       expect(options.valid).toBeFalsy()
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.find('.el-form-item__error').exists()).toBeTruthy()
-        expect(wrapper.find('.el-form-item__error').text() === errorMessage).toBeTruthy()
-      })
+
+      await wrapper.vm.$nextTick()
+      expect(wrapper.find('.el-form-item__error').exists()).toBeTruthy()
+      expect(wrapper.find('.el-form-item__error').text() === errorMessage).toBeTruthy()
     })
   })
 
-  it('reset field', () => {
+  it('reset field', async () => {
     const data = {
       fields: {
         name: {
@@ -176,14 +176,13 @@ describe('form', () => {
 
     vm.setValues({ name: 'jack', address: 'abc', type: [2] })
     vm.resetFields()
-    vm.$nextTick(() => {
-      expect(vm.formData.name).toBe('')
-      expect(vm.formData.address).toBe('')
-      expect(vm.formData.type.length).toBe(0)
-    })
+    await vm.$nextTick()
+    expect(vm.formData.name).toBe('')
+    expect(vm.formData.address).toBe('')
+    expect(vm.formData.type.length).toBe(0)
   })
 
-  it('clear validate', () => {
+  it('clear validate', async () => {
     const data = {
       fields: {
         name: {
@@ -221,20 +220,20 @@ describe('form', () => {
     const vm = wrapper.vm
 
     vm.validate(() => void 0)
-    vm.$nextTick(() => {
-      const nameField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'name')
-      const addressField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'address')
-      expect(nameField.validateMessage).toBe('请输入活动名称');
-      expect(addressField.validateMessage).toBe('请选择活动区域');
-      vm.clearValidate(['name'])
-      vm.$nextTick(() => {
-        expect(nameField.validateMessage).toBe('');
-        vm.clearValidate()
-        vm.$nextTick(() => {
-          expect(addressField.validateMessage).toBe('')
-        })
-      })
-    })
+
+    await vm.$nextTick()
+    const nameField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'name')
+    const addressField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'address')
+    expect(nameField.validateMessage).toBe('请输入活动名称')
+    expect(addressField.validateMessage).toBe('请选择活动区域')
+
+    vm.clearValidate(['name'])
+    await vm.$nextTick()
+    expect(nameField.validateMessage).toBe('');
+    
+    vm.clearValidate()
+    await vm.$nextTick()
+    expect(addressField.validateMessage).toBe('')
   })
 
   it('form item nest button', () => {

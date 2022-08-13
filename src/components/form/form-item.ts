@@ -2,6 +2,9 @@ import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
 import { useCustomInput } from "./use-custom-input"
 import { customInputProps } from "../../shared/custom-input-props"
+import { pick } from "src/utils"
+
+const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
 const formItemProps = {
   ...customInputProps,
@@ -10,22 +13,14 @@ const formItemProps = {
   label: String as PropType<string>,
   labelWidth: String as PropType<string>,
   prop: String as PropType<string>,
-  required: {
-    type: Boolean as PropType<boolean>,
-    default: undefined
-  },
+  required: Boolean as PropType<boolean>,
   rules: [Object, Array] as PropType<object | unknown[]>,
   error: String as PropType<string>,
   validateStatus: String as PropType<string>,
   for: String as PropType<string>,
-  inlineMessage: {
-    type: [String, Boolean] as PropType<string | boolean>,
-    default: ''
-  },
-  showMessage: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  }
+  inlineMessage: [String, Boolean] as PropType<string | boolean>,
+  showMessage: Boolean as PropType<boolean>,
+  size: String as PropType<string>
 }
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
@@ -44,21 +39,9 @@ export default defineComponent({
     expose && context.expose(expose)
 
     return () => h(ElFormItem, {
-      props: {
-        label: props.label,
-        labelWidth: props.labelWidth,
-        prop: props.prop,
-        required: props.required,
-        rules: props.rules,
-        error: props.error,
-        validateStatus: props.validateStatus,
-        for: props.for,
-        inlineMessage: props.inlineMessage,
-        showMessage: props.showMessage,
-        size: props.size
-      },
+      props: pick(props, propNames),
       scopedSlots: {
-        header: () => context.slots.header?.()
+        error: (params) => context.slots.error?.(params),
       }
     }, [
       context.slots.itemPrefix?.(),

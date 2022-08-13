@@ -16,11 +16,12 @@ import {
   Upload,
   TimePicker
 } from 'element-ui'
-import { h, ref, SetupContext } from 'vue'
+import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { toString, find, omitBy } from '../../utils'
 import { CustomInputProps } from '../../shared/custom-input-props'
 import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
+import { EmitFn } from 'vue/types/v3-setup-context'
 
 type useInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -31,17 +32,53 @@ interface BaseProps extends CustomInputProps {
   exclude?: string | number | RegExp  
 }
 
+const useEvents = (emit: EmitFn) => ({
+  onClick(event: MouseEvent | InputEvent) {
+    emit('click', event)
+  },
+
+  onChange(value: CustomInputValue) {
+    emit('change', value)
+  },
+
+  onVisibleChange(value: CustomInputValue) {
+    emit('visible-change', value)
+  },
+
+  onBlur(value: CustomInputValue) {
+    emit('blur', value)
+  },
+
+  onFocus(event: CustomInputValue) {
+    emit('focus', event)
+  },
+
+  onClear() {
+    emit('clear')
+  }
+})
+
+const useExpose = (inputRef: Ref<any>) => ({
+  focus() {
+    inputRef.value?.focus()
+  },
+
+  blur() {
+    inputRef.value?.blur()
+  },
+
+  select() {
+    // @ts-ignore
+    inputRef.value?.select()
+  }
+})
+
 export function useCustomInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
   const { onKeyup } = options || {}
   const { emit } = context
 
   const nativeOn = omitBy({ keyup: onKeyup }, (item) => !item)
-
   const inputRef = ref<any>(null)
-
-  function onClick(event: MouseEvent | InputEvent) {
-    emit('click', event)
-  }
 
   const onInput = options?.onInput ? options.onInput : props.exclude ? (value: CustomInputValue) => {
     const newVal = toString(value).replace(props.exclude as RegExp, '')
@@ -50,38 +87,8 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
     emit('input', value)
   }
 
-  function onChange(value: CustomInputValue) {
-    emit('change', value)
-  }
-
-  function onVisibleChange(value: CustomInputValue) {
-    emit('visible-change', value)
-  }
-
-  function onBlur(value: CustomInputValue) {
-    emit('blur', value)
-  }
-
-  function onFocus(event: CustomInputValue) {
-    emit('focus', event)
-  }
-
-  function onClear() {
-    emit('clear')
-  }
-
-  function focus() {
-    inputRef.value?.focus()
-  }
-
-  function blur() {
-    inputRef.value?.blur()
-  }
-
-  function select() {
-    // @ts-ignore
-    inputRef.value?.select()
-  }
+  const { onClick, onChange, onVisibleChange, onBlur, onFocus, onClear } = useEvents(emit)
+  const { focus, blur, select } = useExpose(inputRef)
 
   const setRef = function(el: HTMLInputElement) {
     inputRef.value = el
@@ -125,7 +132,7 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
       }
     }, props.options?.map(
       (item, index) => h(Radio, {
-        key: `sim.radio.options.${index}`,
+        key: `s.r.opt.${index}`,
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -146,7 +153,7 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
       }
     }, props.options?.map(
       (item: CustomInputOptions, index) => h(Checkbox, {
-        key: `sim.checkbox.options.${index}`,
+        key: `s.c.opt.${index}`,
         props: {
           label: item.value,
           disabled: item.disabled,
@@ -180,7 +187,6 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
         size: props.size,
         clear: onClear
       },
-      attrs: context.attrs,
       on: {
         input: onInput,
         change: onChange,
@@ -203,7 +209,6 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
     ])
   }, {
     type: 'number',
-    attrs: context.attrs,
     expose: {
       focus,
       blur() {
@@ -268,7 +273,7 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
       nativeOn
     }, props.options?.map(
       (item, index) => h(Option, {
-        key: `sim.select.options.${index}`,
+        key: `s.s.opt.${index}`,
         props: {
           label: item.label,
           value: item.value,
