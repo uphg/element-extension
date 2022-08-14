@@ -2,8 +2,6 @@
 
 更加简单易用，更具数据化的 Element 组件 
 
-## Todo
-
 ## Form 表单支持列表
 
 - ✅ Radio 单选框
