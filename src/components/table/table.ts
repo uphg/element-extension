@@ -6,7 +6,7 @@ import { find } from "../../utils"
 import { TableColumnOptions, TableColumnProps } from "../../types/table"
 
 export default defineComponent({
-  name: 'STable',
+  name: 'ETable',
   props: {
     columns: {
       type: Array as PropType<Array<TableColumnProps>>,

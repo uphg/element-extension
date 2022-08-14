@@ -1,17 +1,17 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import SimElement from '../src/index'
+import SmallElement from '../src/index'
 
 const localVue = createLocalVue()
-localVue.use(SimElement)
+localVue.use(SmallElement)
 
 describe('form', () => {
 
   it('label width', () => {
     const formDemo = {
       template: `
-        <s-form label-width="80px">
-          <s-form-item label="活动名称" v-model="form.name"  />
-        </s-form>
+        <e-form label-width="80px">
+          <e-form-item label="活动名称" v-model="form.name"  />
+        </e-form>
       `,
       data() {
         return {
@@ -32,10 +32,10 @@ describe('form', () => {
   it('auto label width', () => {
     const formDemo = {
       template: `
-        <s-form label-width="auto">
-          <s-form-item label="活动名称" v-model="form.name"  />
-          <s-form-item label="活动备注内容" v-model="form.remark"  />
-        </s-form>
+        <e-form label-width="auto">
+          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动备注内容" v-model="form.remark"  />
+        </e-form>
       `,
       data() {
         return {
@@ -57,10 +57,10 @@ describe('form', () => {
   it('inline form', () => {
     const formDemo = {
       template: `
-        <s-form inline>
-          <s-form-item label="活动名称" v-model="form.name"  />
-          <s-form-item label="活动备注内容" v-model="form.remark"  />
-        </s-form>
+        <e-form inline>
+          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动备注内容" v-model="form.remark"  />
+        </e-form>
       `,
       data() {
         return {
@@ -78,10 +78,10 @@ describe('form', () => {
   it('label position', () => {
     const formDemo1 = {
       template: `
-        <s-form label-position="top" ref="labelTop">
-          <s-form-item label="活动名称" v-model="form.name"  />
-          <s-form-item label="活动备注内容" v-model="form.remark"  />
-        </s-form>
+        <e-form label-position="top" ref="labelTop">
+          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动备注内容" v-model="form.remark"  />
+        </e-form>
       `,
       data: () => ({
         form: {
@@ -93,10 +93,10 @@ describe('form', () => {
 
     const formDemo2 = {
       template: `
-        <s-form label-position="left" ref="labelLeft">
-          <s-form-item label="活动名称" v-model="form.name"  />
-          <s-form-item label="活动备注内容" v-model="form.remark"  />
-        </s-form>
+        <e-form label-position="left" ref="labelLeft">
+          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动备注内容" v-model="form.remark"  />
+        </e-form>
       `,
       data: () => ({
         form: {
@@ -116,9 +116,9 @@ describe('form', () => {
   it('label size', () => {
     const formDemo = {
       template: `
-        <s-form size="mini">
-          <s-form-item label="活动名称" v-model="form.name"  />
-        </s-form>
+        <e-form size="mini">
+          <e-form-item label="活动名称" v-model="form.name"  />
+        </e-form>
       `,
       data: () => ({
         form: {
@@ -134,15 +134,15 @@ describe('form', () => {
   it('show message', () => {
     const formDemo = {
       template: `
-        <s-form ref="formRef">
-          <s-form-item label="活动名称" v-model="form.name" :rules="{
+        <e-form ref="formRef">
+          <e-form-item label="活动名称" v-model="form.name" :rules="{
             required: true,
             message: '请输入活动名称',
             trigger: 'change',
             min: 3,
             max: 6
           }"/>
-        </s-form>
+        </e-form>
       `,
       data: () => ({
         form: {
@@ -162,11 +162,11 @@ describe('form', () => {
   it('clear validate', async () => {
     const formDemo = {
       template: `
-        <s-form ref="formRef" :model="form" :rules="rules">
-          <s-form-item label="活动名称" prop="name" v-model="form.name"/>
-          <s-form-item label="活动区域" prop="address" v-model="form.address"/>
-          <s-form-item label="活动性质" prop="checkbox" v-model="form.type" type="checkbox" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])" />
-        </s-form>
+        <e-form ref="formRef" :model="form" :rules="rules">
+          <e-form-item label="活动名称" prop="name" v-model="form.name"/>
+          <e-form-item label="活动区域" prop="address" v-model="form.address"/>
+          <e-form-item label="活动性质" prop="checkbox" v-model="form.type" type="checkbox" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])" />
+        </e-form>
       `,
       data: () => ({
         form: {
@@ -192,7 +192,6 @@ describe('form', () => {
     formRef.validate(() => void 0)
     await formRef.$nextTick()
     const elFormRef = formRef.elFormRef
-
     const nameField = elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'name')
     const addressField = elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'address')
     expect(nameField.validateMessage).toBe('请输入活动名称');
@@ -205,6 +204,88 @@ describe('form', () => {
     formRef.clearValidate()
     await formRef.$nextTick()
     expect(addressField.validateMessage).toBe('')
+  })
+
+  it('form item nest', async () => {
+    const formDemo = {
+      template: `
+        <e-form ref="formRef" :model="form" :rules="rules">
+          <e-form-item label="活动时间" required>
+            <e-form-item prop="date1" type="date" placeholder="选择日期" v-model="form.date1"/>
+            <span>-</span>
+            <e-form-item prop="date2" type="time" placeholder="选择时间" v-model="form.date2"/>
+          </e-form-item>
+        </e-form>
+      `,
+      data() {
+        return {
+          form: {
+            date1: '',
+            date2: ''
+          },
+          rules: {
+            date1: [
+              { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+            ]
+          }
+        };
+      }
+    }
+
+    const wrapper = mount(formDemo, { localVue })
+    const formRef = wrapper.vm.$refs.formRef
+    formRef.validate((valid: boolean, error: any) => {
+      expect(valid).toBeFalsy()
+    })
+  });
+
+  describe('validate', () => {
+    it('input', () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item label="活动名称" prop="name" ref="field">
+              <e-input v-model="form.name"></el-input>
+            </e-form-item>
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              name: ''
+            },
+            rules: {
+              name: [
+                { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
+              ]
+            }
+          };
+        },
+        methods: {
+          setValue(value) {
+            this.form.name = value;
+          }
+        }
+      }
+      vm.$refs.form.validate(valid => {
+        let field = vm.$refs.field;
+        expect(valid).to.not.true;
+        vm.$refs.form.$nextTick(_ => {
+          expect(field.validateMessage).to.equal('请输入活动名称');
+          vm.setValue('aaaaa');
+
+          vm.$refs.form.$nextTick(_ => {
+            expect(field.validateMessage).to.equal('');
+            vm.setValue('aa');
+
+            vm.$refs.form.$nextTick(_ => {
+              expect(field.validateMessage).to.equal('请输入活动名称');
+              done();
+            });
+          });
+        });
+      });
+    })
   })
 
 })

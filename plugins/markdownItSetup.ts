@@ -33,7 +33,7 @@ function markdownItSetup(md) {
 
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
-        return `<s-code
+        return `<e-code
           class="demo-${names[0]}"
           component-name="${componentName}"
           source="${encodeURIComponent(
@@ -42,7 +42,7 @@ function markdownItSetup(md) {
           :part="${componentName}"
         >`
       } else {
-        return '</s-code>'
+        return '</e-code>'
       }
     },
   })

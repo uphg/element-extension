@@ -1,8 +1,8 @@
 <template>
-  <s-form label-width="80px">
-    <s-form-item label="用户名" v-model="formData.name" />
-    <s-form-item label="密码" v-model="formData.password" type="password" />
-  </s-form>
+  <e-form label-width="80px">
+    <e-form-item label="用户名" v-model="formData.name" />
+    <e-form-item label="密码" v-model="formData.password" type="password" />
+  </e-form>
 </template>
 
 <script setup lang="ts">

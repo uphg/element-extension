@@ -3,7 +3,7 @@
 ## npm 安装
 
 ```base
-npm add sim-element
+npm add small-element
 ```
 
 ## 在项目中引入
@@ -11,13 +11,13 @@ npm add sim-element
 ```ts
 // 指定组件
 import Vue from 'vue'
-import { Form } from 'sim-element'
+import { Form } from 'small-element'
 
 Vue.use(Form)
 
 // 全局引入
 import Vue from 'vue'
-import SimElement from 'sim-element'
+import SmallElement from 'small-element'
 
-Vue.use(SimElement)
+Vue.use(SmallElement)
 ```

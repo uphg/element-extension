@@ -2,7 +2,7 @@
   <header class="navbar">
     <div class="container">
       <div class="logo">
-        Sim Element
+        Small Element
       </div>
       <div class="nav-links">
         <NavLink

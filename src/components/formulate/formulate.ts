@@ -1,11 +1,12 @@
-import { computed, defineComponent, ExtractPropTypes, h, PropType, ref, VNodeChildren } from "vue"
+import { defineComponent, ExtractPropTypes, h, PropType, Ref, ref, VNodeChildren } from "vue"
 import { Form, FormItem } from "element-ui"
-import { ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
+import { ElForm } from "element-ui/types/form"
 import { isArray, isObject } from "../../utils"
 import renderInput from './render-input'
 import { FormulateFields, FormulateFiled, FormulateBaseFiled, FormulateFullFields, MapRules } from '../../types/formulate'
 import { CustomInputValue } from "../../types/custom-input"
 import { FormRules, FormData } from '../../types/form'
+import useElForm from '../../composables/useElForm'
 
 type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
@@ -44,136 +45,13 @@ const formulateProps = {
 
 export type FormulateProps = ExtractPropTypes<typeof formulateProps>
 
-export default defineComponent({
-  name: 'SFormulate',
-  props: formulateProps,
-  setup(_props, context) {
-    const props = _props.data ? _props.data : _props
-    const fieldsIsArray = isArray(props.fields)
-
-    const _elFormRef = ref<any>(null)
-    const elFormRef = computed(() => _elFormRef.value) 
-    const rules = ref<FormRules | { [key: string]: [] }>({})
-
-    if (!props.fields) {
-      throw new Error('[SimElement] "fields" attribute is required');
-    }
-
-    const formData = ref(initFormData(props.fields, fieldsIsArray))
-    const fields = mapFields(props.fields, (item) => {
-      const { type, key, label, rules: _rules } = item as FormulateFiled
-      if (_rules && isObject(_rules)) {
-        rules.value[key] = isArray(_rules) ?  _rules : [_rules]
-      } else if (props.rules && props.rules?.[key]) {
-        rules.value[key] = props.rules?.[key]
-      } else if (props.mapRules) {
-        if (typeof props.mapRules !== 'function') {
-          throw new Error('[SimElement] "mapRules" must be a function and return an array')
-        }
-        const rule = props.mapRules({ type, key, label })
-        rule && rule.length && (rules.value[key] = rule) 
-      }
-    }, fieldsIsArray)
-
-    function validate(callback: ValidateCallback) {
-      elFormRef.value.validate(callback)
-    }
-
-    function validateField(props: string | string[], callback?: ValidateFieldCallback) {
-      elFormRef.value.validateField(props, callback)
-    }
-
-    function resetFields() {
-      elFormRef.value.resetFields()
-    }
-
-    function clearValidate(props?: string | string[]) {
-      elFormRef.value.clearValidate(props)
-    }
-
-    function setValues(obj: FormData) {
-      const keys = Object.keys(obj)
-      keys.forEach((key) => {
-        formData.value[key] = obj[key]
-      })
-    }
-
-    function getValues() {
-      return formData.value
-    }
-    
-    function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
-      elFormRef.value.validate((valid: boolean, errors: object) => {
-        callback(formData.value, { valid, errors })
-      })
-    }
-
-    function renderFormItem(item: FormulateFiled, index: number, children?: VNodeChildren) {
-      return h(FormItem, {
-        key: `SForm.item.${index}`,
-        props: {
-          label: item.label,
-          labelWidth: item.labelWidth,
-          prop: item.prop || item.key,
-          required: item.required,
-          rules: item.rules,
-          error: item.error,
-          validateStatus: item.validateStatus,
-          for: item.for,
-          inlineMessage: item.inlineMessage,
-          showMessage: item.showMessage,
-          size: item.size
-        }
-      }, 
-        [item.itemPrefix, ...(children as Array<VNodeChildren>), item.itemSuffix]
-      )
-    }
-
-    context.expose({
-      get formData() {
-        return formData.value
-      },
-      validate,
-      validateField,
-      resetFields,
-      clearValidate,
-      setValues,
-      getValues,
-      submit,
-      get elFormRef() {
-        return elFormRef.value
-      }
-    })
-
-    return () => h(Form, {
-        // @ts-ignore
-        ref: (el) => _elFormRef.value = el,
-        props: {
-          rules: rules.value,
-          model: formData.value,
-          inline: props.inline,
-          labelPosition: props.labelPosition,
-          labelWidth: props.labelWidth,
-          labelSuffix: props.labelSuffix,
-          validateOnRuleChange: props.validateOnRuleChange,
-          size: props.size
-        }
-      },
-      (fields as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
-        ? null
-        : renderFormItem(item, index, 
-          (isArray(item)
-            ? item.map((piece, i) => renderInput(piece, { elFormRef, formData, context }))
-            : [renderInput(item, { elFormRef, formData, context })]
-          )
-        )
-      )
-    )
-  }
-})
-
 function initFormData(baseFields: FormulateFields, fieldsIsArray: boolean) {
   const result: { [key: string]: CustomInputValue } = {}
+  resetFormData(result, baseFields, fieldsIsArray)
+  return result
+}
+
+function resetFormData(formData: { [key: string]: CustomInputValue }, baseFields: FormulateFields, fieldsIsArray: boolean) {
   const fields = (fieldsIsArray ? baseFields : Object.keys(baseFields)) as FormulateFiled[] | string[] 
   fields.forEach((value, _key) => {
     const key = fieldsIsArray ? (value as FormulateFiled).key : value as string
@@ -186,24 +64,23 @@ function initFormData(baseFields: FormulateFields, fieldsIsArray: boolean) {
       case 'checkbox':
       case 'file':
       case 'upload':
-        result[key] = []
+        formData[key] = []
         break;
       case 'slider':
       case 'number':
       case 'input-number':
-        result[key] = 0
+        formData[key] = 0
         break;
       case 'switch':
-        result[key] = false
+        formData[key] = false
         break;
       default:
         if (/^\$/.test(key)) {
           break
         }
-        result[key] = ''
+        formData[key] = ''
     }
   })
-  return result
 }
 
 type MapFieldsCallbackParamsItem = FormulateFiled | FormulateBaseFiled | FormulateFiled[] | string | null
@@ -239,3 +116,118 @@ function mapFields(
     return item
   })
 }
+
+function renderFormItem(item: FormulateFiled, index: number, children?: VNodeChildren) {
+  return h(FormItem, {
+    key: `s.form.item.${index}`,
+    props: {
+      label: item.label,
+      labelWidth: item.labelWidth,
+      prop: item.prop || item.key,
+      required: item.required,
+      rules: item.rules,
+      error: item.error,
+      validateStatus: item.validateStatus,
+      for: item.for,
+      inlineMessage: item.inlineMessage,
+      showMessage: item.showMessage,
+      size: item.size
+    }
+  }, 
+    [item.itemPrefix, ...(children as Array<VNodeChildren>), item.itemSuffix]
+  )
+}
+
+export default defineComponent({
+  name: 'EFormulate',
+  props: formulateProps,
+  setup(_props, context) {
+    const props = _props.data ? _props.data : _props
+    const fieldsIsArray = isArray(props.fields)
+    const rules = ref<FormRules | { [key: string]: [] }>({})
+
+    if (!props.fields) {
+      throw new Error('[SmallElement] "fields" attribute is required');
+    }
+
+    const formData = ref(initFormData(props.fields, fieldsIsArray))
+    const fields = mapFields(props.fields, (item) => {
+      const { type, key, label, rules: _rules } = item as FormulateFiled
+      if (_rules && isObject(_rules)) {
+        rules.value[key] = isArray(_rules) ?  _rules : [_rules]
+      } else if (props.rules && props.rules?.[key]) {
+        rules.value[key] = props.rules?.[key]
+      } else if (props.mapRules) {
+        if (typeof props.mapRules !== 'function') {
+          throw new Error('[SmallElement] "mapRules" must be a function and return an array')
+        }
+        const rule = props.mapRules({ type, key, label })
+        rule && rule.length && (rules.value[key] = rule) 
+      }
+    }, fieldsIsArray)
+
+    const { elFormRef, validate, validateField, clearValidate } = useElForm()
+
+    function resetFields() {
+      resetFormData(formData.value, props.fields!, fieldsIsArray)
+    }
+
+    function setValues(obj: FormData) {
+      const keys = Object.keys(obj)
+      keys.forEach((key) => {
+        formData.value[key] = obj[key]
+      })
+    }
+
+    function getValues() {
+      return formData.value
+    }
+    
+    function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
+      elFormRef.value?.validate((valid: boolean, errors: object) => {
+        callback(formData.value, { valid, errors })
+      })
+    }
+
+    context.expose({
+      validate,
+      validateField,
+      resetFields,
+      clearValidate,
+      setValues,
+      getValues,
+      submit,
+      get formData() {
+        return formData.value
+      },
+      get elFormRef() {
+        return elFormRef.value
+      }
+    })
+
+    return () => h(Form, {
+        // @ts-ignore
+        ref: (el) => elFormRef.value = el,
+        props: {
+          rules: rules.value,
+          model: formData.value,
+          inline: props.inline,
+          labelPosition: props.labelPosition,
+          labelWidth: props.labelWidth,
+          labelSuffix: props.labelSuffix,
+          validateOnRuleChange: props.validateOnRuleChange,
+          size: props.size
+        }
+      },
+      (fields as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)
+        ? null
+        : renderFormItem(item, index, 
+          (isArray(item)
+            ? item.map((piece, i) => renderInput(piece, { elFormRef, formData, context }))
+            : [renderInput(item, { elFormRef, formData, context })]
+          )
+        )
+      )
+    )
+  }
+})

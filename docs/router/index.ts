@@ -8,13 +8,13 @@ const routes: RouteConfig[] = [
     path: '/',
     component: Layout,
     redirect: '/docs',
-    // children: [
-    //   {
-    //     path: 'test',
-    //     name: 'Test',
-    //     component: () => import('docs/pages/test.vue')
-    //   }
-    // ]
+    children: [
+      {
+        path: 'test',
+        name: 'Test',
+        component: () => import('docs/pages/test.vue')
+      }
+    ]
   },
   {
     path: '/docs',

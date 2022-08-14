@@ -1,15 +1,15 @@
 <template>
-  <s-form
+  <e-form
     :model="formData"
     :rules="rules"
     ref="formRef"
     label-width="100px" class="demo-formData" @submit.native.prevent>
-    <s-form-item
+    <e-form-item
       label="活动名称"
       prop="name"
       v-model="formData.name"
     />
-    <s-form-item
+    <e-form-item
       label="活动区域"
       prop="region"
       v-model="formData.region"
@@ -20,34 +20,34 @@
         { label: '区域二', value: 'beijing' },
       ]"
     />
-    <s-form-item label="活动时间" required>
-      <s-form-item
+    <e-form-item label="活动时间" required>
+      <e-form-item
         prop="date1"
         type="date"
         placeholder="选择日期"
         v-model="formData.date1"
       />
       <span>-</span>
-      <s-form-item
+      <e-form-item
         prop="date2"
         type="time"
         placeholder="选择时间"
         v-model="formData.date2"
       />
-    </s-form-item>
-    <s-form-item
+    </e-form-item>
+    <e-form-item
       label="即时配送"
       prop="delivery"
       type="switch"
       v-model="formData.delivery"
     />
-    <s-form-item
+    <e-form-item
       v-if="formData.delivery"
       label="配送地址"
       prop="deliveryAddress"
       v-model="formData.deliveryAddress"
     />
-    <s-form-item
+    <e-form-item
       label="活动性质"
       prop="type"
       v-model="formData.type"
@@ -59,7 +59,7 @@
         { label: '单纯品牌曝光', value: 3, name: 'type' },
       ]"
     />
-    <s-form-item
+    <e-form-item
       label="特殊资源"
       prop="resource"
       type="radio"
@@ -69,16 +69,16 @@
         { label: '线下场地免费', value: 1 },
       ]"
     />
-    <s-form-item label="活动形式" prop="desc" type="textarea" v-model="formData.desc" />
-    <s-form-item>
+    <e-form-item label="活动形式" prop="desc" type="textarea" v-model="formData.desc" />
+    <e-form-item>
       <button @click="submitForm">立即创建</button>
       <button @click="resetForm">重置</button>
-    </s-form-item>
-  </s-form>
+    </e-form-item>
+  </e-form>
 </template>
 
 <script setup lang="ts">
-import { ElForm } from 'element-ui/types/form.js';
+import { ElForm } from 'element-ui/types/form';
 import { ref } from 'vue';
 
 const formRef = ref<ElForm | null>(null)
@@ -121,9 +121,7 @@ const rules = {
 }
 
 function submitForm(payload: MouseEvent) {
-  console.log('表单提交成功')
   formRef.value?.validate((valid) => {
-    console.log(222)
     if (valid) {
       alert('submit!');
     } else {
@@ -133,6 +131,6 @@ function submitForm(payload: MouseEvent) {
   })
 }
 function resetForm(payload: MouseEvent) {
-  formRef.value?.resetFields();
+  formRef.value?.clearValidate();
 }
 </script>

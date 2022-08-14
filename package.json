@@ -1,6 +1,6 @@
 {
-  "name": "sim-element",
-  "version": "0.0.14",
+  "name": "small-element",
+  "version": "0.1.0-alpha.1",
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",

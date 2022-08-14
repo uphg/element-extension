@@ -1,21 +1,20 @@
 import './styles/index.scss'
-// import 'element-ui/packages/theme-chalk/lib/base.css'
 import 'element-ui/packages/theme-chalk/lib/index.css'
 import App from './App.vue'
 import Vue from 'vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import router from './router'
-import Code from './components/s-code.vue'
-import Demo from './components/s-demo.vue'
-import Block from './components/s-block.vue'
-import SimElement from 'src/index'
+import Code from './components/e-code.vue'
+import Demo from './components/e-demo.vue'
+import Block from './components/e-block.vue'
+import SmallElement from 'src/index'
 
 Vue.use(PiniaVuePlugin)
-Vue.use(SimElement)
+Vue.use(SmallElement)
 
-Vue.component('s-demo', Demo)
-Vue.component('s-code', Code)
-Vue.component('s-block', Block)
+Vue.component('e-demo', Demo)
+Vue.component('e-code', Code)
+Vue.component('e-block', Block)
 
 new Vue({
   pinia: createPinia(),

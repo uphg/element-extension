@@ -23,7 +23,7 @@ const inputProps = {
 }
 
 export default defineComponent({
-  name: 'SInput',
+  name: 'EInput',
   props: inputProps,
   setup(props, context) {
     return () => h(Input, {

@@ -21,7 +21,7 @@ import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
 import renderDate from './render-date'
 
-function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLElement | ElForm>, formData: Ref<FormData>, context: SetupContext<{}> }) {
+function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { elFormRef, formData, context } = _options
   switch (props.type || 'text') {
     case 'text':
@@ -82,7 +82,7 @@ function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLEl
       })
     case 'radio':
       if (!props.options) {
-        throw new Error('[SimElement] "options" attribute is required when type="radio"');
+        throw new Error('[SmallElement] "options" attribute is required when type="radio"');
       }
       return h(RadioGroup, {
         ref: props.ref,
@@ -106,7 +106,7 @@ function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLEl
       ))
     case 'checkbox':
       if (!props.options) {
-        throw new Error('[SimElement] "options" attribute is required when type="checkbox"');
+        throw new Error('[SmallElement] "options" attribute is required when type="checkbox"');
       }
       return h(CheckboxGroup, {
         ref: props.ref,
@@ -131,7 +131,7 @@ function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLEl
 
     case 'select':
       if (!props.options) {
-        throw new Error('[SimElement] "options" attribute is required when type="select"');
+        throw new Error('[SmallElement] "options" attribute is required when type="select"');
       }
       return h(Select, {
         ref: props.ref,

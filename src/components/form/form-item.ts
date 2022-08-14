@@ -8,25 +8,32 @@ const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 
 
 const formItemProps = {
   ...customInputProps,
-
-  // form item attributes
   label: String as PropType<string>,
   labelWidth: String as PropType<string>,
   prop: String as PropType<string>,
-  required: Boolean as PropType<boolean>,
+  required: {
+    type: Boolean as PropType<boolean>,
+    default: undefined
+  },
   rules: [Object, Array] as PropType<object | unknown[]>,
   error: String as PropType<string>,
   validateStatus: String as PropType<string>,
   for: String as PropType<string>,
-  inlineMessage: [String, Boolean] as PropType<string | boolean>,
-  showMessage: Boolean as PropType<boolean>,
-  size: String as PropType<string>
+  inlineMessage: {
+    type: [String, Boolean] as PropType<string | boolean>,
+    default: ''
+  },
+  showMessage: {
+    type: Boolean as PropType<boolean>,
+    default: true
+  },
+  size: String as PropType<string>,
 }
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
 export default defineComponent({
-  name: 'SFormItem',
+  name: 'EFormItem',
   props: formItemProps,
   setup(props, context) {
     const { render, expose } = useCustomInput(props, context, {

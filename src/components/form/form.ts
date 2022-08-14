@@ -1,7 +1,8 @@
 import { defineComponent, h, PropType, Ref, ref } from 'vue'
 import { Form } from 'element-ui'
-import { ElForm, ValidateCallback, ValidateFieldCallback } from 'element-ui/types/form'
+import { ElForm } from 'element-ui/types/form'
 import { pick } from '../../utils'
+import useElForm from '../../composables/useElForm'
 
 const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
@@ -42,26 +43,11 @@ const formProps = {
 }
 
 export default defineComponent({
-  name: 'SForm',
+  name: 'EForm',
   props: formProps,
   setup(props, context) {
-    const elFormRef = ref<ElForm | null>(null)
 
-    function validate(callback: ValidateCallback) {
-      elFormRef.value?.validate(callback)
-    }
-
-    function validateField(props: string | string[], callback?: ValidateFieldCallback) {
-      elFormRef.value?.validateField(props, callback)
-    }
-
-    // function resetFields() {
-    //   elFormRef.value?.resetFields()
-    // }
-
-    function clearValidate(props?: string | string[]) {
-      elFormRef.value?.clearValidate(props)
-    }
+    const { elFormRef, validate, validateField, clearValidate } = useElForm()
 
     context.expose({
       validate,

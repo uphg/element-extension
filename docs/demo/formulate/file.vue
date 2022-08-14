@@ -1,5 +1,5 @@
 <template>
-  <s-formulate :data="data" />
+  <e-formulate :data="data" />
 </template>
 
 <script setup lang="ts">
