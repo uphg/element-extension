@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <SConfigProvider>
+    <EConfigProvider>
       <div>
         <Form ref="formRef" :model="form" :rules="rules">
           <FormItem label="活动时间" required>
@@ -16,12 +16,12 @@
         <button @click="onSubmit">验证</button>
       </div>
       
-    </SConfigProvider>
+    </EConfigProvider>
   </div>
 </template>
 
 <script setup lang="ts">
-import SConfigProvider from '../components/s-config-provider'
+import EConfigProvider from '../components/e-config-provider'
 import HelloWorld from '../components/HelloWorld.vue'
 import { ref } from 'vue';
 import { Form, FormItem, Col, DatePicker, TimePicker } from 'element-ui';

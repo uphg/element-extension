@@ -1,8 +1,10 @@
 import { defineComponent, h, provide } from "vue";
 
+const Config = Symbol('e-config')
+
 export default defineComponent({
   setup(props, context) {
-    provide('s-config', { name: 'Jack' })
+    provide(Config, { name: 'Jack' })
     return () => context.slots.default?.()
   }
 })
