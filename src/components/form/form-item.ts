@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
+import { defineComponent, h, PropType, ExtractPropTypes, ref } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
 import { useCustomInput } from "./use-custom-input"
 import { customInputProps } from "../../shared/custom-input-props"
@@ -36,6 +36,7 @@ export default defineComponent({
   name: 'EFormItem',
   props: formItemProps,
   setup(props, context) {
+    const elFormItem = ref<ElFormItem | null>(null)
     const { render, expose } = useCustomInput(props, context, {
       onKeyup(event) {
         if (event.keyCode !== 13) return
@@ -43,9 +44,17 @@ export default defineComponent({
       }
     })
 
-    expose && context.expose(expose)
+    expose && context.expose({
+      ...expose,
+      get elFormItem() {
+        return elFormItem.value
+      }
+    })
 
+    
     return () => h(ElFormItem, {
+      // @ts-ignore
+      ref: (el: ElFormItem) => elFormItem.value = el,
       props: pick(props, propNames),
       scopedSlots: {
         error: (params) => context.slots.error?.(params),

@@ -47,19 +47,19 @@ export default defineComponent({
   props: formProps,
   setup(props, context) {
 
-    const { elFormRef, validate, validateField, clearValidate } = useElForm()
+    const { elForm, validate, validateField, clearValidate } = useElForm()
 
     context.expose({
       validate,
       validateField,
       clearValidate,
-      get elFormRef() {
-        return elFormRef.value
+      get elForm() {
+        return elForm.value
       }
     })
     // @ts-ignore
     return () => h(Form, {
-      ref: (el: ElForm) => { elFormRef.value = el },
+      ref: (el: ElForm) => { elForm.value = el },
       props: pick(props, propNames),
       scopedSlots: {
         default: () => context.slots.default?.()

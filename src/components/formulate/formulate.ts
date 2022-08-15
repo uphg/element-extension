@@ -166,7 +166,7 @@ export default defineComponent({
       }
     }, fieldsIsArray)
 
-    const { elFormRef, validate, validateField, clearValidate } = useElForm()
+    const { elForm, validate, validateField, clearValidate } = useElForm()
 
     function resetFields() {
       resetFormData(formData.value, props.fields!, fieldsIsArray)
@@ -184,7 +184,7 @@ export default defineComponent({
     }
     
     function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
-      elFormRef.value?.validate((valid: boolean, errors: object) => {
+      elForm.value?.validate((valid: boolean, errors: object) => {
         callback(formData.value, { valid, errors })
       })
     }
@@ -200,14 +200,14 @@ export default defineComponent({
       get formData() {
         return formData.value
       },
-      get elFormRef() {
-        return elFormRef.value
+      get elForm() {
+        return elForm.value
       }
     })
 
     return () => h(Form, {
         // @ts-ignore
-        ref: (el) => elFormRef.value = el,
+        ref: (el) => elForm.value = el,
         props: {
           rules: rules.value,
           model: formData.value,
@@ -223,8 +223,8 @@ export default defineComponent({
         ? null
         : renderFormItem(item, index, 
           (isArray(item)
-            ? item.map((piece, i) => renderInput(piece, { elFormRef, formData, context }))
-            : [renderInput(item, { elFormRef, formData, context })]
+            ? item.map((piece, i) => renderInput(piece, { elForm, formData, context }))
+            : [renderInput(item, { elForm, formData, context })]
           )
         )
       )

@@ -21,8 +21,8 @@ import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
 import renderDate from './render-date'
 
-function renderInput(props: PartialInputProps, _options: { elFormRef: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
-  const { elFormRef, formData, context } = _options
+function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
+  const { elForm, formData, context } = _options
   switch (props.type || 'text') {
     case 'text':
     case 'password':

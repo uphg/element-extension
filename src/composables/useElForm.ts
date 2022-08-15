@@ -2,21 +2,21 @@ import { ref, Ref } from "vue"
 import { ElForm, ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 
 function useElForm() {
-  const elFormRef = ref<ElForm | null>(null)
+  const elForm = ref<ElForm | null>(null)
 
   return {
-    elFormRef,
+    elForm,
 
     validate(callback: ValidateCallback) {
-      elFormRef.value?.validate(callback)
+      elForm.value?.validate(callback)
     },
 
     validateField(props: string | string[], callback?: ValidateFieldCallback) {
-      elFormRef.value?.validateField(props, callback)
+      elForm.value?.validateField(props, callback)
     },
 
     clearValidate(props?: string | string[]) {
-      elFormRef.value?.clearValidate(props)
+      elForm.value?.clearValidate(props)
     }
   }
 }

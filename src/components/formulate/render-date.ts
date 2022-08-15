@@ -8,7 +8,7 @@ import { FormData } from '../../types/form'
 function renderDate(
   props: PartialInputProps,
   _options: {
-    elFormRef: Ref<HTMLElement | ElForm | null>;
+    elForm: Ref<HTMLElement | ElForm | null>;
     formData: Ref<FormData>;
     context: SetupContext<{}>;
   },
