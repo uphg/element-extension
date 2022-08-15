@@ -222,8 +222,8 @@ describe('form', () => {
     vm.validate(() => void 0)
 
     await vm.$nextTick()
-    const nameField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'name')
-    const addressField = vm.elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'address')
+    const nameField = vm.elForm.fields.find((field: { [key: string]: any }) => field.prop === 'name')
+    const addressField = vm.elForm.fields.find((field: { [key: string]: any }) => field.prop === 'address')
     expect(nameField.validateMessage).toBe('请输入活动名称')
     expect(addressField.validateMessage).toBe('请选择活动区域')
 

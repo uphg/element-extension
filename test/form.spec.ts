@@ -1,8 +1,10 @@
 import { createLocalVue, mount } from '@vue/test-utils'
+import Element from 'element-ui'
 import SmallElement from '../src/index'
 
 const localVue = createLocalVue()
 localVue.use(SmallElement)
+localVue.use(Element)
 
 describe('form', () => {
 
@@ -191,9 +193,9 @@ describe('form', () => {
 
     formRef.validate(() => void 0)
     await formRef.$nextTick()
-    const elFormRef = formRef.elFormRef
-    const nameField = elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'name')
-    const addressField = elFormRef.fields.find((field: { [key: string]: any }) => field.prop === 'address')
+    const elForm = formRef.elForm
+    const nameField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'name')
+    const addressField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'address')
     expect(nameField.validateMessage).toBe('请输入活动名称');
     expect(addressField.validateMessage).toBe('请选择活动区域');
 
@@ -239,35 +241,141 @@ describe('form', () => {
     })
   });
 
-  // describe('validate', () => {
-  //   it('input', () => {
-  //     const formDemo = {
-  //       template: `
-  //         <e-form :model="form" :rules="rules" ref="formRef">
-  //           <e-form-item label="活动名称" prop="name" ref="field">
-  //             <e-input v-model="form.name"></el-input>
-  //           </e-form-item>
-  //         </e-form>
-  //       `,
-  //       data() {
-  //         return {
-  //           form: {
-  //             name: ''
-  //           },
-  //           rules: {
-  //             name: [
-  //               { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
-  //             ]
-  //           }
-  //         };
-  //       },
-  //       methods: {
-  //         setValue(value) {
-  //           this.form.name = value;
-  //         }
-  //       }
-  //     }
-  //   })
-  // })
+  describe('validate', () => {
+    it('input', async () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item label="活动名称" type="text" prop="name" v-model="form.name" ref="formItemRef"/>
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              name: ''
+            },
+            rules: {
+              name: [
+                { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
+              ]
+            }
+          };
+        },
+        methods: {
+          setValue(this: { form: { name: string } },value: string) {
+            this.form.name = value;
+          }
+        }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      formRef.validate((valid: boolean) => {
+        expect(valid).toBeFalsy()
+      })
+      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请输入活动名称')
+
+      wrapper.vm.setValue('abc')
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('')
+
+      wrapper.vm.setValue('aa')
+      await formRef.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请输入活动名称')
+    })
+
+    it('textarea', async () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item label="活动名称" type="textarea" prop="name" v-model="form.name" ref="formItemRef"/>
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              name: ''
+            },
+            rules: {
+              name: [
+                { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
+              ]
+            }
+          };
+        },
+        methods: {
+          setValue(this: { form: { name: string } },value: string) {
+            this.form.name = value;
+          }
+        }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      formRef.validate((valid: boolean) => {
+        expect(valid).toBeFalsy()
+      })
+      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请输入活动名称')
+
+      wrapper.vm.setValue('abc')
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('')
+
+      wrapper.vm.setValue('aa')
+      await formRef.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请输入活动名称')
+    })
+
+    it('select', async () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item
+              label="活动区域"
+              type="select"
+              prop="region"
+              v-model="form.region"
+              :options="[
+                { label: '区域一', value: 0 },
+                { label: '区域二', value: 1 }
+              ]"
+              ref="formItemRef"
+            />
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              region: ''
+            },
+            rules: {
+              region: [
+                { required: true, message: '请选择活动区域', trigger: 'change' }
+              ]
+            }
+          };
+        }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      formRef.validate((valid: boolean) => {
+        expect(valid).toBeFalsy()
+      })
+      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择活动区域')
+
+      wrapper.vm.form.region = 0
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('')
+
+      wrapper.vm.form.region = ''
+      await formRef.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择活动区域')
+    })
+
+  })
 
 })
