@@ -44,8 +44,8 @@ export default defineComponent({
       }
     })
 
-    expose && context.expose({
-      ...expose,
+    context.expose({
+      ...(expose ? expose : {}),
       get elFormItem() {
         return elFormItem.value
       }

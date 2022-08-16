@@ -7,10 +7,10 @@ import router from './router'
 import Code from './components/e-code.vue'
 import Demo from './components/e-demo.vue'
 import Block from './components/e-block.vue'
-import SmallElement from 'src/index'
+import ElementExtension from 'src/index'
 
 Vue.use(PiniaVuePlugin)
-Vue.use(SmallElement)
+Vue.use(ElementExtension)
 
 Vue.component('e-demo', Demo)
 Vue.component('e-code', Code)

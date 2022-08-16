@@ -82,7 +82,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
       })
     case 'radio':
       if (!props.options) {
-        throw new Error('[SmallElement] "options" attribute is required when type="radio"');
+        throw new Error('[ElementExtension] "options" attribute is required when type="radio"');
       }
       return h(RadioGroup, {
         ref: props.ref,
@@ -106,7 +106,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
       ))
     case 'checkbox':
       if (!props.options) {
-        throw new Error('[SmallElement] "options" attribute is required when type="checkbox"');
+        throw new Error('[ElementExtension] "options" attribute is required when type="checkbox"');
       }
       return h(CheckboxGroup, {
         ref: props.ref,
@@ -131,7 +131,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
 
     case 'select':
       if (!props.options) {
-        throw new Error('[SmallElement] "options" attribute is required when type="select"');
+        throw new Error('[ElementExtension] "options" attribute is required when type="select"');
       }
       return h(Select, {
         ref: props.ref,

@@ -1,5 +1,5 @@
 {
-  "name": "small-element",
+  "name": "element-extension",
   "version": "0.1.0-alpha.1",
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
   "main": "dist/index.umd.js",
