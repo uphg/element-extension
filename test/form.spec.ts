@@ -1,10 +1,8 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import Element from 'element-ui'
-import SmallElement from '../src/index'
+import ElementExtension from '../src/index'
 
 const localVue = createLocalVue()
-localVue.use(SmallElement)
-localVue.use(Element)
+localVue.use(ElementExtension)
 
 describe('form', () => {
 
@@ -376,6 +374,95 @@ describe('form', () => {
       expect(elFormItem.validateMessage).toBe('请选择活动区域')
     })
 
+    it('datepicker', async () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item
+              label="活动日期"
+              type="date"
+              prop="date"
+              v-model="form.date"
+              ref="formItemRef"
+              placeholder="选择日期"
+            />
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              date: ''
+            },
+            rules: {
+              date: [
+                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+              ]
+            }
+          };
+        }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      formRef.validate((valid: boolean) => {
+        expect(valid).toBeFalsy()
+      })
+      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择日期')
+
+      wrapper.vm.form.date = new Date()
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('')
+
+      wrapper.vm.form.date = ''
+      await formRef.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择日期')
+    })
+
+    it('timepicker', async () => {
+      const formDemo = {
+        template: `
+          <e-form :model="form" :rules="rules" ref="formRef">
+            <e-form-item
+              label="活动时间"
+              type="time"
+              prop="time"
+              v-model="form.time"
+              ref="formItemRef"
+              placeholder="选择时间"
+            />
+          </e-form>
+        `,
+        data() {
+          return {
+            form: {
+              time: ''
+            },
+            rules: {
+              time: [
+                { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+              ]
+            }
+          };
+        }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      formRef.validate((valid: boolean) => {
+        expect(valid).toBeFalsy()
+      })
+      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择时间')
+
+      wrapper.vm.form.time = new Date()
+      await formRef.elForm.$nextTick()
+      expect(elFormItem.validateMessage).toBe('')
+
+      wrapper.vm.form.time = ''
+      await formRef.$nextTick()
+      expect(elFormItem.validateMessage).toBe('请选择时间')
+    })
   })
 
 })
