@@ -13,7 +13,7 @@ git init &&
 git add -A &&
 git commit -m 'deploy' &&
 
-git push -f git@github.com:uphg/sim-element.git master:gh-pages
-git push -f git@gitee.com:uphg/sim-element.git master:gh-pages
+git push -f git@github.com:uphg/element-part.git master:gh-pages
+git push -f git@gitee.com:uphg/element-part.git master:gh-pages
 
 cd -

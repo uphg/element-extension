@@ -1,6 +1,6 @@
 <template>
   <aside class="sidebar">
-    <h2 class="sidebar-logo">Small Element</h2>
+    <h2 class="sidebar-logo">Element Part</h2>
     <SidebarGroup v-for="item, index in sidebars" :key="index" :title="item.title" :children="item.children" />
   </aside>
 </template>

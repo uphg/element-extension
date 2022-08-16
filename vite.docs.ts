@@ -8,7 +8,7 @@ const toPath = (p) => `${path.resolve(__dirname, p)}/`
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/small-element/',
+  base: '/element-part/',
   build: {
     outDir: 'dist-docs'
   },

@@ -2,7 +2,7 @@
   <header class="navbar">
     <div class="container">
       <div class="logo">
-        Small Element
+        Element Part
       </div>
       <div class="nav-links">
         <NavLink
