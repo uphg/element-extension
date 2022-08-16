@@ -20,7 +20,7 @@ Vue.use(Form)
 
 // 全局引入
 import Vue from 'vue'
-import ElementExtension from 'element-extension'
+import ElementPart from 'element-extension'
 
-Vue.use(ElementExtension)
+Vue.use(ElementPart)
 ```

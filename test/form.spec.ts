@@ -1,8 +1,8 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import ElementExtension from '../src/index'
+import ElementPart from '../src/index'
 
 const localVue = createLocalVue()
-localVue.use(ElementExtension)
+localVue.use(ElementPart)
 
 describe('form', () => {
 

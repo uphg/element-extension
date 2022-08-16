@@ -147,7 +147,7 @@ export default defineComponent({
     const rules = ref<FormRules | { [key: string]: [] }>({})
 
     if (!props.fields) {
-      throw new Error('[ElementExtension] "fields" attribute is required');
+      throw new Error('[ElementPart] "fields" attribute is required');
     }
 
     const formData = ref(initFormData(props.fields, fieldsIsArray))
@@ -159,7 +159,7 @@ export default defineComponent({
         rules.value[key] = props.rules?.[key]
       } else if (props.mapRules) {
         if (typeof props.mapRules !== 'function') {
-          throw new Error('[ElementExtension] "mapRules" must be a function and return an array')
+          throw new Error('[ElementPart] "mapRules" must be a function and return an array')
         }
         const rule = props.mapRules({ type, key, label })
         rule && rule.length && (rules.value[key] = rule) 
