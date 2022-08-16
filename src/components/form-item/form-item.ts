@@ -2,7 +2,7 @@ import { defineComponent, h, PropType, ExtractPropTypes, ref } from "vue"
 import { FormItem as ElFormItem } from "element-ui"
 import { useCustomInput } from "./use-custom-input"
 import { customInputProps } from "../../shared/custom-input-props"
-import { pick } from "src/utils"
+import { pick } from "../../utils"
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
