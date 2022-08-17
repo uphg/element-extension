@@ -28,10 +28,6 @@ type useInputParamsOptions = {
   onInput?: (event: any) => void;
 }
 
-interface BaseProps extends CustomInputProps {
-  exclude?: string | number | RegExp  
-}
-
 const useEvents = (emit: EmitFn) => ({
   onClick(event: MouseEvent | InputEvent) {
     emit('click', event)
@@ -73,7 +69,7 @@ const useExpose = (inputRef: Ref<any>) => ({
   }
 })
 
-export function useCustomInput<T extends BaseProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
+export function useCustomInput<T extends CustomInputProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
   const { onKeyup } = options || {}
   const { emit } = context
 
@@ -81,7 +77,8 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
   const inputRef = ref<any>(null)
 
   const onInput = options?.onInput ? options.onInput : props.exclude ? (value: CustomInputValue) => {
-    const newVal = toString(value).replace(props.exclude as RegExp, '')
+    const exclude = typeof props.exclude === 'number' ? toString(props.exclude) : props.exclude 
+    const newVal = toString(value).replace(exclude, '')
     emit('input', newVal)
   } : (value: CustomInputValue) => {
     emit('input', value)

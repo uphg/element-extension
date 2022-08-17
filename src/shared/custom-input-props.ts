@@ -102,11 +102,11 @@ export const customInputProps = {
   unlinkPanels: Boolean as PropType<boolean>,
 
   // DatePicker
-  timeArrowControl: Boolean,
+  timeArrowControl: Boolean as PropType<boolean>,
 
   // TimePicker
-  isRange: Boolean,
-  arrowControl: Boolean,
+  isRange: Boolean as PropType<boolean>,
+  arrowControl: Boolean as PropType<boolean>,
 
   // switch
   width: {
@@ -216,43 +216,43 @@ export const customInputProps = {
   // max - default: 100
   // step - default: 1
   showInput: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   showInputControls: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: true
   },
   inputSize: {
-    type: String,
+    type: String as PropType<string>,
     default: 'small'
   },
   showStops: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   showTooltip: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: true
   },
-  formatTooltip: Function,
+  formatTooltip: Function as PropType<Function>,
   range: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   vertical: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   height: {
-    type: String
+    type: String as PropType<string>
   },
   debounce: {
-    type: Number,
+    type: Number as PropType<number>,
     default: 300
   },
-  tooltipClass: String,
-  marks: Object,
+  tooltipClass: String as PropType<string>,
+  marks: Object as PropType<{ [key: string]: unknown }>,
 
   // other options
   validateEvent: {
@@ -261,11 +261,16 @@ export const customInputProps = {
   },
   options: [Array] as PropType<CustomInputOptions[] | CascaderOption[]>,
   pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
+
+  // custom props
   hue: {
     type: String as PropType<string>,
     default: 'default'
   },
-  exclude: [RegExp, String, Number] as PropType<RegExp | string | number>,
+  exclude: {
+    type: [String, Number, RegExp] as PropType<string | number | RegExp>,
+    default: null
+  }
 }
 
 export type CustomInputProps = ExtractPropTypes<typeof customInputProps>

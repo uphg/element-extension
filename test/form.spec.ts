@@ -475,6 +475,36 @@ describe('form', () => {
   // })
 
   describe('components extends', () => {
+
+    it('input exclude', async () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item ref="formItemRef" label="联系方式" v-model="form.phone" :exclude="/[0-9]/"/>
+          </e-form>
+        `,
+        data: () => ({
+          form: {
+            phone: ''
+          }
+        })
+      }
+      const wrapper = mount(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef
+      const formItemRef = wrapper.vm.$refs.formItemRef
+      formItemRef.focus()
+      await formRef.$nextTick()
+      const keyCodes = ['1', '2', 'q', '3', '4', 'w']
+      await wrapper.trigger('keydown', { key: 'a' })
+      // keyCodes.forEach(async (key) => {
+      //   await wrapper.trigger('keydown', { key })
+      // })
+      formItemRef.blur()      
+      await formRef.$nextTick()
+      expect(wrapper.vm.form.phone).toBe('a')
+
+    })
+
     it('select options scopedSlots', () => {
       const formDemo = {
         template: `
