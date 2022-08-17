@@ -1,4 +1,4 @@
-import { ref, Ref } from "vue"
+import { ref } from "vue"
 import { ElForm, ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 
 function useElForm() {
