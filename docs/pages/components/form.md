@@ -22,6 +22,16 @@ form/options
 
 :::
 
+## 自定义模板
+
+使用 options 插槽给 options 选项自定义模板
+
+:::code
+
+form/options-custom
+
+:::
+
 
 ## 表单验证
 
@@ -54,9 +64,13 @@ import FormBase from 'docs/demo/form/base.vue'
 import FormOptions from 'docs/demo/form/options.vue'
 import FormValidate from 'docs/demo/form/validate.vue'
 import FormRender from 'docs/demo/form/render.vue'
+import FormOptionsCustom from 'docs/demo/form/options-custom.vue'
 </script>
 
 <style>
+.demo-form .el-form-item:last-child {
+  margin-bottom: 0;
+}
 .demo-form .el-form {
   width: 460px;
 }
