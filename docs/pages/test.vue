@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import EConfigProvider from '../components/e-config-provider'
-import HelloWorld from '../components/HelloWorld.vue'
 import { ref } from 'vue';
 import { Form, FormItem, Col, DatePicker, TimePicker } from 'element-ui';
 import { ElForm } from 'element-ui/types/form';
