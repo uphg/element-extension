@@ -4,6 +4,11 @@ import ElementPart from '../src/index'
 const localVue = createLocalVue()
 localVue.use(ElementPart)
 
+const withOptions = (options: string[]) => (options.map((item, index) =>({
+  label: item,
+  value: index
+})))
+
 describe('form', () => {
 
   it('label width', () => {
@@ -462,6 +467,40 @@ describe('form', () => {
       wrapper.vm.form.time = ''
       await formRef.$nextTick()
       expect(elFormItem.validateMessage).toBe('请选择时间')
+    })
+  })
+
+  // describe('components base', () => {
+
+  // })
+
+  describe('components extends', () => {
+    it('select options scopedSlots', () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item
+              type="select"
+              label="活动区域"
+              v-model="form.region"
+              :options="withOptions(['区域一'])"
+            >
+              <template v-slot:options="slotProps">
+                <span class="custom">{{ slotProps.label + '-' + slotProps.value }}</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: {
+            region: ''
+          }
+        }),
+        methods: { withOptions }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.custom').exists()).toBeTruthy()
+      expect(wrapper.find('.custom').text()).toBe('区域一-0')
     })
   })
 
