@@ -6,7 +6,7 @@ import { highlight } from './highlight'
 const demoPath = `${path.resolve('./docs/demo')}`
 
 function getComponentName(sourceFile) {
-  const names = sourceFile.split('/')
+  const names = sourceFile.split(/[\/-]/)
   return names.map((item) => item.replace(/^(\w)/, (_, c) => (c ? c.toUpperCase() : ''))).join('')
 }
 

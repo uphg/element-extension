@@ -1,8 +1,9 @@
-import { defineComponent, h, PropType, Ref, ref } from 'vue'
+import { defineComponent, h, PropType } from 'vue'
 import { Form } from 'element-ui'
-import { ElForm } from 'element-ui/types/form'
 import { pick } from '../../utils'
 import useElForm from '../../composables/useElForm'
+import { ElForm } from "element-ui/types/form"
+
 
 const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 

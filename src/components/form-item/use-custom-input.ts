@@ -280,7 +280,7 @@ export function useCustomInput<T extends BaseProps>(props: T, context: SetupCont
           disabled: item.disabled,
           size: props.size,
         }
-      })
+      }, [context.slots.options?.(item)])
     ))
   }, {
     type: 'cascader',

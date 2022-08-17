@@ -1,8 +1,10 @@
-import { defineComponent, h, PropType, ExtractPropTypes, ref } from "vue"
-import { FormItem as ElFormItem } from "element-ui"
+import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
+import { FormItem } from "element-ui"
 import { useCustomInput } from "./use-custom-input"
 import { customInputProps } from "../../shared/custom-input-props"
 import { pick } from "../../utils"
+import useElFormItem from "../../composables/useElFormItem"
+import { ElFormItem } from "element-ui/types/form-item"
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
@@ -36,7 +38,7 @@ export default defineComponent({
   name: 'EFormItem',
   props: formItemProps,
   setup(props, context) {
-    const elFormItem = ref<ElFormItem | null>(null)
+    const { elFormItem, clearValidate } = useElFormItem()
     const { render, expose } = useCustomInput(props, context, {
       onKeyup(event) {
         if (event.keyCode !== 13) return
@@ -48,11 +50,12 @@ export default defineComponent({
       ...(expose ? expose : {}),
       get elFormItem() {
         return elFormItem.value
-      }
+      },
+      clearValidate
     })
 
     
-    return () => h(ElFormItem, {
+    return () => h(FormItem, {
       // @ts-ignore
       ref: (el: ElFormItem) => elFormItem.value = el,
       props: pick(props, propNames),
