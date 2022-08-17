@@ -88,7 +88,7 @@ function onSubmit() {
 }
 
 function onReset() {
-  formulateRef.value?.resetFields()
+  formulateRef.value?.clearValidate()
 }
 </script>
 
