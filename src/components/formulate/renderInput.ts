@@ -16,10 +16,10 @@ import {
 import { h, Ref, SetupContext } from 'vue'
 import { PartialInputProps } from '../../types/formulate'
 import { FormData } from '../../types/form'
-import { CustomInputOptions } from 'src/types/custom-input'
+import { CustomInputOptions } from 'src/types/customInput'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
-import renderDate from './render-date'
+import renderDate from './renderDate'
 
 function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { elForm, formData, context } = _options

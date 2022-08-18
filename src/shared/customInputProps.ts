@@ -4,7 +4,8 @@ import { CascaderOption } from "element-ui/types/cascader-panel"
 import { DatePickerOptions } from "element-ui/types/date-picker"
 import { TimePickerOptions } from "element-ui/types/time-picker"
 import { TimeSelectOptions } from "element-ui/types/time-select"
-import { CustomInputOptions } from '../types/custom-input'
+import { CustomInputOptions } from '../types/customInput'
+import { InputExclude } from "../types/input";
 
 function noop() { }
 
@@ -336,7 +337,7 @@ export const customInputProps = {
     default: 'default'
   },
   exclude: {
-    type: [String, Number, RegExp] as PropType<string | number | RegExp>,
+    type: [String, Number, RegExp] as PropType<InputExclude>,
     default: null
   }
 }

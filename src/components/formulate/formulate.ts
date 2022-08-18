@@ -2,9 +2,9 @@ import { defineComponent, ExtractPropTypes, h, PropType, Ref, ref, VNodeChildren
 import { Form, FormItem } from "element-ui"
 import { ElForm } from "element-ui/types/form"
 import { isArray, isObject } from "../../utils"
-import renderInput from './render-input'
+import renderInput from './renderInput'
 import { FormulateFields, FormulateFiled, FormulateBaseFiled, FormulateFullFields, MapRules } from '../../types/formulate'
-import { CustomInputValue } from "../../types/custom-input"
+import { CustomInputValue } from "../../types/customInput"
 import { FormRules, FormData } from '../../types/form'
 import useElForm from '../../composables/useElForm'
 

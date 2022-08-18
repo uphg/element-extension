@@ -1,4 +1,4 @@
-import { formGlobalFieldsKey } from '../shared/form-providers'
+import { formGlobalFieldsKey } from '../shared/formProviders'
 import { VueConstructor } from 'vue/types/vue'
 
 import Input from './input/index'

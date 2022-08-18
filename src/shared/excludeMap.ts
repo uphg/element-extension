@@ -1,4 +1,4 @@
-export const excludes = {
+export const excludeMap = {
   account: /[^\w]/g,
   password: /[\u4E00-\u9FA5\s]/g,
   phone: /^0|[^\d]/g,

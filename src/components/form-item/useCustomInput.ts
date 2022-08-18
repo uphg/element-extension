@@ -19,11 +19,14 @@ import {
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { toString, find, omitBy } from '../../utils'
-import { CustomInputProps } from '../../shared/custom-input-props'
-import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
+import { CustomInputProps } from '../../shared/customInputProps'
+import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
+import { createExclude } from '../../shared/createExclude'
 
-type useInputParamsOptions = {
+
+
+type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;
   onInput?: (event: any) => void;
 }
@@ -69,7 +72,7 @@ const useExpose = (inputRef: Ref<any>) => ({
   }
 })
 
-export function useCustomInput<T extends CustomInputProps>(props: T, context: SetupContext<{}>, options?: useInputParamsOptions) {
+export function useCustomInput<T extends CustomInputProps>(props: T, context: SetupContext<{}>, options?: CustomInputParamsOptions) {
   const { onKeyup } = options || {}
   const { emit } = context
 
@@ -77,7 +80,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
   const inputRef = ref<any>(null)
 
   const onInput = options?.onInput ? options.onInput : props.exclude ? (value: CustomInputValue) => {
-    const exclude = typeof props.exclude === 'number' ? toString(props.exclude) : props.exclude 
+    const exclude = createExclude(props.exclude)
     const newVal = toString(value).replace(exclude, '')
     emit('input', newVal)
   } : (value: CustomInputValue) => {
