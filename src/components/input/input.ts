@@ -77,7 +77,9 @@ export default defineComponent({
   name: 'EInput',
   props: inputProps,
   setup(props, context) {
-
+    const onInput = (value: string | number) => {
+      context.emit('input', value)
+    }
 
     return () => h(Input, {
       props: pick(props, inputPropNames),
@@ -91,9 +93,7 @@ export default defineComponent({
         change(value: string | number) {
           context.emit('change', value)
         },
-        input(value: string | number) {
-          context.emit('input', value)
-        },
+        input: onInput,
         clear() {
           context.emit('clear')
         }

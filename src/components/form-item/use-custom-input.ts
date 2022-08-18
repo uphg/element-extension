@@ -18,7 +18,7 @@ import {
 } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { toString, find, omitBy } from '../../utils'
+import { toString, find, omitBy, pick } from '../../utils'
 import { CustomInputProps } from '../../shared/custom-input-props'
 import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
 import { EmitFn } from 'vue/types/v3-setup-context'
@@ -174,20 +174,35 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         type: props.type,
         value: props.value,
         clearable: props.clearable,
-        disabled: props.disabled,
         showPassword: props.showPassword,
+        disabled: props.disabled,
+        size: props.size,
         suffixIcon: props.suffixIcon,
         prefixIcon: props.prefixIcon,
-        maxlength: props.maxlength,
-        minlength: props.minlength,
         showWordLimit: props.showWordLimit,
-        size: props.size,
-        clear: onClear
+        tabindex: props.tabindex,
+        validateEvent: props.validateEvent
+      },
+      attrs: {
+        placeholder: context.attrs.placeholder,
+        autocomplete: context.attrs.autocomplete,
+        name: context.attrs.name,
+        readonly: context.attrs.readonly,
+        step: context.attrs.step,
+        autofocus: context.attrs.autofocus,
+        form: context.attrs.form,
+        rows: context.attrs.rows,
+        autosize: context.attrs.autosize,
+        maxlength: context.attrs.maxlength,
+        minlength: context.attrs.minlength,
+        max: props.max,
+        min: props.min,
       },
       on: {
         input: onInput,
         change: onChange,
         blur: onBlur,
+        clear: onClear
       },
       nativeOn,
     }, [
@@ -367,8 +382,8 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       props: {
         value: props.value || 0,
         disabled: props.disabled,
-        min: props.min,
-        max: props.max,
+        min: props.min || 0,
+        max: props.max || 100,
         step: props.step,
         showInput: props.showInput,
         showInputControls: props.showInputControls,

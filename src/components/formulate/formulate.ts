@@ -211,12 +211,17 @@ export default defineComponent({
         props: {
           rules: rules.value,
           model: formData.value,
-          inline: props.inline,
           labelPosition: props.labelPosition,
           labelWidth: props.labelWidth,
           labelSuffix: props.labelSuffix,
+          inline: props.inline,
+          inlineMessage: props.inlineMessage,
+          statusIcon: props.statusIcon,
+          showMessage: props.showMessage,
+          size: props.size,
+          disabled: props.disabled,
           validateOnRuleChange: props.validateOnRuleChange,
-          size: props.size
+          hideRequiredAsterisk: props.hideRequiredAsterisk
         }
       },
       (fields as FormulateFiled[])?.map((item, index) => item.vIf && !item.vIf(formData.value)

@@ -19,14 +19,21 @@ export const customInputProps = {
   },
   text: String as PropType<string>,
   disabled: Boolean as PropType<boolean>,
-  clearable: Boolean as PropType<boolean>,
-  showPassword: Boolean as PropType<boolean>,
+  clearable: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  showPassword: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
   suffixIcon: String as PropType<string>,
   prefixIcon: String as PropType<string>,
   size: String as PropType<string>,
-  maxlength: [String, Number] as PropType<string | number>,
-  minlength: [String, Number] as PropType<string | number>,
-  showWordLimit: Boolean as PropType<boolean>,
+  showWordLimit: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
   multiple: Boolean as PropType<boolean>,
   max: Number as PropType<number>,
   min: Number as PropType<number>,
@@ -34,6 +41,7 @@ export const customInputProps = {
     type: Number as PropType<number>,
     default: 1 // input-number & slider
   },
+  tabindex: String as PropType<string>,
 
   // input - number
   stepStrictly: {
