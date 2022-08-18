@@ -43,13 +43,11 @@ form/validate
 
 :::
 
-## setup 渲染
-
-使用 setup 渲染组件
+## exclude 属性
 
 :::code
 
-form/render
+form/input-exclude
 
 :::
 
@@ -65,6 +63,8 @@ import FormOptions from 'docs/demo/form/options.vue'
 import FormValidate from 'docs/demo/form/validate.vue'
 import FormRender from 'docs/demo/form/render.vue'
 import FormOptionsCustom from 'docs/demo/form/options-custom.vue'
+import FormInputExclude from 'docs/demo/form/input-exclude.vue'
+
 </script>
 
 <style>
