@@ -1,4 +1,4 @@
-import Vue, { h } from 'vue'
+import Vue, { computed, getCurrentInstance, h } from 'vue'
 import VueRouter, { type RouteConfig } from 'vue-router';
 import Layout from 'docs/layout/index.vue'
 Vue.use(VueRouter)
@@ -53,5 +53,7 @@ const router = new VueRouter({
   base: import.meta.env.BASE_URL,
   routes
 })
+
+export const useRoute = () => computed(() => getCurrentInstance()?.proxy.$route)
 
 export default router

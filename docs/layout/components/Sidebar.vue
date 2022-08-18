@@ -1,7 +1,12 @@
 <template>
   <aside class="sidebar">
     <h2 class="sidebar-logo">Element Part</h2>
-    <SidebarGroup v-for="item, index in sidebars" :key="index" :title="item.title" :children="item.children" />
+    <SidebarGroup
+      v-for="item, index in sidebars"
+      :key="index"
+      :title="item.title"
+      :children="item.children"
+    />
   </aside>
 </template>
 
@@ -11,15 +16,28 @@ import SidebarGroup from './SidebarGroup.vue';
 const sidebars = [
   {
     title: '开发指南',
+    name: '',
     children: [
-      { title: '快速开始', link: '/docs/quick-start' }
+      {
+        title: '快速开始',
+        name: 'DocsQuickStart',
+        link: '/docs/quick-start'
+      }
     ]
   },
   {
     title: '组件',
     children: [
-      { title: 'Form 表单', link: '/components/form' },
-      { title: 'Formulate 定制表单', link: '/components/formulate' },
+      {
+        title: 'Form 表单',
+        name: 'ComponentsForm',
+        link: '/components/form'
+      },
+      {
+        title: 'Formulate 定制表单',
+        name: 'ComponentsFormulate',
+        link: '/components/formulate'
+      },
     ]
   }
 ]
