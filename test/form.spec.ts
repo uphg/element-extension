@@ -15,7 +15,7 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form label-width="80px">
-          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
         </e-form>
       `,
       data() {
@@ -38,8 +38,8 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form label-width="auto">
-          <e-form-item label="活动名称" v-model="form.name"  />
-          <e-form-item label="活动备注内容" v-model="form.remark"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动备注内容" v-model="form.remark"/>
         </e-form>
       `,
       data() {
@@ -63,8 +63,8 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form inline>
-          <e-form-item label="活动名称" v-model="form.name"  />
-          <e-form-item label="活动备注内容" v-model="form.remark"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动备注内容" v-model="form.remark"/>
         </e-form>
       `,
       data() {
@@ -84,8 +84,8 @@ describe('form', () => {
     const formDemo1 = {
       template: `
         <e-form label-position="top" ref="labelTop">
-          <e-form-item label="活动名称" v-model="form.name"  />
-          <e-form-item label="活动备注内容" v-model="form.remark"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动备注内容" v-model="form.remark"/>
         </e-form>
       `,
       data: () => ({
@@ -99,8 +99,8 @@ describe('form', () => {
     const formDemo2 = {
       template: `
         <e-form label-position="left" ref="labelLeft">
-          <e-form-item label="活动名称" v-model="form.name"  />
-          <e-form-item label="活动备注内容" v-model="form.remark"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动备注内容" v-model="form.remark"/>
         </e-form>
       `,
       data: () => ({
@@ -122,7 +122,7 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form size="mini">
-          <e-form-item label="活动名称" v-model="form.name"  />
+          <e-form-item label="活动名称" v-model="form.name"/>
         </e-form>
       `,
       data: () => ({
@@ -170,7 +170,7 @@ describe('form', () => {
         <e-form ref="formRef" :model="form" :rules="rules">
           <e-form-item label="活动名称" prop="name" v-model="form.name"/>
           <e-form-item label="活动区域" prop="address" v-model="form.address"/>
-          <e-form-item label="活动性质" prop="checkbox" v-model="form.type" type="checkbox" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])" />
+          <e-form-item label="活动性质" prop="checkbox" v-model="form.type" type="checkbox" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])"/>
         </e-form>
       `,
       data: () => ({
@@ -470,12 +470,47 @@ describe('form', () => {
     })
   })
 
-  // describe('components base', () => {
-
-  // })
-
   describe('components extends', () => {
 
+    it('form item prefix', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item label="活动名称" v-model="form.name">
+              <template #itemPrefix>
+                <span class="item-prefix">我是前缀</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: { name: '' }
+        })
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.item-prefix').exists()).toBeTruthy()
+    })
+
+    it('form item suffix', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item label="活动名称" v-model="form.name">
+              <template #itemSuffix>
+                <span class="item-suffix">我是后缀</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: { name: '' }
+        })
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.item-suffix').exists()).toBeTruthy()
+    })
 
     it('select options scopedSlots', () => {
       const formDemo = {
@@ -488,7 +523,7 @@ describe('form', () => {
               :options="withOptions(['区域一'])"
             >
               <template v-slot:options="slotProps">
-                <span class="custom">{{ slotProps.label + '-' + slotProps.value }}</span>
+                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
               </template>
             </e-form-item>
           </e-form>
@@ -501,8 +536,8 @@ describe('form', () => {
         methods: { withOptions }
       }
       const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.custom').exists()).toBeTruthy()
-      expect(wrapper.find('.custom').text()).toBe('区域一-0')
+      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
     })
   })
 

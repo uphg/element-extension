@@ -42,6 +42,11 @@ export const customInputProps = {
     default: 1 // input-number & slider
   },
   tabindex: String as PropType<string>,
+  popperClass: String as PropType<string>,
+  debounce: {
+    type: Number as PropType<number>,
+    default: 300
+  },
 
   // input - number
   stepStrictly: {
@@ -63,11 +68,26 @@ export const customInputProps = {
     default: ''
   },
 
-
   // select
+  automaticDropdown: Boolean as PropType<boolean>,
+  filterable: Boolean as PropType<boolean>,
+  allowCreate: Boolean as PropType<boolean>,
+  loading: Boolean as PropType<boolean>,
+  remote: Boolean as PropType<boolean>,
+  loadingText: String as PropType<string>,
+  noMatchText: String as PropType<string>,
+  noDataText: String as PropType<string>,
+  remoteMethod: Function as PropType<Function>,
+  filterMethod: Function as PropType<Function>,
   multipleLimit: {
     type: Number as PropType<number>,
     default: 0
+  },
+  defaultFirstOption: Boolean as PropType<boolean>,
+  reserveKeyword: Boolean as PropType<boolean>,
+  valueKey: {
+    type: String as PropType<string>,
+    default: 'value'
   },
   collapseTags: Boolean as PropType<boolean>,
   popperAppendToBody: {
@@ -76,11 +96,56 @@ export const customInputProps = {
   },
 
   // cascader
+  props: Object as PropType<object>,
+  separator: {
+    type: String,
+    default: ' / '
+  },
   showAllLevels: {
     type: Boolean as PropType<boolean>,
     default: true
   },
-  props: Object as PropType<object>,
+  beforeFilter: {
+    type: Function,
+    default: () => (() => {})
+  },
+
+  // cascader - PopperMixin
+  placement: {
+    type: String,
+    default: 'bottom-start'
+  },
+  appendToBody: {
+    type: Boolean,
+    default: true
+  },
+  visibleArrow: {
+    type: Boolean,
+    default: true
+  },
+  arrowOffset: {
+    type: Number,
+    default: 35
+  },
+  offset: {
+    default: 0
+  },
+  boundariesPadding: {
+    type: Number,
+    default: 5
+  },
+  popperOptions: {
+    type: Object,
+    default() {
+      return {
+        gpuAcceleration: false
+      };
+    }
+  },
+  transformOrigin: {
+    type: [Boolean, String],
+    default: true
+  },
 
   // date
   format: String as PropType<string>,
@@ -92,7 +157,6 @@ export const customInputProps = {
     type: String as PropType<string>,
     default: 'el-icon-circle-close'
   },
-  popperClass: String as PropType<string>,
   editable: {
     type: Boolean as PropType<boolean>,
     default: true
@@ -254,10 +318,6 @@ export const customInputProps = {
   },
   height: {
     type: String as PropType<string>
-  },
-  debounce: {
-    type: Number as PropType<number>,
-    default: 300
   },
   tooltipClass: String as PropType<string>,
   marks: Object as PropType<{ [key: string]: unknown }>,

@@ -18,7 +18,7 @@ import {
 } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { toString, find, omitBy, pick } from '../../utils'
+import { toString, find, omitBy } from '../../utils'
 import { CustomInputProps } from '../../shared/custom-input-props'
 import { CustomInputOptions, CustomInputValue } from '../../types/custom-input'
 import { EmitFn } from 'vue/types/v3-setup-context'
@@ -246,6 +246,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         placeholder: context.attrs.placeholder,
         name: context.attrs.name,
       },
+      attrs: context.attrs,
       on: {
         input(newVal: string | number) {
           if (props.value === newVal) return
@@ -264,17 +265,34 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
     render: () => h(Select, {
       ref: setRef,
       props: {
+        name: context.attrs.name,
+        id: context.attrs.id,
         value: props.value,
-        clearable: props.clearable,
-        disabled: props.disabled,
+        autocomplete: context.attrs.autocomplete,
+        automaticDropdown: props.automaticDropdown,
         size: props.size,
+        disabled: props.disabled,
+        clearable: props.clearable,
+        filterable: props.filterable,
+        allowCreate: props.allowCreate,
+        loading: props.loading,
+        popperClass: props.popperClass,
+        remote: props.remote,
+        loadingText: props.loadingText,
+        noMatchText: props.noMatchText,
+        noDataText: props.noDataText,
+        remoteMethod: props.remoteMethod,
+        filterMethod: props.filterMethod,
         multiple: props.multiple,
         multipleLimit: props.multipleLimit,
+        placeholder: context.attrs.placeholder,
+        defaultFirstOption: props.defaultFirstOption,
+        reserveKeyword: props.reserveKeyword,
+        valueKey: props.valueKey,
         collapseTags: props.collapseTags,
-        popperAppendToBody: props.popperAppendToBody,
-        autocomplete: context.attrs.autocomplete
+        popperAppendToBody: props.popperAppendToBody
       },
-      attrs: context.attrs,
+      // attrs: context.attrs,
       on: {
         input: onInput,
         change: onChange,
@@ -304,7 +322,8 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         clearable: props.clearable,
         showAllLevels: props.showAllLevels,
         props: props.props,
-        collapseTags: props.collapseTags
+        collapseTags: props.collapseTags,
+        placeholder: context.attrs.placeholder 
       },
       on: {
         input: onInput,
