@@ -29,6 +29,11 @@ const sidebars = [
     title: '组件',
     children: [
       {
+        title: 'Input 输入框',
+        name: 'ComponentsInput',
+        link: '/components/input'
+      },
+      {
         title: 'Form 表单',
         name: 'ComponentsForm',
         link: '/components/form'
