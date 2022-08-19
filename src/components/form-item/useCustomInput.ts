@@ -139,7 +139,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
           disabled: item.disabled,
           size: props.size,
         }
-      }, [item.label])
+      }, [context.slots.options ? context.slots.options(item) : item.label])
     ))
   }, {
     type: 'checkbox',
@@ -163,7 +163,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         attrs: {
           name: item.name
         }
-      }, [item.label]) || null
+      }, [context.slots.options ? context.slots.options(item) : item.label]) || null
     ))
   }, {
     type: ['text', 'password', 'textarea'],

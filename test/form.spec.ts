@@ -624,6 +624,64 @@ describe('form', () => {
       expect(wrapper.find('.custom-options').exists()).toBeTruthy()
       expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
     })
+
+    it('radio options scopedSlots', () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item
+              type="radio"
+              label="活动区域"
+              v-model="form.region"
+              :options="withOptions(['区域一'])"
+            >
+              <template v-slot:options="slotProps">
+                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: {
+            region: ''
+          }
+        }),
+        methods: { withOptions }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-radio-group').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
+    })
+
+    it('checkbox options scopedSlots', () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item
+              type="checkbox"
+              label="活动区域"
+              v-model="form.region"
+              :options="withOptions(['区域一'])"
+            >
+              <template v-slot:options="slotProps">
+                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: {
+            region: ''
+          }
+        }),
+        methods: { withOptions }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-checkbox-group').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
+    })
   })
 
 })
