@@ -9,9 +9,8 @@
       :options="withOptions(['区域一', '区域二'])"
     >
       <template v-slot:options="slotProps">
-        <span>{{ slotProps.label }}</span>
-        {{ ' --- ' }}
-        <span style="color: #8492a6;">{{ slotProps.value }}</span>
+        <span style="float: left">{{ slotProps.label }}</span>
+        <span style="float: right; color: #8492a6; font-size: 13px">{{ slotProps.value }}</span>
       </template>
     </e-form-item>
   </e-form>
