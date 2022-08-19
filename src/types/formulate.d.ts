@@ -1,39 +1,34 @@
 import { SimElementComponent } from './component'
 import { FormData, FormRule } from './form';
 import { CustomInputTypes, CustomInputValue, CustomInputOptions } from './input'
-import { CustomInputProps } from '../../shared/input-props'
+import { CustomInputProps } from '../shared/customInputProps'
 import { ElementUIComponentSize } from 'element-ui/types/component';
 import { FormItemLabelPosition, ValidateCallback, ValidateFieldCallback } from 'element-ui/types/form';
+import { ScopedSlot, VNodeChildren } from 'vue/types/vnode';
 
-export interface FormulateBaseFiled {
-  label: string;
+export interface FormulateField extends CustomInputProps {
+  label?: string;
+  key?: string;
   type?: CustomInputTypes | string;
   rules?: FormRule;
   required?: boolean;
   options?: CustomInputOptions;
-  [key: string]: any;
+  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
+  [key: string]: VNodeChildren;
 }
 
-export interface FormulateFiled extends FormulateBaseFiled {
-  key: string;
-}
 
-export type FormulateFullFields = {
-  [key: string]: FormulateBaseFiled;
-  $footer?: FormulateBaseFiled | FormulateFiled[]
+export type FormulateFields = {
+  [key: string]: FormulateFiled;
+  $footer?: FormulateFiled | FormulateFiled[]
 }
-
-export type FormulateFields = FormulateFullFields | FormulateFiled[]
 
 export interface MapRules {
   (options: { type?: string, key: string, label: string }): FormRule[] | []
 }
 
-export interface FormulatePublicInputProps {
-  vIf(formData: { [key: string]: CustomInputValue }): boolean | undefined
-}
 
-export type PartialInputProps = Partial<CustomInputProps & FormulatePublicInputProps>
+export type PartialInputProps = Partial<FormulateInputProps>
 
 export declare class EFormulate extends SimElementComponent {
   
