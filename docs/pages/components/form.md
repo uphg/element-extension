@@ -32,6 +32,13 @@ form/options-custom
 
 :::
 
+添加 `withOptionGroup` 可以使用 Select 组件的 OptionsGroup 嵌套功能
+
+:::code
+
+form/option-group
+
+:::
 
 ## 表单验证
 
@@ -44,6 +51,8 @@ form/validate
 :::
 
 ## exclude 属性
+
+让 Input 组件排除输入指定项，支持字符串、正则、数字
 
 :::code
 
@@ -63,6 +72,7 @@ import FormOptions from 'docs/demo/form/options.vue'
 import FormValidate from 'docs/demo/form/validate.vue'
 import FormRender from 'docs/demo/form/render.vue'
 import FormOptionsCustom from 'docs/demo/form/options-custom.vue'
+import FormOptionGroup from 'docs/demo/form/option-group.vue'
 import FormInputExclude from 'docs/demo/form/input-exclude.vue'
 
 </script>
