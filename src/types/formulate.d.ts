@@ -26,7 +26,7 @@ export type FormulateFullFields = {
 export type FormulateFields = FormulateFullFields | FormulateFiled[]
 
 export interface MapRules {
-  (options: { type?: string, key: string, label: string }): FormRule | []
+  (options: { type?: string, key: string, label: string }): FormRule[] | []
 }
 
 export interface FormulatePublicInputProps {

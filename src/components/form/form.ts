@@ -3,41 +3,14 @@ import { Form } from 'element-ui'
 import { pick } from '../../utils'
 import useElForm from '../../composables/useElForm'
 import { ElForm } from "element-ui/types/form"
-
+import { elFormProps } from '../../shared/elFormProps'
 
 const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
-const formProps = {
-  model: Object as PropType<object>,
-  rules: {
-    type: [Object, Array] as PropType<object|Array<unknown>>,
-    default: () => ({})
-  },
-  labelPosition: String as PropType<string>,
-  labelWidth: String as PropType<string>,
-  labelSuffix: {
-    type: String as PropType<string>,
-    default: ''
-  },
-  
-  inline: Boolean as PropType<boolean>,
-  inlineMessage: Boolean as PropType<boolean>,
-  statusIcon: Boolean as PropType<boolean>,
-  showMessage: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  },
-  size: String as PropType<string>,
-  disabled: Boolean as PropType<boolean>,
-  validateOnRuleChange: {
-    type: Boolean as PropType<boolean>,
-    default: true // el 默认 true
-  },
-  hideRequiredAsterisk: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  }
 
+const formProps = {
+  ...elFormProps,
+  
   // customize props
   // withValidate: Boolean as PropType<boolean>, // 是否开启验证
   // withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行

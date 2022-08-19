@@ -6,20 +6,54 @@ import { TimePickerOptions } from "element-ui/types/time-picker"
 import { TimeSelectOptions } from "element-ui/types/time-select"
 import { CustomInputOptions } from '../types/customInput'
 import { InputExclude } from "../types/input";
+import { QueryChangeHandler } from 'element-ui/types/select'
 
 function noop() { }
 
 export const customInputProps = {
+  // public
   value: {
     type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
     default: ''
   },
+  text: String as PropType<string>,
+  multiple: Boolean as PropType<boolean>,
+  max: Number as PropType<number>,
+  min: Number as PropType<number>,
+  step: {
+    type: Number as PropType<number>,
+    default: 1 // input-number & slider
+  },
+  popperClass: String as PropType<string>,
+  debounce: {
+    type: Number as PropType<number>,
+    default: 300
+  },
+
+  // input
+  size: String as PropType<string>,
+  resize: String as PropType<string>,
+  form: String as PropType<string>,
+  disabled: Boolean as PropType<boolean>,
+  readonly: Boolean as PropType<boolean>,
   type: {
     type: String as PropType<string>,
     default: 'text'
   },
-  text: String as PropType<string>,
-  disabled: Boolean as PropType<boolean>,
+  autosize: {
+    type: [Boolean, Object] as PropType<boolean | { [key: string]: any }>,
+    default: false
+  },
+  autocomplete: {
+    type: String as PropType<string>,
+    default: 'off'
+  },
+  validateEvent: {
+    type: Boolean as PropType<boolean>,
+    default: true
+  },
+  suffixIcon: String as PropType<string>,
+  prefixIcon: String as PropType<string>,
   clearable: {
     type: Boolean as PropType<boolean>,
     default: false
@@ -28,26 +62,11 @@ export const customInputProps = {
     type: Boolean as PropType<boolean>,
     default: false
   },
-  suffixIcon: String as PropType<string>,
-  prefixIcon: String as PropType<string>,
-  size: String as PropType<string>,
   showWordLimit: {
     type: Boolean as PropType<boolean>,
     default: false
   },
-  multiple: Boolean as PropType<boolean>,
-  max: Number as PropType<number>,
-  min: Number as PropType<number>,
-  step: {
-    type: Number as PropType<number>,
-    default: 1 // input-number & slider
-  },
   tabindex: String as PropType<string>,
-  popperClass: String as PropType<string>,
-  debounce: {
-    type: Number as PropType<number>,
-    default: 300
-  },
 
   // input - number
   stepStrictly: {
@@ -78,8 +97,8 @@ export const customInputProps = {
   loadingText: String as PropType<string>,
   noMatchText: String as PropType<string>,
   noDataText: String as PropType<string>,
-  remoteMethod: Function as PropType<Function>,
-  filterMethod: Function as PropType<Function>,
+  remoteMethod: Function as PropType<QueryChangeHandler>,
+  filterMethod: Function as PropType<QueryChangeHandler>,
   multipleLimit: {
     type: Number as PropType<number>,
     default: 0
@@ -151,7 +170,6 @@ export const customInputProps = {
   // date
   format: String as PropType<string>,
   valueFormat: String as PropType<string>,
-  readonly: Boolean as PropType<boolean>,
   startPlaceholder: String as PropType<string>,
   endPlaceholder: String as PropType<string>,
   clearIcon: {
@@ -324,10 +342,6 @@ export const customInputProps = {
   marks: Object as PropType<{ [key: string]: unknown }>,
 
   // other options
-  validateEvent: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  },
   options: [Array] as PropType<CustomInputOptions[] | CascaderOption[]>,
   pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
 

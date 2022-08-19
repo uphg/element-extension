@@ -19,13 +19,11 @@ import {
 } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { toString, find, omitBy } from '../../utils'
+import { find, omitBy } from '../../utils'
 import { CustomInputProps } from '../../shared/customInputProps'
 import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
+import { useOnInput } from '../../shared/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
-import { createExclude } from '../../shared/createExclude'
-
-
 
 type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -79,14 +77,8 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
 
   const nativeOn = omitBy({ keyup: onKeyup }, (item) => !item)
   const inputRef = ref<any>(null)
-
-  const onInput = options?.onInput ? options.onInput : props.exclude ? (value: CustomInputValue) => {
-    const exclude = createExclude(props.exclude)
-    const newVal = toString(value).replace(exclude, '')
-    emit('input', newVal)
-  } : (value: CustomInputValue) => {
-    emit('input', value)
-  }
+  const _onInput = useOnInput(props, context)
+  const onInput = options?.onInput ? options.onInput : _onInput
 
   const { onClick, onChange, onVisibleChange, onBlur, onFocus, onClear } = useEvents(emit)
   const { focus, blur, select } = useExpose(inputRef)
@@ -126,6 +118,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       props: {
         value: props.value,
         disabled: props.disabled,
+        size: props.size,
       },
       on: {
         input: onInput,
@@ -136,8 +129,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         key: `s.r.opt.${index}`,
         props: {
           label: item.value,
-          disabled: item.disabled,
-          size: props.size,
+          disabled: item.disabled
         }
       }, [context.slots.options ? context.slots.options(item) : item.label])
     ))
@@ -147,6 +139,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       props: {
         value: props.value,
         disabled: props.disabled,
+        size: props.size,
       },
       on: {
         input: onInput,
@@ -157,8 +150,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         key: `s.c.opt.${index}`,
         props: {
           label: item.value,
-          disabled: item.disabled,
-          size: props.size,
+          disabled: item.disabled
         },
         attrs: {
           name: item.name
@@ -250,7 +242,6 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         placeholder: context.attrs.placeholder,
         name: context.attrs.name,
       },
-      attrs: context.attrs,
       on: {
         input(newVal: string | number) {
           if (props.value === newVal) return
@@ -296,7 +287,6 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         collapseTags: props.collapseTags,
         popperAppendToBody: props.popperAppendToBody
       },
-      // attrs: context.attrs,
       on: {
         input: onInput,
         change: onChange,
@@ -311,13 +301,30 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
     render: () => h(Cascader, {
       props: {
         value: props.value,
-        disabled: props.disabled,
         options: props.options,
-        clearable: props.clearable,
-        showAllLevels: props.showAllLevels,
         props: props.props,
+        size: props.size,
+        placeholder: context.attrs.placeholder ,
+        disabled: props.disabled,
+        clearable: props.clearable,
+        filterable: props.filterable,
+        filterMethod: props.filterMethod,
+        separator: props.separator,
+        showAllLevels: props.showAllLevels,
         collapseTags: props.collapseTags,
-        placeholder: context.attrs.placeholder 
+        debounce: props.debounce,
+        beforeFilter: props.beforeFilter,
+        popperClass: props.popperClass,
+
+        // PopperMixin
+        placement: props.placement,
+        appendToBody: props.appendToBody,
+        visibleArrow: props.visibleArrow,
+        arrowOffset: props.arrowOffset,
+        offset: props.offset,
+        boundariesPadding: props.boundariesPadding,
+        popperOptions: props.popperOptions,
+        transformOrigin: props.transformOrigin
       },
       on: {
         input: onInput,
@@ -334,20 +341,6 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       focus
     },
     render: () => h(DatePicker, getDataAttrs())
-  }, {
-    type: 'time',
-    render: () => h(TimeSelect, {
-      props: {
-        value: props.value,
-        pickerOptions: props.pickerOptions,
-        disabled: props.disabled,
-        size: props.size,
-      },
-      on: {
-        input: onInput,
-        change: onChange
-      }
-    })
   }, {
     // 时间选择器
     type: ['time', 'time-select'],
@@ -534,8 +527,7 @@ function renderSelectOptions(props: CustomInputProps, context: SetupContext<{}>)
     props: {
       label: item.label,
       value: item.value,
-      disabled: item.disabled,
-      size: props.size,
+      disabled: item.disabled
     }
   }, [context.slots.options?.(item)])
 

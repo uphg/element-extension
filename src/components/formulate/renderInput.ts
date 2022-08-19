@@ -1,24 +1,10 @@
-import {
-  Button,
-  Input,
-  Select,
-  Cascader,
-  Option,
-  RadioGroup,
-  Radio,
-  CheckboxGroup,
-  Checkbox,
-  InputNumber,
-  Switch,
-  Slider,
-  Upload
-} from 'element-ui'
+import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGroup, Checkbox, InputNumber, Switch, Slider, Upload } from 'element-ui'
 import { h, Ref, SetupContext } from 'vue'
-import { PartialInputProps } from '../../types/formulate'
-import { FormData } from '../../types/form'
-import { CustomInputOptions } from 'src/types/customInput'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
+import { PartialInputProps } from '../../types/formulate'
+import { FormData } from '../../types/form'
+import { CustomInputOptions } from '../../types/customInput'
 import renderDate from './renderDate'
 
 function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
@@ -32,20 +18,30 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         props: {
           type: props.type,
           value: formData.value[props.key],
-          disabled: props.disabled,
           clearable: props.clearable,
+          showPassword: props.showPassword,
+          disabled: props.disabled,
+          size: props.size,
           suffixIcon: props.suffixIcon,
           prefixIcon: props.prefixIcon,
           showWordLimit: props.showWordLimit,
-          showPassword: props.showPassword,
-          rows: props.rows,
-          autosize: props.autosize
+          tabindex: props.tabindex,
+          validateEvent: props.validateEvent
         },
         attrs: {
           placeholder: props.placeholder,
+          autocomplete: props.autocomplete,
           name: props.name,
-          minlength: props.minlength,
-          maxlength: props.maxlength,
+          readonly: props.readonly,
+          step: props.step,
+          autofocus: props.autofocus,
+          form: props.form,
+          rows: props.rows,
+          autosize: props.autosize,
+          maxlength: props.minlength,
+          minlength: props.maxlength,
+          max: props.max,
+          min: props.min,
         },
         on: {
           input(value: any) {
@@ -54,6 +50,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         },
         scopedSlots: props.scopedSlots
       }, props?.children)
+
     case 'number':
       return h(InputNumber, {
         ref: props.ref,
@@ -68,8 +65,6 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
           size: props.size,
           min: props.min,
           max: props.max,
-        },
-        attrs: {
           placeholder: props.placeholder,
           name: props.name,
         },
@@ -80,6 +75,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
           }
         }
       })
+
     case 'radio':
       if (!props.options) {
         throw new Error('[ElementPart] "options" attribute is required when type="radio"');
@@ -89,6 +85,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
+          size: props.size
         },
         on: {
           input(value: any) {
@@ -104,6 +101,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
           }
         }, [item.label])
       ))
+
     case 'checkbox':
       if (!props.options) {
         throw new Error('[ElementPart] "options" attribute is required when type="checkbox"');
@@ -113,6 +111,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
+          size: props.size
         },
         on: {
           input(value: any) {
@@ -138,7 +137,8 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         props: {
           value: formData.value[props.key],
           disabled: props.disabled,
-          placeholder: props.placeholder
+          placeholder: props.placeholder,
+          size: props.size
         },
         on: {
           input(value: any) {
@@ -161,13 +161,30 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         ref: props.ref,
         props: {
           value: formData.value[props.key],
-          disabled: props.disabled,
           options: props.options,
-          clearable: props.clearable,
-          showAllLevels: props.showAllLevels,
           props: props.props,
+          size: props.size,
+          placeholder: props.placeholder ,
+          disabled: props.disabled,
+          clearable: props.clearable,
+          filterable: props.filterable,
+          filterMethod: props.filterMethod,
+          separator: props.separator,
+          showAllLevels: props.showAllLevels,
           collapseTags: props.collapseTags,
-          placeholder: props.placeholder
+          debounce: props.debounce,
+          beforeFilter: props.beforeFilter,
+          popperClass: props.popperClass,
+
+          // PopperMixin
+          placement: props.placement,
+          appendToBody: props.appendToBody,
+          visibleArrow: props.visibleArrow,
+          arrowOffset: props.arrowOffset,
+          offset: props.offset,
+          boundariesPadding: props.boundariesPadding,
+          popperOptions: props.popperOptions,
+          transformOrigin: props.transformOrigin
         },
         on: {
           input(value: any) {
@@ -192,7 +209,8 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
           inactiveColor: props.inactiveColor,
           activeValue: props.activeValue,
           inactiveValue: props.inactiveValue,
-          validateEvent: props.validateEvent
+          validateEvent: props.validateEvent,
+          size: props.size,
         },
         on: {
           input(value: any) {
@@ -222,7 +240,8 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
           debounce: props.debounce,
           label: props.label,
           tooltipClass: props.tooltipClass,
-          marks: props.marks
+          marks: props.marks,
+          size: props.size,
         },
         on: {
           input(value: any) {
@@ -240,10 +259,14 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
     case 'monthrange':
     case 'datetime':
     case 'datetimerange':
+    case 'date-picker':
       return renderDate(props, _options, 1)
 
     case 'file':
     case 'upload':
+      if (!props.action) {
+        throw new Error('[ElementPart] upload component "action" attribute is required');
+      }
       return h(Upload, {
         ref: props.ref,
         props: {

@@ -1,41 +1,21 @@
 import { defineComponent, ExtractPropTypes, h, PropType, Ref, ref, VNodeChildren } from "vue"
 import { Form, FormItem } from "element-ui"
-import { ElForm } from "element-ui/types/form"
 import { isArray, isObject } from "../../utils"
 import renderInput from './renderInput'
 import { FormulateFields, FormulateFiled, FormulateBaseFiled, FormulateFullFields, MapRules } from '../../types/formulate'
 import { CustomInputValue } from "../../types/customInput"
 import { FormRules, FormData } from '../../types/form'
 import useElForm from '../../composables/useElForm'
+import { elFormProps } from '../../shared/elFormProps'
 
 type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
 const formulateDataProps = {
-  rules: Object as PropType<FormRules>,
-  inline: Boolean as PropType<boolean>,
-  inlineMessage: Boolean as PropType<boolean>,
-  showMessage: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  },
-  statusIcon: Boolean,
-  disabled: Boolean as PropType<boolean>,
-  labelPosition: String as PropType<string>,
-  labelWidth: String as PropType<string>,
-  labelSuffix: {
-    type: String as PropType<string>,
-    default: ''
-  },
-  validateOnRuleChange: Boolean as PropType<boolean>, // 是否在 rules 属性改变后立即触发一次验证，El 默认 true
-  hideRequiredAsterisk: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
+  ...elFormProps,
   
   fields: [Array, Object] as PropType<FormulateFields>,
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
   mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
-  size: String as PropType<string>,
 }
 
 const formulateProps = {
@@ -144,7 +124,7 @@ export default defineComponent({
   setup(_props, context) {
     const props = _props.data ? _props.data : _props
     const fieldsIsArray = isArray(props.fields)
-    const rules = ref<FormRules | { [key: string]: [] }>({})
+    const rules = ref<FormRules>({})
 
     if (!props.fields) {
       throw new Error('[ElementPart] "fields" attribute is required');
