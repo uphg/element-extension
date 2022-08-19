@@ -1,6 +1,6 @@
 import { h, PropType, defineComponent } from "vue"
 import type { VNodeData } from "vue"
-import { Table as ElTable, TableColumn as ElTableColumn, Link as ElLink, Button as ElButton } from "element-ui"
+import { Table, TableColumn, Link, Button } from "element-ui"
 import { rowCallbackParams } from "element-ui/types/table"
 import { find } from "../../utils"
 import { TableColumnOptions, TableColumnProps } from "../../types/table"
@@ -19,12 +19,12 @@ export default defineComponent({
     stripe: Boolean,
   },
   setup(props, context) {
-    return () => h(ElTable, {
+    return () => h(Table, {
       props: {
         data: props.data,
         stripe: props.stripe
       }
-    }, props.columns.map(item => h(ElTableColumn, handleColumnsData(item)))
+    }, props.columns.map(item => h(TableColumn, handleColumnsData(item)))
     )
   }
 })
@@ -63,24 +63,25 @@ function handleColumnsData(props: TableColumnProps) {
 
 function renderChildrenNode(item: TableColumnProps, scope: rowCallbackParams) {
   const { hue='primary', size } = item
+  const onClick = () => item?.onClick(scope.row)
   if (item.type === 'link') {
-    return h(ElLink, {
+    return h(Link, {
       props: {
         type: hue,
         size
       },
       on: {
-        click: () => item?.onClick(scope.row)
+        click: onClick
       }
     }, [item.text])
   } else if (item.type === 'button') {
-    return h(ElButton, {
+    return h(Button, {
       props: {
         type: hue,
         size
       },
       on: {
-        click: () => item?.onClick(scope.row)
+        click: onClick
       }
     }, [item.text])
   }

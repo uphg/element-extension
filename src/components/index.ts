@@ -1,10 +1,10 @@
 import { formGlobalFieldsKey } from '../shared/formProviders'
 import { VueConstructor } from 'vue/types/vue'
 
-import Input from './input/index'
 import Form from './form'
 import FormItem from './form-item'
 import Formulate from './formulate'
+import Input from './input/index'
 import Table from './table'
 
 function install(Vue: VueConstructor) {

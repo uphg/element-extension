@@ -169,6 +169,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       props: {
         type: props.type,
         value: props.value,
+        autocomplete: props.autocomplete,
         clearable: props.clearable,
         showPassword: props.showPassword,
         disabled: props.disabled,
@@ -181,7 +182,6 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       },
       attrs: {
         placeholder: context.attrs.placeholder,
-        autocomplete: context.attrs.autocomplete,
         name: context.attrs.name,
         readonly: context.attrs.readonly,
         step: context.attrs.step,

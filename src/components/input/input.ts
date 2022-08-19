@@ -6,7 +6,8 @@ import { useOnInput } from "../../shared/useOnInput";
 import { ElInput } from "element-ui/types/input";
 import { InputType } from '../../types/input'
 
-const inputPropNames = ['value', 'size', 'resize', 'form', 'disabled', 'readonly', 'type', 'autosize', 'autocomplete', 'autoComplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'clearable', 'showPassword', 'showWordLimit', 'tabindex']
+const inputPropNames = ['value', 'size', 'resize', 'form', 'disabled', 'readonly', 'type', 'autosize', 'autocomplete',  'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'clearable', 'showPassword', 'showWordLimit', 'tabindex']
+const inputAttrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'autosize', 'maxlength', 'minlength', 'max', 'min']
 
 const inputProps = {
   value: [String, Number] as PropType<string | number>,
@@ -54,6 +55,7 @@ export default defineComponent({
     return () => h(Input, {
       ref: (el: ElInput) => inputRef.value = el,
       props: pick(props, inputPropNames),
+      attrs: pick(context.attrs, inputAttrNames),
       on: {
         blur(event: FocusEvent) {
           context.emit('blur', event)
