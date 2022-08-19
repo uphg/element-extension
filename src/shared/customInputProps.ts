@@ -339,7 +339,8 @@ export const customInputProps = {
   exclude: {
     type: [String, Number, RegExp] as PropType<InputExclude>,
     default: null
-  }
+  },
+  withOptionGroup: Boolean as PropType<boolean>
 }
 
 export type CustomInputProps = ExtractPropTypes<typeof customInputProps>

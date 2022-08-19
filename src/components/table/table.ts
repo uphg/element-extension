@@ -47,7 +47,7 @@ function handleColumnsData(props: TableColumnProps) {
     data.scopedSlots = {
       default: (scope) => props.children?.map((item) => renderChildrenNode(item, scope))
     }
-  } else if (props.options !== void 0) {
+  } else if (props.options) {
     data.scopedSlots = {
       default: (scope) => find(
         props.options as TableColumnOptions[],

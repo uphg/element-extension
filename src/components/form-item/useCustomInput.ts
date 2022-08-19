@@ -14,7 +14,8 @@ import {
   TimeSelect,
   DatePicker,
   Upload,
-  TimePicker
+  TimePicker,
+  OptionGroup
 } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
@@ -304,17 +305,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
         clear: onClear
       },
       nativeOn
-    }, props.options?.map(
-      (item, index) => h(Option, {
-        key: `s.s.opt.${index}`,
-        props: {
-          label: item.label,
-          value: item.value,
-          disabled: item.disabled,
-          size: props.size,
-        }
-      }, [context.slots.options?.(item)])
-    ))
+    }, renderSelectOptions(props, context))
   }, {
     type: 'cascader',
     render: () => h(Cascader, {
@@ -534,4 +525,28 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
   ))
 
   return template!
+}
+
+function renderSelectOptions(props: CustomInputProps, context: SetupContext<{}>) {
+
+  const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
+    key: `s.s.opt.${index}`,
+    props: {
+      label: item.label,
+      value: item.value,
+      disabled: item.disabled,
+      size: props.size,
+    }
+  }, [context.slots.options?.(item)])
+
+  return props.withOptionGroup
+    ? (props.options as CustomInputOptions[])?.map(
+      (group, i) => h(OptionGroup, {
+        key: `s.s.opt.g${i}`,
+        props: {
+          label: group.label 
+        }
+      }, [group.options?.map(renderOptions)])
+    )
+    : props.options?.map(renderOptions)
 }

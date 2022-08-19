@@ -512,6 +512,91 @@ describe('form', () => {
       expect(wrapper.find('.item-suffix').exists()).toBeTruthy()
     })
 
+    it('select options group', () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item
+              type="select"
+              label="活动区域"
+              v-model="select"
+              :options="options"
+              with-option-group
+            >
+              <template v-slot:options="slotProps">
+                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          select: '',
+          options: [{
+            label: '热门城市',
+            options: [{
+              value: 'Shanghai',
+              label: '上海'
+            }, {
+              value: 'Beijing',
+              label: '北京'
+            }]
+          }, {
+            label: '城市名',
+            options: [{
+              value: 'Chengdu',
+              label: '成都'
+            }, {
+              value: 'Shenzhen',
+              label: '深圳'
+            }, {
+              value: 'Guangzhou',
+              label: '广州'
+            }, {
+              value: 'Dalian',
+              label: '大连'
+            }]
+          }],
+        }),
+        methods: { withOptions }
+      }
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').text()).toBe('上海-Shanghai')
+    })
+
+    it('select options scopedSlots', () => {
+      const formDemo = {
+        template: `
+          <e-form ref="formRef">
+            <e-form-item
+              type="select"
+              label="活动区域"
+              v-model="form.region"
+              :options="[{
+                value: 'Shanghai',
+                label: '上海'
+              }, {
+                value: 'Beijing',
+                label: '北京'
+              }]"
+            >
+              <template v-slot:options="slotProps">
+                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: {
+            region: ''
+          }
+        })
+      }
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
+      expect(wrapper.find('.custom-options').text()).toBe('上海-Shanghai')
+    })
+
     it('select options scopedSlots', () => {
       const formDemo = {
         template: `
