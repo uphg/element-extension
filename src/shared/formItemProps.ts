@@ -1,45 +1,35 @@
-import { PropType } from "vue";
-import { ElUpload, FileListItem } from "element-ui/types/upload"
-import { CascaderOption } from "element-ui/types/cascader-panel"
-import { DatePickerOptions } from "element-ui/types/date-picker"
-import { TimePickerOptions } from "element-ui/types/time-picker"
-import { TimeSelectOptions } from "element-ui/types/time-select"
-import { CustomInputOptions } from '../types/customInput'
+import { ExtractPropTypes, PropType } from "vue";
+import { CascaderOption } from "element-ui/types/cascader-panel";
+import { DatePickerOptions } from "element-ui/types/date-picker";
+import { QueryChangeHandler } from "element-ui/types/select";
+import { TimePickerOptions } from "element-ui/types/time-picker";
+import { TimeSelectOptions } from "element-ui/types/time-select";
+import { ElUpload, FileListItem } from "element-ui/types/upload";
+import { CustomInputOptions } from "../types/customInput";
 import { InputExclude } from "../types/input";
-import { QueryChangeHandler } from 'element-ui/types/select'
+import { elFormItemProps } from "./elFormItemProps";
+
+export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
+export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
+export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
 function noop() { }
 
-export const publicProps = {
-  // formulate: props.value
-  value: {
-    type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
-    default: ''
-  },
-  text: String as PropType<string>,
-  multiple: Boolean as PropType<boolean>,
-  max: Number as PropType<number>,
-  min: Number as PropType<number>,
-  step: {
-    type: Number as PropType<number>,
-    default: 1 // input-number & slider
-  },
-  popperClass: String as PropType<string>,
-  debounce: {
-    type: Number as PropType<number>,
-    default: 300
-  },
-
-  // input
-  size: String as PropType<string>,
-  resize: String as PropType<string>,
-  form: String as PropType<string>,
-  disabled: Boolean as PropType<boolean>,
-  readonly: Boolean as PropType<boolean>,
+export const formItemBaseProps = {
   type: {
     type: String as PropType<string>,
     default: 'text'
   },
+  value: {
+    type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
+    default: ''
+  },
+  clearable: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  disabled: Boolean as PropType<boolean>,
+  size: String as PropType<string>,
   autosize: {
     type: [Boolean, Object] as PropType<boolean | { [key: string]: any }>,
     default: false
@@ -48,16 +38,16 @@ export const publicProps = {
     type: String as PropType<string>,
     default: 'off'
   },
-  validateEvent: {
-    type: Boolean as PropType<boolean>,
-    default: true
+  readonly: Boolean as PropType<boolean>,
+  max: Number as PropType<number>,
+  min: Number as PropType<number>,
+  step: {
+    type: Number as PropType<number>,
+    default: 1 // input-number & slider
   },
-  suffixIcon: String as PropType<string>,
-  prefixIcon: String as PropType<string>,
-  clearable: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
+  resize: String as PropType<string>,
+  form: String as PropType<string>,
+  tabindex: String as PropType<string>,
   showPassword: {
     type: Boolean as PropType<boolean>,
     default: false
@@ -66,7 +56,56 @@ export const publicProps = {
     type: Boolean as PropType<boolean>,
     default: false
   },
-  tabindex: String as PropType<string>,
+  validateEvent: {
+    type: Boolean as PropType<boolean>,
+    default: true
+  },
+  options: [Array] as PropType<CustomInputOptions[] | CascaderOption[]>,
+  // optionGroups: [Array], // x
+  action: {
+    type: String as PropType<string>,
+    // required: true
+  },
+  headers: {
+    type: Object as PropType<object>,
+    default() {
+      return {};
+    }
+  },
+  multiple: Boolean as PropType<boolean>,
+  fileList: {
+    type: Array as PropType<FileListItem[]>,
+    default() {
+      return [];
+    }
+  },
+  accept: String as PropType<string>,
+  format: String as PropType<string>,
+  pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
+
+  // custom props
+  hue: {
+    type: String as PropType<string>,
+    default: 'default'
+  },
+  exclude: {
+    type: [String, Number, RegExp] as PropType<InputExclude>,
+    default: null
+  },
+  withOptionGroup: Boolean as PropType<boolean>
+}
+
+export const formItemExtendsProps = {
+  text: String as PropType<string>,
+  popperClass: String as PropType<string>,
+  debounce: {
+    type: Number as PropType<number>,
+    default: 300
+  },
+
+  // input
+  suffixIcon: String as PropType<string>,
+  prefixIcon: String as PropType<string>,
 
   // input - number
   stepStrictly: {
@@ -168,7 +207,8 @@ export const publicProps = {
   },
 
   // date
-  format: String as PropType<string>,
+  defaultValue: {} as PropType<{ [key: string]: any }>,
+  defaultTime: {} as PropType<{ [key: string]: any }>,
   valueFormat: String as PropType<string>,
   startPlaceholder: String as PropType<string>,
   endPlaceholder: String as PropType<string>,
@@ -184,8 +224,6 @@ export const publicProps = {
     type: String as PropType<string>,
     default: 'left'
   },
-  defaultValue: {} as PropType<{ [key: string]: any }>,
-  defaultTime: {} as PropType<{ [key: string]: any }>,
   rangeSeparator: {
     type: [String, Number] as PropType<string | number>,
     default: '-'
@@ -232,29 +270,15 @@ export const publicProps = {
   },
 
   // upload
-  action: {
-    type: String as PropType<string>,
-    // required: true
-  },
-  headers: {
-    type: Object as PropType<object>,
-    default() {
-      return {};
-    }
-  },
-  data: Object as PropType<object>,
-  // name: {
-  //   type: String,
-  //   default: 'file'
-  // },
+  limit: Number as PropType<number>,
   drag: Boolean as PropType<boolean>,
+  data: Object as PropType<object>,
   dragger: Boolean as PropType<boolean>,
   withCredentials: Boolean as PropType<boolean>,
   showFileList: {
     type: Boolean as PropType<boolean>,
     default: true
   },
-  accept: String as PropType<string>,
   beforeUpload: Function as PropType<ElUpload['beforeUpload']>,
   beforeRemove: Function as PropType<ElUpload['onExceed']>,
   onRemove: {
@@ -280,12 +304,7 @@ export const publicProps = {
     type: Function as PropType<ElUpload['onError']>,
     default: noop
   },
-  fileList: {
-    type: Array as PropType<FileListItem[]>,
-    default() {
-      return [];
-    }
-  },
+
   autoUpload: {
     type: Boolean as PropType<boolean>,
     default: true
@@ -295,7 +314,6 @@ export const publicProps = {
     default: 'text' // text,picture,picture-card
   },
   httpRequest: Function as PropType<ElUpload["httpRequest"]>,
-  limit: Number as PropType<number>,
   onExceed: {
     type: Function as PropType<ElUpload['onExceed']>,
     default: noop
@@ -340,19 +358,14 @@ export const publicProps = {
   },
   tooltipClass: String as PropType<string>,
   marks: Object as PropType<{ [key: string]: unknown }>,
-
-  // other options
-  options: [Array] as PropType<CustomInputOptions[] | CascaderOption[]>,
-  pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
-
-  // custom props
-  hue: {
-    type: String as PropType<string>,
-    default: 'default'
-  },
-  exclude: {
-    type: [String, Number, RegExp] as PropType<InputExclude>,
-    default: null
-  },
-  withOptionGroup: Boolean as PropType<boolean>
 }
+
+export const formItemProps = {
+  ...elFormItemProps,
+  ...formItemBaseProps,
+  extends: {
+    type: Object as PropType<FormItemExtendsProps>,
+    default: () => ({})
+  }
+}
+

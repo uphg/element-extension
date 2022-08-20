@@ -6,6 +6,7 @@ import { pick } from "../../utils"
 import useElFormItem from "../../composables/useElFormItem"
 import { ElFormItem } from "element-ui/types/form-item"
 import { elFormItemProps } from "../../shared/elFormItemProps"
+import { formItemBaseProps, FormItemExtendsProps } from "../../shared/formItemProps"
 
 export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
@@ -14,10 +15,15 @@ const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 
 
 const formItemProps = {
   ...elFormItemProps,
-  ...customInputProps
+  ...formItemBaseProps,
+  extends: {
+    type: Object as PropType<FormItemExtendsProps>,
+    default: () => ({})
+  }
 }
 
-
+console.log(`formItemProps.length`)
+console.log(Object.keys(formItemProps).length)
 
 export default defineComponent({
   name: 'EFormItem',

@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType } from 'vue'
+import { defineComponent, h } from 'vue'
 import { Form } from 'element-ui'
 import { pick } from '../../utils'
 import useElForm from '../../composables/useElForm'
@@ -6,7 +6,6 @@ import { ElForm } from "element-ui/types/form"
 import { elFormProps } from '../../shared/elFormProps'
 
 const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
-
 
 const formProps = {
   ...elFormProps,
@@ -20,7 +19,6 @@ export default defineComponent({
   name: 'EForm',
   props: formProps,
   setup(props, context) {
-
     const { elForm, validate, validateField, clearValidate } = useElForm()
 
     context.expose({
