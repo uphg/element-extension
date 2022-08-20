@@ -22,7 +22,7 @@ formulate/rows-2
 
 :::
 
-列数会自动计算
+列宽会根据 ElCol 的 `span` 属性与 `fields.length` 相除进行计算，所以列数必须能被 24 整除
 
 :::code
 
@@ -72,7 +72,7 @@ import FormulateFile from 'docs/demo/formulate/file.vue'
   margin-bottom: 0;
 }
 .demo-formulate .el-form {
-  width: 460px;
+  width: 320px;
 }
 .demo-formulate .el-select {
   width: 100%;

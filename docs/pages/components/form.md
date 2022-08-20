@@ -62,7 +62,7 @@ form/input-exclude
 
 ## FormItem Attributes
 
-除了支持 ElFormItem 的属性，还支持以下属性（注：特定组件的其他属性可以在 data 属性中以对象形式传入）
+除了支持 ElFormItem 的属性，还支持以下属性（注：特定组件的其他属性可以在 extends 属性中以对象形式传入）
 
 | 参数            | 说明                                                         | 类型                              | 可选值                                                       | 默认值              |
 | --------------- | ------------------------------------------------------------ | --------------------------------- | ------------------------------------------------------------ | ------------------- |
@@ -87,26 +87,31 @@ form/input-exclude
 | form            | 原生属性                                                     | string                            | —                                                            | —                   |
 | label           | 输入框关联的label文字                                        | string                            | —                                                            | —                   |
 | tabindex        | 输入框的tabindex                                             | string                            | -                                                            | -                   |
+| show-password   | 是否显示切换密码图标                                         | boolean                           | —                                                            | false               |
+| show-word-limit | 是否显示输入字数统计，只在 `type = "text"` 或 `type = "textarea"` 时有效 | boolean                           | —                                                            | false               |
 | validate-event  | 输入时是否触发表单的校验                                     | boolean                           | -                                                            | true                |
 | options         | Select / Radio / Checkbox 选项                               | array                             | array, object                                                | []                  |
 | option-groups   | Select 组件分组选项                                          | array                             | array, object                                                | []                  |
 | action          | 必选参数，上传的地址                                         | string                            | —                                                            | —                   |
+| headers         | 设置上传的请求头部                                           | object                            | —                                                            | —                   |
 | multiple        | 是否支持多选文件                                             | boolean                           | —                                                            | —                   |
-| limit           | 最大允许上传个数                                             | number                            | —                                                            | —                   |
 | file-list       | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array                             | —                                                            | []                  |
 | accept          | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)（thumbnail-mode 模式下此参数无效） | string                            | —                                                            | —                   |
-| drag            | 是否启用拖拽上传                                             | boolean                           | —                                                            | false               |
 | format          | 显示在输入框中的格式                                         | string                            | 见[日期格式](https://element.eleme.io/#/zh-CN/component/date-picker#ri-qi-ge-shi) | yyyy-MM-dd HH:mm:ss |
 | picker-options  | 当前时间日期选择器特有的选项参考下表                         | object                            | —                                                            | {}                  |
-| range-separator | 选择范围时的分隔符                                           | string                            | —                                                            | '-'                 |
-| default-value   | 可选，选择器打开时默认显示的时间                             | Date                              | 可被`new Date()`解析                                         | —                   |
-| default-time    | 范围选择时选中日期所使用的当日内具体时刻                     | string[]                          | 数组，长度为 2，每项值为字符串，形如`12:00:00`，第一项指定开始日期的时刻，第二项指定结束日期的时刻，不指定会使用时刻 `00:00:00` | —                   |
-| value-format    | 可选，绑定值的格式。不指定则绑定值为 Date 对象               | string                            | 见[日期格式](https://element.eleme.io/#/zh-CN/component/date-picker#ri-qi-ge-shi) | —                   |
-| data            | 传入特定组件的其他属性                                       |                                   |                                                              |                     |
-| extra           |                                                              |                                   |                                                              |                     |
+| extra           | 用于在元素下展示更多说明信息，可以是 html string、纯文本、也可以是 h 函数 | string                            | —                                                            | —                   |
+| extends         | 传入特定组件的其他属性                                       | object                            | —                                                            | {}                  |
 |                 |                                                              |                                   |                                                              |                     |
 |                 |                                                              |                                   |                                                              |                     |
 |                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+|                 |                                                              |                                   |                                                              |                     |
+
+
 
 
 
@@ -135,7 +140,7 @@ import FormInputExclude from 'docs/demo/form/input-exclude.vue'
   margin-bottom: 0;
 }
 .demo-form .el-form {
-  width: 460px;
+  width: 320px;
 }
 .demo-form .el-select {
   width: 100%;
