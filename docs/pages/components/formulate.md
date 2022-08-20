@@ -12,6 +12,24 @@ formulate/base
 
 :::
 
+## 多列
+
+可传入数组设置多列
+
+:::code
+
+formulate/rows-2
+
+:::
+
+列数会自动计算
+
+:::code
+
+formulate/rows-3
+
+:::
+
 ## 表单验证
 
 完整的表单验证示例
@@ -42,6 +60,8 @@ formulate/file
 
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
+import FormulateRows2 from 'docs/demo/formulate/rows-2.vue'
+import FormulateRows3 from 'docs/demo/formulate/rows-3.vue'
 import FormulateValidate from 'docs/demo/formulate/validate.vue'
 import FormulateRules from 'docs/demo/formulate/rules.vue'
 import FormulateFile from 'docs/demo/formulate/file.vue'
