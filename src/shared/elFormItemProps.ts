@@ -1,4 +1,4 @@
-import { PropType } from "vue"
+import { ExtractPropTypes, PropType } from "vue"
 
 export const elFormItemProps = {
   label: String as PropType<string>,
@@ -22,3 +22,5 @@ export const elFormItemProps = {
   },
   size: String as PropType<string>,
 }
+
+export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>

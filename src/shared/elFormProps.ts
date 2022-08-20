@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import { ExtractPropTypes, PropType } from 'vue'
 import { ElementUIComponentSize } from 'element-ui/types/component'
 import { FormRules } from '../types/form'
 
@@ -32,3 +32,5 @@ export const elFormProps = {
     default: false
   }
 }
+
+export type ElFormProps = ExtractPropTypes<typeof elFormProps>

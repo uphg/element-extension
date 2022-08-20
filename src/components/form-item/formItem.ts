@@ -1,38 +1,23 @@
 import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem } from "element-ui"
 import { useCustomInput } from "./useCustomInput"
-import { customInputProps } from "../../shared/customInputProps"
+import { CustomInputProps, customInputProps } from "../../shared/customInputProps"
 import { pick } from "../../utils"
 import useElFormItem from "../../composables/useElFormItem"
 import { ElFormItem } from "element-ui/types/form-item"
+import { elFormItemProps } from "../../shared/elFormItemProps"
+
+export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>
+export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
 const formItemProps = {
-  ...customInputProps,
-  label: String as PropType<string>,
-  labelWidth: String as PropType<string>,
-  prop: String as PropType<string>,
-  required: {
-    type: Boolean as PropType<boolean>,
-    default: undefined
-  },
-  rules: [Object, Array] as PropType<object | unknown[]>,
-  error: String as PropType<string>,
-  validateStatus: String as PropType<string>,
-  for: String as PropType<string>,
-  inlineMessage: {
-    type: [String, Boolean] as PropType<string | boolean>,
-    default: ''
-  },
-  showMessage: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  },
-  size: String as PropType<string>,
+  ...elFormItemProps,
+  ...customInputProps
 }
 
-export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+
 
 export default defineComponent({
   name: 'EFormItem',

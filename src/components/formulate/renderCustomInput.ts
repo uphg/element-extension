@@ -52,6 +52,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
       }, props?.children)
 
     case 'number':
+    case 'input-number':
       return h(InputNumber, {
         ref: props.ref,
         props: {

@@ -71,7 +71,11 @@ const useExpose = (inputRef: Ref<any>) => ({
   }
 })
 
-export function useCustomInput<T extends CustomInputProps>(props: T, context: SetupContext<{}>, options?: CustomInputParamsOptions) {
+export function useCustomInput<T extends Partial<CustomInputProps>>(
+  props: T,
+  context: SetupContext<{}>,
+  options?: CustomInputParamsOptions
+) {
   const { onKeyup } = options || {}
   const { emit } = context
 
@@ -216,7 +220,7 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       }, context.slots.append())
     ])
   }, {
-    type: 'number',
+    type: ['number', 'input-number'],
     expose: {
       focus,
       blur() {
@@ -512,15 +516,18 @@ export function useCustomInput<T extends CustomInputProps>(props: T, context: Se
       focus: onFocus
     }
   })
-
+  console.log('props.type')
+  console.log(props.type)
+  const propsType = props.type || 'text'
   const template = find(inputMap, ({ type }) => (
-    typeof type === 'string' ? props.type === type : type.indexOf(props.type) !== -1
+    typeof type === 'string' ? propsType === type : type.indexOf(propsType) !== -1
+    // typeof type === 'string' ? props.type === type : type.indexOf(props.type) !== -1
   ))
 
   return template!
 }
 
-function renderSelectOptions(props: CustomInputProps, context: SetupContext<{}>) {
+function renderSelectOptions(props: Partial<CustomInputProps>, context: SetupContext<{}>) {
 
   const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
     key: `s.s.opt.${index}`,
