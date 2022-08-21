@@ -1,7 +1,7 @@
 <template>
   <e-form label-width="80px">
-    <e-form-item label="用户名" v-model="formData.name" />
-    <e-form-item label="密码" v-model="formData.password" :data="{ type: 'password' }" />
+    <e-form-item label="用户名" v-model="formData.name" placeholder="请输入用户名" />
+    <e-form-item label="密码" v-model="formData.password" placeholder="请输入密码" type="password" />
   </e-form>
 </template>
 

@@ -126,9 +126,9 @@ import FormInputExclude from 'docs/demo/form/input-exclude.vue'
   margin-bottom: 0;
 }
 .demo-form .el-form {
-  width: 320px;
+  width: 480px;
 }
-.demo-form .el-select {
-  width: 100%;
+.demo-form .el-input {
+  width: 240px;
 }
 </style>
