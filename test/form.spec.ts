@@ -59,6 +59,33 @@ describe('form', () => {
     expect(marginLeft).toBe(marginLeft2)
   })
 
+  it('label slot', () => {
+    const formDemo = {
+      template: `
+        <e-form label-width="80px">
+          <e-form-item v-model="form.name">
+            <template v-slot:label>
+              <span class="label-slot">活动名称</span>
+            </template>
+          </e-form-item>
+        </e-form>
+      `,
+      data() {
+        return {
+          form: {
+            name: ''
+          }
+        }
+      }
+    }    
+    const wrapper = mount(formDemo, { localVue })
+
+    expect(wrapper.vm.$el.querySelector('.el-form-item__label').querySelector('.label-slot').nodeName).toBe('SPAN')
+    expect(wrapper.vm.$el.querySelector('.el-form-item__label').querySelector('.label-slot').textContent).toBe('活动名称')
+
+    wrapper.destroy()
+  })
+
   it('inline form', () => {
     const formDemo = {
       template: `
@@ -520,8 +547,7 @@ describe('form', () => {
               type="select"
               label="活动区域"
               v-model="select"
-              :options="options"
-              with-option-group
+              :option-groups="options"
             >
               <template v-slot:options="slotProps">
                 <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
@@ -595,34 +621,6 @@ describe('form', () => {
       const wrapper = mount(formDemo, { localVue })
       expect(wrapper.find('.custom-options').exists()).toBeTruthy()
       expect(wrapper.find('.custom-options').text()).toBe('上海-Shanghai')
-    })
-
-    it('select options scopedSlots', () => {
-      const formDemo = {
-        template: `
-          <e-form ref="formRef">
-            <e-form-item
-              type="select"
-              label="活动区域"
-              v-model="form.region"
-              :options="withOptions(['区域一'])"
-            >
-              <template v-slot:options="slotProps">
-                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: {
-            region: ''
-          }
-        }),
-        methods: { withOptions }
-      }
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
     })
 
     it('radio options scopedSlots', () => {

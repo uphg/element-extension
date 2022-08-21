@@ -1,5 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import { Formulate } from '../src/index'
+import ElementPart from '../src/index'
+
+const localVue = createLocalVue()
+localVue.use(ElementPart)
 
 describe('form', () => {
 
@@ -236,7 +240,7 @@ describe('form', () => {
     expect(addressField.validateMessage).toBe('')
   })
 
-  it('form item nest button', () => {
+  it.skip('form item nest button', () => {
     const data = {
       fields: {
         name: {
@@ -250,6 +254,37 @@ describe('form', () => {
 
     const wrapper = mount(Formulate, { propsData: { data } })
     expect(wrapper.find('.el-form-item__content .el-button--primary').exists()).toBeTruthy()
+  })
+
+  it('form rows', () => {
+    const formDemo = {
+      template: `
+        <e-formulate ref="formulateRef" :data="data"/>
+      `,
+      data() {
+        return {
+          data: {
+            labelWidth: '80px',
+            fields: [{
+              name: { label: '用户名', placeholder: '请输入用户名' },
+              phone: { label: '手机号', placeholder: '请输入手机号' }
+            },{
+              password: { label: '密码', placeholder: '请输入密码' },
+              checkPass: { label: '确认密码', placeholder: '请输入确认密码' }
+            }]
+          }
+        }
+      }
+    }    
+    const wrapper = mount(formDemo, { localVue })
+
+    console.log(`wrapper.find('.el-row')`)
+    console.log(wrapper.find('.el-row'))
+    expect(wrapper.find('.el-row').exists()).toBeTruthy()
+    expect(wrapper.findAll('.el-col').length).toBe(2)
+    expect(wrapper.findAll('.el-col-12').length).toBe(2)
+
+    wrapper.destroy()
   })
 
 })
