@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import mdContainer from 'markdown-it-container'
 import { highlight } from './highlight'
+import { linksPlugin } from './linksPlugin'
 
 const demoPath = `${path.resolve('./docs/demo')}`
 
@@ -11,6 +12,7 @@ function getComponentName(sourceFile) {
 }
 
 function markdownItSetup(md) {
+  md.use(linksPlugin)
   md.use(mdContainer, 'code', {
     validate(params) {
       return !!params.trim().match(/^code\s*(.*)$/)

@@ -4,8 +4,7 @@
       type="select"
       label="活动区域"
       v-model="select"
-      :options="options"
-      with-option-group
+      :option-groups="options"
     >
       <template v-slot:options="slotProps">
         <span style="float: left">{{ slotProps.label }}</span>

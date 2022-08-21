@@ -12,6 +12,16 @@ form/base
 
 :::
 
+## exclude 属性
+
+兼容 Input 组件的 exclude 属性，排除指定字符串规则
+
+:::code
+
+form/input-exclude
+
+:::
+
 ## options 选项
 
 FormItem 可以添加 options 属性选项渲染多种选择类型的组件
@@ -22,7 +32,7 @@ form/options
 
 :::
 
-## 自定义模板
+## options 自定义模板
 
 使用 options 插槽给 options 选项自定义模板
 
@@ -32,11 +42,11 @@ form/options-custom
 
 :::
 
-添加 `withOptionGroup` 可以使用 Select 组件的 OptionsGroup 嵌套功能
+添加 `option-groups` 属性可以使用 ElSelect 组件的 OptionsGroup 分组功能
 
 :::code
 
-form/option-group
+form/option-groups
 
 :::
 
@@ -50,19 +60,19 @@ form/validate
 
 :::
 
-## exclude 属性
+## label 插槽
 
-让 Input 组件排除输入指定项，支持字符串、正则、数字
+与 ElFormItem label 插槽作用相同
 
 :::code
 
-form/input-exclude
+form/label
 
 :::
 
 ## FormItem Attributes
 
-除了支持 ElFormItem 的属性，还支持以下属性（注：特定组件的其他属性可以在 extends 属性中以对象形式传入）
+除了支持 [ElFormItem](https://element.eleme.io/#/zh-CN/component/form#form-item-attributes) 的属性，还支持以下属性（注：特定组件的其他属性可以在 extends 属性中以对象形式传入）
 
 | 参数            | 说明                                                         | 类型                              | 可选值                                                       | 默认值              |
 | --------------- | ------------------------------------------------------------ | --------------------------------- | ------------------------------------------------------------ | ------------------- |
@@ -95,13 +105,22 @@ form/input-exclude
 | action          | 必选参数，上传的地址                                         | string                            | —                                                            | —                   |
 | headers         | 设置上传的请求头部                                           | object                            | —                                                            | —                   |
 | multiple        | 是否支持多选文件                                             | boolean                           | —                                                            | —                   |
-| file-list       | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array                             | —                                                            | []                  |
+| file-list       | 上传的文件列表, 例如: `[{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}]` | array                             | —                                                            | []                  |
 | accept          | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)（thumbnail-mode 模式下此参数无效） | string                            | —                                                            | —                   |
 | format          | 显示在输入框中的格式                                         | string                            | 见[日期格式](https://element.eleme.io/#/zh-CN/component/date-picker#ri-qi-ge-shi) | yyyy-MM-dd HH:mm:ss |
 | picker-options  | 当前时间日期选择器特有的选项参考下表                         | object                            | —                                                            | {}                  |
 | extra           | 用于在元素下展示更多说明信息，可以是 html string、纯文本、也可以是 h 函数 | string                            | —                                                            | —                   |
 | extends         | 传入特定组件的其他属性                                       | object                            | —                                                            | {}                  |
 | expands         | 允许除 expands 外的 props 以对象形式绑定在当前属性           | object                            | —                                                            | {}                  |
+
+## Form-Item Slot
+
+在 ElFormItem 默认插槽基础上添加了以下插槽
+
+| name  | 说明             |
+| :---- | :--------------- |
+| —     | Form Item 的内容 |
+| label | 标签文本的内容   |
 
 
 
@@ -113,12 +132,13 @@ export default {
 
 <script setup lang="ts">
 import FormBase from 'docs/demo/form/base.vue'
+import FormInputExclude from 'docs/demo/form/input-exclude.vue'
 import FormOptions from 'docs/demo/form/options.vue'
 import FormValidate from 'docs/demo/form/validate.vue'
 import FormRender from 'docs/demo/form/render.vue'
 import FormOptionsCustom from 'docs/demo/form/options-custom.vue'
-import FormOptionGroup from 'docs/demo/form/option-group.vue'
-import FormInputExclude from 'docs/demo/form/input-exclude.vue'
+import FormOptionGroups from 'docs/demo/form/option-groups.vue'
+import FormLabel from 'docs/demo/form/label.vue'
 </script>
 
 <style>

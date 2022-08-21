@@ -12,6 +12,20 @@
     font-weight: 400;
     padding-top: 36px;
   }
+
+  code {
+
+    font-family: Menlo,Monaco,Consolas,Courier,monospace;
+  }
+
+  p > code, table code {
+    background-color: #f1f1f1;
+    padding: .15em .5em;
+    border-radius: 4px;
+    color: #476582;
+    transition: color .5s,background-color .5s;
+  }
+
   pre {
     padding: 20px 24px;
     background-color: #282c34;
@@ -19,7 +33,11 @@
   }
 
   table {
+    border-collapse: collapse;
     width: 100%;
+    font-size: 14px;
+    margin-bottom: 45px;
+    line-height: 1.5em;
     th {
       text-align: left;
       white-space: nowrap;

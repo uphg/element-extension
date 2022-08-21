@@ -1,16 +1,10 @@
 <template>
-  <div class="formulate">
-    <e-formulate ref="formulateRef" :data="data" style="width: 100%"/>
-    <div class="formulate-footer" style="width: 100%">
-      <button @click="onSubmit">立刻创建</button>
-    </div>
-  </div>
+  <e-formulate ref="formulateRef" :data="data" style="width: 100%"/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const formulateRef = ref<any>(null)
 const data = ref({
   labelWidth: '80px',
   fields: [{
@@ -21,8 +15,4 @@ const data = ref({
     checkPass: { label: '确认密码', placeholder: '请输入确认密码' }
   }]
 })
-
-function onSubmit() {
-  formulateRef.value?.submit((formData: any) => console.log(formData))
-}
 </script>

@@ -1,12 +1,12 @@
 # 快速开始
 
-## npm 安装
+## 安装
 
 ```bash
-npm i element-extension
+npm i element-part
 # or 
-pnpm add element-extension
-yarn add element-extension
+pnpm add element-part
+yarn add element-part
 ```
 
 ## 在项目中引入
@@ -14,13 +14,13 @@ yarn add element-extension
 ```ts
 // 指定组件
 import Vue from 'vue'
-import { Form } from 'element-extension'
+import { Form } from 'element-part'
 
 Vue.use(Form)
 
 // 全局引入
 import Vue from 'vue'
-import ElementPart from 'element-extension'
+import ElementPart from 'element-part'
 
 Vue.use(ElementPart)
 ```

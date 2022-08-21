@@ -32,19 +32,19 @@ formulate/rows-3
 
 ## 表单验证
 
+与 ElForm 表单的 rules 属性相同
+
+:::code
+
+formulate/rules
+
+:::
+
 完整的表单验证示例
 
 :::code
 
 formulate/validate
-
-:::
-
-也可以单独定义 rules 属性，与 Form 表单的 rules 属性相同
-
-:::code
-
-formulate/rules
 
 :::
 
@@ -72,9 +72,12 @@ import FormulateFile from 'docs/demo/formulate/file.vue'
   margin-bottom: 0;
 }
 .demo-formulate .el-form {
-  width: 320px;
+  width: 480px;
 }
-.demo-formulate .el-select {
+.demo-formulate .el-input {
+  width: 240px;
+}
+.demo-formulate .el-row .el-input {
   width: 100%;
 }
 </style>
