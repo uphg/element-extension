@@ -7,29 +7,24 @@ import { FormItemLabelPosition, ValidateCallback, ValidateFieldCallback } from '
 import { ScopedSlot, VNodeChildren } from 'vue/types/vnode';
 import { ElFormItemProps } from '../shared/elFormItemProps';
 
-export type FormulateField = {
-  label: string;
-  type?: CustomInputTypes;
-  rules?: FormRule[];
-  required?: boolean;
-  options?: CustomInputOptions;
-  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
-  itemPrefix?: VNodeChildren,
-  itemSuffix?: VNodeChildren
-  // [key: string]: VNodeChildren;
-} & CustomInputProps & ElFormItemProps
+// export type FormulateField = {
+//   label: string;
+//   type?: CustomInputTypes;
+//   rules?: FormRule[];
+//   required?: boolean;
+//   options?: CustomInputOptions;
+//   vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
+//   itemPrefix?: VNodeChildren,
+//   itemSuffix?: VNodeChildren
+// } & ElFormItemProps & CustomInputProps
 
-export interface FormulateFields {
-  [key: string]: FormulateField
-}
+// export interface FormulateFields {
+//   [key: string]: FormulateField
+// }
 
-const a: FormulateField = {}
+// export type FormulateInputProps = {}
 
-export interface MapRules {
-  (options: { type?: string, key: string, label: string }): FormRule[] | []
-}
-
-export type PartialInputProps = Partial<FormulateInputProps>
+// export type PartialInputProps = Partial<FormulateInputProps>
 
 export declare class EFormulate extends SimElementComponent {
   

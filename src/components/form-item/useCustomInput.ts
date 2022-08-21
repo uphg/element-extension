@@ -501,7 +501,6 @@ export function useCustomInput<T extends FormItemProps>(
   const propsType = props.type || 'text'
   const template = find(inputMap, ({ type }) => (
     typeof type === 'string' ? propsType === type : type.indexOf(propsType) !== -1
-    // typeof type === 'string' ? props.type === type : type.indexOf(props.type) !== -1
   ))
 
   return template!
@@ -527,5 +526,5 @@ function renderSelectOptions(props: FormItemProps, context: SetupContext<{}>) {
         }
       }, [group.options?.map(renderOptions)])
     )
-    : props.options?.map(renderOptions)
+    : (props.options?.map(renderOptions) || context.slots.default?.())
 }

@@ -1,32 +1,15 @@
-import { defineComponent, ExtractPropTypes, h, PropType, Ref, ref, VNodeChildren } from "vue"
+import { defineComponent, h, ref, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
-import { isArray, isObject, map } from "../../utils"
+import { VNodeChildrenArrayContents } from "vue/types/umd"
+import { isArray, isObject } from "../../utils"
 import renderCustomInput from './renderCustomInput'
-import { FormulateField, FormulateFields, MapRules } from '../../types/formulate'
 import { CustomInputValue } from "../../types/customInput"
 import { FormRules, FormData } from '../../types/form'
 import useElForm from '../../composables/useElForm'
-import { elFormProps } from '../../shared/elFormProps'
-import { VNode, VNodeChildrenArrayContents } from "vue/types/umd"
-
-type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
-
-export type FormulateProps = ExtractPropTypes<typeof formulateProps>
+import { FormulateField, FormulateFields, formulateProps, FormulateProps } from "../../shared/formulateProps"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
-}
-
-const formulateDataProps = {
-  ...elFormProps,
-  fields: [Array, Object] as PropType<FormulateFields | FormulateFields[]>,
-  withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
-  mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
-}
-
-const formulateProps = {
-  data: [Object] as PropType<FormulateDataProps>,
-  ...formulateDataProps,
 }
 
 function initFormData(baseFields: FormulateFields | FormulateFields[]) {
@@ -74,15 +57,17 @@ function useRules(props: FormulateProps) {
   const rules = ref<FormRules>({})
   const handleRules = (item: MapFieldsItem) => {
     const { type, key, label, rules: _rules } = item
+    const propRules = props.expands.rules || props.rules
+    const propMapRules = props.expands.mapRules || props.mapRules
     if (_rules && isObject(_rules)) {
       rules.value[key] = isArray(_rules) ?  _rules : [_rules]
-    } else if (props.rules && props.rules?.[key]) {
-      rules.value[key] = props.rules?.[key]
-    } else if (props.mapRules) {
-      if (typeof props.mapRules !== 'function') {
+    } else if (propRules && propRules?.[key]) {
+      rules.value[key] = propRules?.[key]
+    } else if (propMapRules) {
+      if (typeof propMapRules !== 'function') {
         throw new Error('[ElementPart] "mapRules" must be a function and return an array')
       }
-      const rule = props.mapRules({ type, key, label })
+      const rule = propMapRules({ type, key, label })
       rule && rule.length && (rules.value[key] = rule) 
     }
   }
@@ -106,6 +91,7 @@ function mapFields(
 }
 
 function renderFormItem(item: MapFieldsItem, index: string | number, children: VNodeChildren) {
+
   return h(FormItem, {
     key: `s.form.item.${index}`,
     props: {
@@ -122,29 +108,37 @@ function renderFormItem(item: MapFieldsItem, index: string | number, children: V
       size: item.size
     }
   }, 
-    [item.itemPrefix, ...(children as VNodeChildrenArrayContents), item.itemSuffix]
+    [
+      item.itemPrefix,
+      ...(children as VNodeChildrenArrayContents),
+      item.extra && (
+        typeof item.extra === 'string'
+          ? h('div', { class: 'e-formulate__extra', domProps: { innerHTML: item.extra } })
+          : [item.extra]
+      ),
+      item.itemSuffix
+    ]
   )
 }
 
 export default defineComponent({
   name: 'EFormulate',
   props: formulateProps,
-  setup(_props, context) {
-    const props = _props.data ? _props.data : _props
-
-    if (!props.fields) {
+  setup(props, context) {
+    const propFields = props.expands.fields || props.fields
+    if (!propFields) {
       throw new Error('[ElementPart] "fields" attribute is required');
     }
 
-    const formData = ref(initFormData(props.fields))
+    const formData = ref(initFormData(propFields))
     const { rules, handleRules } = useRules(props)
 
-    const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
+    const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(propFields, handleRules))
 
     const { elForm, validate, validateField, clearValidate } = useElForm()
 
     function resetFields() {
-      resetFormData(formData.value, props.fields!)
+      resetFormData(formData.value, propFields!)
     }
 
     function setValues(obj: FormData) {
@@ -198,23 +192,22 @@ export default defineComponent({
         props: {
           rules: rules.value,
           model: formData.value,
-          labelPosition: props.labelPosition,
-          labelWidth: props.labelWidth,
-          labelSuffix: props.labelSuffix,
-          inline: props.inline,
-          inlineMessage: props.inlineMessage,
-          statusIcon: props.statusIcon,
-          showMessage: props.showMessage,
-          size: props.size,
-          disabled: props.disabled,
-          validateOnRuleChange: props.validateOnRuleChange,
-          hideRequiredAsterisk: props.hideRequiredAsterisk
+          labelPosition: props.expands.labelPosition || props.labelPosition,
+          labelWidth: props.expands.labelWidth || props.labelWidth,
+          labelSuffix: props.expands.labelSuffix || props.labelSuffix,
+          inline: props.expands.inline || props.inline,
+          inlineMessage: props.expands.inlineMessage || props.inlineMessage,
+          statusIcon: props.expands.statusIcon || props.statusIcon,
+          showMessage: props.expands.showMessage || props.showMessage,
+          size: props.expands.size || props.size,
+          disabled: props.expands.disabled || props.disabled,
+          validateOnRuleChange: props.expands.validateOnRuleChange || props.validateOnRuleChange,
+          hideRequiredAsterisk: props.expands.hideRequiredAsterisk || props.hideRequiredAsterisk
         }
       },
-      // [h(Row, void 0, [h(Col, {props:{ span: 24}}, ['hi'])])]
-      isArray(props.fields)
+      isArray(propFields)
         ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
+          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(propFields?.length) || 0) }, }, row.map(
             (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
           ))
         ))]

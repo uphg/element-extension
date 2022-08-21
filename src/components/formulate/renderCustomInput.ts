@@ -2,12 +2,14 @@ import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGro
 import { h, Ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
-import { PartialInputProps } from '../../types/formulate'
 import { FormData } from '../../types/form'
 import { CustomInputOptions } from '../../types/customInput'
 import renderDate from './renderDate'
+import { FormulateField } from '../../shared/formulateProps'
+import { VNode } from 'vue/types/umd'
 
-function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
+
+function renderCustomInput(props: FormulateField, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { elForm, formData, context } = _options
   switch (props.type || 'text') {
     case 'text':
@@ -302,7 +304,7 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
         scopedSlots: props.scopedSlots
       }, [
         ...(
-          props.children ? props.children : props.button && [h(Button, {
+          props.children ? (props.children as VNode[]) : [props.button] && [h(Button, {
             props: {
               type: props.button?.hue || 'primary',
               size: props.button?.size || 'small',
@@ -347,4 +349,4 @@ function renderInput(props: PartialInputProps, _options: { elForm: Ref<HTMLEleme
   }
 }
 
-export default renderInput
+export default renderCustomInput
