@@ -102,7 +102,8 @@ export const formItemBaseProps = {
     type: [String, Number, RegExp] as PropType<InputExclude>,
     default: null
   },
-  withOptionGroup: Boolean as PropType<boolean>
+  // withOptionGroup: Boolean as PropType<boolean>,
+  optionGroups: [Object, Array] as PropType<CustomInputOptions[]>
 }
 
 export const formItemExtendsProps = {

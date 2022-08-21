@@ -45,7 +45,6 @@ export default defineComponent({
       clearValidate
     })
 
-    
     return () => h(FormItem, {
       // @ts-ignore
       ref: (el: ElFormItem) => elFormItem.value = el,
@@ -54,6 +53,9 @@ export default defineComponent({
         error: (params) => context.slots.error?.(params),
       }
     }, [
+      context.slots.label && h('slot', {
+        slot: 'label'
+      }, context.slots.label()),
       context.slots.itemPrefix?.(),
       context.slots.default?.() || render(),
       context.slots.itemSuffix?.(),

@@ -518,8 +518,8 @@ function renderSelectOptions(props: FormItemProps, context: SetupContext<{}>) {
     }
   }, [context.slots.options?.(item)])
 
-  return props.withOptionGroup
-    ? (props.options as CustomInputOptions[])?.map(
+  return props.optionGroups
+    ? (props.optionGroups as CustomInputOptions[])?.map(
       (group, i) => h(OptionGroup, {
         key: `s.s.opt.g${i}`,
         props: {
