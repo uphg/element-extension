@@ -59,7 +59,7 @@ const sidebars = [
   left: 0;
   transition: transform 0.3s;
   transform: translate(-100%);
-  @media (min-width: 1080px) {
+  @media (min-width: 1200px) {
     transform: translate(0);
     left: calc((100vw - var(--layout-max-width)) / 2);
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="sim-code">
+  <div class="e-code">
     <div class="demo">
       <component :is="componentIs" />
     </div>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sim-code {
+.e-code {
   // padding: 22px 24px;
   border-radius: 6px;
   margin-bottom: 1.2em;
@@ -42,7 +42,7 @@ export default {
 }
 
 .code-source {
-  max-width: 755px;
+  max-width: 875px;
   border-top: 1px solid rgba(60, 60, 60, .12);
   background-color: #282c34;
   color: #fff;
@@ -58,7 +58,7 @@ export default {
     margin: 0;
   }
 }
-// .sim-code .code-source {
+// .e-code .code-source {
 //   pre, code {
 //     font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
 //     margin: 0;

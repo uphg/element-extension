@@ -43,7 +43,7 @@ const navbars = [
   height: 100%;
   display: flex;
   align-items: center;
-  @media (min-width: 1080px) {
+  @media (min-width: 1200px) {
     padding-left: calc((100vw - var(--layout-max-width)) / 2);
     padding-right: calc((100vw - var(--layout-max-width)) / 2);    
   }

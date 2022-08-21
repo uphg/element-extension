@@ -1,6 +1,7 @@
 .markdown-body {
   color: #2c3e50;
   padding: 12px 0;
+  font-size: 14px;
   h1 {
     font-size: 36px;
     font-weight: 400;
@@ -15,5 +16,23 @@
     padding: 20px 24px;
     background-color: #282c34;
     border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    th {
+      text-align: left;
+      white-space: nowrap;
+      color: #909399;
+      font-weight: 400;
+      &:first-child {
+        padding-left: 10px;
+      }
+    }
+    td, th {
+      border-bottom: 1px solid #dcdfe6;
+      padding: 15px;
+      max-width: 250px;
+    }
   }
 }

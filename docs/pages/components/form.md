@@ -101,21 +101,7 @@ form/input-exclude
 | picker-options  | 当前时间日期选择器特有的选项参考下表                         | object                            | —                                                            | {}                  |
 | extra           | 用于在元素下展示更多说明信息，可以是 html string、纯文本、也可以是 h 函数 | string                            | —                                                            | —                   |
 | extends         | 传入特定组件的其他属性                                       | object                            | —                                                            | {}                  |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-|                 |                                                              |                                   |                                                              |                     |
-
-
-
-
-
-
+| expands         | 允许除 expands 外的 props 以对象形式绑定在当前属性           | object                            | —                                                            | {}                  |
 
 
 

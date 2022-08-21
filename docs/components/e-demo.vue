@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sim-demo {
+.e-demo {
   padding: 22px 24px;
   border-radius: 6px;
   margin-bottom: 1.2em;
