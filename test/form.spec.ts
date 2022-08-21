@@ -497,7 +497,7 @@ describe('form', () => {
     })
   })
 
-  describe('components extends', () => {
+  describe('components additional features', () => {
 
     it('form item prefix', () => {
       const formDemo = {
@@ -679,6 +679,42 @@ describe('form', () => {
       expect(wrapper.find('.el-checkbox-group').exists()).toBeTruthy()
       expect(wrapper.find('.custom-options').exists()).toBeTruthy()
       expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
+    })
+
+    it('input extends', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item label="活动名称" v-model="form.name" :extends="{ prefixIcon: 'el-icon-search' }"/>
+          </e-form>
+        `,
+        data: () => ({
+          form: { name: '' }
+        })
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-icon-search').exists()).toBeTruthy()
+    })
+
+    it('input slots', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item label="活动名称" v-model="form.name">
+              <template v-slot:prefix>
+                <i class="el-input__icon el-icon-search"></i>
+              </template>
+            </e-form-item>
+          </e-form>
+        `,
+        data: () => ({
+          form: { name: '' }
+        })
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-input__prefix .el-icon-search').exists()).toBeTruthy()
     })
   })
 

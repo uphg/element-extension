@@ -15,11 +15,9 @@ describe('form', () => {
       }
     }
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      },
+      propsData: { expands: data }
     })
-    expect(wrapper.props().data).toBe(data)
+    expect(wrapper.props().expands).toBe(data)
     expect(wrapper.vm.$el.querySelector('.el-form-item__label').style.width).toBe('80px')
     expect(wrapper.vm.$el.querySelector('.el-form-item__content').style.marginLeft).toBe('80px')
 
@@ -35,11 +33,9 @@ describe('form', () => {
       }
     }
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      },
+      propsData: { expands: data }
     })
-    expect(wrapper.props().data).toBe(data)
+    expect(wrapper.props().expands).toBe(data)
     const formItems = wrapper.vm.$el.querySelectorAll('.el-form-item__content')
     const marginLeft = parseInt(formItems[0].style.marginLeft, 10)
     const marginLeft2 = parseInt(formItems[1].style.marginLeft, 10)
@@ -55,9 +51,7 @@ describe('form', () => {
       }
     }
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      },
+      propsData: { expands: data }
     })
     expect(wrapper.find('.el-form--inline').exists()).toBeTruthy()
   })
@@ -78,8 +72,8 @@ describe('form', () => {
       }
     }
 
-    const wrapper1 = mount(Formulate, { propsData: { data: data1 } })
-    const wrapper2 = mount(Formulate, { propsData: { data: data2 } })
+    const wrapper1 = mount(Formulate, { propsData: { expands: data1 } })
+    const wrapper2 = mount(Formulate, { propsData: { expands: data2 } })
 
     expect(wrapper1.find('.el-form--label-top').exists()).toBeTruthy()
     expect(wrapper2.find('.el-form--label-left').exists()).toBeTruthy()
@@ -93,9 +87,7 @@ describe('form', () => {
       }
     }
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      },
+      propsData: { expands: data }
     })
 
     expect(wrapper.find('.el-form-item--mini').exists()).toBeTruthy()
@@ -118,9 +110,7 @@ describe('form', () => {
       }
     }
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      },
+      propsData: { expands: data }
     })
     wrapper.vm.submit(async (formData: { [key: string]: any }, options:{ valid: boolean }) => {
       expect(options.valid).toBeFalsy()
@@ -171,9 +161,7 @@ describe('form', () => {
     }
 
     const wrapper = mount(Formulate, {
-      propsData: {
-        data,
-      }
+      propsData: { expands: data }
     })
 
     const vm = wrapper.vm
@@ -220,7 +208,7 @@ describe('form', () => {
       }
     }
 
-    const wrapper = mount(Formulate, { propsData: { data } })
+    const wrapper = mount(Formulate, { propsData: { expands: data } })
     const vm = wrapper.vm
 
     vm.validate(() => void 0)
@@ -252,14 +240,14 @@ describe('form', () => {
       }
     }
 
-    const wrapper = mount(Formulate, { propsData: { data } })
+    const wrapper = mount(Formulate, { propsData: { expands: data } })
     expect(wrapper.find('.el-form-item__content .el-button--primary').exists()).toBeTruthy()
   })
 
   it('form rows', () => {
     const formDemo = {
       template: `
-        <e-formulate ref="formulateRef" :data="data"/>
+        <e-formulate ref="formulateRef" :expands="data"/>
       `,
       data() {
         return {
@@ -278,11 +266,34 @@ describe('form', () => {
     }    
     const wrapper = mount(formDemo, { localVue })
 
-    console.log(`wrapper.find('.el-row')`)
-    console.log(wrapper.find('.el-row'))
     expect(wrapper.find('.el-row').exists()).toBeTruthy()
     expect(wrapper.findAll('.el-col').length).toBe(2)
     expect(wrapper.findAll('.el-col-12').length).toBe(2)
+
+    wrapper.destroy()
+  })
+
+  it('form extra', () => {
+    const formDemo = {
+      template: `
+        <e-formulate ref="formulateRef" :expands="data"/>
+      `,
+      data: () => ({
+        data: {
+          fields: {
+            name: {
+              label: '用户名',
+              placeholder: '请输入用户名',
+              extra: '<span class="extra" style="color: #e74856;">用户名只支持英文、数字、下划线</span>'
+            }
+          }
+        }
+      })
+    }    
+    const wrapper = mount(formDemo, { localVue })
+    const extra = wrapper.find('.e-formulate__extra .extra')
+    expect(extra.exists()).toBeTruthy()
+    expect(extra.text()).toBe('用户名只支持英文、数字、下划线')
 
     wrapper.destroy()
   })
