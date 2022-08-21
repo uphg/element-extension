@@ -1,7 +1,6 @@
 import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
 import { FormItem } from "element-ui"
 import { useCustomInput } from "./useCustomInput"
-import { CustomInputProps, customInputProps } from "../../shared/customInputProps"
 import { pick } from "../../utils"
 import useElFormItem from "../../composables/useElFormItem"
 import { ElFormItem } from "element-ui/types/form-item"
@@ -28,6 +27,7 @@ console.log(Object.keys(formItemProps).length)
 export default defineComponent({
   name: 'EFormItem',
   props: formItemProps,
+  inheritAttrs: false,
   setup(props, context) {
     const { elFormItem, clearValidate } = useElFormItem()
     const { render, expose } = useCustomInput(props, context, {

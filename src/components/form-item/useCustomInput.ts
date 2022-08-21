@@ -1,26 +1,7 @@
-import {
-  Button,
-  Input,
-  Select,
-  Cascader,
-  Option,
-  RadioGroup,
-  Radio,
-  CheckboxGroup,
-  Checkbox,
-  InputNumber,
-  Switch,
-  Slider,
-  TimeSelect,
-  DatePicker,
-  Upload,
-  TimePicker,
-  OptionGroup
-} from 'element-ui'
+import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGroup, Checkbox, InputNumber, Switch, Slider, TimeSelect, DatePicker, Upload, TimePicker, OptionGroup } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { find, omitBy } from '../../utils'
-// import { CustomInputProps } from '../../shared/customInputProps'
 import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
 import { useOnInput } from '../../shared/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
@@ -174,7 +155,7 @@ export function useCustomInput<T extends FormItemProps>(
       props: {
         type: props.type,
         value: props.value,
-        autocomplete: props.autocomplete,
+        autocomplete: context.attrs.autocomplete,
         clearable: props.clearable,
         showPassword: props.showPassword,
         disabled: props.disabled,
@@ -182,7 +163,7 @@ export function useCustomInput<T extends FormItemProps>(
         suffixIcon: props.extends.suffixIcon,
         prefixIcon: props.extends.prefixIcon,
         showWordLimit: props.showWordLimit,
-        tabindex: props.tabindex,
+        tabindex: context.attrs.tabindex,
         validateEvent: props.validateEvent
       },
       attrs: {
@@ -196,8 +177,8 @@ export function useCustomInput<T extends FormItemProps>(
         autosize: context.attrs.autosize,
         maxlength: context.attrs.maxlength,
         minlength: context.attrs.minlength,
-        max: props.max,
-        min: props.min,
+        max: context.attrs.max,
+        min: context.attrs.min,
       },
       on: {
         input: onInput,
@@ -236,14 +217,14 @@ export function useCustomInput<T extends FormItemProps>(
       props: {
         value: props.value,
         disabled: props.disabled,
-        step: props.step,
+        step: context.attrs.step,
         stepStrictly: props.extends.stepStrictly,
         precision: props.extends.precision,
         controls: props.extends.controls,
         controlsPosition: props.extends.controlsPosition,
         size: props.size,
-        min: props.min,
-        max: props.max,
+        min: context.attrs.min,
+        max: context.attrs.max,
         placeholder: context.attrs.placeholder,
         name: context.attrs.name,
       },
@@ -309,7 +290,7 @@ export function useCustomInput<T extends FormItemProps>(
         options: props.options,
         props: props.extends.props,
         size: props.size,
-        placeholder: context.attrs.placeholder ,
+        placeholder: context.attrs.placeholder,
         disabled: props.disabled,
         clearable: props.clearable,
         filterable: props.extends.filterable,
@@ -393,10 +374,10 @@ export function useCustomInput<T extends FormItemProps>(
       props: {
         value: props.value || 0,
         disabled: props.disabled,
-        min: props.min || 0,
-        max: props.max || 100,
-        step: props.step,
-        size: props.size,
+        min: context.attrs.min || 0,
+        max: context.attrs.max || 100,
+        step: context.attrs.step,
+        size: context.attrs.size,
         showInput: props.extends.showInput,
         showInputControls: props.extends.showInputControls,
         inputSize: props.extends.inputSize,
@@ -481,7 +462,7 @@ export function useCustomInput<T extends FormItemProps>(
       ...(isTime ? {} : { type: props.type }),
       format: props.format,
       valueFormat: props.extends.valueFormat,
-      readonly: props.readonly,
+      readonly: context.attrs.readonly,
       disabled: props.disabled,
       clearable: props.clearable,
       size: props.size,
@@ -506,7 +487,7 @@ export function useCustomInput<T extends FormItemProps>(
       // ElDatePicker
       timeArrowControl: props.extends.timeArrowControl,
 
-      // 原生属性
+      // html attrs
       name: context.attrs.name,
       placeholder: context.attrs.placeholder,
     },
@@ -517,8 +498,6 @@ export function useCustomInput<T extends FormItemProps>(
       focus: onFocus
     }
   })
-  console.log('props.type')
-  console.log(props.type)
   const propsType = props.type || 'text'
   const template = find(inputMap, ({ type }) => (
     typeof type === 'string' ? propsType === type : type.indexOf(propsType) !== -1

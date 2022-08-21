@@ -36,6 +36,7 @@ const inputProps = {
 export default defineComponent({
   name: 'EInput',
   props: inputProps,
+  inheritAttrs: false,
   setup(props, context) {
     const inputRef = ref<ElInput | null>(null)
     const onInput = useOnInput(props, context)

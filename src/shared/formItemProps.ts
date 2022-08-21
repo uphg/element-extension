@@ -28,26 +28,8 @@ export const formItemBaseProps = {
     type: Boolean as PropType<boolean>,
     default: false
   },
-  disabled: Boolean as PropType<boolean>,
   size: String as PropType<string>,
-  autosize: {
-    type: [Boolean, Object] as PropType<boolean | { [key: string]: any }>,
-    default: false
-  },
-  autocomplete: {
-    type: String as PropType<string>,
-    default: 'off'
-  },
-  readonly: Boolean as PropType<boolean>,
-  max: Number as PropType<number>,
-  min: Number as PropType<number>,
-  step: {
-    type: Number as PropType<number>,
-    default: 1 // input-number & slider
-  },
-  resize: String as PropType<string>,
-  form: String as PropType<string>,
-  tabindex: String as PropType<string>,
+  disabled: Boolean as PropType<boolean>,
   showPassword: {
     type: Boolean as PropType<boolean>,
     default: false
@@ -83,7 +65,35 @@ export const formItemBaseProps = {
   format: String as PropType<string>,
   pickerOptions: [Object] as PropType<DatePickerOptions | TimePickerOptions | TimeSelectOptions>,
 
+  // html attrs
+  // id: String as PropType<string>,
+  // autocomplete: {
+  //   type: String as PropType<string>,
+  //   default: 'off'
+  // },
+  // resize: String as PropType<string>,
+  // tabindex: String as PropType<string>,
+  // placeholder: String as PropType<string>,
+  // name: String as PropType<string>,
+  // readonly: Boolean as PropType<boolean>,
+  // max: Number as PropType<number>,
+  // min: Number as PropType<number>,
+  // step: {
+  //   type: Number as PropType<number>,
+  //   default: 1 // input-number & slider
+  // },
+  // autofocus: String as PropType<string>,
+  // form: String as PropType<string>,
+  // rows: String as PropType<string>,
+  // autosize: {
+  //   type: [Boolean, Object] as PropType<boolean | { [key: string]: any }>,
+  //   default: false
+  // },
+  // maxlength: String as PropType<string>,
+  // minlength: String as PropType<string>,
+
   // custom props
+  text: String as PropType<string>,
   hue: {
     type: String as PropType<string>,
     default: 'default'
@@ -96,7 +106,6 @@ export const formItemBaseProps = {
 }
 
 export const formItemExtendsProps = {
-  text: String as PropType<string>,
   popperClass: String as PropType<string>,
   debounce: {
     type: Number as PropType<number>,
