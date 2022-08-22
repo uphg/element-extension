@@ -58,6 +58,61 @@ formulate/file
 
 :::
 
+## Formulate Fields
+
+fields 字段的类型
+
+```ts
+export type FormulateField =  {
+  label: string;
+  type?: CustomInputTypes;
+  rules?: FormRule[];
+  required?: boolean;
+  options?: CustomInputOptions;
+  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
+  itemPrefix?: VNodeChildren;
+  itemSuffix?: VNodeChildren;
+  ref: string;
+  children: VNode[];
+  extra: string | VNode;
+  tips: string[];
+  key: string;
+  placeholder: string;
+  name: string;
+  autofocus: string;
+  rows: string;
+  minlength: string;
+  maxlength: string;
+  scopedSlots: VNodeData['scopedSlots'];
+  tipClass: string;
+  tipItemClass: string;
+  button: {
+    hue: string;
+    size: string;
+    plain: boolean;
+    round: boolean;
+    circle: boolean;
+    autofocus: boolean;
+    icon: string;
+    text: string;
+  }
+  onClick: (event: MouseEvent) => void
+}
+```
+
+## Formulate Attributes
+
+除了支持 `<el-form>` 组件的默认属性，还支持以下属性
+
+| 参数    | 说明                                               | 类型   | 可选值 | 默认值 |
+| ------- | -------------------------------------------------- | ------ | ------ | ------ |
+| fields  | 字段描述，用于渲染表单内容                         | object | —      | —      |
+|         |                                                    |        |        |        |
+|         |                                                    |        |        |        |
+| expands | 允许除 expands 外的 props 以对象形式绑定在当前属性 | object | —      | {}     |
+
+
+
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
 import FormulateRows2 from 'docs/demo/formulate/rows-2.vue'

@@ -1,4 +1,4 @@
-# input 输入框
+# Input 输入框
 
 拓展 ElInput
 
