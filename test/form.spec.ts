@@ -697,7 +697,7 @@ describe('form', () => {
       expect(wrapper.find('.el-icon-search').exists()).toBeTruthy()
     })
 
-    it('input slots', () => {
+    it('input slot:prefix', () => {
       const formDemo = {
         template: `
           <e-form>
@@ -716,6 +716,37 @@ describe('form', () => {
       const wrapper = mount(formDemo, { localVue })
       expect(wrapper.find('.el-input__prefix .el-icon-search').exists()).toBeTruthy()
     })
+
+    it('button slot:default', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item type="button">
+              <span class="slot-default">hi</span>
+            </e-form-item>
+          </e-form>
+        `
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-button .slot-default').exists()).toBeTruthy()
+    })
+
+    it('upload slot:default', () => {
+      const formDemo = {
+        template: `
+          <e-form>
+            <e-form-item type="file" action="https://jsonplaceholder.typicode.com/posts/">
+              <span class="slot-default">hi</span>
+            </e-form-item>
+          </e-form>
+        `
+      }
+
+      const wrapper = mount(formDemo, { localVue })
+      expect(wrapper.find('.el-upload .slot-default').exists()).toBeTruthy()
+    })
+
   })
 
 })
