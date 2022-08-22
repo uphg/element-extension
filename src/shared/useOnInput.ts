@@ -1,7 +1,7 @@
 import { toString } from "../utils"
 import { CustomInputValue } from "../types/customInput"
 import { InputExclude } from "../types/input"
-import { createExclude } from "./createExclude"
+import { createExclude } from "../utils/createExclude"
 import { SetupContext } from "vue"
 
 export function useOnInput<T extends { exclude?: InputExclude }>(props: T, context: SetupContext<{}>) {

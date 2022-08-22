@@ -1,26 +1,18 @@
-import { ExtractPropTypes, PropType } from "vue"
+import { ExtractPropTypes } from "vue"
+import { commonProps } from "./_commonProps"
 
 export const elFormItemProps = {
-  label: String as PropType<string>,
-  labelWidth: String as PropType<string>,
-  prop: String as PropType<string>,
-  required: {
-    type: Boolean as PropType<boolean>,
-    default: undefined
-  },
-  rules: [Object, Array] as PropType<object | unknown[]>,
-  error: String as PropType<string>,
-  validateStatus: String as PropType<string>,
-  for: String as PropType<string>,
-  inlineMessage: {
-    type: [String, Boolean] as PropType<string | boolean>,
-    default: ''
-  },
-  showMessage: {
-    type: Boolean as PropType<boolean>,
-    default: true
-  },
-  size: String as PropType<string>,
+  label: commonProps.label,
+  labelWidth: commonProps.labelWidth,
+  prop: commonProps.prop,
+  required: commonProps.required,
+  rules: commonProps.rules,
+  error: commonProps.error,
+  validateStatus: commonProps.validateStatus,
+  for: commonProps.for,
+  inlineMessage: commonProps.inlineMessage,
+  showMessage: commonProps.showMessage,
+  size: commonProps.size
 }
 
 export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>

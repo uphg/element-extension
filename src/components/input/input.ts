@@ -52,8 +52,9 @@ export default defineComponent({
         inputRef.value?.select()
       }
     })
-    // @ts-ignore
+    
     return () => h(Input, {
+      // @ts-ignore
       ref: (el: ElInput) => inputRef.value = el,
       props: pick(props, inputPropNames),
       attrs: pick(context.attrs, inputAttrNames),
@@ -72,6 +73,11 @@ export default defineComponent({
           context.emit('clear')
         }
       }
-    })
+    }, [
+      context.slots?.suffix && h('slot', { slot: 'suffix' }, context.slots.suffix()),
+      context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
+      context.slots?.prepend && h('slot', { slot: 'prepend' }, context.slots.prepend()),
+      context.slots?.append && h('slot', { slot: 'append' }, context.slots.append())
+    ])
   }
 })

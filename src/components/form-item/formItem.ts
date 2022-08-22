@@ -1,28 +1,12 @@
-import { defineComponent, h, PropType, ExtractPropTypes } from "vue"
+import { defineComponent, h } from "vue"
 import { FormItem } from "element-ui"
 import { useCustomInput } from "./useCustomInput"
 import { pick } from "../../utils"
 import useElFormItem from "../../composables/useElFormItem"
 import { ElFormItem } from "element-ui/types/form-item"
-import { elFormItemProps } from "../../shared/elFormItemProps"
-import { formItemBaseProps, FormItemExtendsProps } from "../../shared/formItemProps"
-
-export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>
-export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+import { formItemProps } from "../../shared/formItemProps"
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
-
-const formItemProps = {
-  ...elFormItemProps,
-  ...formItemBaseProps,
-  extends: {
-    type: Object as PropType<FormItemExtendsProps>,
-    default: () => ({})
-  }
-}
-
-console.log(`formItemProps.length`)
-console.log(Object.keys(formItemProps).length)
 
 export default defineComponent({
   name: 'EFormItem',
@@ -57,7 +41,7 @@ export default defineComponent({
         slot: 'label'
       }, context.slots.label()),
       context.slots.itemPrefix?.(),
-      context.slots.default?.() || render(),
+      (context.slots.default && props.type === 'text' && context.slots.default?.()) || render(),
       context.slots.itemSuffix?.(),
     ])
   }

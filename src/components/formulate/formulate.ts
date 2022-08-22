@@ -57,17 +57,16 @@ function useRules(props: FormulateProps) {
   const rules = ref<FormRules>({})
   const handleRules = (item: MapFieldsItem) => {
     const { type, key, label, rules: _rules } = item
-    const propRules = props.expands.rules || props.rules
-    const propMapRules = props.expands.mapRules || props.mapRules
+    const baseRules = props.rules
     if (_rules && isObject(_rules)) {
       rules.value[key] = isArray(_rules) ?  _rules : [_rules]
-    } else if (propRules && propRules?.[key]) {
-      rules.value[key] = propRules?.[key]
-    } else if (propMapRules) {
-      if (typeof propMapRules !== 'function') {
+    } else if (baseRules && (baseRules as FormRules)?.[key]) {
+      rules.value[key] = (baseRules as FormRules)?.[key]
+    } else if (props.mapRules) {
+      if (typeof props.mapRules !== 'function') {
         throw new Error('[ElementPart] "mapRules" must be a function and return an array')
       }
-      const rule = propMapRules({ type, key, label })
+      const rule = props.mapRules({ type, key, label })
       rule && rule.length && (rules.value[key] = rule) 
     }
   }
@@ -124,21 +123,21 @@ function renderFormItem(item: MapFieldsItem, index: string | number, children: V
 export default defineComponent({
   name: 'EFormulate',
   props: formulateProps,
-  setup(props, context) {
-    const propFields = props.expands.fields || props.fields
-    if (!propFields) {
+  setup(_props, context) {
+    const props = _props.expands || _props
+    if (!props.fields) {
       throw new Error('[ElementPart] "fields" attribute is required');
     }
 
-    const formData = ref(initFormData(propFields))
+    const formData = ref(initFormData(props.fields))
     const { rules, handleRules } = useRules(props)
 
-    const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(propFields, handleRules))
+    const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
 
     const { elForm, validate, validateField, clearValidate } = useElForm()
 
     function resetFields() {
-      resetFormData(formData.value, propFields!)
+      resetFormData(formData.value, props.fields!)
     }
 
     function setValues(obj: FormData) {
@@ -192,22 +191,22 @@ export default defineComponent({
         props: {
           rules: rules.value,
           model: formData.value,
-          labelPosition: props.expands.labelPosition || props.labelPosition,
-          labelWidth: props.expands.labelWidth || props.labelWidth,
-          labelSuffix: props.expands.labelSuffix || props.labelSuffix,
-          inline: props.expands.inline || props.inline,
-          inlineMessage: props.expands.inlineMessage || props.inlineMessage,
-          statusIcon: props.expands.statusIcon || props.statusIcon,
-          showMessage: props.expands.showMessage || props.showMessage,
-          size: props.expands.size || props.size,
-          disabled: props.expands.disabled || props.disabled,
-          validateOnRuleChange: props.expands.validateOnRuleChange || props.validateOnRuleChange,
-          hideRequiredAsterisk: props.expands.hideRequiredAsterisk || props.hideRequiredAsterisk
+          labelPosition: props.labelPosition,
+          labelWidth: props.labelWidth,
+          labelSuffix: props.labelSuffix,
+          inline: props.inline,
+          inlineMessage: props.inlineMessage,
+          statusIcon: props.statusIcon,
+          showMessage: props.showMessage,
+          size: props.size,
+          disabled: props.disabled,
+          validateOnRuleChange: props.validateOnRuleChange,
+          hideRequiredAsterisk: props.hideRequiredAsterisk
         }
       },
-      isArray(propFields)
+      isArray(props.fields)
         ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(propFields?.length) || 0) }, }, row.map(
+          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
             (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
           ))
         ))]

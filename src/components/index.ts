@@ -1,4 +1,3 @@
-import { formGlobalFieldsKey } from '../shared/formProviders'
 import { VueConstructor } from 'vue/types/vue'
 
 import Form from './form'
@@ -20,6 +19,5 @@ export {
   Form,
   FormItem,
   Formulate,
-  Table,
-  formGlobalFieldsKey
+  Table
 }

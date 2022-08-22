@@ -38,9 +38,10 @@ export type FormulateField =  {
   button: {
     hue: string;
     size: string;
-    plain: string;
-    round: string;
-    circle: string;
+    plain: boolean;
+    round: boolean;
+    circle: boolean;
+    autofocus: boolean;
     icon: string;
     text: string;
   }
@@ -66,8 +67,5 @@ const formulateExpandsProps = {
 
 export const formulateProps = {
   ...formulateExpandsProps,
-  expands: {
-    type: [Object] as PropType<FormulateExpandsProps>,
-    default: () => ({})
-  }
+  expands: [Object] as PropType<FormulateExpandsProps>
 }

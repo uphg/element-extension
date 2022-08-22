@@ -2,11 +2,11 @@ import { h, Ref, SetupContext } from 'vue'
 import { DatePicker, TimeSelect, TimePicker } from 'element-ui'
 import { ElForm } from 'element-ui/types/form';
 import { ElDatePicker } from 'element-ui/types/date-picker';
-import { PartialInputProps } from "../../types/formulate";
 import { FormData } from '../../types/form'
+import { FormulateField } from '../../shared/formulateProps';
 
 function renderDate(
-  props: PartialInputProps,
+  props: FormulateField,
   _options: {
     elForm: Ref<HTMLElement | ElForm | null>;
     formData: Ref<FormData>;

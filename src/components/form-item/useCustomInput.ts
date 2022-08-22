@@ -188,18 +188,10 @@ export function useCustomInput<T extends FormItemProps>(
       },
       nativeOn,
     }, [
-      context.slots?.suffix && h('slot', {
-        slot: 'suffix'
-      }, context.slots.suffix()),
-      context.slots?.prefix && h('slot', {
-        slot: 'prefix'
-      }, context.slots.prefix()),
-      context.slots?.prepend && h('slot', {
-        slot: 'prepend'
-      }, context.slots.prepend()),
-      context.slots?.append && h('slot', {
-        slot: 'append'
-      }, context.slots.append())
+      context.slots?.suffix && h('slot', { slot: 'suffix' }, context.slots.suffix()),
+      context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
+      context.slots?.prepend && h('slot', { slot: 'prepend' }, context.slots.prepend()),
+      context.slots?.append && h('slot', { slot: 'append' }, context.slots.append())
     ])
   }, {
     type: ['number', 'input-number'],
