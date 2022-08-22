@@ -38,24 +38,28 @@ export default defineComponent({
   props: inputProps,
   inheritAttrs: false,
   setup(props, context) {
-    const inputRef = ref<ElInput | null>(null)
+    const elInput = ref<ElInput | null>(null)
     const onInput = useOnInput(props, context)
 
     context.expose({
       focus() {
-        inputRef.value?.focus()
+        elInput.value?.focus()
       },
       blur() {
-        inputRef.value?.blur()
+        elInput.value?.blur()
       },
       select() {
-        inputRef.value?.select()
+        elInput.value?.select()
+      },
+
+      get elInput() {
+        return elInput.value
       }
     })
     
     return () => h(Input, {
       // @ts-ignore
-      ref: (el: ElInput) => inputRef.value = el,
+      ref: (el: ElInput) => elInput.value = el,
       props: pick(props, inputPropNames),
       attrs: pick(context.attrs, inputAttrNames),
       on: {

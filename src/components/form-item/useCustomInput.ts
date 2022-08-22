@@ -6,6 +6,7 @@ import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
 import { useOnInput } from '../../composables/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
 import { FormItemProps } from '../../shared/formItemProps'
+import { renderSelectOptions } from '../../utils/renderSelectOptions'
 
 type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -496,27 +497,4 @@ export function useCustomInput<T extends FormItemProps>(
   ))
 
   return template!
-}
-
-function renderSelectOptions(props: FormItemProps, context: SetupContext<{}>) {
-
-  const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
-    key: `s.s.opt.${index}`,
-    props: {
-      label: item.label,
-      value: item.value,
-      disabled: item.disabled
-    }
-  }, [context.slots.options?.(item)])
-
-  return props.optionGroups
-    ? (props.optionGroups as CustomInputOptions[])?.map(
-      (group, i) => h(OptionGroup, {
-        key: `s.s.opt.g${i}`,
-        props: {
-          label: group.label 
-        }
-      }, [group.options?.map(renderOptions)])
-    )
-    : (props.options?.map(renderOptions) || context.slots.default?.())
 }
