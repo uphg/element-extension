@@ -1,18 +1,14 @@
 <template>
-  <e-form label-width="80px">
-    <e-form-item
-      type="select"
-      label="活动区域"
-      v-model="select"
-      placeholder="请选择活动区域"
-      :option-groups="optionGroups"
-    >
-      <template v-slot:options="slotProps">
-        <span style="float: left">{{ slotProps.label }}</span>
-        <span style="float: right; color: #8492a6; font-size: 13px">{{ slotProps.value }}</span>
-      </template>
-    </e-form-item>
-  </e-form>
+  <e-select
+    v-model="select"
+    placeholder="请选择地区"
+    :option-groups="optionGroups"
+  >
+    <template v-slot:options="slotProps">
+      <span style="float: left">{{ slotProps.label }}</span>
+      <span style="float: right; color: #8492a6; font-size: 13px">{{ slotProps.value }}</span>
+    </template>
+  </e-select>
 </template>
 
 <script setup lang="ts">

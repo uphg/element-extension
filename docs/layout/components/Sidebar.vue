@@ -34,6 +34,11 @@ const sidebars = [
         link: '/components/input'
       },
       {
+        title: 'Select 选择器',
+        name: 'ComponentsSelect',
+        link: '/components/select'
+      },
+      {
         title: 'Form 表单',
         name: 'ComponentsForm',
         link: '/components/form'

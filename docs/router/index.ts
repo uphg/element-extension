@@ -41,6 +41,11 @@ const routes: RouteConfig[] = [
         component: () => import('docs/pages/components/input.md')
       },
       {
+        path: 'select',
+        name: 'ComponentsSelect',
+        component: () => import('docs/pages/components/select.md')
+      },
+      {
         path: 'form',
         name: 'ComponentsForm',
         component: () => import('docs/pages/components/form.md')
