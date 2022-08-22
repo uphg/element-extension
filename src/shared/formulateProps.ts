@@ -1,8 +1,6 @@
 import { ExtractPropTypes, PropType, VNodeChildren } from "vue"
-import { elFormProps } from "./elFormProps"
 import { VNode, VNodeData } from "vue/types/umd"
-import { ElFormItemProps } from "./elFormItemProps"
-import { CustomInputProps } from "./customInputProps"
+import { elFormProps, ElFormItemProps, CustomInputProps } from "./_commonProps"
 import { CustomInputOptions, CustomInputTypes, CustomInputValue } from "../types/customInput"
 import { FormRule } from "../types/form"
 

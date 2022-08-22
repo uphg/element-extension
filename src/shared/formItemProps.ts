@@ -1,6 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { elFormItemProps } from "./elFormItemProps";
-import { commonProps } from "./_commonProps";
+import { commonProps, elFormItemProps } from "./_commonProps";
 
 export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>

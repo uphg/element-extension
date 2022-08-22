@@ -3,7 +3,7 @@ import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { find, omitBy } from '../../utils'
 import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
-import { useOnInput } from '../../shared/useOnInput'
+import { useOnInput } from '../../composables/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
 import { FormItemProps } from '../../shared/formItemProps'
 

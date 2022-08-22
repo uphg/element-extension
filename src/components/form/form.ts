@@ -3,7 +3,7 @@ import { Form } from 'element-ui'
 import { pick } from '../../utils'
 import useElForm from '../../composables/useElForm'
 import { ElForm } from "element-ui/types/form"
-import { elFormProps } from '../../shared/elFormProps'
+import { elFormProps } from '../../shared/_commonProps'
 
 const propNames = ['model', 'rules', 'labelPosition', 'labelWidth', 'labelSuffix', 'inline', 'inlineMessage', 'statusIcon', 'showMessage', 'size', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 

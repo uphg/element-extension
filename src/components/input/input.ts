@@ -1,8 +1,8 @@
 import { defineComponent, h, PropType, ref } from "vue"
 import { Input } from "element-ui"
 import { pick } from "../../utils";
-import { customInputProps } from '../../shared/customInputProps'
-import { useOnInput } from "../../shared/useOnInput";
+import { commonProps } from '../../shared/_commonProps'
+import { useOnInput } from "../../composables/useOnInput";
 import { ElInput } from "element-ui/types/input";
 import { InputType } from '../../types/input'
 
@@ -11,26 +11,26 @@ const inputAttrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 
 
 const inputProps = {
   value: [String, Number] as PropType<string | number>,
-  size: customInputProps.size,
-  resize: customInputProps.resize,
-  form: customInputProps.form,
-  disabled: customInputProps.disabled,
-  readonly: customInputProps.readonly,
   type: {
     type: String as PropType<InputType>,
     default: 'text'
   },
-  autosize: customInputProps.autosize,
-  autocomplete: customInputProps.autocomplete,
-  validateEvent: customInputProps.validateEvent,
-  suffixIcon: customInputProps.suffixIcon,
-  prefixIcon: customInputProps.prefixIcon,
+  size: commonProps.size,
+  resize: commonProps.resize,
+  form: commonProps.form,
+  disabled: commonProps.disabled,
+  readonly: commonProps.readonly,
+  autosize: commonProps.autosize,
+  autocomplete: commonProps.autocomplete,
+  validateEvent: commonProps.validateEvent,
+  suffixIcon: commonProps.suffixIcon,
+  prefixIcon: commonProps.prefixIcon,
   label: String as PropType<string>,
-  clearable: customInputProps.clearable,
-  showPassword: customInputProps.showPassword,
-  showWordLimit: customInputProps.showWordLimit,
-  tabindex: customInputProps.tabindex,
-  exclude: customInputProps.exclude,
+  clearable: commonProps.clearable,
+  showPassword: commonProps.showPassword,
+  showWordLimit: commonProps.showWordLimit,
+  tabindex: commonProps.tabindex,
+  exclude: commonProps.exclude,
 }
 
 export default defineComponent({
