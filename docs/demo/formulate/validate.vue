@@ -1,6 +1,6 @@
 <template>
   <div class="formulate">
-    <e-formulate ref="formulateRef" :data="data" />
+    <e-formulate ref="formulateRef" :expands="data" />
     <div class="formulate-footer">
       <button @click="onSubmit">立刻创建</button>
       <button @click="onReset">重置</button>
