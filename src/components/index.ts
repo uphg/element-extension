@@ -17,6 +17,7 @@ function install(Vue: VueConstructor) {
 export {
   install,
   Input,
+  Select,
   Form,
   FormItem,
   Formulate,
