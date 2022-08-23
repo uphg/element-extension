@@ -11,17 +11,18 @@ export type TableColumnChildrenProps = {
   text: string;
   hue: ButtonType;
   size: ElementUIComponentSize;
-  onClick: (row: rowCallbackParams['row']) => void
+  onClick: (scope: rowCallbackParams) => void
 }
 export type TableColumnOptions = {
   value: any;
   label: string;
 }
 export type TableColumnProps = {
-  emptyText: string;
-  options: TableColumnOptions[];
-  children: TableColumnChildrenProps[];
-  scopedSlots: { [key: string]: ScopedSlot | undefined }
+  emptyText?: string;
+  // options?: TableColumnOptions[];
+  children?: TableColumnChildrenProps[];
+  scopedSlots?: { [key: string]: ScopedSlot | undefined };
+  handleValue?: (scope: rowCallbackParams) => void | any;
 } & ElTableColumnProps
 
 export const elTableColumnProps = {

@@ -1,12 +1,9 @@
 import { defineComponent, h } from "vue"
 import { FormItem } from "element-ui"
 import { useCustomInput } from "./useCustomInput"
-import { pick } from "../../utils"
 import useElFormItem from "../../composables/useElFormItem"
 import { ElFormItem } from "element-ui/types/form-item"
 import { formItemProps } from "../../shared/formItemProps"
-
-const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
 export default defineComponent({
   name: 'EFormItem',
@@ -23,16 +20,28 @@ export default defineComponent({
 
     context.expose({
       ...(expose ? expose : {}),
+      clearValidate,
       get elFormItem() {
         return elFormItem.value
-      },
-      clearValidate
+      }
     })
 
     return () => h(FormItem, {
       // @ts-ignore
       ref: (el: ElFormItem) => elFormItem.value = el,
-      props: pick(props, propNames),
+      props: {
+        label: props.label,
+        labelWidth: props.labelWidth,
+        prop: props.prop,
+        required: props.required,
+        rules: props.rules,
+        error: props.error,
+        validateStatus: props.validateStatus,
+        for: props.for,
+        inlineMessage: props.inlineMessage,
+        showMessage: props.showMessage,
+        size: props.size
+      },
       scopedSlots: {
         error: (params) => context.slots.error?.(params),
       }

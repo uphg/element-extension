@@ -1,15 +1,30 @@
 import { h, defineComponent } from "vue"
 import type { VNodeData } from "vue"
 import { Table, TableColumn, Link, Button } from "element-ui"
-import { rowCallbackParams } from "element-ui/types/table"
-import { find } from "../../utils"
+import { ElTable } from "element-ui/types/table"
+import { find, isArray } from "../../utils"
 import { TableColumnChildrenProps, TableColumnOptions, TableColumnProps, tableProps } from "../../shared/tableProps"
+import { useElTable, useElTableEmit } from "./useElTable"
+import { RowCallbackParams } from "../../types/table"
 
 export default defineComponent({
   name: 'ETable',
   props: tableProps,
   setup(props, context) {
+
+    const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
+    const on = useElTableEmit(context.emit)
+
+    context.expose({
+      clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load,
+      get elTable() {
+        return elTable.value
+      }
+    })
+
     return () => h(Table, {
+      // @ts-ignore
+      ref: (el: ElTable) => elTable.value = el,
       props: {
         data: props.data,
         size: props.size,
@@ -45,7 +60,8 @@ export default defineComponent({
         treeProps: props.treeProps,
         lazy: props.lazy,
         load: props.load
-      }
+      },
+      on,
     }, props.columns.map(item => h(TableColumn, handleColumnsData(item)))
     )
   }
@@ -90,16 +106,16 @@ function handleColumnsData(props: TableColumnProps) {
   }
 
   if (props.children) {
-    data.scopedSlots = {
-      default: (scope) => props.children?.map((item) => renderChildrenNode(item, scope))
+    if (isArray(props.children)) {
+      data.scopedSlots = {
+        default: (scope) => props.children?.map((item) => renderChildrenNode(item, scope))
+      }
+    } else {
+      data.scopedSlots = {
+        default: props.children
+      }
     }
-  } else if (props.options) {
-    data.scopedSlots = {
-      default: (scope) => find(
-        props.options as TableColumnOptions[],
-        ({ value }) => !!(props.prop && scope.row?.[props.prop] === value)
-      )?.label || props?.emptyText
-    }
+
   } else if (props.scopedSlots) {
     data.scopedSlots = props.scopedSlots
   }
@@ -107,9 +123,9 @@ function handleColumnsData(props: TableColumnProps) {
   return data
 }
 
-function renderChildrenNode(item: TableColumnChildrenProps, scope: rowCallbackParams) {
+function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackParams) {
   const { hue='primary', size } = item
-  const onClick = () => item?.onClick(scope.row)
+  const onClick = () => item?.onClick(scope)
   if (item.type === 'link') {
     return h(Link, {
       props: {

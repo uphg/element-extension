@@ -1,13 +1,9 @@
 import { defineComponent, h, PropType, ref } from "vue"
 import { Input } from "element-ui"
-import { pick } from "../../utils";
 import { commonProps } from '../../shared/_commonProps'
 import { useOnInput } from "../../composables/useOnInput";
 import { ElInput } from "element-ui/types/input";
 import { InputType } from '../../types/input'
-
-const inputPropNames = ['value', 'size', 'resize', 'form', 'disabled', 'readonly', 'type', 'autosize', 'autocomplete',  'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'clearable', 'showPassword', 'showWordLimit', 'tabindex']
-const inputAttrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'autosize', 'maxlength', 'minlength', 'max', 'min']
 
 const inputProps = {
   value: [String, Number] as PropType<string | number>,
@@ -60,8 +56,39 @@ export default defineComponent({
     return () => h(Input, {
       // @ts-ignore
       ref: (el: ElInput) => elInput.value = el,
-      props: pick(props, inputPropNames),
-      attrs: pick(context.attrs, inputAttrNames),
+      props: {
+        value: props.value,
+        size: props.size,
+        resize: props.resize,
+        form: props.form,
+        disabled: props.disabled,
+        readonly: props.readonly,
+        type: props.type,
+        autosize: props.autosize,
+        autocomplete: props.autocomplete,
+        validateEvent: props.validateEvent,
+        suffixIcon: props.suffixIcon,
+        prefixIcon: props.prefixIcon,
+        label: props.label,
+        clearable: props.clearable,
+        showPassword: props.showPassword,
+        showWordLimit: props.showWordLimit,
+        tabindex: props.tabindex
+      },
+      attrs: {
+        placeholder: context.attrs.placeholder,
+        name: context.attrs.name,
+        readonly: context.attrs.readonly,
+        step: context.attrs.step,
+        autofocus: context.attrs.autofocus,
+        form: context.attrs.form,
+        rows: context.attrs.rows,
+        autosize: context.attrs.autosize,
+        maxlength: context.attrs.maxlength,
+        minlength: context.attrs.minlength,
+        max: context.attrs.max,
+        min: context.attrs.min
+      },
       on: {
         blur(event: FocusEvent) {
           context.emit('blur', event)
