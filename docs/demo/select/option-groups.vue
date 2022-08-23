@@ -1,7 +1,7 @@
 <template>
   <e-select
     label="活动区域"
-    v-model="select"
+    v-model="region"
     :option-groups="options"
   />
 </template>
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const select = ref('')
+const region = ref('')
 const options = ref([{
   label: '热门城市',
   options: [

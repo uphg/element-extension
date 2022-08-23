@@ -54,7 +54,12 @@ const routes: RouteConfig[] = [
         path: 'formulate',
         name: 'ComponentsFormulate',
         component: () => import('docs/pages/components/formulate.md')
-      }
+      },
+      {
+        path: 'table',
+        name: 'ComponentsTable',
+        component: () => import('docs/pages/components/table.md')
+      },
     ]
   }
 ]

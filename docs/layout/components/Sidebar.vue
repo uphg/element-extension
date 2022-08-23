@@ -48,6 +48,11 @@ const sidebars = [
         name: 'ComponentsFormulate',
         link: '/components/formulate'
       },
+      {
+        title: 'Table 表格',
+        name: 'ComponentsTable',
+        link: '/components/table'
+      },
     ]
   }
 ]
