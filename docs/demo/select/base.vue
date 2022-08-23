@@ -12,5 +12,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const region = ref(0)
+const region = ref('')
 </script>

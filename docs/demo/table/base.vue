@@ -3,6 +3,7 @@
     :data="tableData"
     :columns="tableColumns"
     style="width: 100%"
+    max-height="134"
   />
 </template>
 

@@ -72,7 +72,7 @@ form/label
 
 ## FormItem Attributes
 
-除了支持 [ElFormItem](https://element.eleme.io/#/zh-CN/component/form#form-item-attributes) 的属性，还支持以下属性（注：特定组件的其他属性可以在 extends 属性中以对象形式传入）
+除了支持 [`<el-form-item>`](https://element.eleme.io/#/zh-CN/component/form#form-item-attributes) 的属性，还支持以下属性（注：特定组件的其他属性可以在 extends 属性中以对象形式传入）
 
 | 参数            | 说明                                                         | 类型                              | 可选值                                                       | 默认值              |
 | --------------- | ------------------------------------------------------------ | --------------------------------- | ------------------------------------------------------------ | ------------------- |
@@ -109,18 +109,18 @@ form/label
 | accept          | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)（thumbnail-mode 模式下此参数无效） | string                            | —                                                            | —                   |
 | format          | 显示在输入框中的格式                                         | string                            | 见[日期格式](https://element.eleme.io/#/zh-CN/component/date-picker#ri-qi-ge-shi) | yyyy-MM-dd HH:mm:ss |
 | picker-options  | 当前时间日期选择器特有的选项参考下表                         | object                            | —                                                            | {}                  |
-| extra           | 用于在元素下展示更多说明信息，可以是 html string、纯文本、也可以是 h 函数 | string                            | —                                                            | —                   |
 | extends         | 传入特定组件的其他属性                                       | object                            | —                                                            | {}                  |
-| expands         | 允许除 expands 外的 props 以对象形式绑定在当前属性           | object                            | —                                                            | {}                  |
 
 ## Form-Item Slot
 
 在 ElFormItem 默认插槽基础上添加了以下插槽
 
-| name  | 说明             |
-| :---- | :--------------- |
-| —     | Form Item 的内容 |
-| label | 标签文本的内容   |
+| name       | 说明                                                 |
+| :--------- | :--------------------------------------------------- |
+| —          | Form Item 的内容，如果不传，默认渲染 type 指定的组件 |
+| label      | 标签文本的内容                                       |
+| itemPrefix |                                                      |
+| itemSuffix |                                                      |
 
 
 
