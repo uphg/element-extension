@@ -1,6 +1,6 @@
 import { ElSelect } from "element-ui/types/select"
-import { commonProps } from "src/shared/_commonProps"
-import { CustomInputOptions } from "src/types/customInput"
+import { commonProps } from "../../shared/_commonProps"
+import { CustomInputOptions } from "../../types/customInput"
 import { defineComponent, h, PropType, ref } from "vue"
 import { Select } from "element-ui"
 import { renderSelectOptions } from '../../utils/renderSelectOptions'
