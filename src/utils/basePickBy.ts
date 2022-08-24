@@ -2,7 +2,6 @@ type PickObj = {
   [key: string]: any
 }
 
-
 function basePickBy(obj: PickObj, keys: string[], callback: (item: any, key: string, obj: PickObj) => undefined | boolean) {
   let index = -1
   const length = keys.length
