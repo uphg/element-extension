@@ -1,6 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils"
-import { rowCallbackParams } from "element-ui/types/table";
+import { ElTable, rowCallbackParams } from "element-ui/types/table";
+import Element from 'element-ui'
+import { vi } from 'vitest'
 import ElementPart from '../src/index'
+import { defineComponent } from "vue";
 
 const localVue = createLocalVue()
 localVue.use(ElementPart)
@@ -70,7 +73,7 @@ describe('table', () => {
     const createTable = function(props: string, opts?: { [key: string]: any }) {
       return Object.assign({
         template: `
-          <e-table :data="testData" :columns="columns" ${props}></e-table>
+          <e-table :data="testData" :columns="columns" ${props}/>
         `,
 
         data() {
@@ -153,7 +156,7 @@ describe('table', () => {
       wrapper.destroy()
     });
 
-    it.skip('tableRowStyle[Function]', async () => {
+    it('tableRowStyle[Function]', async () => {
       const wrapper = mount(createTable(':row-style="tableRowStyle"', {
         methods: {
           tableRowStyle(options: { row: rowCallbackParams, rowIndex: number} ) {
@@ -165,95 +168,99 @@ describe('table', () => {
             return null;
           }
         }
-      }))
+      }), { localVue })
+      const child1 = wrapper.find('.el-table__body tr:nth-child(1)').element as HTMLTableRowElement
+      const child2 = wrapper.find('.el-table__body tr:nth-child(2)').element as HTMLTableRowElement
 
-      // await wrapper.vm.$nextTick(() => {})
-      setTimeout(() => {
-        const child1 = wrapper.find('.el-table__body tr:nth-child(1)').element as HTMLTableRowElement
-        const child2 = wrapper.find('.el-table__body tr:nth-child(2)').element as HTMLTableRowElement
-        expect(child1.style.height).toBe('')
-        expect(child1.style.display).toBe('')
-        expect(child2.style.height).toBe('60px')
-        expect(child2.style.display).toBe('none')
-      }, 10)
+      expect(child1.style.height).toBe('')
+      expect(child1.style.display).toBe('')
+      expect(child2.style.height).toBe('60px')
+      expect(child2.style.display).toBe('none')
+
+      wrapper.destroy()
     });
 
-    // it('current-row-key', done => {
-    //   const vm = createVue({
-    //     template: `
-    //     <el-table :data="testData" row-key="id" highlight-current-row :current-row-key="currentRowKey">
-    //       <el-table-column prop="name" label="片名" />
-    //       <el-table-column prop="release" label="发行日期" />
-    //       <el-table-column prop="director" label="导演" />
-    //       <el-table-column prop="runtime" label="时长（分）" />
-    //     </el-table>
-    //   `,
+    it('current-row-key', async () => {
 
-    //     created() {
-    //       this.testData = getTestData();
-    //     },
+      const tableDemo = {
+        template: `
+          <e-table :data="testData" :columns="columns" row-key="id" highlight-current-row :current-row-key="currentRowKey"/>
+        `,
 
-    //     data() {
-    //       return { currentRowKey: null };
-    //     }
-    //   }, true);
-    //   setTimeout(_ => {
-    //     vm.currentRowKey = 1;
-    //     const tr = vm.$el.querySelector('.el-table__body-wrapper tbody tr');
-    //     setTimeout(_ => {
-    //       expect(tr.classList.contains('current-row')).to.be.true;
-    //       vm.currentRowKey = 2;
+        data() {
+          return {
+            testData: getTestData(),
+            columns: getTestColumns(),
+            currentRowKey: null
+          }
+        },
+      }
 
-    //       const rows = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr');
-    //       setTimeout(_ => {
-    //         expect(tr.classList.contains('current-row')).to.be.false;
-    //         expect(rows[1].classList.contains('current-row')).to.be.true;
-    //         destroyVM(vm);
-    //         done();
-    //       }, DELAY);
-    //     }, DELAY);
-    //   }, DELAY);
-    // });
+      const wrapper = mount(tableDemo, { localVue })
 
-    // it('select-on-indeterminate', done => {
-    //   const vm = createVue({
-    //     template: `
-    //       <el-table :data="testData" @selection-change="change" :select-on-indeterminate="false" ref="table">
-    //         <el-table-column type="selection" />
-    //         <el-table-column prop="name" label="name" />
-    //         <el-table-column prop="release" label="release" />
-    //         <el-table-column prop="director" label="director" />
-    //         <el-table-column prop="runtime" label="runtime" />
-    //       </el-table>
-    //     `,
+      wrapper.vm.currentRowKey = 1
+      const tr = wrapper.vm.$el.querySelector('.el-table__body-wrapper tbody tr');
+      await wrapper.vm.$nextTick(() => {})
+  
+      expect(tr.classList.contains('current-row')).toBeTruthy();
 
-    //     created() {
-    //       this.testData = getTestData();
-    //     },
+      wrapper.vm.currentRowKey = 2
+      const rows = wrapper.vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr');
+      await wrapper.vm.$nextTick(() => {})
 
-    //     mounted() {
-    //       this.$refs.table.toggleRowSelection(this.testData[0]);
-    //     },
+      expect(tr.classList.contains('current-row')).toBeFalsy()
+      expect(rows[1].classList.contains('current-row')).toBeTruthy()
 
-    //     data() {
-    //       return { selected: [] };
-    //     },
+      wrapper.destroy()
+    });
 
-    //     methods: {
-    //       change(val) {
-    //         this.selected = val;
-    //       }
-    //     }
-    //   }, true);
+    it('select-on-indeterminate', async () => {
+      vi.useFakeTimers()
 
-    //   setTimeout(_ => {
-    //     vm.$el.querySelector('.el-checkbox').click();
-    //     setTimeout(_ => {
-    //       expect(vm.selected).to.length(0);
-    //       destroyVM(vm);
-    //       done();
-    //     }, DELAY);
-    //   }, DELAY);
-    // });
+      const localVueElement = createLocalVue()
+      localVueElement.use(Element)
+      localVueElement.use(ElementPart)
+
+      const tableDemo = defineComponent({
+        template: `
+          <e-table :data="testData" :columns="columns" @selection-change="change" :select-on-indeterminate="false" ref="tableRef"/>
+        `,
+
+        data() {
+          return {
+            testData: getTestData(),
+            columns: [
+              { type: 'selection' },
+              { prop: 'name', label: 'name' },
+              { prop: 'release', label: 'release' },
+              { prop: 'director', label: 'director' },
+              { prop: 'runtime', label: 'runtime' }
+            ],
+            selected: []
+          }
+        },
+
+        mounted() {
+          (this.$refs.tableRef as ElTable)?.toggleRowSelection(this.testData[0]);
+        },
+
+        methods: {
+          change(val: any) {
+            this.selected = val;
+          }
+        }
+      })
+
+      const wrapper = mount(tableDemo, { localVue: localVueElement })
+      await wrapper.vm.$nextTick(() => {})
+
+      wrapper.vm.$el.querySelector('.el-checkbox').click();
+      await wrapper.vm.$nextTick(() => {})
+      setTimeout(() => {
+        expect(wrapper.vm.selected).toHaveLength(0);
+      }, 100)
+
+      vi.clearAllTimers()
+    });
   });
 })
