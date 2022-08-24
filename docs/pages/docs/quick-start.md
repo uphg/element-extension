@@ -11,16 +11,26 @@ yarn add element-part
 
 ## 在项目中引入
 
+全局引入
+
 ```ts
-// 指定组件
-import Vue from 'vue'
-import { Form } from 'element-part'
-
-Vue.use(Form)
-
-// 全局引入
-import Vue from 'vue'
+import Vue from 'vue';
+import ElementUI from 'element-ui';
 import ElementPart from 'element-part'
 
+Vue.use(ElementUI);
 Vue.use(ElementPart)
 ```
+
+按需引入
+
+```ts
+import Vue from 'vue';
+import ElementUI from 'element-ui';
+import { Form, FormItem } from 'element-part'
+
+Vue.use(ElementUI);
+Vue.use(Form)
+Vue.use(FormItem)
+```
+
