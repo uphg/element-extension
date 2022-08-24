@@ -5,7 +5,7 @@ import { find, omitBy } from '../../utils'
 import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
 import { useOnInput } from '../../composables/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
-import { FormItemProps } from '../../shared/formItemProps'
+import { FormItemProps } from './formItemProps'
 import { renderSelectOptions } from '../../utils/renderSelectOptions'
 
 type CustomInputParamsOptions = {
