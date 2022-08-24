@@ -1,7 +1,7 @@
 import { ref } from "vue"
 import { ElFormItem } from "element-ui/types/form-item"
 
-function useElFormItem() {
+export function useElFormItem() {
   const elFormItem = ref<ElFormItem | null>(null)
 
   return {
@@ -12,5 +12,3 @@ function useElFormItem() {
     }
   }
 }
-
-export default useElFormItem

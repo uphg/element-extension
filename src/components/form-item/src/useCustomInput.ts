@@ -1,12 +1,12 @@
 import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGroup, Checkbox, InputNumber, Switch, Slider, TimeSelect, DatePicker, Upload, TimePicker, OptionGroup } from 'element-ui'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
-import { find, omitBy } from '../../utils'
-import { CustomInputOptions, CustomInputValue } from '../../types/customInput'
-import { useOnInput } from '../../composables/useOnInput'
+import { find, omitBy } from '../../../utils'
+import { CustomInputOptions, CustomInputValue } from '../../../types/customInput'
+import { useOnInput } from '../../../composables/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
 import { FormItemProps } from './formItemProps'
-import { renderSelectOptions } from '../../utils/renderSelectOptions'
+import { renderSelectOptions } from '../../../utils/renderSelectOptions'
 
 type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;

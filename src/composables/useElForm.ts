@@ -1,7 +1,7 @@
 import { ref } from "vue"
 import { ElForm, ValidateCallback, ValidateFieldCallback } from "element-ui/types/form"
 
-function useElForm() {
+export function useElForm() {
   const elForm = ref<ElForm | null>(null)
 
   return {
@@ -20,5 +20,3 @@ function useElForm() {
     }
   }
 }
-
-export default useElForm

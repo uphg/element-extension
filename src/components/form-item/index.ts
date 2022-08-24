@@ -1,4 +1,4 @@
-import FormItem from './formItem'
+import FormItem from './src/formItem'
 
 // @ts-ignore
 FormItem.install = function (Vue) {

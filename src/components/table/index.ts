@@ -1,5 +1,5 @@
 import { VueConstructor } from 'vue';
-import Table from './table'
+import Table from './src/table'
 
 // @ts-ignore
 Table.install = function (Vue: VueConstructor) {

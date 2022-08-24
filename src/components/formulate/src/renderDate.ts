@@ -1,9 +1,9 @@
 import { h, Ref, SetupContext } from 'vue'
 import { DatePicker, TimeSelect, TimePicker } from 'element-ui'
-import { ElForm } from 'element-ui/types/form';
 import { ElDatePicker } from 'element-ui/types/date-picker';
-import { FormData } from '../../types/form'
-import { FormulateField } from '../../shared/formulateProps';
+import { ElForm } from 'element-ui/types/form';
+import { FormulateField } from './formulateProps';
+import { FormData } from '../../../types/form'
 
 function renderDate(
   props: FormulateField,

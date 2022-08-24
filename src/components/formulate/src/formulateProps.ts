@@ -1,8 +1,8 @@
 import { ExtractPropTypes, PropType, VNodeChildren } from "vue"
 import { VNode, VNodeData } from "vue/types/umd"
-import { elFormProps, ElFormItemProps, CustomInputProps } from "./_commonProps"
-import { CustomInputOptions, CustomInputTypes, CustomInputValue } from "../types/customInput"
-import { FormRule } from "../types/form"
+import { elFormProps, ElFormItemProps, CustomInputProps } from "../../../shared/_commonProps"
+import { CustomInputOptions, CustomInputTypes, CustomInputValue } from "../../../types/customInput"
+import { FormRule } from "../../../types/form"
 
 export interface MapRules {
   (options: { type?: string, key: string, label: string }): FormRule[] | []
@@ -61,7 +61,6 @@ const formulateExpandsProps = {
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
   mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
 }
-
 
 export const formulateProps = {
   ...formulateExpandsProps,

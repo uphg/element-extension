@@ -2,12 +2,11 @@ import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGro
 import { h, Ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { ElForm } from 'element-ui/types/form'
-import { FormData } from '../../types/form'
-import { CustomInputOptions } from '../../types/customInput'
+import { FormData } from '../../../types/form'
+import { CustomInputOptions } from '../../../types/customInput'
 import renderDate from './renderDate'
-import { FormulateField } from '../../shared/formulateProps'
+import { FormulateField } from './formulateProps'
 import { VNode } from 'vue/types/umd'
-
 
 function renderCustomInput(props: FormulateField, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
   const { elForm, formData, context } = _options

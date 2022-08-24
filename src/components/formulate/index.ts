@@ -1,4 +1,4 @@
-import Formulate from './formulate'
+import Formulate from './src/formulate'
 
 // @ts-ignore
 Formulate.install = function (Vue) {

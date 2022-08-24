@@ -1,12 +1,12 @@
-import { defineComponent, h, ref, VNodeChildren } from "vue"
+import { h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
-import { isArray, isObject } from "../../utils"
+import { isArray, isObject } from "../../../utils"
 import renderCustomInput from './renderCustomInput'
-import { CustomInputValue } from "../../types/customInput"
-import { FormRules, FormData } from '../../types/form'
-import useElForm from '../../composables/useElForm'
-import { FormulateField, FormulateFields, formulateProps, FormulateProps } from "../../shared/formulateProps"
+import { CustomInputValue } from "../../../types/customInput"
+import { FormRules, FormData } from '../../../types/form'
+import { useElForm } from '../../../composables/useElForm'
+import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
@@ -120,98 +120,94 @@ function renderFormItem(item: MapFieldsItem, index: string | number, children: V
   )
 }
 
-export default defineComponent({
-  name: 'EFormulate',
-  props: formulateProps,
-  setup(_props, context) {
-    const props = _props.expands || _props
-    if (!props.fields) {
-      throw new Error('[ElementPart] "fields" attribute is required');
-    }
-
-    const formData = ref(initFormData(props.fields))
-    const { rules, handleRules } = useRules(props)
-
-    const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
-
-    const { elForm, validate, validateField, clearValidate } = useElForm()
-
-    function resetFields() {
-      resetFormData(formData.value, props.fields!)
-    }
-
-    function setValues(obj: FormData) {
-      const keys = Object.keys(obj)
-      keys.forEach((key) => {
-        formData.value[key] = obj[key]
-      })
-    }
-
-    function getValues() {
-      return formData.value
-    }
-    
-    function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
-      elForm.value?.validate((valid: boolean, errors: object) => {
-        callback(formData.value, { valid, errors })
-      })
-    }
-
-    function renderFormBlock(item: MapFieldsItem, id: string | number) {
-      return item.vIf && !item.vIf(formData.value)
-      ? null
-      : renderFormItem(item, id, 
-        (isArray(item)
-          ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
-          : [renderCustomInput(item, { elForm, formData, context })]
-        )
-      )
-    }
-
-    context.expose({
-      validate,
-      validateField,
-      resetFields,
-      clearValidate,
-      setValues,
-      getValues,
-      submit,
-      get formData() {
-        return formData.value
-      },
-      get elForm() {
-        return elForm.value
-      }
-    })
-
-    return () => {
-      return h(Form, {
-        // @ts-ignore
-        ref: (el) => elForm.value = el,
-        props: {
-          rules: rules.value,
-          model: formData.value,
-          labelPosition: props.labelPosition,
-          labelWidth: props.labelWidth,
-          labelSuffix: props.labelSuffix,
-          inline: props.inline,
-          inlineMessage: props.inlineMessage,
-          statusIcon: props.statusIcon,
-          showMessage: props.showMessage,
-          size: props.size,
-          disabled: props.disabled,
-          validateOnRuleChange: props.validateOnRuleChange,
-          hideRequiredAsterisk: props.hideRequiredAsterisk
-        }
-      },
-      isArray(props.fields)
-        ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
-            (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
-          ))
-        ))]
-        : (formulateFields.value as MapFieldsItem[]).map((formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, index))
-      )
-    }
+export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) {
+  const props = _props.expands || _props
+  if (!props.fields) {
+    throw new Error('[ElementPart] "fields" attribute is required');
   }
-})
+
+  const formData = ref(initFormData(props.fields))
+  const { rules, handleRules } = useRules(props)
+
+  const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
+
+  const { elForm, validate, validateField, clearValidate } = useElForm()
+
+  function resetFields() {
+    resetFormData(formData.value, props.fields!)
+  }
+
+  function setValues(obj: FormData) {
+    const keys = Object.keys(obj)
+    keys.forEach((key) => {
+      formData.value[key] = obj[key]
+    })
+  }
+
+  function getValues() {
+    return formData.value
+  }
+  
+  function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
+    elForm.value?.validate((valid: boolean, errors: object) => {
+      callback(formData.value, { valid, errors })
+    })
+  }
+
+  function renderFormBlock(item: MapFieldsItem, id: string | number) {
+    return item.vIf && !item.vIf(formData.value)
+    ? null
+    : renderFormItem(item, id, 
+      (isArray(item)
+        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
+        : [renderCustomInput(item, { elForm, formData, context })]
+      )
+    )
+  }
+
+  context.expose({
+    validate,
+    validateField,
+    resetFields,
+    clearValidate,
+    setValues,
+    getValues,
+    submit,
+    get formData() {
+      return formData.value
+    },
+    get elForm() {
+      return elForm.value
+    }
+  })
+
+  return () => {
+    return h(Form, {
+      // @ts-ignore
+      ref: (el) => elForm.value = el,
+      props: {
+        rules: rules.value,
+        model: formData.value,
+        labelPosition: props.labelPosition,
+        labelWidth: props.labelWidth,
+        labelSuffix: props.labelSuffix,
+        inline: props.inline,
+        inlineMessage: props.inlineMessage,
+        statusIcon: props.statusIcon,
+        showMessage: props.showMessage,
+        size: props.size,
+        disabled: props.disabled,
+        validateOnRuleChange: props.validateOnRuleChange,
+        hideRequiredAsterisk: props.hideRequiredAsterisk
+      }
+    },
+    isArray(props.fields)
+      ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
+        (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
+          (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
+        ))
+      ))]
+      : (formulateFields.value as MapFieldsItem[]).map((formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, index))
+    )
+  }
+}

@@ -1,4 +1,4 @@
-import Select from './select'
+import Select from './src/select'
 
 // @ts-ignore
 Select.install = function (Vue) {
