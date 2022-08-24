@@ -2,7 +2,7 @@
   <div class="test">
     <EConfigProvider>
       <div>
-        <e-table :data="testData" :columns="columns" :row-style="tableRowStyle"/>
+        <e-table :data="testData" :columns="columns" @selection-change="change" :select-on-indeterminate="false" ref="tableRef"/>
       </div>
     </EConfigProvider>
   </div>
@@ -10,30 +10,41 @@
 
 <script setup lang="ts">
 import EConfigProvider from '../components/e-config-provider'
+import { onMounted, ref, nextTick } from 'vue';
 
-import { RowCallbackParams } from 'src/types/table';
-
-const testData = [
+const tableRef = ref(null)
+const testData = ref([
   { id: 1, name: 'Toy Story', release: '1995-11-22', director: 'John Lasseter', runtime: 80 },
   { id: 2, name: 'A Bug\'s Life', release: '1998-11-25', director: 'John Lasseter', runtime: 95 },
   { id: 3, name: 'Toy Story 2', release: '1999-11-24', director: 'John Lasseter', runtime: 92 },
   { id: 4, name: 'Monsters, Inc.', release: '2001-11-2', director: 'Peter Docter', runtime: 92 },
   { id: 5, name: 'Finding Nemo', release: '2003-5-30', director: 'Andrew Stanton', runtime: 100 }
-]
-const columns = [
-  { prop: 'id' },
-  { prop: 'name', label: '片名' },
-  { prop: 'release', label: '发行日期' },
-  { prop: 'director', label: '导演' },
-  { prop: 'runtime', label: '时长（分）' },
-]
+])
+const columns = ref([
+  { type: 'selection' },
+  { prop: 'name', label: 'name' },
+  { prop: 'release', label: 'release' },
+  { prop: 'director', label: 'director' },
+  { prop: 'runtime', label: 'runtime' }
+])
 
-const tableRowStyle = (options: { row: RowCallbackParams, rowIndex: number} ) => {
-  const { rowIndex } = options
-  if (rowIndex === 1) {
-    return { height: '60px', display: 'none' };
-  }
+const selected = ref([])
 
-  return null;
+function change(val: any) {
+  console.log('val')
+  console.log(val)
+  selected.value = val;
 }
+
+onMounted(() => {
+  tableRef.value.toggleRowSelection(testData.value[0]);
+
+  nextTick(() => {
+  const checkbox = tableRef.value.$el.querySelector('.el-checkbox')
+  console.log('tableRef.value')
+  console.log(tableRef.value)
+  checkbox.click();
+  })
+
+})
 </script>

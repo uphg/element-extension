@@ -1,5 +1,6 @@
 import './styles/index.scss'
 import 'element-ui/packages/theme-chalk/lib/index.css'
+import Element from 'element-ui'
 import App from './App.vue'
 import Vue from 'vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
@@ -11,6 +12,7 @@ import ElementPart from 'src/index'
 
 Vue.use(PiniaVuePlugin)
 Vue.use(ElementPart)
+Vue.use(Element)
 
 Vue.component('e-demo', Demo)
 Vue.component('e-code', Code)
