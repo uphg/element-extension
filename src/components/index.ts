@@ -1,11 +1,11 @@
 import { VueConstructor } from 'vue/types/vue'
 
-import Input from './input'
-import Select from './select'
-import Form from './form'
-import FormItem from './form-item'
-import Formulate from './formulate'
-import Table from './table'
+import { Input, inputProps, useInput } from './input'
+import { Select, selectProps, useSelect } from './select'
+import { Form, formProps, useForm } from './form'
+import { FormItem, formItemProps, useFormItem } from './form-item'
+import { Formulate, formulateProps, useFormulate } from './formulate'
+import { Table, tableProps, useTable } from './table'
 
 function install(Vue: VueConstructor) {
   [Input, Select, Form, FormItem, Formulate, Table].forEach((item) => {
@@ -21,5 +21,19 @@ export {
   Form,
   FormItem,
   Formulate,
-  Table
+  Table,
+
+  useInput,
+  useSelect,
+  useForm,
+  useFormItem,
+  useFormulate,
+  useTable,
+
+  inputProps,
+  selectProps,
+  formProps,
+  formItemProps,
+  formulateProps,
+  tableProps,
 }
