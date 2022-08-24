@@ -8,7 +8,7 @@
 - ✅ Checkbox 多选框
 - ✅ Input 输入框
 - ✅ InputNumber 计数器
-- ⚠️ Select 选择器（不支持远程搜索、分组功能）
+- ✅ Select 选择器
 - ✅ Cascader 级联选择器
 - ✅ Switch 开关
 - ✅ Slider 滑块
@@ -19,3 +19,4 @@
 - ❌ Rate 评分
 - ❌ ColorPicker 颜色选择器
 - ❌ Transfer 穿梭框
+- ⚠️ ...
