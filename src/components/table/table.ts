@@ -56,6 +56,7 @@ export default defineComponent({
         defaultSort: props.defaultSort,
         tooltipEffect: props.tooltipEffect,
         spanMethod: props.spanMethod,
+        selectOnIndeterminate: props.selectOnIndeterminate,
         indent: props.indent,
         treeProps: props.treeProps,
         lazy: props.lazy,
@@ -70,7 +71,6 @@ export default defineComponent({
 
 function handleColumnsData(props: TableColumnProps) {
   if (!props) return
-
   const data: VNodeData = {
     props: {
       type: props.type,
