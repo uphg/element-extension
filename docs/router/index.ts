@@ -26,6 +26,11 @@ const routes: RouteConfig[] = [
         path: 'quick-start',
         name: 'DocsQuickStart',
         component: () => import('docs/pages/docs/quick-start.md')
+      },
+      {
+        path: 'component-packaging',
+        name: 'DocsComponentPackaging',
+        component: () => import('docs/pages/docs/component-packaging.md')
       }
     ]
   },

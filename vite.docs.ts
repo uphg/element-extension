@@ -3,6 +3,7 @@ import path from 'path';
 import vue from '@vitejs/plugin-vue2'
 import Markdown from 'vite-plugin-md'
 import markdownItSetup from './plugins/markdownItSetup'
+import { highlight } from './plugins/highlight';
 
 const toPath = (p) => `${path.resolve(__dirname, p)}/`
 
@@ -32,6 +33,19 @@ export default defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/], // <--
     }),
-    Markdown({ markdownItSetup }),
+    Markdown({
+      markdownItOptions: {
+        highlight(str, lang) {
+          if (lang) {
+            try {
+              return highlight(str, lang)
+            } catch (__) {}
+          }
+      
+          return ''; // use external default escaping
+        }
+      },
+      markdownItSetup
+    }),
   ]
 })

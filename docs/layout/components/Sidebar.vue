@@ -22,6 +22,11 @@ const sidebars = [
         title: '快速开始',
         name: 'DocsQuickStart',
         link: '/docs/quick-start'
+      },
+      {
+        title: '组件封装',
+        name: 'DocsComponentPackaging',
+        link: '/docs/component-packaging'
       }
     ]
   },
