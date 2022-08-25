@@ -7,9 +7,18 @@ import { CustomInputOptions } from '../../../types/customInput'
 import renderDate from './renderDate'
 import { FormulateField } from './formulateProps'
 import { VNode } from 'vue/types/umd'
+import { GlobalInputProps } from '../../../components/config-provider/src/configProviderProps'
 
-function renderCustomInput(props: FormulateField, _options: { elForm: Ref<HTMLElement | ElForm | null>, formData: Ref<FormData>, context: SetupContext<{}> }) {
-  const { elForm, formData, context } = _options
+function renderCustomInput(
+  props: FormulateField,
+  _options: {
+    elForm: Ref<HTMLElement | ElForm | null>;
+    formData: Ref<FormData>;
+    context: SetupContext<{}>;
+    globalInputProps?: GlobalInputProps;
+  }
+) {
+  const { elForm, formData, context, globalInputProps } = _options
   switch (props.type || 'text') {
     case 'text':
     case 'password':
@@ -39,7 +48,7 @@ function renderCustomInput(props: FormulateField, _options: { elForm: Ref<HTMLEl
           form: props.form,
           rows: props.rows,
           autosize: props.autosize,
-          maxlength: props.minlength,
+          maxlength: props.minlength || globalInputProps?.maxlength,
           minlength: props.maxlength,
           max: props.max,
           min: props.min,

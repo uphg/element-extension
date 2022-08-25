@@ -7,6 +7,8 @@ import { CustomInputValue } from "../../../types/customInput"
 import { FormRules, FormData } from '../../../types/form'
 import { useElForm } from '../../../composables/useElForm'
 import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
+import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps"
+import { useGlobalProps } from "../../../composables/useGlobalProps"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
@@ -132,6 +134,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
 
   const { elForm, validate, validateField, clearValidate } = useElForm()
+  const globalInputProps = useGlobalProps<GlobalInputProps>('input')
 
   function resetFields() {
     resetFormData(formData.value, props.fields!)
@@ -159,8 +162,8 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
     ? null
     : renderFormItem(item, id, 
       (isArray(item)
-        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
-        : [renderCustomInput(item, { elForm, formData, context })]
+        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context, globalInputProps }))
+        : [renderCustomInput(item, { elForm, formData, context, globalInputProps })]
       )
     )
   }

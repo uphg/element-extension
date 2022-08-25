@@ -3,10 +3,13 @@ import { Input } from "element-ui"
 import { useOnInput } from "../../../composables/useOnInput";
 import { ElInput } from "element-ui/types/input";
 import { InputProps } from "./inputProps";
+import { useGlobalProps } from "../../../composables/useGlobalProps";
+import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps";
 
 export function useInput(props: InputProps, context: SetupContext<{}>) {
   const elInput = ref<ElInput | null>(null)
   const onInput = useOnInput(props, context)
+  const globalInputProps = useGlobalProps<GlobalInputProps>('input')
 
   context.expose({
     focus() {
@@ -55,7 +58,7 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
       form: context.attrs.form,
       rows: context.attrs.rows,
       autosize: context.attrs.autosize,
-      maxlength: context.attrs.maxlength,
+      maxlength: context.attrs.maxlength || globalInputProps?.maxlength,
       minlength: context.attrs.minlength,
       max: context.attrs.max,
       min: context.attrs.min

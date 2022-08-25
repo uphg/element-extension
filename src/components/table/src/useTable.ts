@@ -87,7 +87,6 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
   }
 }
 
-
 export function useTable(props: TableProps, context: SetupContext<{}>) {
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const on = useElTableEmit(context.emit)

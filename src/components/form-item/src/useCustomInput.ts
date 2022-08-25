@@ -7,6 +7,8 @@ import { useOnInput } from '../../../composables/useOnInput'
 import { EmitFn } from 'vue/types/v3-setup-context'
 import { FormItemProps } from './formItemProps'
 import { renderSelectOptions } from '../../../utils/renderSelectOptions'
+import { GlobalInputProps } from '../../../components/config-provider/src/configProviderProps'
+import { useGlobalProps } from '../../../composables/useGlobalProps'
 
 type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -69,6 +71,7 @@ export function useCustomInput<T extends FormItemProps>(
 
   const { onClick, onChange, onVisibleChange, onBlur, onFocus, onClear } = useEvents(emit)
   const { focus, blur, select } = useExpose(inputRef)
+  const globalInputProps = useGlobalProps<GlobalInputProps>('input')
 
   const setRef = function(el: HTMLInputElement) {
     inputRef.value = el
@@ -176,7 +179,7 @@ export function useCustomInput<T extends FormItemProps>(
         form: context.attrs.form,
         rows: context.attrs.rows,
         autosize: context.attrs.autosize,
-        maxlength: context.attrs.maxlength,
+        maxlength: context.attrs.maxlength || globalInputProps?.maxlength,
         minlength: context.attrs.minlength,
         max: context.attrs.max,
         min: context.attrs.min,
