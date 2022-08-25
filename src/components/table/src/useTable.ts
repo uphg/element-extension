@@ -139,8 +139,8 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       load: props.load
     },
     on,
-  }, props.columns.map(
+  }, props.columns?.length ? props.columns.map(
       item => h(TableColumn, handleColumnsData(item))
-    )
+    ) : context.slots.default?.()
   )
 }

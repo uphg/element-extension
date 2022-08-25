@@ -5,7 +5,9 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 
 export type TableProps = ExtractPropTypes<typeof tableProps>
+
 export type ElTableColumnProps = ExtractPropTypes<typeof elTableColumnProps>
+
 export type TableColumnChildrenProps = {
   type: 'button' | 'link';
   text: string;
@@ -13,16 +15,16 @@ export type TableColumnChildrenProps = {
   size: ElementUIComponentSize;
   onClick: (scope: rowCallbackParams) => void
 }
+
 export type TableColumnOptions = {
   value: any;
   label: string;
 }
+
 export type TableColumnProps = {
   emptyText?: string;
-  // options?: TableColumnOptions[];
   children?: TableColumnChildrenProps[];
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
-  handleValue?: (scope: rowCallbackParams) => void | any;
 } & ElTableColumnProps
 
 export const elTableColumnProps = {
