@@ -1,5 +1,5 @@
 <template>
-  <custom-input v-model="input" @blur="onBlur" />
+  <custom-input v-model="input" placeholder="输入搜索内容" @blur="onBlur" />
 </template>
 
 <script setup lang="ts">

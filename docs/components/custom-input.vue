@@ -21,7 +21,7 @@ export default defineComponent({
 
 <style lang="scss">
 .custom-input {
-  width: 240px;
+  max-width: 180px;
   display: inline-flex;
   align-items: center;
   border-bottom: 1px solid #ebebeb;
