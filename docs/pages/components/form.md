@@ -6,7 +6,7 @@
 
 FormItem 组件的默认 `type="text"`，添加 input 输入框只需要 绑定 v-model
 
-:::code
+::: demo
 
 form/base
 
@@ -16,7 +16,7 @@ form/base
 
 兼容 Input 组件的 exclude 属性，排除指定字符串规则
 
-:::code
+::: demo
 
 form/input-exclude
 
@@ -26,7 +26,7 @@ form/input-exclude
 
 FormItem 可以添加 options 属性选项渲染多种选择类型的组件
 
-:::code
+::: demo
 
 form/options
 
@@ -36,7 +36,7 @@ form/options
 
 使用 options 插槽给 options 选项自定义模板
 
-:::code
+::: demo
 
 form/options-custom
 
@@ -44,7 +44,7 @@ form/options-custom
 
 添加 `option-groups` 属性可以使用 ElSelect 组件的 OptionsGroup 分组功能
 
-:::code
+::: demo
 
 form/option-groups
 
@@ -54,7 +54,7 @@ form/option-groups
 
 添加表单验证功能，与 ElFormItem 相同
 
-:::code
+::: demo
 
 form/validate
 
@@ -64,7 +64,7 @@ form/validate
 
 与 ElFormItem label 插槽作用相同
 
-:::code
+::: demo
 
 form/label
 

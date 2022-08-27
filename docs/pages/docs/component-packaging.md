@@ -8,48 +8,15 @@
 
 你可以使用它们封装一个自定义的 input 组件，如下：
 
-```vue
-<script lang="ts">
-import { inputProps, useInput } from 'src/index'
-import { defineComponent, h } from 'vue'
+::: code
 
-export default defineComponent({
-  name: 'CustomInput',
-  props: inputProps,
-  inheritAttrs: false,
-  setup(props, context) {
-    const renderInput = useInput(props, context)
+docs/components/custom-input.vue
 
-    return () => h('div',
-      { class: 'custom-input' },
-      [
-        renderInput(),
-        h('i', { class: 'el-icon-search' })
-      ]
-    )
-  }
-})
-</script>
-
-<style lang="scss">
-.custom-input {
-  width: 240px;
-  display: inline-flex;
-  align-items: center;
-  border-bottom: 1px solid #ebebeb;
-  .el-input__inner {
-    border: none;
-    padding: 0;
-    border-radius: 0;
-    padding-right: 4px;
-  }
-}
-</style>
-```
+:::
 
 使用该组件
 
-:::code
+::: demo
 
 custom-input/base
 

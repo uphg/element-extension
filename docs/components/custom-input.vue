@@ -7,14 +7,15 @@ export default defineComponent({
   props: inputProps,
   inheritAttrs: false,
   setup(props, context) {
-    // ...
-    const renderInput = useInput(props, context)
-    return () => h('div', {
-      class: 'custom-input'
-    }, [
-      renderInput(),
-      h('i', { class: 'el-icon-search' })
-    ])
+    const { expose, render: renderInput } = useInput(props, context)
+    context.expose(expose)
+
+    return () => h('div', { class: 'custom-input' },
+      [
+        renderInput(),
+        h('i', { class: 'el-icon-search' })
+      ]
+    )
   }
 })
 </script>

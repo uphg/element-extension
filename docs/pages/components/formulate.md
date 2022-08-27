@@ -6,7 +6,7 @@
 
 实现一个基本的表单组件
 
-:::code
+::: demo
 
 formulate/base
 
@@ -16,7 +16,7 @@ formulate/base
 
 可传入数组设置多列
 
-:::code
+::: demo
 
 formulate/rows-2
 
@@ -24,7 +24,7 @@ formulate/rows-2
 
 列宽会根据 ElCol 的 `span` 属性与 `fields.length` 相除进行计算，所以列数必须能被 24 整除
 
-:::code
+::: demo
 
 formulate/rows-3
 
@@ -34,7 +34,7 @@ formulate/rows-3
 
 与 ElForm 表单的 rules 属性相同
 
-:::code
+::: demo
 
 formulate/rules
 
@@ -42,7 +42,7 @@ formulate/rules
 
 完整的表单验证示例
 
-:::code
+::: demo
 
 formulate/validate
 
@@ -52,7 +52,7 @@ formulate/validate
 
 使用上传组件时，可以设置默认按钮格式和提示内容
 
-:::code
+::: demo
 
 formulate/file
 

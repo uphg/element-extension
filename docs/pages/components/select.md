@@ -6,7 +6,7 @@
 
 将 options 改为数据格式传入（去除对默认插槽的支持）
 
-:::code
+::: demo
 
 select/base
 
@@ -16,7 +16,7 @@ select/base
 
 使用 option-groups 可添加分组
 
-:::code
+::: demo
 
 select/option-groups
 
@@ -26,7 +26,7 @@ select/option-groups
 
 使用 `v-slot:options` 插槽可自定义每一项的内容
 
-:::code
+::: demo
 
 select/slot-options
 
@@ -34,7 +34,7 @@ select/slot-options
 
 该插槽还支持与分组同时使用
 
-:::code
+::: demo
 
 select/slot-option-groups
 

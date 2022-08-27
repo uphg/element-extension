@@ -6,7 +6,7 @@
 
 与 `<el-input>` 相同
 
-:::code
+::: demo
 
 input/base
 
@@ -16,7 +16,7 @@ input/base
 
 相比 `<el-input>` 添加了 `exclude` 属性，表示要排除的字符串规则，该属性支持字符串、数字、正则
 
-:::code
+::: demo
 
 input/exclude
 
@@ -26,7 +26,7 @@ input/exclude
 
 同样支持 `type="textarea"` 属性
 
-:::code
+::: demo
 
 input/textarea
 

@@ -6,7 +6,7 @@
 
 在 `<el-table>` 的基础上添加了 `columns` 属性
 
-:::code
+::: demo
 
 table/base
 
