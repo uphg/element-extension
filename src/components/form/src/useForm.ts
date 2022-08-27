@@ -3,45 +3,47 @@ import { ElForm } from "element-ui/types/form"
 import { FormProps } from "./formProps"
 import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
+import { useGlobalProps } from "../../../composables/useGlobalProps"
+import { GlobalFormProps } from "../../../components/config-provider/src/configProviderProps"
+import { handleProps } from "../../../utils/handleProps"
 
 export function useForm(props: FormProps, context: SetupContext<{}>) {
   const { elForm, validate, validateField, clearValidate } = useElForm()
 
-  function setRef(el: ElForm) {
+  const globalFormProps = useGlobalProps<GlobalFormProps>('form')
+
+  const setRef = function(el: ElForm) {
     elForm.value = el
-  }
+  } as unknown as string
 
-  context.expose({
-    validate,
-    validateField,
-    clearValidate,
-    get elForm() { return elForm.value }
-  })
-
-  return () => h(Form, {
-    ref: setRef as unknown as string,
-    props: {
-      model: props.model,
-      rules: props.rules,
-      labelPosition: props.labelPosition,
-      labelWidth: props.labelWidth,
-      labelSuffix: props.labelSuffix,
-      inline: props.inline,
-      inlineMessage: props.inlineMessage,
-      statusIcon: props.statusIcon,
-      showMessage: props.showMessage,
-      size: props.size,
-      disabled: props.disabled,
-      validateOnRuleChange: props.validateOnRuleChange,
-      hideRequiredAsterisk: props.hideRequiredAsterisk
+  return {
+    expose: {
+      validate,
+      validateField,
+      clearValidate,
+      get elForm() { return elForm.value }
     },
-    on: {
-      validate(value: unknown){
-        context.emit('validate', value)
+    render: () => h(Form, {
+      ref: setRef,
+      props: {
+        model: props.model,
+        rules: props.rules,
+        labelSuffix: props.labelSuffix,
+        statusIcon: props.statusIcon,
+        showMessage: props.showMessage,
+        disabled: props.disabled,
+        validateOnRuleChange: props.validateOnRuleChange,
+        hideRequiredAsterisk: props.hideRequiredAsterisk,
+        ...handleProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+      },
+      on: {
+        validate(value: unknown){
+          context.emit('validate', value)
+        }
+      },
+      scopedSlots: {
+        default: () => context.slots.default?.()
       }
-    },
-    scopedSlots: {
-      default: () => context.slots.default?.()
-    }
-  })
+    })
+  }
 }

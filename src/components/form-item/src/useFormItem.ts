@@ -15,37 +15,41 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
     }
   })
 
-  context.expose({
-    ...(expose ? expose : {}),
-    clearValidate,
-    get elFormItem() { return elFormItem.value }
-  })
+  const setRef = function(el: ElFormItem) {
+    elFormItem.value = el
+  } as unknown as string
 
-  return () => h(FormItem, {
-    // @ts-ignore
-    ref: (el: ElFormItem) => elFormItem.value = el,
-    props: {
-      label: props.label,
-      labelWidth: props.labelWidth,
-      prop: props.prop,
-      required: props.required,
-      rules: props.rules,
-      error: props.error,
-      validateStatus: props.validateStatus,
-      for: props.for,
-      inlineMessage: props.inlineMessage,
-      showMessage: props.showMessage,
-      size: props.size
+  return {
+    expose: {
+      ...(expose ? expose : {}),
+      clearValidate,
+      get elFormItem() { return elFormItem.value }
     },
-    scopedSlots: {
-      error: (params) => context.slots.error?.(params),
-    }
-  }, [
-    context.slots.label && h('slot', {
-      slot: 'label'
-    }, context.slots.label()),
-    context.slots.itemPrefix?.(),
-    (context.slots.default && props.type === 'text' && context.slots.default?.()) || render(),
-    context.slots.itemSuffix?.(),
-  ])
+    render: () => h(FormItem, {
+      ref: setRef,
+      props: {
+        label: props.label,
+        labelWidth: props.labelWidth,
+        prop: props.prop,
+        required: props.required,
+        rules: props.rules,
+        error: props.error,
+        validateStatus: props.validateStatus,
+        for: props.for,
+        inlineMessage: props.inlineMessage,
+        showMessage: props.showMessage,
+        size: props.size
+      },
+      scopedSlots: {
+        error: (params) => context.slots.error?.(params),
+      }
+    }, [
+      context.slots.label && h('slot', {
+        slot: 'label'
+      }, context.slots.label()),
+      context.slots.itemPrefix?.(),
+      (context.slots.default && props.type === 'text' && context.slots.default?.()) || render(),
+      context.slots.itemSuffix?.(),
+    ])
+  }
 }

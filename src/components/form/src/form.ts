@@ -6,6 +6,8 @@ export default defineComponent({
   name: 'EForm',
   props: formProps,
   setup(props, context) {
-    return useForm(props, context)
+    const { expose, render } = useForm(props, context)
+    context.expose(expose)
+    return render
   }
 })

@@ -7,6 +7,8 @@ export default defineComponent({
   props: formulateProps,
   inheritAttrs: false,
   setup(props, context) {
-    return useFormulate(props, context)
+    const { expose, render } = useFormulate(props, context)
+    context.expose(expose)
+    return render
   }
 })

@@ -7,8 +7,10 @@ import { CustomInputValue } from "../../../types/customInput"
 import { FormRules, FormData } from '../../../types/form'
 import { useElForm } from '../../../composables/useElForm'
 import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
-import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps"
+import { GlobalFormProps, GlobalInputProps } from "../../../components/config-provider/src/configProviderProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
+import { handleProps } from "../../../utils/handleProps"
+import { ElForm } from "element-ui/types/form"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
@@ -135,6 +137,12 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
 
   const { elForm, validate, validateField, clearValidate } = useElForm()
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
+  const globalFormProps = useGlobalProps<GlobalFormProps>('form')
+
+  const setRef = function(el: ElForm) {
+    elForm.value = el
+  } as unknown as string
+
 
   function resetFields() {
     resetFormData(formData.value, props.fields!)
@@ -168,49 +176,45 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
     )
   }
 
-  context.expose({
-    validate,
-    validateField,
-    resetFields,
-    clearValidate,
-    setValues,
-    getValues,
-    submit,
-    get formData() {
-      return formData.value
-    },
-    get elForm() {
-      return elForm.value
-    }
-  })
-
-  return () => {
-    return h(Form, {
-      // @ts-ignore
-      ref: (el) => elForm.value = el,
-      props: {
-        rules: rules.value,
-        model: formData.value,
-        labelPosition: props.labelPosition,
-        labelWidth: props.labelWidth,
-        labelSuffix: props.labelSuffix,
-        inline: props.inline,
-        inlineMessage: props.inlineMessage,
-        statusIcon: props.statusIcon,
-        showMessage: props.showMessage,
-        size: props.size,
-        disabled: props.disabled,
-        validateOnRuleChange: props.validateOnRuleChange,
-        hideRequiredAsterisk: props.hideRequiredAsterisk
+  return {
+    expose: {
+      validate,
+      validateField,
+      resetFields,
+      clearValidate,
+      setValues,
+      getValues,
+      submit,
+      get formData() {
+        return formData.value
+      },
+      get elForm() {
+        return elForm.value
       }
     },
-    isArray(props.fields)
-      ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-        (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
-          (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
-        ))
-      ))]
-      : (formulateFields.value as MapFieldsItem[]).map((formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, index))
-    )
+    render: () => {
+      return h(Form, {
+        ref: setRef,
+        props: {
+          rules: rules.value,
+          model: formData.value,
+          labelSuffix: props.labelSuffix,
+          statusIcon: props.statusIcon,
+          showMessage: props.showMessage,
+          disabled: props.disabled,
+          validateOnRuleChange: props.validateOnRuleChange,
+          hideRequiredAsterisk: props.hideRequiredAsterisk,
+          ...handleProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+        }
+      },
+      isArray(props.fields)
+        ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
+          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
+            (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
+          ))
+        ))]
+        : (formulateFields.value as MapFieldsItem[]).map((formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, index))
+      )
+    }
   }
 }

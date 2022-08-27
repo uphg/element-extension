@@ -4,13 +4,15 @@ import { DatePickerOptions } from "element-ui/types/date-picker";
 import { TimePickerOptions } from "element-ui/types/time-picker";
 import { TimeSelectOptions } from "element-ui/types/time-select";
 import { ElUpload, FileListItem } from "element-ui/types/upload";
+import { QueryChangeHandler } from "element-ui/types/select";
+import { ElementUIComponentSize } from "element-ui/types/component";
+import { FormRule, FormRules } from "../types/form";
 import { CustomInputOptions } from "../types/customInput";
 import { InputExclude } from "../types/input";
-import { QueryChangeHandler } from "element-ui/types/select";
-import { FormRule, FormRules } from "src/types/form";
-
 
 function noop() { }
+
+export const empty = void 0
 
 export const commonProps = {
   type: {
@@ -74,6 +76,9 @@ export const commonProps = {
   // ElForm
   label: String as PropType<string>,
   labelWidth: String as PropType<string>,
+  labelPosition: String as PropType<string>,
+  inline: Boolean as PropType<boolean>,
+  inlineMessage: Boolean as PropType<boolean>,
   prop: String as PropType<string>,
   required: {
     type: Boolean as PropType<boolean>,
@@ -83,16 +88,9 @@ export const commonProps = {
   error: String as PropType<string>,
   validateStatus: String as PropType<string>,
   for: String as PropType<string>,
-
   model: Object as PropType<object>,
-  labelPosition: String as PropType<string>,
   labelSuffix: {
     type: String as PropType<string>,
-    default: ''
-  },
-  inline: Boolean as PropType<boolean>,
-  inlineMessage: {
-    type: [String, Boolean] as PropType<string | boolean>,
     default: ''
   },
   statusIcon: Boolean as PropType<boolean>,
@@ -554,7 +552,7 @@ export const elFormItemProps = {
   for: commonProps.for,
   inlineMessage: commonProps.inlineMessage,
   showMessage: commonProps.showMessage,
-  size: commonProps.size
+  size: String as PropType<'medium' | 'small' | 'mini'>
 }
 
 export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>
@@ -562,17 +560,32 @@ export type ElFormItemProps = ExtractPropTypes<typeof elFormItemProps>
 export const elFormProps = {
   model: commonProps.model,
   rules: commonProps.rules,
-  labelPosition: commonProps.labelPosition,
-  labelWidth: commonProps.labelWidth,
   labelSuffix: commonProps.labelSuffix,
-  inline: commonProps.inline,
-  inlineMessage: commonProps.inlineMessage,
   statusIcon: commonProps.statusIcon,
   showMessage: commonProps.showMessage,
-  size: commonProps.size,
   disabled: commonProps.disabled,
   validateOnRuleChange: commonProps.validateOnRuleChange,
-  hideRequiredAsterisk: commonProps.hideRequiredAsterisk
+  hideRequiredAsterisk: commonProps.hideRequiredAsterisk,
+  labelWidth: {
+    type: [String, undefined] as PropType<string>,
+    default: empty
+  },
+  labelPosition: {
+    type: [String, undefined] as PropType<string>,
+    default: empty
+  },
+  inline: {
+    type: [Boolean, undefined] as PropType<boolean>,
+    default: empty
+  },
+  inlineMessage: {
+    type: [Boolean, undefined] as PropType<boolean>,
+    default: empty
+  },
+  size: {
+    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
+    default: empty
+  }
 }
 
 export type ElFormProps = ExtractPropTypes<typeof elFormProps>

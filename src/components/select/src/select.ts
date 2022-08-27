@@ -6,6 +6,8 @@ export default defineComponent({
   name: 'ESelect',
   props: selectProps,
   setup(props, context) {
-    return useSelect(props, context)    
+    const { expose, render } = useSelect(props, context)
+    context.expose(expose)
+    return render
   }
 })

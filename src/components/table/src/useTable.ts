@@ -6,6 +6,9 @@ import { isArray } from "../../../utils"
 import { TableColumnChildrenProps, TableColumnProps, TableProps } from "./tableProps"
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
 import { RowCallbackParams } from "../../../types/table"
+import { GlobalTableProps } from "../../../components/config-provider/src/configProviderProps"
+import { useGlobalProps } from "../../../composables/useGlobalProps"
+import { handleProps } from "../../../utils/handleProps"
 
 function handleColumnsData(props: TableColumnProps) {
   if (!props) return
@@ -90,6 +93,7 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
 export function useTable(props: TableProps, context: SetupContext<{}>) {
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const on = useElTableEmit(context.emit)
+  const globalTableProps = useGlobalProps<GlobalTableProps>('table')
 
   context.expose({
     clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load,
@@ -103,13 +107,9 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
     ref: (el: ElTable) => elTable.value = el,
     props: {
       data: props.data,
-      size: props.size,
       width: props.width,
       height: props.height,
-      maxHeight: props.maxHeight,
       fit: props.fit,
-      stripe: props.stripe,
-      border: props.border,
       rowKey: props.rowKey,
       context: props.context,
       showHeader: props.showHeader,
@@ -136,7 +136,8 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       indent: props.indent,
       treeProps: props.treeProps,
       lazy: props.lazy,
-      load: props.load
+      load: props.load,
+      ...handleProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, ['maxHeight', 'stripe', 'border', 'size'])
     },
     on,
   }, props.columns?.length ? props.columns.map(

@@ -7,6 +7,8 @@ export default defineComponent({
   props: inputProps,
   inheritAttrs: false,
   setup(props, context) {
-    return useInput(props, context)
+    const { expose, render } = useInput(props, context)
+    context.expose(expose)
+    return render
   }
 })

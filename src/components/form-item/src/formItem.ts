@@ -7,6 +7,8 @@ export default defineComponent({
   props: formItemProps,
   inheritAttrs: false,
   setup(props, context) {
-    return useFormItem(props, context)
+    const { expose, render } = useFormItem(props, context)
+    context.expose(expose)
+    return render
   }
 })

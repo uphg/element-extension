@@ -1,8 +1,9 @@
+import { ExtractPropTypes, PropType } from "vue";
+import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
 import { rowCallbackParams } from "element-ui/types/table";
-import { ExtractPropTypes, PropType } from "vue";
-import { ScopedSlot } from "vue/types/vnode";
+import { empty } from "../../../shared/_commonProps";
 
 export type TableProps = ExtractPropTypes<typeof tableProps>
 
@@ -86,16 +87,13 @@ export const tableProps = {
       return [];
     }
   },
-  size: String,
   width: [String, Number],
   height: [String, Number],
-  maxHeight: [String, Number],
+
   fit: {
     type: Boolean,
     default: true
   },
-  stripe: Boolean,
-  border: Boolean,
   rowKey: [String, Function],
   context: {},
   showHeader: {
@@ -141,6 +139,24 @@ export const tableProps = {
   lazy: Boolean,
   load: Function,
 
+  // global props
+  size: {
+    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
+    default: empty
+  },
+  maxHeight: {
+    type: [String, Number] as PropType<string | number | undefined>
+  },
+  stripe: {
+    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    default: empty
+  },
+  border: {
+    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    default: empty
+  },
+
+  // custom props
   columns: {
     type: Array as PropType<Array<TableColumnProps>>,
     default: () => []
