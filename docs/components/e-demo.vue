@@ -30,7 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 .e-demo {
-  // padding: 22px 24px;
+  width: 100%;
   border-radius: 6px;
   margin-bottom: 1.2em;
   box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
@@ -42,9 +42,8 @@ export default {
 }
 
 .code-source {
-  max-width: 875px;
+  width: 100%;
   border-top: 1px solid rgba(60, 60, 60, .12);
-  // background-color: #282c34;
   color: #fff;
   overflow-x: auto;
 }

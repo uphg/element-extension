@@ -115,12 +115,12 @@ form/label
 
 在 ElFormItem 默认插槽基础上添加了以下插槽
 
-| name       | 说明                                                 |
-| :--------- | :--------------------------------------------------- |
-| —          | Form Item 的内容，如果不传，默认渲染 type 指定的组件 |
-| label      | 标签文本的内容                                       |
-| itemPrefix |                                                      |
-| itemSuffix |                                                      |
+| name       | 说明                                                      |
+| :--------- | :-------------------------------------------------------- |
+| default    | Form Item 的内容（只在 `type="text"` 或 type 为空时生效） |
+| label      | 标签文本的内容                                            |
+| itemPrefix | FormItem 内元素前插入内容                                 |
+| itemSuffix | FormItem 内元素后插入内容                                 |
 
 
 

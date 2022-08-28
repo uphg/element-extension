@@ -9,41 +9,48 @@
 <script setup lang="ts">
 import { Message } from 'element-ui';
 import { RowCallbackParams } from 'src/types/table'
-import { ref } from 'vue';
-import dayjs from 'dayjs'
+import { ref, h } from 'vue';
 
 const tableData = ref([{
-  date: 1462147200000,
+  date: new Date().getTime(),
   name: '王小虎',
+  address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }, {
   date: 1462320000000,
   name: '李小妹',
+  address: '上海市普陀区金沙江路 1518 弄',
   sex: 1
 }, {
   date: 1462060800000,
   name: '王小虎',
+  address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }, {
   date: 1462233600000,
   name: '王小虎',
+  address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }])
 
 const tableColumns = [{
+  type: 'datetime',
   prop: 'date',
   label: '日期',
   width: '160',
-  children: (scope: RowCallbackParams) => dayjs(scope.row.date).format('YYYY-MM-DD') 
 }, {
   prop: 'name',
   label: '姓名',
-  width: '160'
+  width: '100'
 }, {
   prop: 'sex',
   label: '性别',
-  width: '160',
-  children: (scope: RowCallbackParams) => scope.row.sex ? '女' : '男'
+  width: '80',
+  formatter: (row: RowCallbackParams['row']) => row.sex ? '女' : '男'
+}, {
+  label: '地址',
+  width: '260',
+  children: (scope: RowCallbackParams) => [h('i', { class: 'el-icon-s-flag' }), scope.row.address]
 }, {
   children: [{
     type: 'link',
