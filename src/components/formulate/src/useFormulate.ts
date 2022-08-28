@@ -9,7 +9,7 @@ import { useElForm } from '../../../composables/useElForm'
 import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
 import { GlobalFormProps, GlobalInputProps } from "../../../components/config-provider/src/configProviderProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
-import { handleProps } from "../../../utils/handleProps"
+import { handleDefaultProps } from "../../../utils/handleDefaultProps"
 import { ElForm } from "element-ui/types/form"
 
 interface MapFieldsItem extends FormulateField {
@@ -204,7 +204,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
           disabled: props.disabled,
           validateOnRuleChange: props.validateOnRuleChange,
           hideRequiredAsterisk: props.hideRequiredAsterisk,
-          ...handleProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+          ...handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
         }
       },
       isArray(props.fields)

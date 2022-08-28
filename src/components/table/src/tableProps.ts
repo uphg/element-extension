@@ -2,8 +2,11 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
-import { rowCallbackParams } from "element-ui/types/table";
+// import { rowCallbackParams } from "element-ui/types/table";
 import { empty } from "../../../shared/_commonProps";
+import { VNode } from "vue/types/umd";
+import { RowCallbackParams } from "../../../types/table";
+import { TableColumn } from "element-ui";
 
 export type TableProps = ExtractPropTypes<typeof tableProps>
 
@@ -14,7 +17,7 @@ export type TableColumnChildrenProps = {
   text: string;
   hue: ButtonType;
   size: ElementUIComponentSize;
-  onClick: (scope: rowCallbackParams) => void
+  onClick: (scope: RowCallbackParams) => void
 }
 
 export type TableColumnOptions = {
@@ -24,13 +27,23 @@ export type TableColumnOptions = {
 
 export type TableColumnProps = {
   emptyText?: string;
-  children?: TableColumnChildrenProps[];
+  children?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
 } & ElTableColumnProps
 
+export const defaultFormats = {
+  date: 'yyyy-MM-dd',
+  time: 'HH:mm:ss',
+  datetime: 'yyyy-MM-dd HH:mm:ss',
+  month: 'yyyy-MM',
+  year: 'yyyy'
+}
+
+export type TableColumnExtendsType = keyof (typeof defaultFormats)
+
 export const elTableColumnProps = {
   type: {
-    type: String,
+    type: String as PropType<'selection' | 'index' | 'expand' | TableColumnExtendsType>,
     default: 'default'
   },
   label: String,
@@ -77,6 +90,16 @@ export const elTableColumnProps = {
     validator(val: any) {
       return val.every((order: string) => ['ascending', 'descending', null].indexOf(order) > -1);
     }
+  },
+
+  // 自定义属性
+  dateFormat: {
+    type: [String, Function],
+    default: defaultFormats.date
+  },
+  timeFormat: {
+    type: [String, Function],
+    default: defaultFormats.time
   }
 }
 

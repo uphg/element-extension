@@ -2,19 +2,32 @@ import { h, SetupContext } from "vue"
 import type { VNodeData } from "vue"
 import { Table, TableColumn, Link, Button } from "element-ui"
 import { ElTable } from "element-ui/types/table"
+import { formatDate } from 'element-ui/src/utils/date-util';
 import { isArray } from "../../../utils"
-import { TableColumnChildrenProps, TableColumnProps, TableProps } from "./tableProps"
+import { defaultFormats, TableColumnChildrenProps, TableColumnExtendsType, TableColumnProps, TableProps } from "./tableProps"
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
 import { RowCallbackParams } from "../../../types/table"
 import { GlobalTableProps } from "../../../components/config-provider/src/configProviderProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
-import { handleProps } from "../../../utils/handleProps"
+import { handleDefaultProps } from "../../../utils/handleDefaultProps"
+
+const elTableColumnTypes = ['selection','index','expand']
+const extendColumnTypes = ['date', 'time', 'datetime', 'month', 'year']
+
+function createDateFormat(props: TableColumnProps) {
+  const format = defaultFormats[props.type as TableColumnExtendsType]
+  return (row: RowCallbackParams['row']) => formatDate(row[props.prop!], format)
+}
+
+function handleColumnsType(type: string) {
+  return elTableColumnTypes.includes(type) ? type : void 0
+}
 
 function handleColumnsData(props: TableColumnProps) {
   if (!props) return
   const data: VNodeData = {
     props: {
-      type: props.type,
+      type: handleColumnsType(props.type),
       label: props.label,
       className: props.className,
       labelClassName: props.labelClassName,
@@ -49,7 +62,7 @@ function handleColumnsData(props: TableColumnProps) {
   if (props.children) {
     if (isArray(props.children)) {
       data.scopedSlots = {
-        default: (scope) => props.children?.map((item) => renderChildrenNode(item, scope))
+        default: (scope) => (props.children as TableColumnChildrenProps[])?.map((item) => renderChildrenNode(item, scope))
       }
     } else {
       data.scopedSlots = {
@@ -59,6 +72,10 @@ function handleColumnsData(props: TableColumnProps) {
 
   } else if (props.scopedSlots) {
     data.scopedSlots = props.scopedSlots
+  }
+
+  if (props.prop && extendColumnTypes.includes(props.type)) {
+    data.props!.formatter = createDateFormat(props)
   }
 
   return data
@@ -109,10 +126,8 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       data: props.data,
       width: props.width,
       height: props.height,
-      fit: props.fit,
       rowKey: props.rowKey,
       context: props.context,
-      showHeader: props.showHeader,
       showSummary: props.showSummary,
       sumText: props.sumText,
       summaryMethod: props.summaryMethod,
@@ -124,7 +139,6 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       headerRowStyle: props.headerRowStyle,
       headerCellClassName: props.headerCellClassName,
       headerCellStyle: props.headerCellStyle,
-      highlightCurrentRow: props.highlightCurrentRow,
       currentRowKey: props.currentRowKey,
       emptyText: props.emptyText,
       expandRowKeys: props.expandRowKeys,
@@ -137,7 +151,11 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       treeProps: props.treeProps,
       lazy: props.lazy,
       load: props.load,
-      ...handleProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, ['maxHeight', 'stripe', 'border', 'size'])
+      ...handleDefaultProps<GlobalTableProps>(
+        props as GlobalTableProps,
+        globalTableProps,
+        ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
+      )
     },
     on,
   }, props.columns?.length ? props.columns.map(

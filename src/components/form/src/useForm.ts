@@ -5,7 +5,7 @@ import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalFormProps } from "../../../components/config-provider/src/configProviderProps"
-import { handleProps } from "../../../utils/handleProps"
+import { handleDefaultProps } from "../../../utils/handleDefaultProps"
 
 export function useForm(props: FormProps, context: SetupContext<{}>) {
   const { elForm, validate, validateField, clearValidate } = useElForm()
@@ -34,7 +34,7 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
         disabled: props.disabled,
         validateOnRuleChange: props.validateOnRuleChange,
         hideRequiredAsterisk: props.hideRequiredAsterisk,
-        ...handleProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+        ...handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
       },
       on: {
         validate(value: unknown){

@@ -5,7 +5,7 @@ import { ElInput } from "element-ui/types/input";
 import { InputProps } from "./inputProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps";
-import { handleProps } from "../../../utils/handleProps";
+import { handleDefaultProps } from "../../../utils/handleDefaultProps";
 
 export function useInput(props: InputProps, context: SetupContext<{}>) {
   const elInput = ref<ElInput | null>(null)
@@ -48,7 +48,7 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
         label: props.label,
         showPassword: props.showPassword,
         tabindex: props.tabindex,
-        ...handleProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, ['clearable', 'showWordLimit', 'autosize','size'])
+        ...handleDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, ['clearable', 'showWordLimit', 'autosize','size'])
       },
       attrs: {
         placeholder: context.attrs.placeholder,
@@ -61,7 +61,7 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
         minlength: context.attrs.minlength,
         max: context.attrs.max,
         min: context.attrs.min,
-        ...handleProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, ['maxlength'])
+        ...handleDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, ['maxlength'])
       },
       on: {
         input: onInput,

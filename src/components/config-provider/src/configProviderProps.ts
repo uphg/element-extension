@@ -4,6 +4,8 @@ import { ElementUIComponentSize } from "element-ui/types/component";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
+export type ConfigComponentPropNames = (keyof GlobalInputProps) | (keyof GlobalFormProps) | (keyof GlobalTableProps) | (keyof GlobalTableColumnProps)
+
 export type GlobalInputProps = {
   clearable: boolean;
   showWordLimit: boolean;
@@ -25,36 +27,63 @@ export type GlobalTableProps = {
   stripe: boolean;
   border: boolean;
   size: ElementUIComponentSize;
+  fit: boolean;
+  showHeader: boolean;
+  highlightCurrentRow: boolean;
+}
+
+export type GlobalTableColumnProps = {
+  resizable: boolean;
+  showOverflowTooltip: boolean;
+}
+
+export const defaultProps = {
+  input: {
+    clearable: false,
+    showWordLimit: false,
+    autosize: false,
+    size: empty,
+    maxlength: empty,
+  },
+  form: {
+    inline: false,
+    labelPosition: 'right',
+    labelWidth: void 0,
+    inlineMessage: '',
+    size: empty
+  },
+  table: {
+    maxHeight: empty,
+    stripe: false,
+    border: false,
+    size: empty,
+    fit: true,
+    showHeader: true,
+    highlightCurrentRow: false
+  },
+  tableColumn: {
+    maxHeight: empty,
+    stripe: false,
+    border: false,
+    size: empty
+  }
 }
 
 export const configProviderProps = {
   input: {
     type: Object as PropType<GlobalInputProps>,
-    default: () => ({
-      clearable: false,
-      showWordLimit: false,
-      autosize: false,
-      size: empty,
-      maxlength: empty,
-    })
+    default: empty
   },
   form: {
     type: Object as PropType<GlobalFormProps>,
-    default: () => ({
-      inline: false,
-      labelPosition: 'right',
-      labelWidth: void 0,
-      inlineMessage: '',
-      size: empty
-    })
+    default: empty
   },
   table: {
     type: Object as PropType<GlobalTableProps>,
-    default: () => ({
-      maxHeight: empty,
-      stripe: false,
-      border: false,
-      size: empty
-    })
+    default: empty
+  },
+  tableColumn: {
+    type: Object as PropType<GlobalTableColumnProps>,
+    default: empty
   }
 }
