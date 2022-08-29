@@ -2,15 +2,13 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
-// import { rowCallbackParams } from "element-ui/types/table";
 import { empty } from "../../../shared/_commonProps";
 import { VNode } from "vue/types/umd";
 import { RowCallbackParams } from "../../../types/table";
+import { TableColumnProps } from "../../../components/table-column/src/tableColumnProps";
 import { TableColumn } from "element-ui";
 
 export type TableProps = ExtractPropTypes<typeof tableProps>
-
-export type ElTableColumnProps = ExtractPropTypes<typeof elTableColumnProps>
 
 export type TableColumnChildrenProps = {
   type: 'button' | 'link';
@@ -20,88 +18,11 @@ export type TableColumnChildrenProps = {
   onClick: (scope: RowCallbackParams) => void
 }
 
-export type TableColumnOptions = {
-  value: any;
-  label: string;
-}
 
-export type TableColumnProps = {
-  emptyText?: string;
+export type TableObjectColumnProps = {
   children?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
-} & ElTableColumnProps
-
-export const defaultFormats = {
-  date: 'yyyy-MM-dd',
-  time: 'HH:mm:ss',
-  datetime: 'yyyy-MM-dd HH:mm:ss',
-  month: 'yyyy-MM',
-  year: 'yyyy'
-}
-
-export type TableColumnExtendsType = keyof (typeof defaultFormats)
-
-export const elTableColumnProps = {
-  type: {
-    type: String as PropType<'selection' | 'index' | 'expand' | TableColumnExtendsType>,
-    default: 'default'
-  },
-  label: String,
-  className: String,
-  labelClassName: String,
-  property: String,
-  prop: String,
-  width: {},
-  minWidth: {},
-  renderHeader: Function,
-  sortable: {
-    type: [Boolean, String],
-    default: false
-  },
-  sortMethod: Function,
-  sortBy: [String, Function, Array],
-  resizable: {
-    type: Boolean,
-    default: true
-  },
-  columnKey: String,
-  align: String,
-  headerAlign: String,
-  showTooltipWhenOverflow: Boolean,
-  showOverflowTooltip: Boolean,
-  fixed: [Boolean, String],
-  formatter: Function,
-  selectable: Function,
-  reserveSelection: Boolean,
-  filterMethod: Function,
-  filteredValue: Array,
-  filters: Array,
-  filterPlacement: String,
-  filterMultiple: {
-    type: Boolean,
-    default: true
-  },
-  index: [Number, Function],
-  sortOrders: {
-    type: Array,
-    default() {
-      return ['ascending', 'descending', null];
-    },
-    validator(val: any) {
-      return val.every((order: string) => ['ascending', 'descending', null].indexOf(order) > -1);
-    }
-  },
-
-  // 自定义属性
-  dateFormat: {
-    type: [String, Function],
-    default: defaultFormats.date
-  },
-  timeFormat: {
-    type: [String, Function],
-    default: defaultFormats.time
-  }
-}
+} & TableColumnProps
 
 export const tableProps = {
   data: {
@@ -181,7 +102,7 @@ export const tableProps = {
 
   // custom props
   columns: {
-    type: Array as PropType<Array<TableColumnProps>>,
+    type: Array as PropType<Array<TableObjectColumnProps>>,
     default: () => []
   },
 }

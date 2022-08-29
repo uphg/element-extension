@@ -1,4 +1,4 @@
-import Formulate from './src/formulate'
+import Formulate from './src/Formulate'
 import { formulateProps } from './src/formulateProps'
 import { useFormulate } from './src/useFormulate'
 

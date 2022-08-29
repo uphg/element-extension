@@ -1,4 +1,4 @@
-import FormItem from './src/formItem'
+import FormItem from './src/FormItem'
 import { formItemProps } from './src/formItemProps'
 import { useFormItem } from './src/useFormItem'
 

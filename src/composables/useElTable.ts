@@ -61,7 +61,6 @@ export function useElTable() {
     load
   }
 }
-
 export function useElTableEmit(emit: EmitFn) {
   return createEmit(emit, elTableEmitNames)
 }

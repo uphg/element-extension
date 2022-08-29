@@ -1,4 +1,4 @@
-import Form from './src/form'
+import Form from './src/Form'
 import { formProps } from './src/formProps'
 import { useForm } from './src/useForm'
 

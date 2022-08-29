@@ -1,5 +1,5 @@
 import { VueConstructor } from 'vue';
-import Table from './src/table'
+import Table from './src/Table'
 import { tableProps } from './src/tableProps'
 import { useTable } from './src/useTable'
 

@@ -33,9 +33,6 @@ export type GlobalTableProps = {
 }
 
 export type GlobalTableColumnProps = {
-  stripe: boolean;
-  border: boolean;
-  size: ElementUIComponentSize;
   showOverflowTooltip: boolean;
 }
 

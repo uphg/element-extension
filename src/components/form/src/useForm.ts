@@ -16,6 +16,10 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
     elForm.value = el
   } as unknown as string
 
+  const temp = handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+  console.log('temp')
+  console.log(temp)
+
   return {
     expose: {
       validate,
