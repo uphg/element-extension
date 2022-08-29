@@ -28,6 +28,7 @@ function renderCustomInput(
         props: {
           type: props.type,
           value: formData.value[props.key],
+          autocomplete: props.autocomplete,
           clearable: props.clearable,
           showPassword: props.showPassword,
           disabled: props.disabled,
@@ -36,11 +37,10 @@ function renderCustomInput(
           prefixIcon: props.prefixIcon,
           showWordLimit: props.showWordLimit,
           tabindex: props.tabindex,
-          validateEvent: props.validateEvent
+          validateEvent: props.validateEvent,
         },
         attrs: {
           placeholder: props.placeholder,
-          autocomplete: props.autocomplete,
           name: props.name,
           readonly: props.readonly,
           step: props.step,
@@ -48,8 +48,8 @@ function renderCustomInput(
           form: props.form,
           rows: props.rows,
           autosize: props.autosize,
-          maxlength: props.minlength || globalInputProps?.maxlength,
-          minlength: props.maxlength,
+          maxlength: props.maxlength || globalInputProps?.maxlength,
+          minlength: props.minlength,
           max: props.max,
           min: props.min,
         },
