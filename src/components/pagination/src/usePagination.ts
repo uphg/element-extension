@@ -1,10 +1,15 @@
 import { Pagination } from "element-ui";
 import { ElPagination } from "element-ui/types/pagination";
+import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { h, ref, SetupContext } from "vue";
 import { PaginationProps } from "./paginationProps";
+import { GlobalPaginationProps } from "../../../components/config-provider/src/configProviderProps";
+import { handleDefaultProps } from "../../../utils/handleDefaultProps";
 
 export function usePagination(props: PaginationProps, context: SetupContext<{}>) {
   const elPagination = ref<ElPagination | null>(null)
+  const globalPaginationProps = useGlobalProps<GlobalPaginationProps>('pagination')
+
   const setRef = function(el: ElPagination) {
     elPagination.value = el
   } as unknown as string
@@ -19,19 +24,11 @@ export function usePagination(props: PaginationProps, context: SetupContext<{}>)
       ref: setRef,
       props: {
         pageSize: props.pageSize,
-        small: props.small,
         total: props.total,
         pageCount: props.pageCount,
-        pagerCount: props.pagerCount,
         currentPage: props.currentPage,
-        layout: props.layout,
-        pageSizes: props.pageSizes,
-        popperClass: props.popperClass,
-        prevText: props.prevText,
-        nextText: props.nextText,
-        background: props.background,
         disabled: props.disabled,
-        hideOnSinglePage: props.hideOnSinglePage
+        ...handleDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, ['small', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'background', 'hideOnSinglePage'])
       },
       on: {
         'size-change': (value: number) => {

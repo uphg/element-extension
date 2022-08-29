@@ -33,39 +33,66 @@ export type GlobalTableProps = {
 }
 
 export type GlobalTableColumnProps = {
-  resizable: boolean;
+  stripe: boolean;
+  border: boolean;
+  size: ElementUIComponentSize;
   showOverflowTooltip: boolean;
 }
 
+export type GlobalPaginationProps = {
+  small: boolean;
+  background: boolean;
+  pagerCount: number;
+  layout: string;
+  pageSizes: number[];
+  popperClass: string;
+  prevText: string;
+  nextText: string;
+  hideOnSinglePage: boolean;
+}
+
+export type DefaultProps = typeof defaultProps
+
 export const defaultProps = {
   input: {
-    clearable: false,
-    showWordLimit: false,
-    autosize: false,
+    clearable: empty, // false
+    showWordLimit: empty, // false
+    autosize: empty, // false
     size: empty,
     maxlength: empty,
   },
   form: {
-    inline: false,
-    labelPosition: 'right',
-    labelWidth: void 0,
-    inlineMessage: '',
+    inline: empty, // false
+    labelPosition: empty, // 'right'
+    labelWidth: empty,
+    inlineMessage: empty,
     size: empty
   },
   table: {
     maxHeight: empty,
-    stripe: false,
-    border: false,
+    stripe: empty, // false
+    border: empty, // false
     size: empty,
-    fit: true,
-    showHeader: true,
-    highlightCurrentRow: false
+    fit: empty, // true
+    showHeader: empty, // true
+    highlightCurrentRow: empty // false
   },
   tableColumn: {
-    maxHeight: empty,
-    stripe: false,
-    border: false,
-    size: empty
+    stripe: empty,
+    border: empty,
+    size: empty,
+    showOverflowTooltip: empty
+  },
+  pagination: {
+    small: empty, // false
+    background: empty, // false
+    pagerCount: empty, // 7
+    layout: empty, // 'prev, pager, next, jumper, ->, total'
+    pageSizes: empty, // [10, 20, 30, 40, 50, 100]
+    popperClass: empty,
+    prevText: empty,
+    nextText: empty,
+    hideOnSinglePage: empty,
   }
 }
 
@@ -85,5 +112,9 @@ export const configProviderProps = {
   tableColumn: {
     type: Object as PropType<GlobalTableColumnProps>,
     default: empty
-  }
+  },
+  pagination: {
+    type: Object as PropType<GlobalPaginationProps>,
+    default: empty
+  },
 }

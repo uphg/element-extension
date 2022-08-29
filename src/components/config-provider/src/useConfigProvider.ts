@@ -1,40 +1,20 @@
-import { configMap, ConfigPropKeys } from "../../../shared/configProviderKeys";
+import { configMap } from "../../../shared/configProviderKeys";
 import { provide, SetupContext } from "vue";
-import { ConfigProviderProps, defaultProps, ConfigComponentPropNames } from "./configProviderProps";
-import { isObject } from "../../../utils";
+import { ConfigProviderProps, defaultProps } from "./configProviderProps";
+import { each } from "../../../utils/each";
+import { ObjectLike } from "../../../types/common";
 
-export function useConfigProvider(props: ConfigProviderProps, context: SetupContext<{}>) {
-  
-  (Object.keys(configMap) as ConfigPropKeys[]).forEach((key) => {
-    const tempProps: { [key: string]: any } = {}
-    Object.keys(defaultProps[key]).forEach((prop: string) => {
-      // @ts-ignore
-      tempProps[prop] = props[key][prop] ? props[key][prop] : defaultProps[key][prop]
+export function useConfigProvider(props: ConfigProviderProps, context?: SetupContext<{}>) {
+  const provideProps: ObjectLike = {}
+  each<symbol>(configMap, (configKey, componentName) => {
+    const currentProps = (props as ObjectLike)?.[componentName]
+    const tempProps: ObjectLike = {}
+    each<ObjectLike>((defaultProps as ObjectLike)[componentName], (defaultProp, propName) => {
+      tempProps[propName] = currentProps?.[propName] || defaultProp
     })
-    provide(configMap[key], tempProps)
-  })
+    provideProps[componentName] = tempProps
+    provide<ObjectLike>(configKey, tempProps)
+  });
 
-  return () => context.slots.default?.()
-}
-
-function createConfigDefaultProps(defaults, props) {
-  const result = {}
-  const stack = [[defaults, result, props]]
-
-  while (stack.length) {
-    const part = stack.shift()
-    const defaults = [0]
-    const result = [1]
-    const props = [2]
-    const defaultKeys = Object.keys(defaults)
-    defaultKeys.forEach((key) => {
-
-      result[key] = props[key] || defaults[key]
-      if (isObject(defaults[key])) {
-        stack.push([defaults[key], result[key], props[key]])
-      }
-    })
-    
-  }
-
+  return context && (() => context.slots.default?.())
 }
