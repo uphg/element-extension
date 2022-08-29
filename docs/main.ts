@@ -10,6 +10,9 @@ import Demo from './components/e-demo.vue'
 import CustomInput from './components/custom-input.vue'
 import ElementPart from 'src/index'
 
+console.log('ElementPart')
+console.log(ElementPart)
+
 Vue.use(PiniaVuePlugin)
 Vue.use(ElementPart)
 Vue.use(Element)
