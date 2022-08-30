@@ -7,8 +7,7 @@ export default defineComponent({
   props: paginationProps,
   inheritAttrs: false,
   setup(props, context) {
-    const { expose, render } = usePagination(props, context)
-    context.expose(expose)
+    const { render } = usePagination(props, context)
     return render
   }
 })

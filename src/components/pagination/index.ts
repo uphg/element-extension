@@ -1,4 +1,4 @@
-import Pagination from './src/pagination'
+import Pagination from './src/Pagination'
 import { paginationProps } from './src/paginationProps'
 import { usePagination } from './src/usePagination'
 

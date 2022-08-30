@@ -1,4 +1,4 @@
-import Input from './src/input'
+import Input from './src/Input'
 import { inputProps } from './src/inputProps'
 import { useInput } from './src/useInput'
 

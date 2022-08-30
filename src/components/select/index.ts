@@ -1,4 +1,4 @@
-import Select from './src/select'
+import Select from './src/Select'
 import { selectProps } from './src/selectProps'
 import { useSelect } from './src/useSelect'
 
