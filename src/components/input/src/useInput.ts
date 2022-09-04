@@ -6,10 +6,21 @@ import { InputProps } from "./inputProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps";
 import { handleDefaultProps } from "../../../utils/handleDefaultProps";
+import { generateEmits } from "../../../utils/generateEmits";
+import { generateProps } from "../../../utils/generateProps";
+
+const propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
+const attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
+const otherEmitNames = ['blur', 'focus', 'change', 'clear']
+const globalPropNames = ['clearable', 'showWordLimit', 'autosize','size']
+const globalAttrNames = ['maxlength']
 
 export function useInput(props: InputProps, context: SetupContext<{}>) {
   const elInput = ref<ElInput | null>(null)
   const onInput = useOnInput(props, context)
+  const otherOn = generateEmits(context.emit, otherEmitNames)
+  const on = { input: onInput, ...otherOn }
+
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
 
   const setRef = function(el: ElInput) {
@@ -35,49 +46,14 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
     render: () => h(Input, {
       ref: setRef,
       props: {
-        value: props.value,
-        resize: props.resize,
-        form: props.form,
-        disabled: props.disabled,
-        readonly: props.readonly,
-        type: props.type,
-        autocomplete: props.autocomplete,
-        validateEvent: props.validateEvent,
-        suffixIcon: props.suffixIcon,
-        prefixIcon: props.prefixIcon,
-        label: props.label,
-        showPassword: props.showPassword,
-        tabindex: props.tabindex,
-        ...handleDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, ['clearable', 'showWordLimit', 'autosize','size'])
+        ...generateProps(props, propNames),
+        ...handleDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, globalPropNames)
       },
       attrs: {
-        placeholder: context.attrs.placeholder,
-        name: context.attrs.name,
-        readonly: context.attrs.readonly,
-        step: context.attrs.step,
-        autofocus: context.attrs.autofocus,
-        form: context.attrs.form,
-        rows: context.attrs.rows,
-        minlength: context.attrs.minlength,
-        max: context.attrs.max,
-        min: context.attrs.min,
-        ...handleDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, ['maxlength'])
+        ...generateProps(context.attrs, attrNames),
+        ...handleDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, globalAttrNames)
       },
-      on: {
-        input: onInput,
-        blur(event: FocusEvent) {
-          context.emit('blur', event)
-        },
-        focus(event: FocusEvent) {
-          context.emit('focus', event)
-        },
-        change(value: string | number) {
-          context.emit('change', value)
-        },
-        clear() {
-          context.emit('clear')
-        }
-      }
+      on
     }, [
       context.slots?.suffix && h('slot', { slot: 'suffix' }, context.slots.suffix()),
       context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),

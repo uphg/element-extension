@@ -1,5 +1,5 @@
 import { formatDate } from "element-ui/src/utils/date-util"
-import { RowCallbackParams } from "src/types/table"
+import { RowCallbackParams } from "../../../types/table"
 import { defaultFormats, TableColumnExtendsType, TableColumnProps } from "./tableColumnProps"
 
 export function createDateFormat<T extends TableColumnProps>(props: T) {

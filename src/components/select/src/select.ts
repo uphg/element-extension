@@ -8,6 +8,7 @@ export default defineComponent({
   setup(props, context) {
     const { expose, render } = useSelect(props, context)
     context.expose(expose)
+
     return render
   }
 })

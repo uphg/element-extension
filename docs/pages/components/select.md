@@ -45,10 +45,10 @@ select/slot-option-groups
 
 除了支持 [`<el-select>`](https://element.eleme.io/#/zh-CN/component/select) 的属性，还支持以下属性
 
-| 参数    | 说明                               | 类型   | 可选值 | 默认值 |
-| ------- | ---------------------------------- | ------ | ------ | ------ |
-| options | 下拉列表数组                       | object | —      | —      |
-| options | `el-option-group` 分组下拉列表数组 | object | —      | —      |
+| 参数          | 说明                                    | 类型   | 可选值 | 默认值 |
+| ------------- | --------------------------------------- | ------ | ------ | ------ |
+| options       | 下拉列表数组                            | object | —      | —      |
+| option-groups | 使用 `el-option-group` 分组下拉列表数组 | object | —      | —      |
 
 ## Select Slots
 

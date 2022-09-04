@@ -1,4 +1,4 @@
-type ObjectLike = {[key: string]: any}
+import { ObjectLike } from "../types/object-like"
 
 export function handleDefaultProps<T extends ObjectLike>(props: T, defaults: T | undefined, keys: string[]) {
   const result: T | object = {}

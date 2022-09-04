@@ -1,16 +1,9 @@
-type ObjectLike = {
-  [key: string]: any
-}
+import { ObjectLike } from "../types/object-like"
 
-export function generateProps(defaultProps: ObjectLike, currentProps: ObjectLike, globalProps: ObjectLike) {
-  const result: ObjectLike | object = {}
-  const propNames = Object.keys(defaultProps)
-  propNames.forEach((prop) => {
-    (result as ObjectLike)[prop] = currentProps[prop] || globalProps[prop] || defaultProps[prop]?.default
+export function generateProps<T extends ObjectLike>(props: T, keys: (keyof T | string)[]) {
+  const result: T | object = {}
+  keys.forEach((key) => {
+    (result as T)[key] = props[key]
   })
   return result
 }
-
-generateProps({ hi: 1 }, { hi: '' }, { hi: '你好' })
-
-console.log()

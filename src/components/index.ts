@@ -8,10 +8,12 @@ import { Formulate, formulateProps, useFormulate } from './formulate'
 import { Table, tableProps, useTable } from './table'
 import { TableColumn, tableColumnProps, useTableColumn } from './table-column'
 import { Pagination, paginationProps, usePagination } from './pagination'
+import { StaggeredTransitionGroup } from './staggered-transition-group/index'
+import { Upload } from './upload'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
 function install(Vue: VueConstructor) {
-  [Input, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, ConfigProvider].forEach((item) => {
+  [Input, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider].forEach((item) => {
     // @ts-ignore
     Vue.use(item)
   })
@@ -27,6 +29,8 @@ export {
   Table,
   TableColumn,
   Pagination,
+  StaggeredTransitionGroup,
+  Upload,
   ConfigProvider,
 
   useInput,

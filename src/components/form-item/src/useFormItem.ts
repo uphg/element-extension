@@ -4,42 +4,35 @@ import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
 import { FormItemProps } from "./formItemProps"
+import { generateProps } from 'src/utils/generateProps'
+
+const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
 export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
   const { elFormItem, clearValidate } = useElFormItem()
-  const { render, expose } = useCustomInput(props, context, {
+  const { render, expose: customInputExpose } = useCustomInput(props, context, {
     onKeyup(event) {
       if (event.keyCode === 13) {
-        // 执行回车
+        // enter
       }
     }
   })
+
+  const expose = {
+    ...(customInputExpose ? customInputExpose : {}),
+    clearValidate,
+    get elFormItem() { return elFormItem.value }
+  }
 
   const setRef = function(el: ElFormItem) {
     elFormItem.value = el
   } as unknown as string
 
   return {
-    expose: {
-      ...(expose ? expose : {}),
-      clearValidate,
-      get elFormItem() { return elFormItem.value }
-    },
+    expose,
     render: () => h(FormItem, {
       ref: setRef,
-      props: {
-        label: props.label,
-        labelWidth: props.labelWidth,
-        prop: props.prop,
-        required: props.required,
-        rules: props.rules,
-        error: props.error,
-        validateStatus: props.validateStatus,
-        for: props.for,
-        inlineMessage: props.inlineMessage,
-        showMessage: props.showMessage,
-        size: props.size
-      },
+      props: generateProps(props, propNames),
       scopedSlots: {
         error: (params) => context.slots.error?.(params),
       }
@@ -48,7 +41,7 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
         slot: 'label'
       }, context.slots.label()),
       context.slots.itemPrefix?.(),
-      (context.slots.default && props.type === 'text' && context.slots.default?.()) || render(),
+      (context.slots.default && props.type === 'text' && context.slots.default?.()) || [render()],
       context.slots.itemSuffix?.(),
     ])
   }

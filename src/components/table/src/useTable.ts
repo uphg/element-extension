@@ -8,6 +8,8 @@ import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { handleDefaultProps } from "../../../utils/handleDefaultProps"
 import { handleColumnsData } from "./handleColumnsData";
 
+const globalPropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
+
 export function useTable(props: TableProps, context: SetupContext<{}>) {
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const on = useElTableEmit(context.emit)
@@ -52,11 +54,7 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
         treeProps: props.treeProps,
         lazy: props.lazy,
         load: props.load,
-        ...handleDefaultProps<GlobalTableProps>(
-          props as GlobalTableProps,
-          globalTableProps,
-          ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
-        )
+        ...handleDefaultProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, globalPropNames)
       },
       on,
     }, (

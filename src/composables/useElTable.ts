@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { ElTable, treeNode } from "element-ui/types/table";
 import { EmitFn } from "vue/types/v3-setup-context";
+import { generateEmits } from "../utils/generateEmits";
 
 const elTableEmitNames = ['select', 'select-all', 'selection-change', 'cell-mouse-enter', 'cell-mouse-leave', 'cell-click', 'cell-dblclick', 'row-click', 'row-contextmenu', 'row-dblclick', 'header-click', 'header-contextmenu', 'sort-change', 'filter-change', 'current-change', 'header-dragend', 'expand-change']
 
@@ -62,16 +63,5 @@ export function useElTable() {
   }
 }
 export function useElTableEmit(emit: EmitFn) {
-  return createEmit(emit, elTableEmitNames)
-}
-
-function createEmit(emit: EmitFn, emitNames: string[]) {
-  const result: { [key: string]: (...args: unknown[]) => void } = {}
-
-  emitNames.forEach((key) => {
-    result[key] = (...args) => {
-      emit(key, ...args)
-    }
-  })
-  return result
+  return generateEmits(emit, elTableEmitNames)
 }

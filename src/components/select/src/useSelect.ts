@@ -1,11 +1,17 @@
 import { ElSelect } from "element-ui/types/select"
 import { h, ref, SetupContext } from "vue"
 import { Select } from "element-ui"
-import { renderSelectOptions } from '../../../utils/renderSelectOptions'
 import { SelectProps } from "./selectProps"
+import { renderSelectOptions } from '../../../utils/renderSelectOptions'
+import { generateProps } from "../../../utils/generateProps"
+import { generateEmits } from "../../../utils/generateEmits"
+
+const propNames = ['name', 'id', 'value', 'autocomplete', 'automaticDropdown', 'size', 'disabled', 'clearable', 'filterable', 'allowCreate', 'loading', 'popperClass', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'multiple', 'multipleLimit', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'valueKey', 'collapseTags', 'popperAppendToBody' ]
+const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
 
 export function useSelect(props: SelectProps, context: SetupContext<{}>) {
   const elSelect = ref<ElSelect | null>(null)
+  const on = generateEmits(context.emit, emitNames)
   const setRef = function(el: ElSelect) {
     elSelect.value = el
   } as unknown as string
@@ -24,51 +30,8 @@ export function useSelect(props: SelectProps, context: SetupContext<{}>) {
     },
     render: () => h(Select, {
       ref: setRef,
-      props: {
-        name: props.name,
-        id: props.id,
-        value: props.value,
-        autocomplete: props.autocomplete,
-        automaticDropdown: props.automaticDropdown,
-        size: props.size,
-        disabled: props.disabled,
-        clearable: props.clearable,
-        filterable: props.filterable,
-        allowCreate: props.allowCreate,
-        loading: props.loading,
-        popperClass: props.popperClass,
-        remote: props.remote,
-        loadingText: props.loadingText,
-        noMatchText: props.noMatchText,
-        noDataText: props.noDataText,
-        remoteMethod: props.remoteMethod,
-        filterMethod: props.filterMethod,
-        multiple: props.multiple,
-        multipleLimit: props.multipleLimit,
-        placeholder: props.placeholder,
-        defaultFirstOption: props.defaultFirstOption,
-        reserveKeyword: props.reserveKeyword,
-        valueKey: props.valueKey,
-        collapseTags: props.collapseTags,
-        popperAppendToBody: props.popperAppendToBody
-      },
-      on: {
-        input(value: unknown) {
-          context.emit('input', value)
-        },
-        change(value: unknown) {
-          context.emit('change', value)
-        },
-        visibleChange(value: unknown) {
-          context.emit('visible-change', value)
-        },
-        blur(value: unknown) {
-          context.emit('blur', value)
-        },
-        clear() {
-          context.emit('clear')
-        }
-      }
+      props: generateProps(props, propNames),
+      on
     }, [
       context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
       context.slots?.empty && h('slot', { slot: 'empty' }, context.slots.empty()),

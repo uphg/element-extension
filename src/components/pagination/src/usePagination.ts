@@ -4,34 +4,24 @@ import { h, SetupContext } from "vue";
 import { PaginationProps } from "./paginationProps";
 import { GlobalPaginationProps } from "../../../components/config-provider/src/configProviderProps";
 import { handleDefaultProps } from "../../../utils/handleDefaultProps";
+import { generateEmits } from "../../../utils/generateEmits";
+import { generateProps } from "../../../utils/generateProps";
+
+const propNames = ['pageSize', 'total', 'pageCount', 'currentPage', 'disabled']
+const globalPropNames = ['small', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'background', 'hideOnSinglePage']
+const emitNames = ['size-change', 'current-change', 'prev-click', 'next-click']
 
 export function usePagination(props: PaginationProps, context: SetupContext<{}>) {
   const globalPaginationProps = useGlobalProps<GlobalPaginationProps>('pagination')
+  const on = generateEmits(context.emit, emitNames)
 
   return {
     render: () => h(Pagination, {
       props: {
-        pageSize: props.pageSize,
-        total: props.total,
-        pageCount: props.pageCount,
-        currentPage: props.currentPage,
-        disabled: props.disabled,
-        ...handleDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, ['small', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'background', 'hideOnSinglePage'])
+        ...generateProps(props, propNames),
+        ...handleDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, globalPropNames)
       },
-      on: {
-        'size-change': (value: number) => {
-          context.emit('size-change', value)
-        },
-        'current-change': (value: number) => {
-          context.emit('current-change', value)
-        },
-        'prev-click': (value: number) => {
-          context.emit('prev-click', value)
-        },
-        'next-click': (value: number) => {
-          context.emit('next-click', value)
-        },
-      }
+      on
     }, [context.slots.default?.()])
   }
 }

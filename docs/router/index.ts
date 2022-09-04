@@ -12,7 +12,7 @@ const routes: RouteConfig[] = [
       {
         path: 'test',
         name: 'Test',
-        component: () => import('docs/pages/test.vue')
+        component: () => import('docs/pages/test/index.vue')
       }
     ]
   },

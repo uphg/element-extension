@@ -4,7 +4,7 @@ import { tableColumnProps } from './src/tableColumnProps'
 import { useTableColumn } from './src/useTableColumn'
 
 // @ts-ignore
-Table.install = function (Vue: VueConstructor) {
+TableColumn.install = function (Vue: VueConstructor) {
   Vue.component(TableColumn.name, TableColumn);
 }
 

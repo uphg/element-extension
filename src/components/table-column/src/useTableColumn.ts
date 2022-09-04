@@ -5,12 +5,10 @@ import { extendColumnTypes, TableColumnProps } from "./tableColumnProps";
 import { handleColumnType } from "./handleColumnType";
 import { GlobalTableColumnProps } from "../../config-provider/src/configProviderProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { handleDefaultProps } from "src/utils/handleDefaultProps";
+import { handleDefaultProps } from "../../../utils/handleDefaultProps";
 
 export function useTableColumn(props: TableColumnProps, context: SetupContext<{}>) {
-
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
-
   let formatter = props.formatter
   if (props.prop && extendColumnTypes.includes(props.type)) {
     formatter = createDateFormat(props)

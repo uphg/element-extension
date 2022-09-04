@@ -6,19 +6,20 @@ import { Form } from "element-ui"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalFormProps } from "../../../components/config-provider/src/configProviderProps"
 import { handleDefaultProps } from "../../../utils/handleDefaultProps"
+import { generateEmits } from "../../../utils/generateEmits"
+import { generateProps } from "../../../utils/generateProps"
+
+const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
+const globalPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
+const emitNames = ['validate']
 
 export function useForm(props: FormProps, context: SetupContext<{}>) {
   const { elForm, validate, validateField, clearValidate } = useElForm()
-
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
-
+  const on = generateEmits(context.emit, emitNames)
   const setRef = function(el: ElForm) {
     elForm.value = el
   } as unknown as string
-
-  const temp = handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
-  console.log('temp')
-  console.log(temp)
 
   return {
     expose: {
@@ -30,21 +31,10 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
     render: () => h(Form, {
       ref: setRef,
       props: {
-        model: props.model,
-        rules: props.rules,
-        labelSuffix: props.labelSuffix,
-        statusIcon: props.statusIcon,
-        showMessage: props.showMessage,
-        disabled: props.disabled,
-        validateOnRuleChange: props.validateOnRuleChange,
-        hideRequiredAsterisk: props.hideRequiredAsterisk,
-        ...handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+        ...generateProps(props, propNames),
+        ...handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, globalPropNames)
       },
-      on: {
-        validate(value: unknown){
-          context.emit('validate', value)
-        }
-      },
+      on,
       scopedSlots: {
         default: () => context.slots.default?.()
       }
