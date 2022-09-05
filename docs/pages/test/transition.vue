@@ -11,6 +11,7 @@
       @after-enter="afterEnter"
       @before-leave="beforeLeave"
       @leave="leave"
+      @after-leave="afterLeave"
     >
       <li
         v-for="(item, index) in computedList"
@@ -47,8 +48,7 @@ function beforeEnter(el: HTMLElement) {
   el.style.height = `${0}`
 }
 
-function enter(el: HTMLElement, done) {
-  // var delay = el.dataset.index * 150
+function enter(el: HTMLElement, done: () => void) {
   var delay = Number(el.getAttribute('data-index')) * interval
   setTimeout(() => {
     el.style.opacity = `${1}`
@@ -66,8 +66,7 @@ function beforeLeave(el: HTMLElement) {
   el.style.height = `${el.scrollHeight}px`
 }
 
-function leave(el: HTMLElement, done) {
-  // var delay = el.dataset.index * 150
+function leave(el: HTMLElement, done: () => void) {
   var delay = Number(el.getAttribute('data-index')) * interval
   setTimeout(() => {
     // void el.scrollHeight
@@ -77,6 +76,9 @@ function leave(el: HTMLElement, done) {
       done()
     }, 1000)
   }, delay)
+}
+
+function afterLeave(el: HTMLElement) {
 }
 </script>
 
