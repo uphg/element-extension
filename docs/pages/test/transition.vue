@@ -29,7 +29,7 @@ const computedList = computed(() => list.value.filter(function (item) {
 </script>
 
 <style lang="scss">
-@import 'src/components/staggered-transition-group/staggered-transition-group.css';
+@import 'src/styles/staggered-transition-group.css';
 .staggered-list-ul {
   border: 1px solid blue;
 }

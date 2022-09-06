@@ -14,7 +14,6 @@ const staggeredProps = {
 
 function beforeEnter(el: HTMLElement) {
   addClass(el, transitionClass)
-  el.style.transition = 
   el.style.opacity = `${0}`
   el.style.height = `${0}`
 }
@@ -24,7 +23,6 @@ function enter(el: HTMLElement, done: () => void) {
   setTimeout(() => {
     el.style.opacity = `${1}`
     el.style.height = `${el.scrollHeight}px`
-    void el.scrollHeight
     setTimeout(() => {
       done()
     }, transitionTime)
