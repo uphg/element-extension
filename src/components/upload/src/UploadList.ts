@@ -1,9 +1,14 @@
-import { defineComponent, h } from "vue"
+import { defineComponent, h, PropType, ref } from "vue"
 import { StaggeredTransitionGroup } from "../../staggered-transition-group";
+
+type ElUploadFile = {
+  uid: string | number;
+  status: string;
+}
 
 const UploadListProps = {
   files: {
-    type: Array,
+    type: Array as PropType<ElUploadFile[]>,
     default() {
       return [];
     }
@@ -20,7 +25,13 @@ export default defineComponent({
   name: 'EUpload',
   props: UploadListProps,
   setup(props, context) {
-    return h(StaggeredTransitionGroup, {
+    const focusing = ref(false)
+    const listItemOn = {
+      focus() { focusing.value = true },
+      blur() { focusing.value = false },
+      click() { focusing.value = false }
+    }
+    return () => h(StaggeredTransitionGroup, {
       class: [
         'e-upload-list',
         'e-upload-list--' + props.listType,
@@ -29,6 +40,13 @@ export default defineComponent({
       props: {
         tag: 'ul'
       }
-    })
+    }, props.files.map(
+        (file) => h('li', {
+          class: ['e-upload-list__item', 'is-' + file.status, focusing.value ? 'focusing' : ''],
+          key: file.uid,
+          on: listItemOn
+        })
+      )
+    )
   }
 })
