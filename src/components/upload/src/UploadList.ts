@@ -1,4 +1,5 @@
 import { defineComponent, h } from "vue"
+import { StaggeredTransitionGroup } from "../../staggered-transition-group";
 
 const UploadListProps = {
   files: {
@@ -19,16 +20,14 @@ export default defineComponent({
   name: 'EUpload',
   props: UploadListProps,
   setup(props, context) {
-
-    return h('transition-group', {
+    return h(StaggeredTransitionGroup, {
       class: [
-        'el-upload-list',
-        'el-upload-list--' + props.listType,
+        'e-upload-list',
+        'e-upload-list--' + props.listType,
         { 'is-disabled': props.disabled }
       ],
       props: {
-        tag: 'ul',
-        name: 'el-list'
+        tag: 'ul'
       }
     })
   }
