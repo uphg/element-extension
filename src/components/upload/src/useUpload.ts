@@ -1,9 +1,11 @@
-import { h, ref, SetupContext } from "vue"
+import { computed, h, onMounted, ref, SetupContext } from "vue"
 import { Upload } from "element-ui"
 import { ElUpload as _ElUpload, ElUploadInternalFileDetail } from "element-ui/types/upload"
 import { UploadProps } from "./uploadProps"
 import { generateProps } from "../../../utils/generateProps"
 import UploadList from "./UploadList"
+import { renderSlot } from "../../../utils/renderSlot"
+import { ElUploadFile } from "./uploadListProps"
 
 const propNames = ['action', 'headers', 'data', 'multiple', 'name', 'drag', 'dragger', 'withCredentials', 'accept', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList', 'autoUpload', 'listType', 'httpRequest', 'disabled', 'limit', 'onExceed']
 interface ElUpload extends _ElUpload {
@@ -17,6 +19,9 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
   const setRef = function(el: ElUpload) {
     elUpload.value = el
   } as unknown as string
+
+  const uploadFiles = computed(() => elUpload.value?.uploadFiles)
+  const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
 
   return {
     expose: {
@@ -34,18 +39,16 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
       }
     },
     render: () => {
-      const uploadDisabled = elUpload.value?.uploadDisabled
-      const uploadFiles = elUpload.value?.uploadFiles
       const showFileList = props.showFileList
       const uploadList = h(UploadList, {
         props: {
-          disabled: uploadDisabled,
+          disabled: uploadDisabled.value,
+          files: uploadFiles.value,
           listType: props.listType,
-          files: uploadFiles,
           handlePreview: props.onPreview
         },
         on: {
-          remove(file) {
+          remove(file: ElUploadFile) {
             elUpload.value?.handleRemove(file)
           }
         },
@@ -61,13 +64,21 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
         ref: setRef,
         props: {
           ...generateProps(props, propNames),
-          showFileList: false
+          showFileList: props.listType === 'picture-card' ? props.showFileList : false
         },
-      }, [
-        showFileList && props.listType === 'picture-card' && uploadList,
-        ...context.slots.default?.()!,
-        showFileList && props.listType !== 'picture-card' && uploadList
-      ])
+      },
+        props.listType === 'picture-card'
+          ? [
+              renderSlot(context, 'trigger'),
+              renderSlot(context, 'default'),
+              renderSlot(context, 'tip'),
+            ]
+          : [
+              h('slot', { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null]),
+              ...context.slots.tip?.()!,
+              showFileList && uploadList
+            ]
+      )
     }
   }
 }

@@ -14,13 +14,13 @@ const interval = 150
 
 function beforeEnter(el: HTMLElement) {
   addClass(el, transitionClass)
-  setStyle(el, { opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' })
+  resetStyle(el)
 }
 
 function enter(el: HTMLElement, done: () => void) {
   const delayed = getInterval(el)
   setTimeout(() => {
-    setStyle(el, { opacity: 1, height: `${el.scrollHeight}px`, marginTop: '', marginBottom: ''})
+    revertStyle(el)
     setTimeout(() => {
       done()
     }, transitionTime)
@@ -33,13 +33,13 @@ function afterEnter(el: HTMLElement) {
 
 function beforeLeave(el: HTMLElement) {
   addClass(el, transitionClass)
-  setStyle(el, { opacity: 1, height: `${el.scrollHeight}px`, marginTop: '', marginBottom: '', })
+  revertStyle(el)
 }
 
 function leave(el: HTMLElement, done: () => void) {
   const delayed = getInterval(el)
   setTimeout(() => {
-    setStyle(el, { opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' })
+    resetStyle(el)
     setTimeout(() => {
       done()
     }, transitionTime)
@@ -50,9 +50,17 @@ function afterLeave(el: HTMLElement) {
   clearStyle(el)
 }
 
+function revertStyle(el: HTMLElement) {
+  setStyle(el, { opacity: 1, height: `${el.scrollHeight}px`, paddingTop: '', paddingBottom: '', borderTopWidth: '', borderBottomWidth: '', marginTop: '', marginBottom: '', })
+}
+
+function resetStyle(el: HTMLElement) {
+  setStyle(el, { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, borderTopWidth: 0, borderBottomWidth: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' })
+}
+
 function clearStyle(el: HTMLElement) {
   removeClass(el, transitionClass)
-  setStyle(el, { opacity: '', height: '', marginTop: '', marginBottom: '', overflow: '' })
+  setStyle(el, { opacity: '', height: '', paddingTop: '', paddingBottom: '', borderTopWidth: '', borderBottomWidth: '', marginTop: '', marginBottom: '', overflow: '' })
 }
 
 function getInterval(el: HTMLElement) {

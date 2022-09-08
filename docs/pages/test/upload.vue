@@ -12,8 +12,6 @@
       :file-list="fileList">
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      <h2>hi</h2>
-      <!-- FileList -->
     </e-upload>
     <e-upload
       class="upload-demo"
@@ -29,14 +27,27 @@
     >
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      <h2>hi</h2>
-      <!-- FileList -->
+    </e-upload>
+    <e-upload
+      class="upload-demo"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList"
+      list-type="picture-card"
+    >
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </e-upload>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Message, MessageBox } from 'element-ui';
+import { Message, MessageBox, Upload as ElUpload } from 'element-ui';
 
 const fileList = [
   {name: 'food1.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
@@ -63,4 +74,8 @@ function beforeRemove(file, fileList) {
 <style lang="scss">
 @import 'src/styles/staggered-transition-group.css';
 @import 'src/styles/upload.css';
+.el-upload-list__item {
+  transition: none;
+  transition: height 0.8s, opacity 0.8s, margin 0.8s;
+}
 </style>
