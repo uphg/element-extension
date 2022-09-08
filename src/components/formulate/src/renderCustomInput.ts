@@ -8,6 +8,8 @@ import renderDate from './renderDate'
 import { FormulateField } from './formulateProps'
 import { VNode } from 'vue/types/umd'
 import { GlobalInputProps } from '../../../components/config-provider/src/configProviderProps'
+import { createExclude } from '../../../utils/createExclude'
+import toString from '../../../utils/toString'
 
 function renderCustomInput(
   props: FormulateField,
@@ -55,7 +57,13 @@ function renderCustomInput(
         },
         on: {
           input(value: any) {
-            formData.value[props.key] = value
+            if (props.exclude) {
+              const exclude = createExclude(props.exclude!)
+              const newVal = toString(value).replace(exclude, '')
+              formData.value[props.key] = newVal
+            } else {
+              formData.value[props.key] = value
+            }            
           }
         },
         scopedSlots: props.scopedSlots
