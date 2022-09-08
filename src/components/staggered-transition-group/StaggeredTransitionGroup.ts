@@ -1,9 +1,5 @@
-import { addClass, removeClass } from "../../utils/dom"
+import { addClass, getStyle, removeClass, setStyle } from "../../utils/dom"
 import { defineComponent, h } from "vue"
-
-const transitionClass = 'e-staggered-transition-fade'
-const transitionTime = 800
-const interval = 150
 
 const staggeredProps = {
   tag: {
@@ -12,17 +8,19 @@ const staggeredProps = {
   }
 }
 
+const transitionClass = 'e-staggered-transition-fade'
+const transitionTime = 800
+const interval = 150
+
 function beforeEnter(el: HTMLElement) {
   addClass(el, transitionClass)
-  el.style.opacity = `${0}`
-  el.style.height = `${0}`
+  setStyle(el, { opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' })
 }
 
 function enter(el: HTMLElement, done: () => void) {
   const delayed = getInterval(el)
   setTimeout(() => {
-    el.style.opacity = `${1}`
-    el.style.height = `${el.scrollHeight}px`
+    setStyle(el, { opacity: 1, height: `${el.scrollHeight}px`, marginTop: '', marginBottom: ''})
     setTimeout(() => {
       done()
     }, transitionTime)
@@ -30,20 +28,18 @@ function enter(el: HTMLElement, done: () => void) {
 }
 
 function afterEnter(el: HTMLElement) {
-  removeClass(el, transitionClass)
+  clearStyle(el)
 }
 
 function beforeLeave(el: HTMLElement) {
   addClass(el, transitionClass)
-  el.style.opacity = `${1}`
-  el.style.height = `${el.scrollHeight}px`
+  setStyle(el, { opacity: 1, height: `${el.scrollHeight}px`, marginTop: '', marginBottom: '', })
 }
 
 function leave(el: HTMLElement, done: () => void) {
   const delayed = getInterval(el)
   setTimeout(() => {
-    el.style.opacity = `${0}`
-    el.style.height = `${0}`
+    setStyle(el, { opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' })
     setTimeout(() => {
       done()
     }, transitionTime)
@@ -51,7 +47,12 @@ function leave(el: HTMLElement, done: () => void) {
 }
 
 function afterLeave(el: HTMLElement) {
+  clearStyle(el)
+}
+
+function clearStyle(el: HTMLElement) {
   removeClass(el, transitionClass)
+  setStyle(el, { opacity: '', height: '', marginTop: '', marginBottom: '', overflow: '' })
 }
 
 function getInterval(el: HTMLElement) {
@@ -76,6 +77,8 @@ export default defineComponent({
         leave,
         afterLeave
       }
-    }, context.slots.default?.())
+    }, context.slots.default?.().map((item) => {
+      return item
+    }))
   }
 })

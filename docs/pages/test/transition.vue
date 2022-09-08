@@ -4,8 +4,9 @@
     <e-staggered-transition-group tag="ul" class="staggered-list-ul">
       <li
         v-for="(item, index) in computedList"
-        v-bind:key="item.msg"
-        v-bind:data-index="index"
+        :key="item.msg"
+        :data-index="index"
+        class="staggered-list-li"
       >{{ item.msg }}</li>
     </e-staggered-transition-group>
   </div>
@@ -32,5 +33,10 @@ const computedList = computed(() => list.value.filter(function (item) {
 @import 'src/styles/staggered-transition-group.css';
 .staggered-list-ul {
   border: 1px solid blue;
+  background-color: #ebeef5;
+}
+.staggered-list-li {
+  margin-top: 3.2em;
+  background-color: #3f85ed;
 }
 </style>

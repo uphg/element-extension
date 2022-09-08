@@ -33,8 +33,8 @@ export default defineComponent({
     }
     return () => h(StaggeredTransitionGroup, {
       class: [
-        'e-upload-list',
-        'e-upload-list--' + props.listType,
+        'el-upload-list',
+        'el-upload-list--' + props.listType,
         { 'is-disabled': props.disabled }
       ],
       props: {
@@ -42,7 +42,7 @@ export default defineComponent({
       }
     }, props.files.map(
         (file) => h('li', {
-          class: ['e-upload-list__item', 'is-' + file.status, focusing.value ? 'focusing' : ''],
+          class: ['el-upload-list__item', 'is-' + file.status, focusing.value ? 'focusing' : ''],
           key: file.uid,
           on: listItemOn
         })

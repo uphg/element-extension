@@ -1,22 +1,52 @@
-import camelize from './_camelize'
+import type { StyleElement } from './internal/interface'
+import isObject from './isObject'
+import camelize from "./_camelize";
+import { each } from './each'
+import mergeClass from './internal/mergeClass'
+import splitClass from './internal/splitClass'
+import toString from './toString'
 
-export const addClass = (el: Element, ...className: string[]) => {
-  if (!el) return
-  el.classList.add(...className)
+export function addClass(el: Element, ...args: string[] | string[][]) {
+  const classNames = mergeClass(args)
+  if (el.classList) {
+    el.classList.add(...classNames)
+    return
+  }
+  const className = (el.getAttribute('class') || '') + ` ${classNames.join(' ')}`
+  el.setAttribute('class', className)
 }
 
-export const removeClass = (el: Element, ...className: string[]) => {
-  if (!el) return
-  el.classList.remove(...className)
+export function removeClass(el: Element, ...args: string[]) {
+  const classNames = mergeClass(args)
+  if (el.classList) {
+    el.classList.remove(...classNames)
+    return
+  }
+  let prev = el.getAttribute('class') || ''
+  each(classNames, (item) => {
+    prev = prev.replace(` ${item} `, '')
+  })
+  const mergings = splitClass(prev)
+  mergings && el.setAttribute('class', mergings.join(' '))
 }
 
-export const getStyle = (el: Element, styleName: string) => {
-  // const style = window.getComputedStyle(el, null) as unknown as { [key: string]: string }
-  // return style
+export function getStyle(el: HTMLElement, styleName: string): string {
+  if (!el || !styleName) return ''
   styleName = camelize(styleName)
   // see: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle#defaultview
   const computed = document.defaultView?.getComputedStyle(el, '')
-
   // @ts-ignore
-  return computed && computed?.[styleName]
+  return (computed ? computed?.[styleName] : el['style'][styleName]) || ''
 }
+
+type Styles = { [key: string]: string | number }
+
+export function setStyle(el: StyleElement, styles: Styles | string, value?: string) {
+  if (isObject(styles)) {
+    each(styles as Styles, (item, key) => setStyle(el, key as string, toString(item)))
+    return
+  }
+  const styleName = camelize(styles as string)
+  el.style[styleName] = value
+}
+
