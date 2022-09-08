@@ -1,0 +1,10 @@
+.el-upload-list {
+  overflow: hidden;
+}
+.el-upload-list__item {
+  min-height: 28px;
+}
+
+.el-upload-list.el-upload-list--picture .el-upload-list__item {
+  min-height: 94px;
+}

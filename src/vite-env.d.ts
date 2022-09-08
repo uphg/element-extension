@@ -19,3 +19,14 @@ declare module 'element-ui/src/utils/types' {
     isFunction
   }
 }
+
+declare module 'element-ui/src/locale' {
+  const t: (path: string, options?: any) => string
+  const use: (l: string) => void
+  const i18n: (fn: () => void) => void
+  export {
+    t,
+    use,
+    i18n
+  }
+}

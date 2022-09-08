@@ -1,9 +1,9 @@
 <template>
   <div class="test">
     <!-- <TestConfig /> -->
-    <!-- <TestUpload /> -->
+    <TestUpload />
     <!-- <TestSelect /> -->
-    <TestTransition />
+    <!-- <TestTransition /> -->
   </div>
 </template>
 

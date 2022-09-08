@@ -15,6 +15,23 @@
       <h2>hi</h2>
       <!-- FileList -->
     </e-upload>
+    <e-upload
+      class="upload-demo"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList"
+      list-type="picture"
+    >
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      <h2>hi</h2>
+      <!-- FileList -->
+    </e-upload>
   </div>
 </template>
 
@@ -42,3 +59,8 @@ function beforeRemove(file, fileList) {
   return MessageBox.confirm(`确定移除 ${ file.name }？`);
 }
 </script>
+
+<style lang="scss">
+@import 'src/styles/staggered-transition-group.css';
+@import 'src/styles/upload.css';
+</style>
