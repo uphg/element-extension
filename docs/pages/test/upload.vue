@@ -72,10 +72,4 @@ function beforeRemove(file, fileList) {
 </script>
 
 <style lang="scss">
-@import 'src/styles/staggered-transition-group.css';
-@import 'src/styles/upload.css';
-.el-upload-list__item {
-  transition: none;
-  transition: height 0.8s, opacity 0.8s, margin 0.8s;
-}
 </style>
