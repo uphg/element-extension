@@ -5,6 +5,10 @@ const staggeredProps = {
   tag: {
     type: String,
     default: 'div'
+  },
+  appear: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -75,7 +79,8 @@ export default defineComponent({
       props: {
         tag: props.tag,
         name: 'staggered-fade',
-        css: false
+        css: false,
+        appear: props.appear
       },
       on: {
         beforeEnter,
