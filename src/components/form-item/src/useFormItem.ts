@@ -4,7 +4,7 @@ import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
 import { FormItemProps } from "./formItemProps"
-import { generateProps } from 'src/utils/generateProps'
+import { generateProps } from '../../../utils/generateProps'
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 

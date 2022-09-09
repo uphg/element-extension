@@ -8,7 +8,7 @@ import { renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalUploadProps } from "../../config-provider/src/configProviderProps"
-import { handleDefaultProps } from "src/utils/handleDefaultProps"
+import { handleDefaultProps } from "../../../utils/handleDefaultProps"
 
 const propNames = ['name', 'dragger', 'withCredentials', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList',   'disabled', 'limit', 'onExceed']
 const globalPropNames = ['action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
