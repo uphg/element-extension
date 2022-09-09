@@ -58,6 +58,11 @@ const sidebars = [
         name: 'ComponentsTable',
         link: '/components/table'
       },
+      {
+        title: 'Upload 上传',
+        name: 'ComponentsUpload',
+        link: '/components/upload'
+      }
     ]
   }
 ]

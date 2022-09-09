@@ -65,6 +65,11 @@ const routes: RouteConfig[] = [
         name: 'ComponentsTable',
         component: () => import('docs/pages/components/table.md')
       },
+      {
+        path: 'upload',
+        name: 'ComponentsUpload',
+        component: () => import('docs/pages/components/upload.md')
+      }
     ]
   }
 ]

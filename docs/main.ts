@@ -1,5 +1,6 @@
 import './styles/index.scss'
 import 'element-ui/packages/theme-chalk/lib/index.css'
+import 'src/styles/index.css'
 import Element from 'element-ui'
 import App from './App.vue'
 import Vue from 'vue'
@@ -9,9 +10,6 @@ import Code from './components/e-code.vue'
 import Demo from './components/e-demo.vue'
 import CustomInput from './components/custom-input.vue'
 import ElementPart from 'src/index'
-
-console.log('ElementPart')
-console.log(ElementPart)
 
 Vue.use(PiniaVuePlugin)
 Vue.use(ElementPart)
