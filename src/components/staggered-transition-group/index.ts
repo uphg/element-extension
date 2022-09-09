@@ -6,6 +6,4 @@ StaggeredTransitionGroup.install = function (Vue: VueConstructor) {
   Vue.component(StaggeredTransitionGroup.name, StaggeredTransitionGroup);
 }
 
-export {
-  StaggeredTransitionGroup
-}
+export { StaggeredTransitionGroup }

@@ -1,5 +1,14 @@
 .el-upload-list {
   overflow: hidden;
+  padding-top: 5px;
+}
+
+.el-upload-list__item {
+  margin-top: 5px;
+  line-height: inherit;
+}
+.el-upload-list__item:first-child {
+  margin-top: 5px;
 }
 
 .el-upload-list__item-wrap {

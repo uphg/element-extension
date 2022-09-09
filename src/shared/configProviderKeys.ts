@@ -5,6 +5,7 @@ export const configFormKey = Symbol('config-form')
 export const configTableKey = Symbol('config-table')
 export const configTableColumnKey = Symbol('config-table-column')
 export const configPaginationKey = Symbol('config-pagination')
+export const configUploadKey = Symbol('config-upload')
 
 export const configMap = {
   input: configInputKey,
@@ -12,4 +13,5 @@ export const configMap = {
   table: configTableKey,
   tableColumn: configTableColumnKey,
   pagination: configPaginationKey,
+  upload: configUploadKey,
 }

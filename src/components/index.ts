@@ -9,7 +9,7 @@ import { Table, tableProps, useTable } from './table'
 import { TableColumn, tableColumnProps, useTableColumn } from './table-column'
 import { Pagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup } from './staggered-transition-group/index'
-import { Upload } from './upload'
+import { Upload, uploadProps, useUpload } from './upload'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
 function install(Vue: VueConstructor) {
@@ -41,6 +41,7 @@ export {
   useTable,
   useTableColumn,
   usePagination,
+  useUpload,
   useConfigProvider,
 
   inputProps,
@@ -51,5 +52,6 @@ export {
   tableProps,
   tableColumnProps,
   paginationProps,
+  uploadProps,
   configProviderProps,
 }

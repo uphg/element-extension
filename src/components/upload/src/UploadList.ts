@@ -27,7 +27,7 @@ export default defineComponent({
 
     return () => {
       const liWrap = (data: VNodeData, children?: VNodeChildren) => props.listType === 'picture'
-        ? h('li', { class: 'el-upload-list__item-wrap', key: data.key }, [h('div', { ...data, key: data.key + 'div' }, children)])
+        ? h('li', { class: 'el-upload-list__item-wrap', key: data.key }, [h('div', { ...data, key: 'div' + data.key }, children)])
         : h('li', data, children)
       return h(
         props.listType === 'text' || props.listType === 'picture' ? StaggeredTransitionGroup : 'ul', {

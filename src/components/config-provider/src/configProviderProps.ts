@@ -1,6 +1,7 @@
 import { empty } from "../../../shared/_commonProps";
 import { ExtractPropTypes, PropType } from "vue"
 import { ElementUIComponentSize } from "element-ui/types/component";
+import { ObjectLike } from "../../../types/object-like";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
@@ -48,6 +49,20 @@ export type GlobalPaginationProps = {
   hideOnSinglePage: boolean;
 }
 
+export type GlobalUploadProps = {
+  action: string,
+  headers: ObjectLike,
+  multiple: boolean,
+  data: ObjectLike,
+  showFileList: boolean,
+  drag: boolean,
+  accept: string,
+  listType: string,
+  autoUpload: boolean,
+  httpRequest:/*  (...args: unknown[]) => unknown | */ Function
+}
+
+
 export type DefaultProps = typeof defaultProps
 
 export const defaultProps = {
@@ -90,6 +105,18 @@ export const defaultProps = {
     prevText: empty,
     nextText: empty,
     hideOnSinglePage: empty,
+  },
+  upload: {
+    action: empty,
+    headers: empty,
+    multiple: empty,
+    data: empty,
+    showFileList: empty,
+    drag: empty,
+    accept: empty,
+    listType: empty,
+    autoUpload: empty,
+    httpRequest: empty
   }
 }
 
@@ -112,6 +139,10 @@ export const configProviderProps = {
   },
   pagination: {
     type: Object as PropType<GlobalPaginationProps>,
+    default: empty
+  },
+  upload: {
+    type: Object as PropType<GlobalUploadProps>,
     default: empty
   },
 }

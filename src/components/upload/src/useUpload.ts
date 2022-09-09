@@ -6,8 +6,12 @@ import { generateProps } from "../../../utils/generateProps"
 import UploadList from "./UploadList"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
+import { useGlobalProps } from "../../../composables/useGlobalProps"
+import { GlobalUploadProps } from "../../config-provider/src/configProviderProps"
+import { handleDefaultProps } from "src/utils/handleDefaultProps"
 
-const propNames = ['action', 'headers', 'data', 'multiple', 'name', 'drag', 'dragger', 'withCredentials', 'accept', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList', 'autoUpload', 'listType', 'httpRequest', 'disabled', 'limit', 'onExceed']
+const propNames = ['name', 'dragger', 'withCredentials', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList',   'disabled', 'limit', 'onExceed']
+const globalPropNames = ['action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
 interface ElUpload extends _ElUpload {
   uploadDisabled: boolean;
   uploadFiles: { [key: string]: any }[];
@@ -20,11 +24,16 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
     elUpload.value = el
   } as unknown as string
 
+  const globalUploadProps = useGlobalProps<GlobalUploadProps>('upload')
+
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
 
   return {
     expose: {
+      get elUpload() {
+        return elUpload.value
+      },
       clearFiles() {
         elUpload.value!.clearFiles()
       },
@@ -34,12 +43,15 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
       submit() {
         elUpload.value!.submit()
       },
-      get elUpload() {
-        return elUpload.value
+      removeFile(file: ElUploadFile, raw?: string) {
+        elUpload.value?.handleRemove(file, raw)
+      },
+      get uploadFiles() {
+        return elUpload.value?.uploadFiles
       }
     },
     render: () => {
-      const showFileList = props.showFileList
+      const showFileList = globalUploadProps?.showFileList || props.showFileList
       const uploadList = h(UploadList, {
         props: {
           disabled: uploadDisabled.value,
@@ -60,11 +72,13 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
           }
         }
       })
+      
       return h(Upload, {
         ref: setRef,
         props: {
           ...generateProps(props, propNames),
-          showFileList: props.listType === 'picture-card' ? props.showFileList : false
+          ...handleDefaultProps<GlobalUploadProps>(props as GlobalUploadProps, globalUploadProps, globalPropNames),
+          showFileList: props.listType === 'picture-card' ? showFileList : false
         },
       },
         props.listType === 'picture-card'

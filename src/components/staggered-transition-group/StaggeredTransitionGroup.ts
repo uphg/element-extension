@@ -1,4 +1,4 @@
-import { addClass, getStyle, removeClass, setStyle } from "../../utils/dom"
+import { addClass, removeClass, setStyle } from "../../utils/dom"
 import { defineComponent, h } from "vue"
 
 const staggeredProps = {
