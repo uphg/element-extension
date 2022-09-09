@@ -75,8 +75,6 @@ export default defineComponent({
   name: 'EStaggeredTransitionGroup',
   props: staggeredProps,
   setup(props, context) {
-    console.log('props.appear')
-    console.log(props.appear)
     return () => h('transition-group', {
       props: {
         tag: props.tag,
