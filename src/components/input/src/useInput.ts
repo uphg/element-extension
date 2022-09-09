@@ -8,6 +8,7 @@ import { GlobalInputProps } from "../../../components/config-provider/src/config
 import { handleDefaultProps } from "../../../utils/handleDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
 import { generateProps } from "../../../utils/generateProps";
+import { renderSlot } from '../../../utils/renderSlot'
 
 const propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
 const attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
@@ -55,10 +56,10 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
       },
       on
     }, [
-      context.slots?.suffix && h('slot', { slot: 'suffix' }, context.slots.suffix()),
-      context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
-      context.slots?.prepend && h('slot', { slot: 'prepend' }, context.slots.prepend()),
-      context.slots?.append && h('slot', { slot: 'append' }, context.slots.append())
+      renderSlot(context, 'suffix'),
+      renderSlot(context, 'prefix'),
+      renderSlot(context, 'prepend'),
+      renderSlot(context, 'append'),
     ])
   }
 }

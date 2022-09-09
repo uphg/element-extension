@@ -1,10 +1,10 @@
-import { computed, h, onMounted, ref, SetupContext } from "vue"
+import { computed, h, ref, SetupContext } from "vue"
 import { Upload } from "element-ui"
 import { ElUpload as _ElUpload, ElUploadInternalFileDetail } from "element-ui/types/upload"
 import { UploadProps } from "./uploadProps"
 import { generateProps } from "../../../utils/generateProps"
 import UploadList from "./UploadList"
-import { renderSlot } from "../../../utils/renderSlot"
+import { FakeSlot, renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalUploadProps } from "../../config-provider/src/configProviderProps"
@@ -83,16 +83,23 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
       },
         props.listType === 'picture-card'
           ? [
+              renderSlot(context, 'tip'),
               renderSlot(context, 'trigger'),
               renderSlot(context, 'default'),
-              renderSlot(context, 'tip'),
             ]
           : [
-              h('slot', { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null]),
-              ...context.slots.tip?.()!,
+              context.slots.default && (
+                context.slots.trigger
+                  ? context.slots.default().concat(renderSlot(context, 'trigger')!)
+                  : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
+              ),
+              context.slots.tip?.(),
               showFileList && uploadList
             ]
       )
     }
   }
 }
+
+// trigger
+// default

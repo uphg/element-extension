@@ -7,6 +7,7 @@ import { GlobalTableProps } from "../../config-provider/src/configProviderProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { handleDefaultProps } from "../../../utils/handleDefaultProps"
 import { handleColumnsData } from "./handleColumnsData";
+import { renderSlot } from '../../../utils/renderSlot'
 
 const globalPropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
 
@@ -62,7 +63,7 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
           ? props.columns.map(
             item => h(TableColumn, handleColumnsData(item))
           ) : [context.slots.default?.()]]
-      ).concat([context.slots?.append && h('slot', { slot: 'append' }, context.slots.append())])
+      ).concat([renderSlot(context, 'append')])
     )
   }
 }

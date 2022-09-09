@@ -1,4 +1,5 @@
-import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGroup, Checkbox, InputNumber, Switch, Slider, TimeSelect, DatePicker, Upload, TimePicker, OptionGroup } from 'element-ui'
+import { Button, Input, Select, Cascader, Option, RadioGroup, Radio, CheckboxGroup, Checkbox, InputNumber, Switch, Slider, TimeSelect, DatePicker, TimePicker, OptionGroup } from 'element-ui'
+import { Upload } from '../../upload/index'
 import { h, Ref, ref, SetupContext } from 'vue'
 import { ElUploadInternalFileDetail } from 'element-ui/types/upload'
 import { find, omitBy } from '../../../utils'
@@ -9,6 +10,7 @@ import { FormItemProps } from './formItemProps'
 import { renderSelectOptions } from '../../../utils/renderSelectOptions'
 import { GlobalInputProps } from '../../../components/config-provider/src/configProviderProps'
 import { useGlobalProps } from '../../../composables/useGlobalProps'
+import { renderSlot } from '../../../utils/renderSlot'
 
 type CustomInputParamsOptions = {
   onKeyup?: (event: any) => void;
@@ -192,10 +194,10 @@ export function useCustomInput<T extends FormItemProps>(
       },
       nativeOn,
     }, [
-      context.slots?.suffix && h('slot', { slot: 'suffix' }, context.slots.suffix()),
-      context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
-      context.slots?.prepend && h('slot', { slot: 'prepend' }, context.slots.prepend()),
-      context.slots?.append && h('slot', { slot: 'append' }, context.slots.append())
+      renderSlot(context, 'suffix'),
+      renderSlot(context, 'prefix'),
+      renderSlot(context, 'prepend'),
+      renderSlot(context, 'append')
     ])
   }, {
     type: ['number', 'input-number'],
@@ -439,15 +441,9 @@ export function useCustomInput<T extends FormItemProps>(
         file: props => context.slots.file && context.slots.file({ file: props.file })
       }
     }, [
-      context.slots?.default && h('slot', {
-        slot: 'default'
-      }, context.slots.default()),
-      context.slots?.trigger && h('slot', {
-        slot: 'trigger'
-      }, context.slots.trigger()),
-      context.slots?.tip && h('slot', {
-        slot: 'tip'
-      }, context.slots.tip())
+      renderSlot(context, 'default'),
+      renderSlot(context, 'trigger'),
+      renderSlot(context, 'tip'),
     ])
   }]
 

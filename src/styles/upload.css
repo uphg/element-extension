@@ -14,8 +14,3 @@
 .el-upload-list__item:first-child {
   margin-top: 5px;
 }
-
-.el-upload-list__item-wrap {
-  display: flex;
-  height: 102px;
-}

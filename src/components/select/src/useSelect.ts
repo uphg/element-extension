@@ -5,6 +5,7 @@ import { SelectProps } from "./selectProps"
 import { renderSelectOptions } from '../../../utils/renderSelectOptions'
 import { generateProps } from "../../../utils/generateProps"
 import { generateEmits } from "../../../utils/generateEmits"
+import { renderSlot } from '../../../utils/renderSlot'
 
 const propNames = ['name', 'id', 'value', 'autocomplete', 'automaticDropdown', 'size', 'disabled', 'clearable', 'filterable', 'allowCreate', 'loading', 'popperClass', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'multiple', 'multipleLimit', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'valueKey', 'collapseTags', 'popperAppendToBody' ]
 const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
@@ -33,8 +34,8 @@ export function useSelect(props: SelectProps, context: SetupContext<{}>) {
       props: generateProps(props, propNames),
       on
     }, [
-      context.slots?.prefix && h('slot', { slot: 'prefix' }, context.slots.prefix()),
-      context.slots?.empty && h('slot', { slot: 'empty' }, context.slots.empty()),
+      renderSlot(context, 'prefix'),
+      renderSlot(context, 'empty'),
       ...renderSelectOptions(props, context)!,
     ])
   }

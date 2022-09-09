@@ -5,6 +5,7 @@ import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
 import { FormItemProps } from "./formItemProps"
 import { generateProps } from '../../../utils/generateProps'
+import { renderSlot } from '../../../utils/renderSlot'
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
@@ -37,11 +38,9 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
         error: (params) => context.slots.error?.(params),
       }
     }, [
-      context.slots.label && h('slot', {
-        slot: 'label'
-      }, context.slots.label()),
+      renderSlot(context, 'label'),
       context.slots.itemPrefix?.(),
-      (context.slots.default && props.type === 'text' && context.slots.default?.()) || [render()],
+      (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [render()],
       context.slots.itemSuffix?.(),
     ])
   }
