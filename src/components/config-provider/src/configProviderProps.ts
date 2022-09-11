@@ -68,6 +68,12 @@ export type GlobalRadioGroup = {
   fill: string;
 }
 
+export type GlobalCheckboxGroup = {
+  size: ElementUIComponentSize;
+  textColor: string;
+  fill: string;
+}
+
 export type DefaultProps = typeof defaultProps
 
 export const defaultProps = {

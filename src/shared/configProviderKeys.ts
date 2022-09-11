@@ -7,6 +7,7 @@ export const configTableColumnKey = Symbol('config-table-column')
 export const configPaginationKey = Symbol('config-pagination')
 export const configUploadKey = Symbol('config-upload')
 export const configRadioGroupKey = Symbol('config-radio-group')
+export const configCheckboxGroup = Symbol('config-checkbox-group')
 
 export const configMap = {
   input: configInputKey,
@@ -16,4 +17,5 @@ export const configMap = {
   pagination: configPaginationKey,
   upload: configUploadKey,
   radioGroup: configRadioGroupKey,
+  checkboxGroup: configCheckboxGroup,
 }

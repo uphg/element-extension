@@ -18,8 +18,11 @@ export const radioGroupProps = {
     type: String,
     default: empty
   },
-  size: commonProps.size,
   disabled: commonProps.disabled,
+  size: {
+    type: commonProps.size,
+    default: empty
+  },
   textColor: {
     type: String,
     default: empty
@@ -34,5 +37,5 @@ export const radioGroupProps = {
   options: {
     type: [Array, Object] as PropType<RadioGroupOptions>,
     default: () => []
-  },
+  }
 }
