@@ -1,6 +1,7 @@
 import { VueConstructor } from 'vue/types/vue'
 
 import { Input, inputProps, useInput } from './input'
+import { RadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
 import { Select, selectProps, useSelect } from './select'
 import { Form, formProps, useForm } from './form'
 import { FormItem, formItemProps, useFormItem } from './form-item'
@@ -12,16 +13,18 @@ import { StaggeredTransitionGroup } from './staggered-transition-group/index'
 import { Upload, uploadProps, useUpload } from './upload'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
+const components = [Input, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+
 function install(Vue: VueConstructor) {
-  [Input, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider].forEach((item) => {
-    // @ts-ignore
-    Vue.use(item)
+  components.forEach((item) => {
+    Vue.use(item as any)
   })
 }
 
 export {
   install,
   Input,
+  RadioGroup,
   Select,
   Form,
   FormItem,
@@ -34,6 +37,7 @@ export {
   ConfigProvider,
 
   useInput,
+  useRadioGroup,
   useSelect,
   useForm,
   useFormItem,
@@ -45,6 +49,7 @@ export {
   useConfigProvider,
 
   inputProps,
+  radioGroupProps,
   selectProps,
   formProps,
   formItemProps,

@@ -1,10 +1,9 @@
-import { VueConstructor } from 'vue';
 import Upload from './src/Upload'
 import { useUpload } from './src/useUpload'
 import { uploadProps } from './src/uploadProps'
+import { ComponentPlugin } from '../../types/component-plugin';
 
-// @ts-ignore
-Upload.install = function (Vue: VueConstructor) {
+(Upload  as ComponentPlugin<typeof Upload>).install = function (Vue) {
   Vue.component(Upload.name, Upload);
 }
 

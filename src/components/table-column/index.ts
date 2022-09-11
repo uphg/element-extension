@@ -1,10 +1,9 @@
-import { VueConstructor } from 'vue';
 import TableColumn from './src/TableColumn'
 import { tableColumnProps } from './src/tableColumnProps'
 import { useTableColumn } from './src/useTableColumn'
+import { ComponentPlugin } from '../../types/component-plugin';
 
-// @ts-ignore
-TableColumn.install = function (Vue: VueConstructor) {
+(TableColumn as ComponentPlugin<typeof TableColumn>).install = function (Vue) {
   Vue.component(TableColumn.name, TableColumn);
 }
 

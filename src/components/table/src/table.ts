@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { tableProps } from "./tableProps"
 import { useTable } from "./useTable"
 
-export default defineComponent({
+const ETable = defineComponent({
   name: 'ETable',
   props: tableProps,
   setup(props, context) {
@@ -12,4 +12,6 @@ export default defineComponent({
     return render
   }
 })
+
+export default ETable
 

@@ -1,8 +1,8 @@
-import { defineComponent, h } from "vue"
+import { defineComponent } from "vue"
 import { formItemProps } from "./formItemProps"
 import { useFormItem } from "./useFormItem"
 
-export default defineComponent({
+const EFormItem = defineComponent({
   name: 'EFormItem',
   props: formItemProps,
   inheritAttrs: false,
@@ -12,3 +12,5 @@ export default defineComponent({
     return render
   }
 })
+
+export default EFormItem

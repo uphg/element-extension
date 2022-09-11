@@ -71,7 +71,7 @@ function getInterval(el: HTMLElement) {
   return Number(el.getAttribute('data-index')) * interval
 }
 
-export default defineComponent({
+const EStaggeredTransitionGroup = defineComponent({
   name: 'EStaggeredTransitionGroup',
   props: staggeredProps,
   setup(props, context) {
@@ -90,8 +90,8 @@ export default defineComponent({
         leave,
         afterLeave
       }
-    }, context.slots.default?.().map((item) => {
-      return item
-    }))
+    }, context.slots.default?.().map((item) => item))
   }
 })
+
+export default EStaggeredTransitionGroup

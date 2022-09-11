@@ -1,8 +1,7 @@
-import { VueConstructor } from 'vue';
 import StaggeredTransitionGroup from './StaggeredTransitionGroup'
+import { ComponentPlugin } from '../../types/component-plugin';
 
-// @ts-ignore
-StaggeredTransitionGroup.install = function (Vue: VueConstructor) {
+(StaggeredTransitionGroup  as ComponentPlugin<typeof StaggeredTransitionGroup>).install = function (Vue) {
   Vue.component(StaggeredTransitionGroup.name, StaggeredTransitionGroup);
 }
 

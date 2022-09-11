@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { configProviderProps } from "./configProviderProps"
 import { useConfigProvider } from "./useConfigProvider"
 
-export default defineComponent({
+const EConfigProvider = defineComponent({
   name: 'EConfigProvider',
   props: configProviderProps,
   setup(props, context) {
@@ -10,3 +10,4 @@ export default defineComponent({
   }
 })
 
+export default EConfigProvider

@@ -5,9 +5,9 @@ import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalFormProps } from "../../../components/config-provider/src/configProviderProps"
-import { handleDefaultProps } from "../../../utils/handleDefaultProps"
+import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { generateEmits } from "../../../utils/generateEmits"
-import { generateProps } from "../../../utils/generateProps"
+import pick from "../../../utils/pick"
 
 const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 const globalPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
@@ -31,8 +31,8 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
     render: () => h(Form, {
       ref: setRef,
       props: {
-        ...generateProps(props, propNames),
-        ...handleDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, globalPropNames)
+        ...pick(props, propNames),
+        ...withDefaultProps(props as GlobalFormProps, globalFormProps, globalPropNames)
       },
       on,
       scopedSlots: {

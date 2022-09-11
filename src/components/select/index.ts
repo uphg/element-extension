@@ -1,9 +1,9 @@
 import Select from './src/Select'
 import { selectProps } from './src/selectProps'
 import { useSelect } from './src/useSelect'
+import { ComponentPlugin } from '../../types/component-plugin';
 
-// @ts-ignore
-Select.install = function (Vue) {
+(Select as ComponentPlugin<typeof Select>).install = function (Vue) {
   Vue.component(Select.name, Select);
 }
 

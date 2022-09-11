@@ -3,9 +3,9 @@ import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { h, SetupContext } from "vue";
 import { PaginationProps } from "./paginationProps";
 import { GlobalPaginationProps } from "../../../components/config-provider/src/configProviderProps";
-import { handleDefaultProps } from "../../../utils/handleDefaultProps";
+import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
-import { generateProps } from "../../../utils/generateProps";
+import pick from '../../../utils/pick'
 
 const propNames = ['pageSize', 'total', 'pageCount', 'currentPage', 'disabled']
 const globalPropNames = ['small', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'background', 'hideOnSinglePage']
@@ -18,8 +18,8 @@ export function usePagination(props: PaginationProps, context: SetupContext<{}>)
   return {
     render: () => h(Pagination, {
       props: {
-        ...generateProps(props, propNames),
-        ...handleDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, globalPropNames)
+        ...pick(props, propNames),
+        ...withDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, globalPropNames)
       },
       on
     }, [context.slots.default?.()])

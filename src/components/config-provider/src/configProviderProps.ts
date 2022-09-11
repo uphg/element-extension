@@ -62,6 +62,11 @@ export type GlobalUploadProps = {
   httpRequest:/*  (...args: unknown[]) => unknown | */ Function
 }
 
+export type GlobalRadioGroup = {
+  size: ElementUIComponentSize;
+  textColor: string;
+  fill: string;
+}
 
 export type DefaultProps = typeof defaultProps
 

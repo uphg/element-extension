@@ -2,13 +2,13 @@ import { computed, h, ref, SetupContext } from "vue"
 import { Upload } from "element-ui"
 import { ElUpload as _ElUpload, ElUploadInternalFileDetail } from "element-ui/types/upload"
 import { UploadProps } from "./uploadProps"
-import { generateProps } from "../../../utils/generateProps"
+import pick from "../../../utils/pick"
 import UploadList from "./UploadList"
 import { FakeSlot, renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { GlobalUploadProps } from "../../config-provider/src/configProviderProps"
-import { handleDefaultProps } from "../../../utils/handleDefaultProps"
+import { withDefaultProps } from "../../../utils/withDefaultProps"
 
 const propNames = ['name', 'dragger', 'withCredentials', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList',   'disabled', 'limit', 'onExceed']
 const globalPropNames = ['action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
@@ -76,8 +76,8 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
       return h(Upload, {
         ref: setRef,
         props: {
-          ...generateProps(props, propNames),
-          ...handleDefaultProps<GlobalUploadProps>(props as GlobalUploadProps, globalUploadProps, globalPropNames),
+          ...pick(props, propNames),
+          ...withDefaultProps<GlobalUploadProps>(props as GlobalUploadProps, globalUploadProps, globalPropNames),
           showFileList: props.listType === 'picture-card' ? showFileList : false
         },
       },

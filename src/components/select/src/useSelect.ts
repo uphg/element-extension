@@ -3,7 +3,7 @@ import { h, ref, SetupContext } from "vue"
 import { Select } from "element-ui"
 import { SelectProps } from "./selectProps"
 import { renderSelectOptions } from '../../../utils/renderSelectOptions'
-import { generateProps } from "../../../utils/generateProps"
+import pick from "../../../utils/pick"
 import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from '../../../utils/renderSlot'
 
@@ -31,7 +31,7 @@ export function useSelect(props: SelectProps, context: SetupContext<{}>) {
     },
     render: () => h(Select, {
       ref: setRef,
-      props: generateProps(props, propNames),
+      props: pick(props, propNames),
       on
     }, [
       renderSlot(context, 'prefix'),

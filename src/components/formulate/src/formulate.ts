@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { formulateProps } from "./formulateProps"
 import { useFormulate } from "./useFormulate"
 
-export default defineComponent({
+const EFormulate = defineComponent({
   name: 'EFormulate',
   props: formulateProps,
   inheritAttrs: false,
@@ -12,3 +12,5 @@ export default defineComponent({
     return render
   }
 })
+
+export default EFormulate

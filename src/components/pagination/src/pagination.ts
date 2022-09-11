@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { paginationProps } from "./paginationProps"
 import { usePagination } from "./usePagination"
 
-export default defineComponent({
+const EPagination = defineComponent({
   name: 'EPagination',
   props: paginationProps,
   inheritAttrs: false,
@@ -11,3 +11,6 @@ export default defineComponent({
     return render
   }
 })
+
+
+export default EPagination

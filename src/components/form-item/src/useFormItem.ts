@@ -4,7 +4,7 @@ import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
 import { FormItemProps } from "./formItemProps"
-import { generateProps } from '../../../utils/generateProps'
+import pick from '../../../utils/pick'
 import { renderSlot } from '../../../utils/renderSlot'
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
@@ -33,7 +33,7 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
     expose,
     render: () => h(FormItem, {
       ref: setRef,
-      props: generateProps(props, propNames),
+      props: pick(props, propNames),
       scopedSlots: {
         error: (params) => context.slots.error?.(params),
       }

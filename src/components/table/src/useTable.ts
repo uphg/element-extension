@@ -5,7 +5,7 @@ import { TableProps } from "./tableProps"
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
 import { GlobalTableProps } from "../../config-provider/src/configProviderProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
-import { handleDefaultProps } from "../../../utils/handleDefaultProps"
+import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { handleColumnsData } from "./handleColumnsData";
 import { renderSlot } from '../../../utils/renderSlot'
 
@@ -16,6 +16,10 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
   const on = useElTableEmit(context.emit)
   const globalTableProps = useGlobalProps<GlobalTableProps>('table')
 
+  const setRef = function(el: ElTable) {
+    elTable.value = el
+  } as unknown as string
+
   return {
     expose: {
       clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load,
@@ -24,8 +28,7 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
       }
     },
     render: () => h(Table, {
-      // @ts-ignore
-      ref: (el: ElTable) => elTable.value = el,
+      ref: setRef,
       props: {
         data: props.data,
         width: props.width,
@@ -55,7 +58,7 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
         treeProps: props.treeProps,
         lazy: props.lazy,
         load: props.load,
-        ...handleDefaultProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, globalPropNames)
+        ...withDefaultProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, globalPropNames)
       },
       on,
     }, (

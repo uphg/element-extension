@@ -1,10 +1,9 @@
-import { VueConstructor } from 'vue';
 import Table from './src/Table'
 import { tableProps } from './src/tableProps'
 import { useTable } from './src/useTable'
+import { ComponentPlugin } from '../../types/component-plugin';
 
-// @ts-ignore
-Table.install = function (Vue: VueConstructor) {
+(Table  as ComponentPlugin<typeof Table>).install = function (Vue) {
   Vue.component(Table.name, Table);
 }
 

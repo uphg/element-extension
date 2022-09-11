@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { tableColumnProps } from "./tableColumnProps"
 import { useTableColumn } from "./useTableColumn"
 
-export default defineComponent({
+const ETableColumn = defineComponent({
   name: 'ETableColumn',
   props: tableColumnProps,
   setup(props, context) {
@@ -10,4 +10,6 @@ export default defineComponent({
     return render
   }
 })
+
+export default ETableColumn
 

@@ -1,11 +1,9 @@
-type PickObj = {
-  [key: string]: any
-}
+import { ObjectLike } from "../types/object-like"
 
-function pick(obj: PickObj, keys: string[]) {
+function pick<T extends ObjectLike>(obj: T, keys: string[]) {
   let index = -1
   const length = keys.length || 0
-  const result: PickObj = {}
+  const result: T | ObjectLike = {}
 
   while (++index < length) {
     const key = keys[index]

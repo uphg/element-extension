@@ -5,7 +5,7 @@ import { extendColumnTypes, TableColumnProps } from "./tableColumnProps";
 import { handleColumnType } from "./handleColumnType";
 import { GlobalTableColumnProps } from "../../config-provider/src/configProviderProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { handleDefaultProps } from "../../../utils/handleDefaultProps";
+import { withDefaultProps } from "../../../utils/withDefaultProps";
 
 export function useTableColumn(props: TableColumnProps, context: SetupContext<{}>) {
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
@@ -45,7 +45,7 @@ export function useTableColumn(props: TableColumnProps, context: SetupContext<{}
         filterMultiple: props.filterMultiple,
         index: props.index,
         sortOrders: props.sortOrders,
-        ...handleDefaultProps<GlobalTableColumnProps>(
+        ...withDefaultProps<GlobalTableColumnProps>(
           props as GlobalTableColumnProps,
           globalTableColumnProps,
           ['showOverflowTooltip']

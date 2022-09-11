@@ -1,8 +1,8 @@
-import { defineComponent, h } from "vue"
+import { defineComponent } from "vue"
 import { uploadProps } from "./uploadProps"
 import { useUpload } from "./useUpload"
 
-export default defineComponent({
+const EUpload = defineComponent({
   name: 'EUpload',
   props: uploadProps,
   setup(props, context) {
@@ -11,3 +11,5 @@ export default defineComponent({
     return render
   }
 })
+
+export default EUpload

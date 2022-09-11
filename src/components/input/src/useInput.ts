@@ -5,16 +5,17 @@ import { ElInput } from "element-ui/types/input";
 import { InputProps } from "./inputProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalInputProps } from "../../../components/config-provider/src/configProviderProps";
-import { handleDefaultProps } from "../../../utils/handleDefaultProps";
+import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
-import { generateProps } from "../../../utils/generateProps";
-import { renderSlot } from '../../../utils/renderSlot'
+import pick from "../../../utils/pick";
+import { renderSlots } from '../../../utils/renderSlot'
 
 const propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
 const attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
 const globalPropNames = ['clearable', 'showWordLimit', 'autosize','size']
 const globalAttrNames = ['maxlength']
+const slotNames = ['suffix', 'prefix', 'prepend', 'append']
 
 export function useInput(props: InputProps, context: SetupContext<{}>) {
   const elInput = ref<ElInput | null>(null)
@@ -47,19 +48,14 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
     render: () => h(Input, {
       ref: setRef,
       props: {
-        ...generateProps(props, propNames),
-        ...handleDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, globalPropNames)
+        ...pick(props, propNames),
+        ...withDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, globalPropNames)
       },
       attrs: {
-        ...generateProps(context.attrs, attrNames),
-        ...handleDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, globalAttrNames)
+        ...pick(context.attrs, attrNames),
+        ...withDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, globalAttrNames)
       },
       on
-    }, [
-      renderSlot(context, 'suffix'),
-      renderSlot(context, 'prefix'),
-      renderSlot(context, 'prepend'),
-      renderSlot(context, 'append'),
-    ])
+    }, renderSlots(context, slotNames))
   }
 }

@@ -2,7 +2,7 @@ import { defineComponent } from "vue"
 import { inputProps } from "./inputProps";
 import { useInput } from "./useInput";
 
-export default defineComponent({
+const EInput = defineComponent({
   name: 'EInput',
   props: inputProps,
   inheritAttrs: false,
@@ -12,3 +12,5 @@ export default defineComponent({
     return render
   }
 })
+
+export default EInput
