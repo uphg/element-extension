@@ -15,6 +15,8 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const on = useElTableEmit(context.emit)
   const globalTableProps = useGlobalProps<GlobalTableProps>('table')
+  console.log('globalTableProps')
+  console.log(globalTableProps)
 
   const setRef = function(el: ElTable) {
     elTable.value = el
@@ -58,7 +60,7 @@ export function useTable(props: TableProps, context: SetupContext<{}>) {
         treeProps: props.treeProps,
         lazy: props.lazy,
         load: props.load,
-        ...withDefaultProps<GlobalTableProps>(props as GlobalTableProps, globalTableProps, globalPropNames)
+        ...withDefaultProps(props, globalTableProps, globalPropNames)
       },
       on,
     }, (

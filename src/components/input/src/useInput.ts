@@ -49,11 +49,11 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
       ref: setRef,
       props: {
         ...pick(props, propNames),
-        ...withDefaultProps<GlobalInputProps>(props as GlobalInputProps, globalInputProps, globalPropNames)
+        ...withDefaultProps(props, globalInputProps, globalPropNames)
       },
       attrs: {
         ...pick(context.attrs, attrNames),
-        ...withDefaultProps<GlobalInputProps>(context.attrs as GlobalInputProps, globalInputProps, globalAttrNames)
+        ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
       },
       on
     }, renderSlots(context, slotNames))

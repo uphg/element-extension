@@ -19,6 +19,8 @@ export const radioGroupProps = {
     default: empty
   },
   disabled: commonProps.disabled,
+
+  // global props
   size: {
     type: commonProps.size,
     default: empty

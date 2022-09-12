@@ -30,7 +30,7 @@ export function useRadioGroup(props: RadioGroupProps, context: SetupContext<{}>)
       ref: setRef,
       props: {
         ...pick(props, propNames),
-        ...withDefaultProps(props as GlobalRadioGroup, globalRadioGroupProps,globalPropNames)
+        ...withDefaultProps(props, globalRadioGroupProps,globalPropNames)
       },
       on: { input, change }
     }, props.options.map((item) => h(Radio, {

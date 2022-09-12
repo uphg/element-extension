@@ -204,7 +204,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
           disabled: props.disabled,
           validateOnRuleChange: props.validateOnRuleChange,
           hideRequiredAsterisk: props.hideRequiredAsterisk,
-          ...withDefaultProps<GlobalFormProps>(props as GlobalFormProps, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+          ...withDefaultProps(props, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
         }
       },
       isArray(props.fields)

@@ -25,13 +25,12 @@ export function useCheckboxGroup(props: CheckboxGroupProps, context: SetupContex
     context.emit('change', value)
   }
 
-
   return {
     render: () => h(CheckboxGroup, {
       ref: setRef,
       props: {
         ...pick(props, propNames),
-        ...withDefaultProps(props as GlobalCheckboxGroup, globalCheckboxGroupProps, globalPropNames)
+        ...withDefaultProps(props, globalCheckboxGroupProps, globalPropNames)
       },
       on: { input, change }
     }, props.options.map((item) => h(Checkbox, {

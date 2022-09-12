@@ -1,20 +1,21 @@
-import { configMap } from "../../../shared/configProviderKeys";
 import { provide, SetupContext } from "vue";
-import { ConfigProviderProps, defaultProps } from "./configProviderProps";
+import { ConfigProviderProps } from "./configProviderProps";
 import { each } from "../../../utils/each";
 import { ObjectLike } from "../../../types/common";
+import { configPropertyMap, ConfigPropertyMap } from "../../../shared/configPropertyMap";
+
+type ConfigPropertyItem = ConfigPropertyMap[keyof ConfigPropertyMap]
 
 export function useConfigProvider(props: ConfigProviderProps, context?: SetupContext<{}>) {
   const provideProps: ObjectLike = {}
-  each<symbol>(configMap, (configKey, componentName) => {
-    const currentProps = (props as ObjectLike)?.[componentName]
+  each<ConfigPropertyItem>(configPropertyMap, (item, propName) => {
     const tempProps: ObjectLike = {}
-    each<ObjectLike>((defaultProps as ObjectLike)[componentName], (defaultProp, propName) => {
-      tempProps[propName] = currentProps?.[propName] || defaultProp
+    const currentProps = (props as ObjectLike)[propName]
+    each<ObjectLike>(item.default as ObjectLike, (defaultValue, key) => {
+      tempProps[key] = (currentProps as ObjectLike)?.[key] || defaultValue
     })
-    provideProps[componentName] = tempProps
-    provide<ObjectLike>(configKey, tempProps)
-  });
-
+    provideProps[propName] = tempProps
+    provide<ObjectLike>(item.key, tempProps)
+  })
   return context && (() => context.slots.default?.())
 }

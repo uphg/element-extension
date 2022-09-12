@@ -45,11 +45,7 @@ export function useTableColumn(props: TableColumnProps, context: SetupContext<{}
         filterMultiple: props.filterMultiple,
         index: props.index,
         sortOrders: props.sortOrders,
-        ...withDefaultProps<GlobalTableColumnProps>(
-          props as GlobalTableColumnProps,
-          globalTableColumnProps,
-          ['showOverflowTooltip']
-        )
+        ...withDefaultProps(props, globalTableColumnProps, ['showOverflowTooltip'])
       },
       scopedSlots: {
         default: (scope) => context.slots.default?.(scope),

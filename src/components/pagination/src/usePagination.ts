@@ -19,7 +19,7 @@ export function usePagination(props: PaginationProps, context: SetupContext<{}>)
     render: () => h(Pagination, {
       props: {
         ...pick(props, propNames),
-        ...withDefaultProps<GlobalPaginationProps>(props as GlobalPaginationProps, globalPaginationProps, globalPropNames)
+        ...withDefaultProps(props, globalPaginationProps, globalPropNames)
       },
       on
     }, [context.slots.default?.()])

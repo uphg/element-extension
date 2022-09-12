@@ -5,8 +5,6 @@ import { ObjectLike } from "../../../types/object-like";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
-export type ConfigComponentPropNames = (keyof GlobalInputProps) | (keyof GlobalFormProps) | (keyof GlobalTableProps) | (keyof GlobalTableColumnProps)
-
 export type GlobalInputProps = {
   clearable: boolean;
   showWordLimit: boolean;
@@ -69,66 +67,22 @@ export type GlobalRadioGroup = {
 }
 
 export type GlobalCheckboxGroup = {
+  min: number;
+  max: number;
   size: ElementUIComponentSize;
   textColor: string;
   fill: string;
 }
 
-export type DefaultProps = typeof defaultProps
-
-export const defaultProps = {
-  input: {
-    clearable: empty, // false
-    showWordLimit: empty, // false
-    autosize: empty, // false
-    size: empty,
-    maxlength: empty,
-  },
-  form: {
-    inline: empty, // false
-    labelPosition: empty, // 'right'
-    labelWidth: empty,
-    inlineMessage: empty,
-    size: empty
-  },
-  table: {
-    maxHeight: empty,
-    stripe: empty, // false
-    border: empty, // false
-    size: empty,
-    fit: empty, // true
-    showHeader: empty, // true
-    highlightCurrentRow: empty // false
-  },
-  tableColumn: {
-    stripe: empty,
-    border: empty,
-    size: empty,
-    showOverflowTooltip: empty
-  },
-  pagination: {
-    small: empty, // false
-    background: empty, // false
-    pagerCount: empty, // 7
-    layout: empty, // 'prev, pager, next, jumper, ->, total'
-    pageSizes: empty, // [10, 20, 30, 40, 50, 100]
-    popperClass: empty,
-    prevText: empty,
-    nextText: empty,
-    hideOnSinglePage: empty,
-  },
-  upload: {
-    action: empty,
-    headers: empty,
-    multiple: empty,
-    data: empty,
-    showFileList: empty,
-    drag: empty,
-    accept: empty,
-    listType: empty,
-    autoUpload: empty,
-    httpRequest: empty
-  }
+export type GlobalInputNumber = {
+  min: number;
+  max: number;
+  step: number;
+  stepStrictly: boolean;
+  precision: number;
+  size: ElementUIComponentSize;
+  controls: boolean;
+  controlsPosition: string;
 }
 
 export const configProviderProps = {
@@ -156,4 +110,16 @@ export const configProviderProps = {
     type: Object as PropType<GlobalUploadProps>,
     default: empty
   },
+  radioGroup: {
+    type: Object as PropType<GlobalRadioGroup>,
+    default: empty
+  },
+  checkboxGroup: {
+    type: Object as PropType<GlobalCheckboxGroup>,
+    default: empty
+  },
+  inputNumber: {
+    type: Object as PropType<GlobalCheckboxGroup>,
+    default: empty
+  }
 }

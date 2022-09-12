@@ -23,6 +23,8 @@ export type CheckboxGroupOptions = Array<CheckboxGroupOption>
 export const checkboxGroupProps = {
   value: Array,
   disabled: commonProps.disabled,
+
+  // global props
   min: {
     type: Number,
     default: empty

@@ -32,7 +32,7 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
       ref: setRef,
       props: {
         ...pick(props, propNames),
-        ...withDefaultProps(props as GlobalFormProps, globalFormProps, globalPropNames)
+        ...withDefaultProps(props, globalFormProps, globalPropNames)
       },
       on,
       scopedSlots: {

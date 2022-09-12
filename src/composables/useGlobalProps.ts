@@ -1,6 +1,8 @@
-import { configMap, ConfigPropKeys } from "../shared/configProviderKeys";
+import { configPropertyMap } from '../shared/configPropertyMap'
 import { inject } from "vue";
 
-export function useGlobalProps<T>(key: ConfigPropKeys) {
-  return inject<T | undefined>(configMap[key], void 0)
+type ConfigPropertyNames = keyof (typeof configPropertyMap)
+
+export function useGlobalProps<T>(name: ConfigPropertyNames) {
+  return inject<T | undefined>(configPropertyMap[name].key, void 0)
 }
