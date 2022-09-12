@@ -1,8 +1,8 @@
 import { VueConstructor } from 'vue/types/vue'
-
-import { Input, inputProps, useInput } from './input'
 import { RadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
 import { CheckboxGroup, checkboxGroupProps, useCheckboxGroup } from './checkbox-group'
+import { Input, inputProps, useInput } from './input'
+import { InputNumber, inputNumberProps, useInputNumber } from './input-number'
 import { Select, selectProps, useSelect } from './select'
 import { Form, formProps, useForm } from './form'
 import { FormItem, formItemProps, useFormItem } from './form-item'
@@ -14,7 +14,7 @@ import { StaggeredTransitionGroup } from './staggered-transition-group/index'
 import { Upload, uploadProps, useUpload } from './upload'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
-const components = [Input, RadioGroup, CheckboxGroup, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+const components = [RadioGroup, CheckboxGroup, Input, InputNumber, Select, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
@@ -24,9 +24,10 @@ function install(Vue: VueConstructor) {
 
 export {
   install,
-  Input,
   RadioGroup,
   CheckboxGroup,
+  Input,
+  InputNumber,
   Select,
   Form,
   FormItem,
@@ -38,9 +39,10 @@ export {
   Upload,
   ConfigProvider,
 
-  useInput,
   useRadioGroup,
   useCheckboxGroup,
+  useInput,
+  useInputNumber,
   useSelect,
   useForm,
   useFormItem,
@@ -51,9 +53,10 @@ export {
   useUpload,
   useConfigProvider,
 
-  inputProps,
   radioGroupProps,
   checkboxGroupProps,  
+  inputProps,
+  inputNumberProps,
   selectProps,
   formProps,
   formItemProps,
