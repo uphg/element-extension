@@ -85,6 +85,19 @@ export type GlobalInputNumber = {
   controlsPosition: string;
 }
 
+export type GlobalSwitchProps = {
+  width: number;
+  activeIconClass: string;
+  inactiveIconClass: string;
+  activeText: string;
+  inactiveText: string;
+  activeValue: boolean | string | number;
+  inactiveValue: boolean | string | number;
+  activeColor: string;
+  inactiveColor: string;
+  validateEvent: boolean;
+}
+
 export const configProviderProps = {
   input: {
     type: Object as PropType<GlobalInputProps>,
@@ -120,6 +133,10 @@ export const configProviderProps = {
   },
   inputNumber: {
     type: Object as PropType<GlobalCheckboxGroup>,
+    default: empty
+  },
+  switch: {
+    type: Object as PropType<GlobalSwitchProps>,
     default: empty
   }
 }

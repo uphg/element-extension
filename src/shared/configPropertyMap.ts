@@ -2,19 +2,20 @@ import { empty } from "./_commonProps";
 
 export type ConfigPropertyMap = typeof configPropertyMap
 
-export const configPropInputKey = Symbol('config-input')
-export const configPropFormKey = Symbol('config-form')
-export const configPropTableKey = Symbol('config-table')
-export const configPropTableColumnKey = Symbol('config-table-column')
-export const configPropPaginationKey = Symbol('config-pagination')
-export const configPropUploadKey = Symbol('config-upload')
-export const configPropRadioGroupKey = Symbol('config-radio-group')
-export const configPropCheckboxGroup = Symbol('config-checkbox-group')
-export const configPropInputNumber = Symbol('config-input-number')
+export const globalInputKey = Symbol('config-input')
+export const globalFormKey = Symbol('config-form')
+export const globalTableKey = Symbol('config-table')
+export const globalTableColumnKey = Symbol('config-table-column')
+export const globalPaginationKey = Symbol('config-pagination')
+export const globalUploadKey = Symbol('config-upload')
+export const globalRadioGroupKey = Symbol('config-radio-group')
+export const globalCheckboxGroup = Symbol('config-checkbox-group')
+export const globalInputNumber = Symbol('config-input-number')
+export const globalSwitchKey = Symbol('config-switch')
 
 export const configPropertyMap = {
   input: {
-    key: configPropInputKey,
+    key: globalInputKey,
     default: {
       clearable: empty, // false
       showWordLimit: empty, // false
@@ -24,7 +25,7 @@ export const configPropertyMap = {
     }
   },
   form: {
-    key: configPropFormKey,
+    key: globalFormKey,
     default: {
       inline: empty, // false
       labelPosition: empty, // 'right'
@@ -34,7 +35,7 @@ export const configPropertyMap = {
     }
   },
   table: {
-    key: configPropTableKey,
+    key: globalTableKey,
     default: {
       maxHeight: empty,
       stripe: empty, // false
@@ -46,7 +47,7 @@ export const configPropertyMap = {
     }
   },
   tableColumn: {
-    key: configPropTableColumnKey,
+    key: globalTableColumnKey,
     default: {
       stripe: empty,
       border: empty,
@@ -55,7 +56,7 @@ export const configPropertyMap = {
     }
   },
   pagination: {
-    key: configPropPaginationKey,
+    key: globalPaginationKey,
     default: {
       small: empty, // false
       background: empty, // false
@@ -69,7 +70,7 @@ export const configPropertyMap = {
     }
   },
   upload: {
-    key: configPropUploadKey,
+    key: globalUploadKey,
     default: {
       action: empty,
       headers: empty,
@@ -84,7 +85,7 @@ export const configPropertyMap = {
     }
   },
   radioGroup: {
-    key: configPropRadioGroupKey,
+    key: globalRadioGroupKey,
     default: {
       size: empty,
       textColor: empty,
@@ -92,7 +93,7 @@ export const configPropertyMap = {
     }
   },
   checkboxGroup: {
-    key: configPropCheckboxGroup,
+    key: globalCheckboxGroup,
     default: {
       min: empty,
       max: empty,
@@ -102,7 +103,7 @@ export const configPropertyMap = {
     }
   },
   inputNumber: {
-    key: configPropInputNumber,
+    key: globalInputNumber,
     default: {
       min: empty,
       max: empty,
@@ -112,6 +113,21 @@ export const configPropertyMap = {
       size: empty,
       controls: empty,
       controlsPosition: empty
+    }
+  },
+  switch: {
+    key: globalSwitchKey,
+    default: {
+      width: empty,
+      activeIconClass: empty,
+      inactiveIconClass: empty,
+      activeText: empty,
+      inactiveText: empty,
+      activeValue: empty,
+      inactiveValue: empty,
+      activeColor: empty,
+      inactiveColor: empty,
+      validateEvent: empty
     }
   }
 }
