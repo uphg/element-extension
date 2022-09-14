@@ -132,7 +132,7 @@ export const configProviderProps = {
     default: empty
   },
   inputNumber: {
-    type: Object as PropType<GlobalCheckboxGroup>,
+    type: Object as PropType<GlobalInputNumber>,
     default: empty
   },
   switch: {

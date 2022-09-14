@@ -6,13 +6,20 @@ import { ElSwitch } from "../../../types/element-components"
 import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import pick from "../../../utils/pick"
+import { UseComponentOptions } from "../../../types/use-component-options"
 
 const propNames = ['value', 'disabled', 'name']
 const globalPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
 
-export function useSwitch(props: SwitchProps, context: SetupContext<{}>) {
+export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options?: UseComponentOptions<SwitchProps, GlobalSwitchProps>) {
+  const { handleProps } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
   const globalSwitchProps = useGlobalProps<GlobalSwitchProps>('switch')
+
+  const createProps = handleProps && typeof handleProps === 'function' ? () => handleProps(props, globalSwitchProps!) : () => ({
+    ...pick(props, propNames),
+    ...withDefaultProps(props, globalSwitchProps, globalPropNames)
+  })
 
   const setRef = function(el: ElSwitch) {
     elSwitch.value = el
@@ -35,10 +42,7 @@ export function useSwitch(props: SwitchProps, context: SetupContext<{}>) {
     },
     render: () => h(Switch, {
       ref: setRef,
-      props: {
-        ...pick(props, propNames),
-        ...withDefaultProps(props, globalSwitchProps,globalPropNames)
-      },
+      props: createProps(),
       on: { input, change }
     })
   }

@@ -1,42 +1,47 @@
 import { ExtractPropTypes } from "vue";
+import { empty } from "../../../shared/_commonProps";
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
 
 export const inputNumberProps = {
   step: {
     type: Number,
-    default: 1
+    default: empty
   },
   stepStrictly: {
     type: Boolean,
-    default: false
+    default: empty
   },
   max: {
     type: Number,
-    default: Infinity
+    default: empty
   },
   min: {
     type: Number,
-    default: -Infinity
+    default: empty
   },
-  value: {},
+  value: {
+    type: [Number, Boolean, String],
+    default: () => ({})
+  },
   disabled: Boolean,
-  size: String,
+  size: {
+    type: String,
+    default: empty
+  },
   controls: {
     type: Boolean,
-    default: true
+    default: empty
   },
   controlsPosition: {
     type: String,
-    default: ''
+    default: empty
   },
   name: String,
   label: String,
   placeholder: String,
   precision: {
     type: Number,
-    validator(val: number | string) {
-      return val >= 0 && val === parseInt(val as string, 10);
-    }
+    default: empty
   }
 }
