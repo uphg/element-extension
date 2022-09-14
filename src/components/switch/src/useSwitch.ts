@@ -11,8 +11,26 @@ import { UseComponentOptions } from "../../../types/use-component-options"
 const propNames = ['value', 'disabled', 'name']
 const globalPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
 
+function useComponentProps<T, P>(props, options) {
+  const { configPropertyName, propNames, globalPropNames, attrNames, globalAttrNames, handleProps, handleAttrs, context } = options || {}
+  const globalProps = useGlobalProps<P>(configPropertyName)
+  const createProps = handleProps && typeof handleProps === 'function' ? () => handleProps(props, globalProps!) : () => ({
+    ...pick(props, propNames),
+    ...withDefaultProps(props, globalProps, globalPropNames)
+  })
+  let createAttrs = null
+  if (attrNames || attrNames && globalAttrNames) {
+    createAttrs = handleAttrs && typeof handleAttrs === 'function' ? () => handleAttrs(props, globalProps) : () => ({
+      ...pick(context.attrs, attrNames),
+      ...withDefaultProps(context.attrs, globalProps, globalAttrNames)
+    })
+  }
+  
+  return createAttrs ? { createProps, createAttrs } : { createProps }
+}
+
 export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options?: UseComponentOptions<SwitchProps, GlobalSwitchProps>) {
-  const { handleProps } = options || {}
+  const { handleProps, handleAttrs } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
   const globalSwitchProps = useGlobalProps<GlobalSwitchProps>('switch')
 
