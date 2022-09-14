@@ -8,9 +8,17 @@ export const FakeSlot = defineComponent({
 })
 
 export function renderSlot(context: SetupContext<{}>, slotName: string) {
-  return context.slots[slotName] && h(FakeSlot, { slot: slotName }, context.slots[slotName]!())
+  const slots = context.slots?.[slotName]?.()
+  const data = { slot: slotName }
+  return slots && (
+    slots?.length === 1
+      ? h(FakeSlot, data, slots)
+      : slots?.length > 1
+        ? slots.map((item) => h(FakeSlot, data, [item]))
+        : slots && h(FakeSlot, data, slots)
+  )
 }
 
 export function renderSlots(context: SetupContext<{}>, slotNames: string[]) {
-  return slotNames.map((name) => context.slots[name] && h(FakeSlot, { slot: name }, context.slots[name]!()))
+  return slotNames.map((name) => context.slots[name] && renderSlot(context, name))
 }
