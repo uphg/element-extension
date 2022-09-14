@@ -75,9 +75,9 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
       
       return h(Upload, {
         ref: setRef,
-        props: {
-          ...pick(props, propNames),
-          ...withDefaultProps(props, globalUploadProps, globalPropNames),
+        props:  {
+          ...pick(props, globalUploadProps ? propNames : [...propNames, ...globalPropNames]),
+          ...globalUploadProps ? withDefaultProps(props, globalUploadProps, globalPropNames) : {},
           showFileList: props.listType === 'picture-card' ? showFileList : false
         },
       },

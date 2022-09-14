@@ -8,14 +8,21 @@ import { GlobalFormProps } from "../../../components/config-provider/src/configP
 import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { generateEmits } from "../../../utils/generateEmits"
 import pick from "../../../utils/pick"
+import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 
 const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 const globalPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
 const emitNames = ['validate']
 
-export function useForm(props: FormProps, context: SetupContext<{}>) {
+export function useForm(
+  props: FormProps,
+  context: SetupContext<{}>,
+  options?: UseComponentParamsOptions<FormProps, GlobalFormProps>
+) {
+  const { handleProps } = options || {}
   const { elForm, validate, validateField, clearValidate } = useElForm()
-  const globalFormProps = useGlobalProps<GlobalFormProps>('form')
+  
+  const createProps = useComponentProps(props, 'switch', { propNames, globalPropNames, handleProps })
   const on = generateEmits(context.emit, emitNames)
   const setRef = function(el: ElForm) {
     elForm.value = el
@@ -30,10 +37,7 @@ export function useForm(props: FormProps, context: SetupContext<{}>) {
     },
     render: () => h(Form, {
       ref: setRef,
-      props: {
-        ...pick(props, propNames),
-        ...withDefaultProps(props, globalFormProps, globalPropNames)
-      },
+      props: createProps(),
       on,
       scopedSlots: {
         default: () => context.slots.default?.()

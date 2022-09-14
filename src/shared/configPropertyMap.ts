@@ -1,6 +1,7 @@
 import { empty } from "./_commonProps";
 
 export type ConfigPropertyMap = typeof configPropertyMap
+export type ConfigPropertyName = keyof (typeof configPropertyMap)
 
 export const globalInputKey = Symbol('config-input')
 export const globalFormKey = Symbol('config-form')

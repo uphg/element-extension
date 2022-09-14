@@ -10,11 +10,13 @@ import { generateEmits } from "../../../utils/generateEmits";
 import pick from "../../../utils/pick";
 import { renderSlots } from '../../../utils/renderSlot'
 
-const propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
-const attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
-const otherEmitNames = ['blur', 'focus', 'change', 'clear']
+const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
 const globalPropNames = ['clearable', 'showWordLimit', 'autosize','size']
+
+const _attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
 const globalAttrNames = ['maxlength']
+
+const otherEmitNames = ['blur', 'focus', 'change', 'clear']
 const slotNames = ['suffix', 'prefix', 'prepend', 'append']
 
 export function useInput(props: InputProps, context: SetupContext<{}>) {
@@ -24,6 +26,8 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
   const on = { input: onInput, ...otherOn }
 
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
+  const propNames = globalInputProps ? _propNames : [..._propNames, ...globalPropNames]
+  const attrNames = globalInputProps ? _attrNames : [..._attrNames, ...globalAttrNames]
 
   const setRef = function(el: ElInput) {
     elInput.value = el
@@ -45,17 +49,21 @@ export function useInput(props: InputProps, context: SetupContext<{}>) {
         return elInput.value
       }
     },
-    render: () => h(Input, {
-      ref: setRef,
-      props: {
-        ...pick(props, propNames),
-        ...withDefaultProps(props, globalInputProps, globalPropNames)
-      },
-      attrs: {
-        ...pick(context.attrs, attrNames),
-        ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
-      },
-      on
-    }, renderSlots(context, slotNames))
+    render: () => {
+      const pickProps = pick(props, propNames)
+      const pickAttrs = pick(context.attrs, attrNames)
+      return h(Input, {
+        ref: setRef,
+        props: globalInputProps ? {
+          ...pickProps,
+          ...withDefaultProps(props, globalInputProps, globalPropNames)
+        } : pickProps,
+        attrs: globalInputProps ? {
+          ...pickAttrs,
+          ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
+        } : pickAttrs,
+        on,
+      }, renderSlots(context, slotNames))
+    }
   }
 }
