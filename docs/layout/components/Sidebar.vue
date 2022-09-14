@@ -44,6 +44,11 @@ const sidebars = [
         link: '/components/select'
       },
       {
+        title: 'Switch 表单',
+        name: 'ComponentsSwitch',
+        link: '/components/switch'
+      },
+      {
         title: 'Form 表单',
         name: 'ComponentsForm',
         link: '/components/form'
