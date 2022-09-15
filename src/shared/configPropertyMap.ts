@@ -15,6 +15,24 @@ export const globalInputNumber = Symbol('config-input-number')
 export const globalSwitchKey = Symbol('config-switch')
 
 export const configPropertyMap = {
+  radioGroup: {
+    key: globalRadioGroupKey,
+    default: {
+      size: empty,
+      textColor: empty,
+      fill: empty,
+    }
+  },
+  checkboxGroup: {
+    key: globalCheckboxGroup,
+    default: {
+      min: empty,
+      max: empty,
+      size: empty,
+      textColor: empty,
+      fill: empty,
+    }
+  },
   input: {
     key: globalInputKey,
     default: {
@@ -23,6 +41,49 @@ export const configPropertyMap = {
       autosize: empty, // false
       size: empty,
       maxlength: empty,
+    }
+  },
+  inputNumber: {
+    key: globalInputNumber,
+    default: {
+      min: empty,
+      max: empty,
+      step: empty,
+      stepStrictly: empty,
+      precision: empty,
+      size: empty,
+      controls: empty,
+      controlsPosition: empty
+    }
+  },
+  switch: {
+    key: globalSwitchKey,
+    default: {
+      width: empty,
+      activeIconClass: empty,
+      inactiveIconClass: empty,
+      activeText: empty,
+      inactiveText: empty,
+      activeValue: empty,
+      inactiveValue: empty,
+      activeColor: empty,
+      inactiveColor: empty,
+      validateEvent: empty
+    }
+  },
+  upload: {
+    key: globalUploadKey,
+    default: {
+      action: empty,
+      headers: empty,
+      multiple: empty,
+      data: empty,
+      showFileList: empty,
+      drag: empty,
+      accept: empty,
+      listType: empty,
+      autoUpload: empty,
+      httpRequest: empty
     }
   },
   form: {
@@ -70,66 +131,5 @@ export const configPropertyMap = {
       hideOnSinglePage: empty,
     }
   },
-  upload: {
-    key: globalUploadKey,
-    default: {
-      action: empty,
-      headers: empty,
-      multiple: empty,
-      data: empty,
-      showFileList: empty,
-      drag: empty,
-      accept: empty,
-      listType: empty,
-      autoUpload: empty,
-      httpRequest: empty
-    }
-  },
-  radioGroup: {
-    key: globalRadioGroupKey,
-    default: {
-      size: empty,
-      textColor: empty,
-      fill: empty,
-    }
-  },
-  checkboxGroup: {
-    key: globalCheckboxGroup,
-    default: {
-      min: empty,
-      max: empty,
-      size: empty,
-      textColor: empty,
-      fill: empty,
-    }
-  },
-  inputNumber: {
-    key: globalInputNumber,
-    default: {
-      min: empty,
-      max: empty,
-      step: empty,
-      stepStrictly: empty,
-      precision: empty,
-      size: empty,
-      controls: empty,
-      controlsPosition: empty
-    }
-  },
-  switch: {
-    key: globalSwitchKey,
-    default: {
-      width: empty,
-      activeIconClass: empty,
-      inactiveIconClass: empty,
-      activeText: empty,
-      inactiveText: empty,
-      activeValue: empty,
-      inactiveValue: empty,
-      activeColor: empty,
-      inactiveColor: empty,
-      validateEvent: empty
-    }
-  }
 }
 

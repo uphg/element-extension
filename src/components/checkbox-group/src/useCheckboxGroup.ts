@@ -3,16 +3,19 @@ import { Checkbox as _Checkbox, CheckboxButton, CheckboxGroup } from "element-ui
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group";
 import { CheckboxGroupProps } from "./checkboxGroupProps";
 import { GlobalCheckboxGroup } from "../../config-provider/src/configProviderProps";
-import pick from "../../../utils/pick";
-import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { withDefaultProps } from "../../../utils/withDefaultProps";
+import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 
 const propNames = ['value', 'disabled']
 const globalPropNames = ['min', 'max', 'size', 'fill', 'textColor']
 
-export function useCheckboxGroup(props: CheckboxGroupProps, context: SetupContext<{}>) {
+export function useCheckboxGroup(
+  props: CheckboxGroupProps,
+  context: SetupContext<{}>,
+  options: UseComponentParamsOptions<CheckboxGroupProps, GlobalCheckboxGroup>
+) {
+  const { handleProps } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)
-  const globalCheckboxGroupProps = useGlobalProps<GlobalCheckboxGroup>('checkboxGroup')
+  const createProps = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
   const Checkbox = props.withButton ? CheckboxButton : _Checkbox
 
   const setRef = function(el: ElCheckboxGroup) {
@@ -28,10 +31,7 @@ export function useCheckboxGroup(props: CheckboxGroupProps, context: SetupContex
   return {
     render: () => h(CheckboxGroup, {
       ref: setRef,
-      props: {
-        ...pick(props, propNames),
-        ...withDefaultProps(props, globalCheckboxGroupProps, globalPropNames)
-      },
+      props: createProps(),
       on: { input, change }
     }, props.options.map((item) => h(Checkbox, {
       props: {

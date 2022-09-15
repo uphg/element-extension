@@ -14,15 +14,14 @@ export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options
 
   const createProps = useComponentProps(props, 'switch', { propNames, globalPropNames, handleProps })
   
-  const setRef = function(el: ElSwitch) {
-    elSwitch.value = el
-  } as unknown as string
+  const setRef = ((el: ElSwitch) => elSwitch.value = el) as unknown as string
   const input = (value: string | number | boolean) => {
     context.emit('input', value)
   }
   const change = (value: string | number | boolean) => {
     context.emit('change', value)
   }
+  const on = { input, change }
 
   return {
     expose: {
@@ -33,10 +32,6 @@ export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options
         elSwitch.value?.focus()
       }
     },
-    render: () => h(Switch, {
-      ref: setRef,
-      props: createProps(),
-      on: { input, change }
-    })
+    render: () => h(Switch, { ref: setRef, props: createProps(), on })
   }
 }
