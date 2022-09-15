@@ -3,15 +3,10 @@ import { ExtractPropTypes, PropType } from "vue"
 import { ElementUIComponentSize } from "element-ui/types/component";
 import { ObjectLike } from "../../../types/object-like";
 
-export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
+import { GlobalCheckboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps";
+import { GlobalInputProps } from "../../input/src/inputProps";
 
-export type GlobalInputProps = {
-  clearable: boolean;
-  showWordLimit: boolean;
-  autosize: boolean | { [key: string]: any };
-  size: ElementUIComponentSize;
-  maxlength?: number;
-}
+export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
 export type GlobalFormProps = {
   inline: boolean;
@@ -66,13 +61,13 @@ export type GlobalRadioGroup = {
   fill: string;
 }
 
-export type GlobalCheckboxGroup = {
-  min: number;
-  max: number;
-  size: ElementUIComponentSize;
-  textColor: string;
-  fill: string;
-}
+// export type GlobalCheckboxGroup = {
+//   min: number;
+//   max: number;
+//   size: ElementUIComponentSize;
+//   textColor: string;
+//   fill: string;
+// }
 
 export type GlobalInputNumber = {
   min: number;
@@ -128,7 +123,7 @@ export const configProviderProps = {
     default: empty
   },
   checkboxGroup: {
-    type: Object as PropType<GlobalCheckboxGroup>,
+    type: Object as PropType<GlobalCheckboxGroupProps>,
     default: empty
   },
   inputNumber: {

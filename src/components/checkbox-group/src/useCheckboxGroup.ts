@@ -1,8 +1,7 @@
 import { h, ref, SetupContext } from "vue";
 import { Checkbox as _Checkbox, CheckboxButton, CheckboxGroup } from "element-ui";
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group";
-import { CheckboxGroupProps } from "./checkboxGroupProps";
-import { GlobalCheckboxGroup } from "../../config-provider/src/configProviderProps";
+import { CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 
 const propNames = ['value', 'disabled']
@@ -11,7 +10,7 @@ const globalPropNames = ['min', 'max', 'size', 'fill', 'textColor']
 export function useCheckboxGroup(
   props: CheckboxGroupProps,
   context: SetupContext<{}>,
-  options: UseComponentParamsOptions<CheckboxGroupProps, GlobalCheckboxGroup>
+  options: UseComponentParamsOptions<CheckboxGroupProps, GlobalCheckboxGroupProps>
 ) {
   const { handleProps } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)

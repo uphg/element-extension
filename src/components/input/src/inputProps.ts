@@ -4,6 +4,26 @@ import { empty,commonProps } from '../../../shared/_commonProps'
 import { InputType } from '../../../types/input'
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
+export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { maxlength?: number; }
+
+export const globalInputProps = {
+  clearable: {
+    type: [Boolean] as PropType<boolean>,
+    default: empty
+  },
+  showWordLimit: {
+    type: [Boolean] as PropType<boolean>,
+    default: empty
+  },
+  size: {
+    type: commonProps.size,
+    default: empty
+  },
+  autosize: {
+    type: commonProps.autosize.type,
+    default: empty
+  }
+}
 
 export const inputProps = {
   value: [String, Number] as PropType<string | number>,
@@ -15,25 +35,14 @@ export const inputProps = {
   form: commonProps.form,
   disabled: commonProps.disabled,
   readonly: commonProps.readonly,
-  autosize: commonProps.autosize,
+
   autocomplete: commonProps.autocomplete,
   validateEvent: commonProps.validateEvent,
   suffixIcon: commonProps.suffixIcon,
   prefixIcon: commonProps.prefixIcon,
   label: String as PropType<string>,
   showPassword: commonProps.showPassword,
-  clearable: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
-    default: empty
-  },
-  showWordLimit: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
-    default: empty
-  },
-  size: {
-    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
-    default: empty
-  },
+
   tabindex: commonProps.tabindex,
   exclude: commonProps.exclude,
 }

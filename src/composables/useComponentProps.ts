@@ -11,10 +11,10 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 }
 
 export type UseComponentParamsOptions<Props, GlobalProps> = {
-  handleProps: handleProps <Props, GlobalProps>
+  handleProps: handleProps<Props, GlobalProps>
 }
 
-export interface handleProps <Props, GlobalProps> {
+export interface handleProps<Props, GlobalProps> {
   (props: Props, globalProps?: GlobalProps): Props
 }
 

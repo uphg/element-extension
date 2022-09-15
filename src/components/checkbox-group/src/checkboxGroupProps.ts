@@ -1,8 +1,6 @@
 import { ExtractPropTypes, PropType } from "vue"
 import { commonProps, empty } from "../../../shared/_commonProps"
 
-export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
-
 export type CheckboxGroupOption = {
   value:  string | number | boolean;
   label: string | number | boolean,
@@ -20,11 +18,10 @@ export type CheckboxGroupOption = {
 
 export type CheckboxGroupOptions = Array<CheckboxGroupOption>
 
-export const checkboxGroupProps = {
-  value: Array,
-  disabled: commonProps.disabled,
+export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
+export type GlobalCheckboxGroupProps = ExtractPropTypes<typeof globalCheckboxGroupProps>
 
-  // global props
+export const globalCheckboxGroupProps = {
   min: {
     type: Number,
     default: empty
@@ -45,11 +42,19 @@ export const checkboxGroupProps = {
     type: String,
     default: empty
   },
+}
+
+export const checkboxGroupProps = {
+  value: Array,
+  disabled: commonProps.disabled,
+
+  // global props
+  ...globalCheckboxGroupProps,
 
   border: Boolean as PropType<boolean>,
   withButton: Boolean as PropType<boolean>,
   options: {
     type: [Array, Object] as PropType<CheckboxGroupOptions>,
     default: () => []
-  },
+  }
 }
