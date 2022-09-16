@@ -1,57 +1,45 @@
-import { computed, h, ref, SetupContext } from "vue"
+import { computed, h, SetupContext } from "vue"
 import { Upload } from "element-ui"
-import { ElUpload as _ElUpload, ElUploadInternalFileDetail } from "element-ui/types/upload"
-import { UploadProps } from "./uploadProps"
-import pick from "../../../utils/pick"
+import { ElUpload as _ElUpload } from "element-ui/types/upload"
+import { GlobalUploadProps, UploadProps } from "./uploadProps"
 import UploadList from "./UploadList"
 import { FakeSlot, renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
-import { useGlobalProps } from "../../../composables/useGlobalProps"
-import { GlobalUploadProps } from "../../config-provider/src/configProviderProps"
-import { withDefaultProps } from "../../../utils/withDefaultProps"
+import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
+import { useElUpload } from "../../../composables/useElUpload"
 
 const propNames = ['name', 'dragger', 'withCredentials', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList',   'disabled', 'limit', 'onExceed']
 const globalPropNames = ['action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
-interface ElUpload extends _ElUpload {
-  uploadDisabled: boolean;
-  uploadFiles: { [key: string]: any }[];
-  handleRemove: (file: any, raw?: string) => void;
-} 
 
-export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
-  const elUpload = ref<ElUpload | null>(null)
-  const setRef = function(el: ElUpload) {
-    elUpload.value = el
-  } as unknown as string
-
-  const globalUploadProps = useGlobalProps<GlobalUploadProps>('upload')
+export function useUpload(
+  props: UploadProps,
+  context:  SetupContext<{}>,
+  options?: UseComponentParamsOptions<UploadProps, GlobalUploadProps>
+) {
+  const { handleProps } = options || {}
+  const { elUpload, setRef, clearFiles, abort, submit } = useElUpload()
+  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames, globalPropNames, handleProps })
 
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
+  const showFileList = computed(() => globalProps?.showFileList || props.showFileList)
 
   return {
     expose: {
-      get elUpload() {
-        return elUpload.value
-      },
-      clearFiles() {
-        elUpload.value!.clearFiles()
-      },
-      abort(file: ElUploadInternalFileDetail) {
-        elUpload.value!.abort(file)
-      },
-      submit() {
-        elUpload.value!.submit()
-      },
+      clearFiles,
+      abort,
+      submit,
       removeFile(file: ElUploadFile, raw?: string) {
         elUpload.value?.handleRemove(file, raw)
+      },
+      get elUpload() {
+        return elUpload.value
       },
       get uploadFiles() {
         return elUpload.value?.uploadFiles
       }
     },
     render: () => {
-      const showFileList = globalUploadProps?.showFileList || props.showFileList
       const uploadList = h(UploadList, {
         props: {
           disabled: uploadDisabled.value,
@@ -72,13 +60,11 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
           }
         }
       })
-      
       return h(Upload, {
         ref: setRef,
         props:  {
-          ...pick(props, globalUploadProps ? propNames : [...propNames, ...globalPropNames]),
-          ...globalUploadProps ? withDefaultProps(props, globalUploadProps, globalPropNames) : {},
-          showFileList: props.listType === 'picture-card' ? showFileList : false
+          ...createProps(),
+          showFileList: props.listType === 'picture-card' ? showFileList.value : false
         },
       },
         props.listType === 'picture-card'
@@ -94,7 +80,7 @@ export function useUpload(props: UploadProps, context:  SetupContext<{}>) {
                   : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
               ),
               context.slots.tip?.(),
-              showFileList && uploadList
+              showFileList.value && uploadList
             ]
       )
     }

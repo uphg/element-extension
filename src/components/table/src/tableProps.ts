@@ -8,6 +8,7 @@ import { RowCallbackParams } from "../../../types/table";
 import { TableColumnProps } from "../../../components/table-column/src/tableColumnProps";
 import { TableColumn } from "element-ui";
 
+export type GlobalTableProps = ExtractPropTypes<typeof globalTableProps>
 export type TableProps = ExtractPropTypes<typeof tableProps>
 
 export type TableColumnChildrenProps = {
@@ -24,6 +25,34 @@ export type TableObjectColumnProps = {
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
 } & TableColumnProps
 
+export const globalTableProps = {
+  // global props
+  size: {
+    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
+    default: empty
+  },
+  maxHeight: {
+    type: [String, Number] as PropType<string | number | undefined>
+  },
+  stripe: {
+    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    default: empty
+  },
+  border: {
+    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    default: empty
+  },
+  fit: {
+    type: Boolean,
+    default: true
+  },
+  showHeader: {
+    type: Boolean,
+    default: true
+  },
+  highlightCurrentRow: Boolean
+}
+
 export const tableProps = {
   data: {
     type: Array,
@@ -33,17 +62,8 @@ export const tableProps = {
   },
   width: [String, Number],
   height: [String, Number],
-
-  fit: {
-    type: Boolean,
-    default: true
-  },
   rowKey: [String, Function],
   context: {},
-  showHeader: {
-    type: Boolean,
-    default: true
-  },
   showSummary: Boolean,
   sumText: String,
   summaryMethod: Function,
@@ -55,7 +75,6 @@ export const tableProps = {
   headerRowStyle: [Object, Function],
   headerCellClassName: [String, Function],
   headerCellStyle: [Object, Function],
-  highlightCurrentRow: Boolean,
   currentRowKey: [String, Number],
   emptyText: String,
   expandRowKeys: Array,
@@ -82,27 +101,11 @@ export const tableProps = {
   },
   lazy: Boolean,
   load: Function,
-
-  // global props
-  size: {
-    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
-    default: empty
-  },
-  maxHeight: {
-    type: [String, Number] as PropType<string | number | undefined>
-  },
-  stripe: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
-    default: empty
-  },
-  border: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
-    default: empty
-  },
+  ...globalTableProps,
 
   // custom props
   columns: {
     type: Array as PropType<Array<TableObjectColumnProps>>,
     default: () => []
-  },
+  }
 }

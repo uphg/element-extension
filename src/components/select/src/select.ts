@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import { selectProps } from "./selectProps"
 import { useSelect } from "./useSelect"
+import { ElementPartComponent } from "../../../types"
 
 const ESelect = defineComponent({
   name: 'ESelect',
@@ -13,4 +14,4 @@ const ESelect = defineComponent({
   }
 })
 
-export default ESelect
+export default ESelect as ElementPartComponent<typeof ESelect>

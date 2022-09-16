@@ -34,9 +34,10 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
   }
 }
 
-export function handleColumnsData(props: TableObjectColumnProps) {
+export function handleColumnsData(props: TableObjectColumnProps, key: string | number) {
   if (!props) return
   const data: VNodeData = {
+    key: key,
     props: {
       type: handleColumnType(props.type),
       label: props.label,

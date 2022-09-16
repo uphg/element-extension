@@ -1,10 +1,11 @@
 import { ExtractPropTypes } from "vue";
 
+export type GlobalUploadProps = ExtractPropTypes<typeof globalUploadProps>
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
 
 function noop() {}
 
-export const uploadProps = {
+export const globalUploadProps = {
   action: {
     type: String,
     required: true
@@ -15,20 +16,32 @@ export const uploadProps = {
       return {};
     }
   },
-  data: Object,
   multiple: Boolean,
-  name: {
-    type: String,
-    default: 'file'
-  },
-  drag: Boolean,
-  dragger: Boolean,
-  withCredentials: Boolean,
+  data: Object,
   showFileList: {
     type: Boolean,
     default: true
   },
+  drag: Boolean,
   accept: String,
+  listType: {
+    type: String,
+    default: 'text' // text,picture,picture-card
+  },
+  autoUpload: {
+    type: Boolean,
+    default: true
+  },
+  httpRequest: Function,
+}
+
+export const uploadProps = {
+  name: {
+    type: String,
+    default: 'file'
+  },
+  dragger: Boolean,
+  withCredentials: Boolean,
   type: {
     type: String,
     default: 'select'
@@ -64,19 +77,11 @@ export const uploadProps = {
       return [];
     }
   },
-  autoUpload: {
-    type: Boolean,
-    default: true
-  },
-  listType: {
-    type: String,
-    default: 'text' // text,picture,picture-card
-  },
-  httpRequest: Function,
   disabled: Boolean,
   limit: Number,
   onExceed: {
     type: Function,
     default: noop
-  }
+  },
+  ...globalUploadProps
 }

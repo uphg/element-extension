@@ -1,5 +1,6 @@
 import { addClass, removeClass, setStyle } from "../../utils/dom"
 import { defineComponent, h } from "vue"
+import { ElementPartComponent } from "../../types"
 
 const staggeredProps = {
   tag: {
@@ -94,4 +95,4 @@ const EStaggeredTransitionGroup = defineComponent({
   }
 })
 
-export default EStaggeredTransitionGroup
+export default EStaggeredTransitionGroup as ElementPartComponent<typeof EStaggeredTransitionGroup>

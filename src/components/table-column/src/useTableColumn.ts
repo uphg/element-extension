@@ -1,14 +1,21 @@
 import { TableColumn } from "element-ui";
 import { createDateFormat } from "./createDateFormat";
 import { h, SetupContext } from "vue"
-import { extendColumnTypes, TableColumnProps } from "./tableColumnProps";
+import { extendColumnTypes, TableColumnProps, GlobalTableColumnProps } from "./tableColumnProps";
 import { handleColumnType } from "./handleColumnType";
-import { GlobalTableColumnProps } from "../../config-provider/src/configProviderProps";
-import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { withDefaultProps } from "../../../utils/withDefaultProps";
+import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 
-export function useTableColumn(props: TableColumnProps, context: SetupContext<{}>) {
-  const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
+const propNames = ['label', 'labelClassName', 'property', 'prop', 'width', 'minWidth', 'renderHeader', 'sortable', 'sortMethod', 'sortBy', 'columnKey', 'align', 'headerAlign', 'showTooltipWhenOverflow', 'fixed', 'formatter', 'selectable', 'reserveSelection', 'filterMethod', 'filteredValue', 'filters', 'filterPlacement', 'filterMultiple', 'index', 'sortOrders']
+const globalPropNames = ['className', 'resizable', 'showOverflowTooltip']
+
+export function useTableColumn(
+  props: TableColumnProps,
+  context: SetupContext<{}>,
+  options?: UseComponentParamsOptions<TableColumnProps, GlobalTableColumnProps>
+) {
+  const { handleProps } = options || {}
+  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
+  const type = handleColumnType(props.type)
   let formatter = props.formatter
   if (props.prop && extendColumnTypes.includes(props.type)) {
     formatter = createDateFormat(props)
@@ -17,35 +24,9 @@ export function useTableColumn(props: TableColumnProps, context: SetupContext<{}
   return {
     render: () => h(TableColumn, {
       props: {
-        type: handleColumnType(props.type),
-        label: props.label,
-        className: props.className,
-        labelClassName: props.labelClassName,
-        property: props.property,
-        prop: props.prop,
-        width: props.width,
-        minWidth: props.minWidth,
-        renderHeader: props.renderHeader,
-        sortable: props.sortable,
-        sortMethod: props.sortMethod,
-        sortBy: props.sortBy,
-        resizable: props.resizable,
-        columnKey: props.columnKey,
-        align: props.align,
-        headerAlign: props.headerAlign,
-        showTooltipWhenOverflow: props.showTooltipWhenOverflow,
-        fixed: props.fixed,
+        ...createProps(),
         formatter: formatter,
-        selectable: props.selectable,
-        reserveSelection: props.reserveSelection,
-        filterMethod: props.filterMethod,
-        filteredValue: props.filteredValue,
-        filters: props.filters,
-        filterPlacement: props.filterPlacement,
-        filterMultiple: props.filterMultiple,
-        index: props.index,
-        sortOrders: props.sortOrders,
-        ...withDefaultProps(props, globalTableColumnProps, ['showOverflowTooltip'])
+        type
       },
       scopedSlots: {
         default: (scope) => context.slots.default?.(scope),

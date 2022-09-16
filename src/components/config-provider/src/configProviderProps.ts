@@ -4,9 +4,12 @@ import { ElementUIComponentSize } from "element-ui/types/component";
 import { ObjectLike } from "../../../types/object-like";
 import { GlobalCheckboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps";
 import { GlobalInputProps } from "../../input/src/inputProps";
+import { GlobalInputNumberProps } from "../../input-number/src/inputNumberProps";
 import { GlobalFormProps } from "../../form/src/formProps";
 import { GlobalPaginationProps } from "../../pagination/src/paginationProps";
 import { GlobalRadioGroupProps } from "../../radio-group/src/radioGroupProps";
+import { GlobalSelectProps } from "../../select/src/selectProps";
+import { GlobalSwitchProps } from "../../switch/src/switchProps";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
@@ -37,33 +40,29 @@ export type GlobalUploadProps = {
   httpRequest:/*  (...args: unknown[]) => unknown | */ Function
 }
 
-export type GlobalInputNumber = {
-  min: number;
-  max: number;
-  step: number;
-  stepStrictly: boolean;
-  precision: number;
-  size: ElementUIComponentSize;
-  controls: boolean;
-  controlsPosition: string;
-}
-
-export type GlobalSwitchProps = {
-  width: number;
-  activeIconClass: string;
-  inactiveIconClass: string;
-  activeText: string;
-  inactiveText: string;
-  activeValue: boolean | string | number;
-  inactiveValue: boolean | string | number;
-  activeColor: string;
-  inactiveColor: string;
-  validateEvent: boolean;
-}
-
 export const configProviderProps = {
+  radioGroup: {
+    type: Object as PropType<GlobalRadioGroupProps>,
+    default: empty
+  },
+  checkboxGroup: {
+    type: Object as PropType<GlobalCheckboxGroupProps>,
+    default: empty
+  },
   input: {
     type: Object as PropType<GlobalInputProps>,
+    default: empty
+  },
+  inputNumber: {
+    type: Object as PropType<GlobalInputNumberProps>,
+    default: empty
+  },
+  select: {
+    type: Object as PropType<GlobalSelectProps>,
+    default: empty
+  },
+  switch: {
+    type: Object as PropType<GlobalSwitchProps>,
     default: empty
   },
   form: {
@@ -84,22 +83,6 @@ export const configProviderProps = {
   },
   upload: {
     type: Object as PropType<GlobalUploadProps>,
-    default: empty
-  },
-  radioGroup: {
-    type: Object as PropType<GlobalRadioGroupProps>,
-    default: empty
-  },
-  checkboxGroup: {
-    type: Object as PropType<GlobalCheckboxGroupProps>,
-    default: empty
-  },
-  inputNumber: {
-    type: Object as PropType<GlobalInputNumber>,
-    default: empty
-  },
-  switch: {
-    type: Object as PropType<GlobalSwitchProps>,
     default: empty
   }
 }

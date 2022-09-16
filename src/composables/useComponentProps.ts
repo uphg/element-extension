@@ -27,7 +27,7 @@ export function useComponentProps<Props extends ObjectLike, GlobalProps extends 
   const globalProps = useGlobalProps<GlobalProps>(configPropertyName)
   const propNames = globalProps ? _propNames : [..._propNames, ...globalPropNames]
 
-  const createProps = handleProps && typeof handleProps === 'function'
+  const createProps = typeof handleProps === 'function'
     ? handleProps(props, globalProps)
     : () => ({ ...pick(props, propNames), ...withDefaultProps(props, globalProps, globalPropNames) }) as Props
   return { createProps, globalProps }

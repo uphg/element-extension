@@ -1,14 +1,17 @@
 import { h, ref, SetupContext } from "vue"
 import { Switch } from "element-ui"
-import { SwitchProps } from "./switchProps"
-import { GlobalSwitchProps } from "../../config-provider/src/configProviderProps"
+import { SwitchProps, GlobalSwitchProps } from "./switchProps"
 import { ElSwitch } from "../../../types/element-components"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 
 const propNames = ['value', 'disabled', 'name']
 const globalPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
 
-export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options?: UseComponentParamsOptions<SwitchProps, GlobalSwitchProps>) {
+export function useSwitch(
+  props: SwitchProps,
+  context: SetupContext<{}>,
+  options?: UseComponentParamsOptions<SwitchProps, GlobalSwitchProps>
+) {
   const { handleProps } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
 

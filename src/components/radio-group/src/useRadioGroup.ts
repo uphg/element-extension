@@ -4,8 +4,8 @@ import { ElRadioGroup } from "element-ui/types/radio-group"
 import { RadioGroupProps, GlobalRadioGroupProps } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 
-const propNames = ['value', 'disabled', 'options']
-const globalPropNames = ['size', 'textColor', 'fill']
+const propNames = ['value', 'disabled', 'options'] // el props
+const globalPropNames = ['size', 'textColor', 'fill'] // global el props
 
 export function useRadioGroup(
   props: RadioGroupProps,

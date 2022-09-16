@@ -1,23 +1,10 @@
 import { empty } from "../../../shared/_commonProps"
 import { ExtractPropTypes } from "vue"
 
+export type GlobalSwitchProps = ExtractPropTypes<typeof globalSwitchProps>
 export type SwitchProps = ExtractPropTypes<typeof switchProps>
 
-export const switchProps = {
-  value: {
-    type: [Boolean, String, Number],
-    default: false
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  name: {
-    type: String,
-    default: ''
-  },
-  id: String,
-
+export const globalSwitchProps = {
   // global props
   width: {
     type: Number,
@@ -59,4 +46,21 @@ export const switchProps = {
     type: Boolean,
     default: empty
   }
+}
+
+export const switchProps = {
+  value: {
+    type: [Boolean, String, Number],
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  name: {
+    type: String,
+    default: ''
+  },
+  id: String,
+  ...globalSwitchProps
 }
