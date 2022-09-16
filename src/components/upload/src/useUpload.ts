@@ -18,11 +18,10 @@ export function useUpload(
 ) {
   const { handleProps } = options || {}
   const { elUpload, setRef, clearFiles, abort, submit } = useElUpload()
-  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames, globalPropNames, handleProps })
+  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames: [...propNames, 'showFileList'], globalPropNames, handleProps })
 
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
-  const showFileList = computed(() => globalProps?.showFileList || props.showFileList)
 
   return {
     expose: {
@@ -40,11 +39,14 @@ export function useUpload(
       }
     },
     render: () => {
+      const uploadProps = createProps()
+      const showFileList = uploadProps.showFileList || globalProps?.showFileList || true
+      const listType = props.listType || globalProps?.showFileList || 'text'
       const uploadList = h(UploadList, {
         props: {
           disabled: uploadDisabled.value,
           files: uploadFiles.value,
-          listType: props.listType,
+          listType,
           handlePreview: props.onPreview
         },
         on: {
@@ -60,14 +62,15 @@ export function useUpload(
           }
         }
       })
+
       return h(Upload, {
         ref: setRef,
-        props:  {
-          ...createProps(),
-          showFileList: props.listType === 'picture-card' ? showFileList.value : false
+        props: {
+          ...uploadProps,
+          showFileList: listType === 'picture-card' ? showFileList : false
         },
       },
-        props.listType === 'picture-card'
+        listType === 'picture-card'
           ? [
               renderSlot(context, 'tip'),
               renderSlot(context, 'trigger'),
@@ -80,7 +83,7 @@ export function useUpload(
                   : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
               ),
               context.slots.tip?.(),
-              showFileList.value && uploadList
+              showFileList && uploadList
             ]
       )
     }

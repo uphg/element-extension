@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes } from "vue"
+import { empty } from "../../../shared/_commonProps"
 
 export type GlobalUploadProps = ExtractPropTypes<typeof globalUploadProps>
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
@@ -8,31 +9,44 @@ function noop() {}
 export const globalUploadProps = {
   action: {
     type: String,
-    required: true
+    // required: true
   },
   headers: {
     type: Object,
-    default() {
-      return {};
-    }
+    default: empty // {}
   },
-  multiple: Boolean,
-  data: Object,
+  multiple: {
+    type: Boolean,
+    default: empty
+  },
+  data: {
+    type: Object,
+    default: empty
+  },
   showFileList: {
     type: Boolean,
-    default: true
+    default: empty // true
   },
-  drag: Boolean,
-  accept: String,
+  drag: {
+    type: Boolean,
+    default: empty
+  },
+  accept: {
+    type: String,
+    default: empty
+  },
   listType: {
     type: String,
-    default: 'text' // text,picture,picture-card
+    default: empty // 'text' // text,picture,picture-card
   },
   autoUpload: {
     type: Boolean,
-    default: true
+    default: empty // true
   },
-  httpRequest: Function,
+  httpRequest: {
+    type: Function,
+    default: empty
+  },
 }
 
 export const uploadProps = {

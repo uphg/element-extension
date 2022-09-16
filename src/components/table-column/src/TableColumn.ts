@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import { tableColumnProps } from "./tableColumnProps"
 import { useTableColumn } from "./useTableColumn"
+import { ElementPartComponent } from "../../../types"
 
 const ETableColumn = defineComponent({
   name: 'ETableColumn',
@@ -11,5 +12,5 @@ const ETableColumn = defineComponent({
   }
 })
 
-export default ETableColumn
+export default ETableColumn as ElementPartComponent<typeof ETableColumn>
 

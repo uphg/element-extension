@@ -27,6 +27,7 @@
   }
 }
 .container {
+  width: 100%;
   flex: 1;
   padding: 2.5rem 1.5rem;
 }

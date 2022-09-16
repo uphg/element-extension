@@ -46,6 +46,7 @@ export default {
   border-top: 1px solid rgba(60, 60, 60, .12);
   color: #fff;
   overflow-x: auto;
+  background-color: #282c34;
 }
 
 :deep(.code-source) {
