@@ -1,21 +1,20 @@
 import { h, ref, SetupContext } from "vue"
 import { RadioGroup, RadioButton, Radio as _Radio } from "element-ui"
 import { ElRadioGroup } from "element-ui/types/radio-group"
-import { RadioGroupProps } from "./radioGroupProps"
-import { GlobalRadioGroup } from "../../config-provider/src/configProviderProps"
+import { RadioGroupProps, GlobalRadioGroupProps } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 
-const propNames = ['value', 'disabled', 'border', 'withButton', 'options']
+const propNames = ['value', 'disabled', 'options']
 const globalPropNames = ['size', 'textColor', 'fill']
 
 export function useRadioGroup(
   props: RadioGroupProps,
   context: SetupContext<{}>,
-  options: UseComponentParamsOptions<RadioGroupProps, GlobalRadioGroup>
+  options?: UseComponentParamsOptions<RadioGroupProps, GlobalRadioGroupProps>
 ) {
   const { handleProps } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
-  const createProps = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
+  const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
   const setRef = ((el: ElRadioGroup) => elRadioGroup.value = el) as unknown as string
 
   const input = (value: string | number | boolean) => {
@@ -26,7 +25,8 @@ export function useRadioGroup(
   }
   const on = { input, change }
 
-  const Radio = props.withButton ? RadioButton : _Radio
+  const Radio = (props.withButton || globalProps?.withButton) ? RadioButton : _Radio
+  const withBorder = (props.withBorder || globalProps?.withBorder)
 
   return {
     render: () => h(RadioGroup, {
@@ -38,7 +38,7 @@ export function useRadioGroup(
         label: item.value,
         name: item.name,
         disabled: item.disabled,
-        border: item.border || props.border
+        border: item.border || withBorder
       }
     }, [item.label as string])))
   }

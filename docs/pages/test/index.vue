@@ -1,10 +1,10 @@
 <template>
   <div class="test">
-    <!-- <TestConfig /> -->
+    <TestConfig />
     <!-- <TestTransition /> -->
     <!-- <TestUpload /> -->
     <!-- <TestSelect /> -->
-    <TestInput />
+    <!-- <TestInput /> -->
   </div>
 </template>
 

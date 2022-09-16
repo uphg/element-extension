@@ -1,10 +1,9 @@
-import { ElementUIComponentSize } from "element-ui/types/component"
 import { ExtractPropTypes, PropType } from "vue"
 import { empty,commonProps } from '../../../shared/_commonProps'
 import { InputType } from '../../../types/input'
 
-export type InputProps = ExtractPropTypes<typeof inputProps>
 export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { maxlength?: number; }
+export type InputProps = ExtractPropTypes<typeof inputProps>
 
 export const globalInputProps = {
   clearable: {
@@ -16,7 +15,7 @@ export const globalInputProps = {
     default: empty
   },
   size: {
-    type: commonProps.size,
+    type: commonProps.size.type,
     default: empty
   },
   autosize: {
@@ -35,14 +34,15 @@ export const inputProps = {
   form: commonProps.form,
   disabled: commonProps.disabled,
   readonly: commonProps.readonly,
-
   autocomplete: commonProps.autocomplete,
   validateEvent: commonProps.validateEvent,
   suffixIcon: commonProps.suffixIcon,
   prefixIcon: commonProps.prefixIcon,
   label: String as PropType<string>,
   showPassword: commonProps.showPassword,
-
   tabindex: commonProps.tabindex,
+  ...globalInputProps,
+
+  // customize props
   exclude: commonProps.exclude,
 }

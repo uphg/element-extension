@@ -1,24 +1,12 @@
 import { empty } from "../../../shared/_commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
+export type GlobalPaginationProps = ExtractPropTypes<typeof globalPaginationProps>
 export type PaginationProps = ExtractPropTypes<typeof paginationProps>
 
-export const paginationProps = {
-  pageSize: {
-    type: Number as PropType<number>,
-    default: 10
-  },
-  total: Number as PropType<number>,
-  pageCount: Number as PropType<number>,
-  currentPage: {
-    type: Number as PropType<number>,
-    default: 1
-  },  
-  disabled: Boolean as PropType<boolean>,
-
-  // global props
+export const globalPaginationProps = {
   small: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    type: Boolean as PropType<boolean>,
     default: empty
   },
   background: {
@@ -52,5 +40,20 @@ export const paginationProps = {
   hideOnSinglePage: {
     type: Boolean as PropType<boolean>,
     default: empty
+  }
+}
+
+export const paginationProps = {
+  pageSize: {
+    type: Number as PropType<number>,
+    default: 10
   },
+  total: Number as PropType<number>,
+  pageCount: Number as PropType<number>,
+  currentPage: {
+    type: Number as PropType<number>,
+    default: 1
+  },  
+  disabled: Boolean as PropType<boolean>,
+  ...globalPaginationProps
 }

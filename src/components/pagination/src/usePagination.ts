@@ -1,7 +1,6 @@
 import { Pagination } from "element-ui";
 import { h, SetupContext } from "vue";
-import { PaginationProps } from "./paginationProps";
-import { GlobalPaginationProps } from "../../../components/config-provider/src/configProviderProps";
+import { PaginationProps, GlobalPaginationProps } from "./paginationProps";
 import { generateEmits } from "../../../utils/generateEmits";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 
@@ -15,7 +14,7 @@ export function usePagination(
   options?: UseComponentParamsOptions<PaginationProps, GlobalPaginationProps>
 ) {
   const { handleProps } = options || {}
-  const createProps = useComponentProps(props, 'pagination', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames, handleProps })
   const on = generateEmits(context.emit, emitNames)
 
   return {

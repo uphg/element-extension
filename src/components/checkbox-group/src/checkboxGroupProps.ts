@@ -31,7 +31,7 @@ export const globalCheckboxGroupProps = {
     default: empty
   },
   size: {
-    type: commonProps.size,
+    type: commonProps.size.type,
     default: empty
   },
   textColor: {
@@ -42,17 +42,24 @@ export const globalCheckboxGroupProps = {
     type: String,
     default: empty
   },
+
+  // customize props
+  withBorder: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  withButton: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  }
 }
 
 export const checkboxGroupProps = {
   value: Array,
   disabled: commonProps.disabled,
-
-  // global props
   ...globalCheckboxGroupProps,
 
-  border: Boolean as PropType<boolean>,
-  withButton: Boolean as PropType<boolean>,
+  // customize props
   options: {
     type: [Array, Object] as PropType<CheckboxGroupOptions>,
     default: () => []

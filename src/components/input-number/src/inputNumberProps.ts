@@ -1,9 +1,10 @@
 import { ExtractPropTypes } from "vue";
 import { empty } from "../../../shared/_commonProps";
 
+export type GlobalInputNumberProps = ExtractPropTypes<typeof globalInputNumberProps>
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
 
-export const inputNumberProps = {
+export const globalInputNumberProps = {
   step: {
     type: Number,
     default: empty
@@ -20,11 +21,10 @@ export const inputNumberProps = {
     type: Number,
     default: empty
   },
-  value: {
-    type: [Number, Boolean, String],
-    default: () => ({})
+  precision: {
+    type: Number,
+    default: empty
   },
-  disabled: Boolean,
   size: {
     type: String,
     default: empty
@@ -36,12 +36,17 @@ export const inputNumberProps = {
   controlsPosition: {
     type: String,
     default: empty
+  }
+}
+
+export const inputNumberProps = {
+  value: {
+    type: [Number, Boolean, String],
+    default: () => ({})
   },
+  disabled: Boolean,
   name: String,
   label: String,
   placeholder: String,
-  precision: {
-    type: Number,
-    default: empty
-  }
+  ...globalInputNumberProps
 }

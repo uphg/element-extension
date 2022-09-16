@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import { formProps } from './formProps'
 import { useForm } from './useForm'
+import { ElementPartComponent } from '../../../types'
 
 const EForm = defineComponent({
   name: 'EForm',
@@ -12,4 +13,4 @@ const EForm = defineComponent({
   }
 })
 
-export default EForm
+export default EForm as ElementPartComponent<typeof EForm>

@@ -17,7 +17,5 @@ export function useConfigProvider(props: ConfigProviderProps, context?: SetupCon
     provideProps[propName] = tempProps
     provide<ObjectLike>(item.key, tempProps)
   })
-  console.log('provideProps')
-  console.log(provideProps)
   return context && (() => context.slots.default?.())
 }

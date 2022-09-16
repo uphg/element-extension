@@ -18,117 +18,117 @@ export const configPropertyMap = {
   radioGroup: {
     key: globalRadioGroupKey,
     default: {
-      size: empty,
-      textColor: empty,
-      fill: empty,
+      // size: empty,
+      // textColor: empty,
+      // fill: empty,
     }
   },
   checkboxGroup: {
     key: globalCheckboxGroup,
     default: {
-      min: empty,
-      max: empty,
-      size: empty,
-      textColor: empty,
-      fill: empty,
+      // min: empty,
+      // max: empty,
+      // size: empty,
+      // textColor: empty,
+      // fill: empty,
     }
   },
   input: {
     key: globalInputKey,
     default: {
-      clearable: empty, // false
-      showWordLimit: empty, // false
-      autosize: empty, // false
-      size: empty,
-      maxlength: empty,
+      // clearable: empty, // false
+      // showWordLimit: empty, // false
+      // autosize: empty, // false
+      // size: empty,
+      // maxlength: empty,
     }
   },
   inputNumber: {
     key: globalInputNumber,
     default: {
-      min: empty,
-      max: empty,
-      step: empty,
-      stepStrictly: empty,
-      precision: empty,
-      size: empty,
-      controls: empty,
-      controlsPosition: empty
+      // min: empty,
+      // max: empty,
+      // step: empty,
+      // stepStrictly: empty,
+      // precision: empty,
+      // size: empty,
+      // controls: empty,
+      // controlsPosition: empty
     }
   },
   switch: {
     key: globalSwitchKey,
     default: {
-      width: empty,
-      activeIconClass: empty,
-      inactiveIconClass: empty,
-      activeText: empty,
-      inactiveText: empty,
-      activeValue: empty,
-      inactiveValue: empty,
-      activeColor: empty,
-      inactiveColor: empty,
-      validateEvent: empty
+      // width: empty,
+      // activeIconClass: empty,
+      // inactiveIconClass: empty,
+      // activeText: empty,
+      // inactiveText: empty,
+      // activeValue: empty,
+      // inactiveValue: empty,
+      // activeColor: empty,
+      // inactiveColor: empty,
+      // validateEvent: empty
     }
   },
   upload: {
     key: globalUploadKey,
     default: {
-      action: empty,
-      headers: empty,
-      multiple: empty,
-      data: empty,
-      showFileList: empty,
-      drag: empty,
-      accept: empty,
-      listType: empty,
-      autoUpload: empty,
-      httpRequest: empty
+      // action: empty,
+      // headers: empty,
+      // multiple: empty,
+      // data: empty,
+      // showFileList: empty,
+      // drag: empty,
+      // accept: empty,
+      // listType: empty,
+      // autoUpload: empty,
+      // httpRequest: empty
     }
   },
   form: {
     key: globalFormKey,
     default: {
-      inline: empty, // false
-      labelPosition: empty, // 'right'
-      labelWidth: empty,
-      inlineMessage: empty,
-      size: empty
+      // inline: empty, // false
+      // labelPosition: empty, // 'right'
+      // labelWidth: empty,
+      // inlineMessage: empty,
+      // size: empty
     }
   },
   table: {
     key: globalTableKey,
     default: {
-      maxHeight: empty,
-      stripe: empty, // false
-      border: empty, // false
-      size: empty,
-      fit: empty, // true
-      showHeader: empty, // true
-      highlightCurrentRow: empty // false
+      // maxHeight: empty,
+      // stripe: empty, // false
+      // border: empty, // false
+      // size: empty,
+      // fit: empty, // true
+      // showHeader: empty, // true
+      // highlightCurrentRow: empty // false
     }
   },
   tableColumn: {
     key: globalTableColumnKey,
     default: {
-      stripe: empty,
-      border: empty,
-      size: empty,
-      showOverflowTooltip: empty
+      // stripe: empty,
+      // border: empty,
+      // size: empty,
+      // showOverflowTooltip: empty
     }
   },
   pagination: {
     key: globalPaginationKey,
     default: {
-      small: empty, // false
-      background: empty, // false
-      pagerCount: empty, // 7
-      layout: empty, // 'prev, pager, next, jumper, ->, total'
-      pageSizes: empty, // [10, 20, 30, 40, 50, 100]
-      popperClass: empty,
-      prevText: empty,
-      nextText: empty,
-      hideOnSinglePage: empty,
+      // small: empty, // false
+      // background: empty, // false
+      // pagerCount: empty, // 7
+      // layout: empty, // 'prev, pager, next, jumper, ->, total'
+      // pageSizes: empty, // [10, 20, 30, 40, 50, 100]
+      // popperClass: empty,
+      // prevText: empty,
+      // nextText: empty,
+      // hideOnSinglePage: empty,
     }
   },
 }

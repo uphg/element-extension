@@ -2,19 +2,13 @@ import { empty } from "../../../shared/_commonProps";
 import { ExtractPropTypes, PropType } from "vue"
 import { ElementUIComponentSize } from "element-ui/types/component";
 import { ObjectLike } from "../../../types/object-like";
-
 import { GlobalCheckboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps";
 import { GlobalInputProps } from "../../input/src/inputProps";
+import { GlobalFormProps } from "../../form/src/formProps";
+import { GlobalPaginationProps } from "../../pagination/src/paginationProps";
+import { GlobalRadioGroupProps } from "../../radio-group/src/radioGroupProps";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
-
-export type GlobalFormProps = {
-  inline: boolean;
-  labelPosition: 'right' | 'left' | 'top';
-  labelWidth: string; 
-  inlineMessage: boolean;
-  size: ElementUIComponentSize
-}
 
 export type GlobalTableProps = {
   maxHeight: string | number;
@@ -30,18 +24,6 @@ export type GlobalTableColumnProps = {
   showOverflowTooltip: boolean;
 }
 
-export type GlobalPaginationProps = {
-  small: boolean;
-  background: boolean;
-  pagerCount: number;
-  layout: string;
-  pageSizes: number[];
-  popperClass: string;
-  prevText: string;
-  nextText: string;
-  hideOnSinglePage: boolean;
-}
-
 export type GlobalUploadProps = {
   action: string,
   headers: ObjectLike,
@@ -54,20 +36,6 @@ export type GlobalUploadProps = {
   autoUpload: boolean,
   httpRequest:/*  (...args: unknown[]) => unknown | */ Function
 }
-
-export type GlobalRadioGroup = {
-  size: ElementUIComponentSize;
-  textColor: string;
-  fill: string;
-}
-
-// export type GlobalCheckboxGroup = {
-//   min: number;
-//   max: number;
-//   size: ElementUIComponentSize;
-//   textColor: string;
-//   fill: string;
-// }
 
 export type GlobalInputNumber = {
   min: number;
@@ -119,7 +87,7 @@ export const configProviderProps = {
     default: empty
   },
   radioGroup: {
-    type: Object as PropType<GlobalRadioGroup>,
+    type: Object as PropType<GlobalRadioGroupProps>,
     default: empty
   },
   checkboxGroup: {

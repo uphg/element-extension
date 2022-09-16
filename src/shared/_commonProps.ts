@@ -27,7 +27,10 @@ export const commonProps = {
     type: Boolean as PropType<boolean>,
     default: false
   },
-  size: String as PropType<string>,
+  size: {
+    type: String as PropType<ElementUIComponentSize>,
+    default: empty
+  },
   disabled: Boolean as PropType<boolean>,
   showPassword: {
     type: Boolean as PropType<boolean>,
@@ -74,11 +77,26 @@ export const commonProps = {
   minlength: String as PropType<string>,
 
   // ElForm
-  label: String as PropType<string>,
-  labelWidth: String as PropType<string>,
-  labelPosition: String as PropType<string>,
-  inline: Boolean as PropType<boolean>,
-  inlineMessage: Boolean as PropType<boolean>,
+  label: {
+    type: String as PropType<string>,
+    default: ''
+  },
+  labelWidth: {
+    type: String as PropType<string>,
+    default: ''
+  },
+  labelPosition: {
+    type: String as PropType<string>,
+    default: ''
+  },
+  inline: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  inlineMessage: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
   prop: String as PropType<string>,
   required: {
     type: Boolean as PropType<boolean>,

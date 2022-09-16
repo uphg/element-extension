@@ -1,23 +1,18 @@
-import { h, ref, SetupContext } from "vue"
+import { h, SetupContext } from "vue"
 import { Input } from "element-ui"
-import { useOnInput } from "../../../composables/useOnInput";
-import { ElInput } from "element-ui/types/input";
 import { InputProps, GlobalInputProps } from "./inputProps";
+import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
-import pick from "../../../utils/pick";
 import { renderSlots } from '../../../utils/renderSlot'
 import { useElInput } from "../../../composables/useElInput";
 import { ObjectLike } from "../../../types/object-like";
+import pick from "../../../utils/pick";
 
 export interface UseInputOptins {
-  handleProps: (props: InputProps, globalProps?: GlobalInputProps) => ObjectLike
-  handleAttrs: (props: InputProps, globalProps?: GlobalInputProps) => ObjectLike
-}
-
-export interface handleProps<Props, GlobalProps> {
-  (props: Props, globalProps?: GlobalProps): Props
+  handleProps: (props: InputProps, globalProps?: GlobalInputProps) => () => ObjectLike
+  handleAttrs: (props: InputProps, globalProps?: GlobalInputProps) => () => ObjectLike
 }
 
 const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
@@ -29,29 +24,25 @@ const globalAttrNames = ['maxlength']
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
 const slotNames = ['suffix', 'prefix', 'prepend', 'append']
 
-export function useInputProps(props: InputProps, context: SetupContext<{}>, options: UseInputOptins) {
-  const { handleProps, handleAttrs } = options
+export function useInputProps(props: InputProps, context: SetupContext<{}>, options?: UseInputOptins) {
+  const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
   const propNames = globalInputProps ? _propNames : [..._propNames, ...globalPropNames]
   const attrNames = globalInputProps ? _attrNames : [..._attrNames, ...globalAttrNames]
 
   const createProps = handleProps
-    ? () => handleProps(props, globalInputProps)
-    : globalInputProps
-      ? () => ({
-          ...pick(props, propNames),
-          ...withDefaultProps(props, globalInputProps, globalPropNames)
-        })
-      : () => pick(props, propNames)
+    ? handleProps(props, globalInputProps)
+    : () => ({
+        ...pick(props, propNames),
+        ...withDefaultProps(props, globalInputProps, globalPropNames)
+      })
 
   const createAttrs = handleAttrs
-    ? () => handleAttrs(props, globalInputProps)
-    : globalInputProps
-      ? () => ({
-          ...pick(context.attrs, attrNames),
-          ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
-        })
-      : () => pick(context.attrs, attrNames)
+    ? handleAttrs(props, globalInputProps)
+    : () => ({
+        ...pick(context.attrs, attrNames),
+        ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
+      })
 
   return {
     createProps,
@@ -60,27 +51,21 @@ export function useInputProps(props: InputProps, context: SetupContext<{}>, opti
   }
 }
 
-export function useInput(props: InputProps, context: SetupContext<{}>, options: UseInputOptins) {
-  const { elInput, focus, blur, select } = useElInput()
+export function useInput(props: InputProps, context: SetupContext<{}>, options?: UseInputOptins) {
+  const { elInput, setRef, focus, blur, select } = useElInput()
 
-  const onInput = useOnInput(props, context)
+  const input = useOnInput(props, context)
   const otherOn = generateEmits(context.emit, otherEmitNames)
-  const on = { input: onInput, ...otherOn }
+  const on = { input, ...otherOn }
 
   const { createProps, createAttrs } = useInputProps(props, context, options)
 
   const expose = { focus, blur, select, get elInput() { return elInput.value } }
 
-  const setRef = function(el: ElInput) {
-    elInput.value = el
-  } as unknown as string
-
   return {
     expose,
-    render() {
-      return h(Input, { ref: setRef, props: createProps(), attrs: createAttrs(), on },
-        renderSlots(context, slotNames)
-      )
-    }
+    render: () => h(Input, { ref: setRef, props: createProps(), attrs: createAttrs(), on },
+      renderSlots(context, slotNames)
+    )
   }
 }

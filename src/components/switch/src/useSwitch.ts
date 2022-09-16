@@ -12,7 +12,7 @@ export function useSwitch(props: SwitchProps, context: SetupContext<{}>, options
   const { handleProps } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
 
-  const createProps = useComponentProps(props, 'switch', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'switch', { propNames, globalPropNames, handleProps })
   
   const setRef = ((el: ElSwitch) => elSwitch.value = el) as unknown as string
   const input = (value: string | number | boolean) => {

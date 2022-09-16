@@ -15,7 +15,7 @@ export type UseComponentParamsOptions<Props, GlobalProps> = {
 }
 
 export interface handleProps<Props, GlobalProps> {
-  (props: Props, globalProps?: GlobalProps): Props
+  (props: Props, globalProps?: GlobalProps): () => Props
 }
 
 export function useComponentProps<Props extends ObjectLike, GlobalProps extends ObjectLike>(
@@ -28,7 +28,7 @@ export function useComponentProps<Props extends ObjectLike, GlobalProps extends 
   const propNames = globalProps ? _propNames : [..._propNames, ...globalPropNames]
 
   const createProps = handleProps && typeof handleProps === 'function'
-    ? () => handleProps(props, globalProps)
+    ? handleProps(props, globalProps)
     : () => ({ ...pick(props, propNames), ...withDefaultProps(props, globalProps, globalPropNames) }) as Props
-  return createProps
+  return { createProps, globalProps }
 }

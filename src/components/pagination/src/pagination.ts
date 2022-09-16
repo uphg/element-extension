@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import { paginationProps } from "./paginationProps"
 import { usePagination } from "./usePagination"
+import { ElementPartComponent } from "../../../types"
 
 const EPagination = defineComponent({
   name: 'EPagination',
@@ -13,4 +14,4 @@ const EPagination = defineComponent({
 })
 
 
-export default EPagination
+export default EPagination as ElementPartComponent<typeof EPagination>
