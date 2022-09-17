@@ -10,6 +10,7 @@ export function useElSelect() {
     blur() {
       elSelect.value?.blur()
     },
+    setRef: ((el: ElSelect) => elSelect.value = el) as unknown as string,
     elSelect
   }
 }

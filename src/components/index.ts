@@ -1,10 +1,14 @@
 import { VueConstructor } from 'vue/types/vue'
+
 import { RadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
 import { CheckboxGroup, checkboxGroupProps, useCheckboxGroup } from './checkbox-group'
 import { Input, inputProps, useInput } from './input'
 import { InputNumber, inputNumberProps, useInputNumber } from './input-number'
 import { Select, selectProps, useSelect } from './select'
+import { Cascader, cascaderProps, useCascader } from './cascader'
 import { Switch, switchProps, useSwitch } from './switch'
+import { Slider, sliderProps, useSlider } from './slider'
+import { Upload, uploadProps, useUpload } from './upload'
 import { Form, formProps, useForm } from './form'
 import { FormItem, formItemProps, useFormItem } from './form-item'
 import { Formulate, formulateProps, useFormulate } from './formulate'
@@ -12,10 +16,9 @@ import { Table, tableProps, useTable } from './table'
 import { TableColumn, tableColumnProps, useTableColumn } from './table-column'
 import { Pagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup } from './staggered-transition-group/index'
-import { Upload, uploadProps, useUpload } from './upload'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
-const components = [RadioGroup, CheckboxGroup, Input, InputNumber, Select, Switch, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+const components = [RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
@@ -30,7 +33,10 @@ export {
   Input,
   InputNumber,
   Select,
+  Cascader,
   Switch,
+  Slider,
+  Upload,
   Form,
   FormItem,
   Formulate,
@@ -38,7 +44,6 @@ export {
   TableColumn,
   Pagination,
   StaggeredTransitionGroup,
-  Upload,
   ConfigProvider,
 
   useRadioGroup,
@@ -46,14 +51,16 @@ export {
   useInput,
   useInputNumber,
   useSelect,
+  useCascader,
   useSwitch,
+  useSlider,
+  useUpload,
   useForm,
   useFormItem,
   useFormulate,
   useTable,
   useTableColumn,
   usePagination,
-  useUpload,
   useConfigProvider,
 
   radioGroupProps,
@@ -61,13 +68,15 @@ export {
   inputProps,
   inputNumberProps,
   selectProps,
+  cascaderProps,
   switchProps,
+  sliderProps,
+  uploadProps,
   formProps,
   formItemProps,
   formulateProps,
   tableProps,
   tableColumnProps,
   paginationProps,
-  uploadProps,
   configProviderProps,
 }
