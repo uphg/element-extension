@@ -16,15 +16,15 @@ export type RadioGroupOptions = Array<RadioGroupOption>
 
 export const globalRadioGroupProps = {
   size: {
-    type: commonProps.size.type,
+    type: [commonProps.size.type, undefined],
     default: empty
   },
   textColor: {
-    type: String,
+    type: [String, undefined],
     default: empty
   },
   fill: {
-    type: String,
+    type: [String, undefined],
     default: empty
   },
 

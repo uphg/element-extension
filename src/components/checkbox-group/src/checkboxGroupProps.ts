@@ -35,11 +35,11 @@ export const globalCheckboxGroupProps = {
     default: empty
   },
   textColor: {
-    type: String,
+    type: [String, undefined],
     default: empty
   },
   fill: {
-    type: String,
+    type: [String, undefined],
     default: empty
   },
 

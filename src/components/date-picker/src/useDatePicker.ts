@@ -1,6 +1,6 @@
 import { h, ref, SetupContext } from "vue"
 import { DatePicker as _DatePicker, TimeSelect, TimePicker } from "element-ui"
-import { DatePickerProps, TimePickerProps, TimeSelectProps, GlobalDateProps, PublicDateProps } from "./dateProps"
+import { GlobalDateProps, PublicDateProps } from "./dateProps"
 import { useComponentProps } from "../../../composables/useComponentProps"
 import { configPropertyMap } from "src/shared/configPropertyMap"
 import { ElDatePicker } from "element-ui/types/date-picker"
