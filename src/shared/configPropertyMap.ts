@@ -9,12 +9,17 @@ export const globalSelectKey = Symbol('config-select')
 export const globalCascaderKey = Symbol('config-select')
 export const globalSwitchKey = Symbol('config-switch')
 export const globalSliderKey = Symbol('config-slider')
+export const globalDatePickerKey = Symbol('config-date-picker')
+export const globalTimePickerKey = Symbol('config-time-picker')
+export const globalTimeSelectKey = Symbol('config-time-select')
+
 export const globalUploadKey = Symbol('config-upload')
 export const globalFormKey = Symbol('config-form')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
 
+const publicDatePropNames = ['size', 'editable', 'clearable', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'format', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'pickerOptions', 'prefixIcon', 'clearIcon', 'validateEvent']
 
 export const configPropertyMap = {
   radioGroup: {
@@ -48,6 +53,18 @@ export const configPropertyMap = {
   slider: {
     key: globalSliderKey,
     propNames: ['min', 'max', 'step', 'showInput', 'showInputControls', 'inputSize', 'showStops', 'showTooltip', 'formatTooltip', 'range', 'vertical', 'height', 'label', 'debounce', 'tooltipClass', 'marks']
+  },
+  datePicker: {
+    key: globalDatePickerKey,
+    propNames: publicDatePropNames
+  },
+  timePicker: {
+    key: globalTimePickerKey,
+    propNames: publicDatePropNames
+  },
+  timeSelect: {
+    key: globalTimeSelectKey,
+    propNames: publicDatePropNames
   },
   upload: {
     key: globalUploadKey,

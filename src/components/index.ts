@@ -8,6 +8,7 @@ import { Select, selectProps, useSelect } from './select'
 import { Cascader, cascaderProps, useCascader } from './cascader'
 import { Switch, switchProps, useSwitch } from './switch'
 import { Slider, sliderProps, useSlider } from './slider'
+import { DatePicker, datePickerProps, TimePicker, timePickerProps, TimeSelect, timeSelectProps, useDatePicker } from './date-picker'
 import { Upload, uploadProps, useUpload } from './upload'
 import { Form, formProps, useForm } from './form'
 import { FormItem, formItemProps, useFormItem } from './form-item'
@@ -36,6 +37,9 @@ export {
   Cascader,
   Switch,
   Slider,
+  DatePicker,
+  TimePicker,
+  TimeSelect,
   Upload,
   Form,
   FormItem,
@@ -54,6 +58,7 @@ export {
   useCascader,
   useSwitch,
   useSlider,
+  useDatePicker,
   useUpload,
   useForm,
   useFormItem,
@@ -71,6 +76,9 @@ export {
   cascaderProps,
   switchProps,
   sliderProps,
+  datePickerProps,
+  timePickerProps,
+  timeSelectProps,
   uploadProps,
   formProps,
   formItemProps,
