@@ -6,15 +6,16 @@ import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from '../../../utils/renderSlot'
 import { useElSelect } from "../../../composables/useElSelect"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
+import { ObjectLike } from "../../../types/object-like"
 
 const propNames = ['name', 'id', 'value', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
 const globalPropNames = ['valueKey', 'size', 'multiple', 'multipleLimit', 'clearable', 'popperClass', 'popperAppendToBody']
 const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
 
-export function useSelect(
-  props: SelectProps,
+export function useSelect<T extends ObjectLike>(
+  props: SelectProps | T,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<SelectProps, GlobalSelectProps>
+  options?: UseComponentParamsOptions<SelectProps | ObjectLike, GlobalSelectProps>
 ) {
   const { handleProps } = options || {}
   const { elSelect, setRef, focus, blur } = useElSelect()

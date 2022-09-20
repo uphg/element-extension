@@ -1,7 +1,7 @@
 import { h, ref, SetupContext } from "vue";
 import { Checkbox as _Checkbox, CheckboxButton, CheckboxGroup } from "element-ui";
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group";
-import { CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps";
+import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 import { ObjectLike } from "../../../types/object-like";
 
@@ -11,7 +11,7 @@ const globalPropNames = ['min', 'max', 'size', 'fill', 'textColor']
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<CheckboxGroupProps, GlobalCheckboxGroupProps>
+  options?: UseComponentParamsOptions<CheckboxGroupProps | ObjectLike, GlobalCheckboxGroupProps>
 ) {
   const { handleProps } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)
@@ -33,7 +33,7 @@ export function useCheckboxGroup<T extends ObjectLike>(
       ref: setRef,
       props: createProps(),
       on: { input, change }
-    }, (props as CheckboxGroupProps).options.map((item) => h(Checkbox, {
+    }, props.options?.map((item: CheckboxGroupOption) => h(Checkbox, {
       props: {
         label: item.value,
         name: item.name,

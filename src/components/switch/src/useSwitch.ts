@@ -3,14 +3,15 @@ import { Switch } from "element-ui"
 import { SwitchProps, GlobalSwitchProps } from "./switchProps"
 import { ElSwitch } from "../../../types/element-components"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
+import { ObjectLike } from "../../../types/object-like"
 
 const propNames = ['value', 'disabled', 'name']
 const globalPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
 
-export function useSwitch(
-  props: SwitchProps,
+export function useSwitch<T extends ObjectLike>(
+  props: SwitchProps | T,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<SwitchProps, GlobalSwitchProps>
+  options?: UseComponentParamsOptions<SwitchProps | ObjectLike, GlobalSwitchProps>
 ) {
   const { handleProps } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)

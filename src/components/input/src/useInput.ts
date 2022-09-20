@@ -11,20 +11,20 @@ import { ObjectLike } from "../../../types/object-like";
 import pick from "../../../utils/pick";
 
 export interface UseInputOptins {
-  handleProps: (props: InputProps, globalProps?: GlobalInputProps) => () => ObjectLike
-  handleAttrs: (props: InputProps, globalProps?: GlobalInputProps) => () => ObjectLike
+  handleProps: (props: InputProps | ObjectLike, globalProps?: GlobalInputProps) => () => ObjectLike
+  handleAttrs: (props: InputProps | ObjectLike, globalProps?: GlobalInputProps) => () => ObjectLike
 }
 
-const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex']
-const globalPropNames = ['clearable', 'showWordLimit', 'autosize','size']
+const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
+const globalPropNames = ['clearable', 'showWordLimit', 'autosize', 'size', 'suffixIcon', 'prefixIcon']
 
-const _attrNames = ['placeholder', 'name', 'readonly', 'step', 'autofocus', 'form', 'rows', 'minlength', 'max', 'min']
+const _attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
 const globalAttrNames = ['maxlength']
 
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
 const slotNames = ['suffix', 'prefix', 'prepend', 'append']
 
-export function useInputProps(props: InputProps, context: SetupContext<{}>, options?: UseInputOptins) {
+export function useInputProps(props: InputProps | ObjectLike, context: SetupContext<{}>, options?: UseInputOptins) {
   const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
   const propNames = globalInputProps ? _propNames : [..._propNames, ...globalPropNames]
@@ -51,7 +51,7 @@ export function useInputProps(props: InputProps, context: SetupContext<{}>, opti
   }
 }
 
-export function useInput(props: InputProps, context: SetupContext<{}>, options?: UseInputOptins) {
+export function useInput<T extends ObjectLike>(props: InputProps | T, context: SetupContext<{}>, options?: UseInputOptins) {
   const { elInput, setRef, focus, blur, select } = useElInput()
 
   const input = useOnInput(props, context)

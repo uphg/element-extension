@@ -5,16 +5,17 @@ import { useElCascader } from "../../../composables/useElCascader"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from "../../../utils/renderSlot"
+import { ObjectLike } from "../../../types/object-like"
 
 const propNames = ['value', 'placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
 const globalPropNames = ['options', 'props', 'size', 'clearable', 'popperClass', 'separator', 'showAllLevels', 'collapseTags']
 
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
 
-export function useCascader(
-  props: CascaderProps,
+export function useCascader<T extends ObjectLike>(
+  props: CascaderProps | T,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<CascaderProps, GlobalCascaderProps>
+  options?: UseComponentParamsOptions<CascaderProps | ObjectLike, GlobalCascaderProps>
 ) {
   const { handleProps } = options || {}
   const { elCascader, setRef, getCheckedNodes } = useElCascader()

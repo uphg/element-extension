@@ -7,14 +7,14 @@ import pick from "../utils/pick";
 type ComponentPropsOptions<Props, GlobalProps> = {
   propNames: string[];
   globalPropNames: string[];
-  handleProps?: handleProps<Props, GlobalProps>
+  handleProps?: HandleProps<Partial<Props>, GlobalProps>
 }
 
 export type UseComponentParamsOptions<Props, GlobalProps> = {
-  handleProps: handleProps<Props, GlobalProps>
+  handleProps: HandleProps<Props, GlobalProps>
 }
 
-export interface handleProps<Props, GlobalProps> {
+export interface HandleProps<Props, GlobalProps> {
   (props: Props, globalProps?: GlobalProps): () => Props
 }
 

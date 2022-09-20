@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { commonProps, elFormItemProps } from "../../../shared/_commonProps";
+import { commonProps, elFormItemProps, empty } from "../../../shared/_commonProps";
 
 export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
@@ -17,6 +17,7 @@ export const formItemBaseProps = {
   clearable: commonProps.clearable,
   size: commonProps.size,
   disabled: commonProps.disabled,
+  readonly: commonProps.readonly,
   showPassword: commonProps.showPassword,
   showWordLimit: commonProps.showWordLimit,
   validateEvent: commonProps.validateEvent,
@@ -29,55 +30,65 @@ export const formItemBaseProps = {
   format: commonProps.format,
   pickerOptions: commonProps.pickerOptions,
 
-  // html attrs
-  // id: String as PropType<string>,
-  // autocomplete: {
-  //   type: String as PropType<string>,
-  //   default: 'off'
-  // },
-  // resize: String as PropType<string>,
-  // tabindex: String as PropType<string>,
-  // placeholder: String as PropType<string>,
-  // name: String as PropType<string>,
-  // readonly: Boolean as PropType<boolean>,
-  // max: Number as PropType<number>,
-  // min: Number as PropType<number>,
-  // step: {
-  //   type: Number as PropType<number>,
-  //   default: 1 // input-number & slider
-  // },
-  // autofocus: String as PropType<string>,
-  // form: String as PropType<string>,
-  // rows: String as PropType<string>,
-  // autosize: {
-  //   type: [Boolean, Object] as PropType<boolean | { [key: string]: any }>,
-  //   default: false
-  // },
-  // maxlength: String as PropType<string>,
-  // minlength: String as PropType<string>,
-
   // custom props
-  text: commonProps.text,
-  hue: commonProps.hue,
   exclude: commonProps.exclude,
   optionGroups: commonProps.optionGroups,
+  withBorder: {
+    type: Boolean,
+    default: empty
+  },
+  withButton: {
+    type: Boolean,
+    default: empty
+  }
 }
 
 export const formItemExtendsProps = {
   popperClass: commonProps.popperClass,
   debounce: commonProps.debounce,
 
+  // radio
+  size: {
+    type: [commonProps.size.type, undefined],
+    default: empty
+  },
+  textColor: {
+    type: [String, undefined],
+    default: empty
+  },
+  fill: {
+    type: [String, undefined],
+    default: empty
+  },
+
+  // checkout
+  min: {
+    type: [Number, undefined],
+    default: empty
+  },
+  max: {
+    type: [Number, undefined],
+    default: empty
+  },
+
   // input
+  tabindex: commonProps.tabindex,
+  resize: commonProps.resize,
+  form: commonProps.form,
+  autocomplete: commonProps.autocomplete,
+  autosize: commonProps.autosize,
   suffixIcon: commonProps.suffixIcon,
   prefixIcon: commonProps.prefixIcon,
 
   // input - number
+  step: commonProps.step,
   stepStrictly: commonProps.stepStrictly,
   precision: commonProps.precision,
   controls: commonProps.controls,
   controlsPosition: commonProps.controlsPosition,
 
   // select
+  id: String,
   automaticDropdown: commonProps.automaticDropdown,
   filterable: commonProps.filterable,
   allowCreate: commonProps.allowCreate,

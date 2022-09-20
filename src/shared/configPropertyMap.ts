@@ -32,7 +32,7 @@ export const configPropertyMap = {
   },
   input: {
     key: globalInputKey,
-    propNames: ['clearable', 'showWordLimit', 'autosize', 'size', 'maxlength']
+    propNames: ['clearable', 'showWordLimit', 'autosize', 'size', 'maxlength', 'suffixIcon', 'prefixIcon', 'maxlength']
   },
   inputNumber: {
     key: globalInputNumberKey,
