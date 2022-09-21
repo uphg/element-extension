@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import { formulateProps } from "./formulateProps"
 import { useFormulate } from "./useFormulate"
+import { ElementPartComponent } from "../../../types"
 
 const EFormulate = defineComponent({
   name: 'EFormulate',
@@ -13,4 +14,4 @@ const EFormulate = defineComponent({
   }
 })
 
-export default EFormulate
+export default EFormulate as ElementPartComponent<typeof EFormulate>

@@ -1,3 +1,4 @@
+import { ElementUIComponentSize } from "element-ui/types/component";
 import { ExtractPropTypes, PropType } from "vue";
 import { commonProps, empty } from "../../../shared/_commonProps";
 
@@ -16,15 +17,15 @@ export type RadioGroupOptions = Array<RadioGroupOption>
 
 export const globalRadioGroupProps = {
   size: {
-    type: [commonProps.size.type, undefined],
+    type: [commonProps.size.type, undefined] as PropType<ElementUIComponentSize | undefined>,
     default: empty
   },
   textColor: {
-    type: [String, undefined],
+    type: [String, undefined] as PropType<string | undefined>,
     default: empty
   },
   fill: {
-    type: [String, undefined],
+    type: [String, undefined] as PropType<string | undefined>,
     default: empty
   },
 

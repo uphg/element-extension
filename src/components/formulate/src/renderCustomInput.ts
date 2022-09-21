@@ -8,7 +8,7 @@ import { CustomInputOptions } from '../../../types/customInput'
 import renderDate from './renderDate'
 import { FormulateField } from './formulateProps'
 import { VNode } from 'vue/types/umd'
-import { GlobalInputProps } from '../../../components/config-provider/src/configProviderProps'
+import { GlobalInputProps } from '../../input/src/inputProps'
 import { createExclude } from '../../../utils/createExclude'
 import toString from '../../../utils/toString'
 

@@ -23,11 +23,11 @@ export type GlobalCheckboxGroupProps = ExtractPropTypes<typeof globalCheckboxGro
 
 export const globalCheckboxGroupProps = {
   min: {
-    type: [Number, undefined],
+    type: [Number, undefined] as PropType<number | undefined>,
     default: empty
   },
   max: {
-    type: [Number, undefined],
+    type: [Number, undefined] as PropType<number | undefined>,
     default: empty
   },
   size: {
@@ -35,11 +35,11 @@ export const globalCheckboxGroupProps = {
     default: empty
   },
   textColor: {
-    type: [String, undefined],
+    type: [String, undefined] as PropType<string | undefined>,
     default: empty
   },
   fill: {
-    type: [String, undefined],
+    type: [String, undefined] as PropType<string | undefined>,
     default: empty
   },
 
