@@ -19,6 +19,7 @@ export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
 
+export const globalUploadPropNames = ['withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
 const publicDatePropNames = ['size', 'editable', 'clearable', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'format', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'pickerOptions', 'prefixIcon', 'clearIcon', 'validateEvent']
 
 export const configPropertyMap = {
@@ -68,7 +69,7 @@ export const configPropertyMap = {
   },
   upload: {
     key: globalUploadKey,
-    propNames: ['action', 'headers', 'multiple', 'data', 'showFileList', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
+    propNames: globalUploadPropNames.concat(['showFileList'])
   },
   form: {
     key: globalFormKey,

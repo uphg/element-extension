@@ -7,14 +7,16 @@ import { FakeSlot, renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { useElUpload } from "../../../composables/useElUpload"
+import { ObjectLike } from "../../../types/object-like"
+import { globalUploadPropNames } from "../../../shared/configPropertyMap"
 
-const propNames = ['name', 'dragger', 'withCredentials', 'type', 'beforeUpload', 'beforeRemove', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'fileList',   'disabled', 'limit', 'onExceed']
-const globalPropNames = ['action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
+const propNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
+const globalPropNames = globalUploadPropNames
 
-export function useUpload(
-  props: UploadProps,
+export function useUpload<T extends ObjectLike>(
+  props: UploadProps | T,
   context:  SetupContext<{}>,
-  options?: UseComponentParamsOptions<UploadProps, GlobalUploadProps>
+  options?: UseComponentParamsOptions<UploadProps | ObjectLike, GlobalUploadProps>
 ) {
   const { handleProps } = options || {}
   const { elUpload, setRef, clearFiles, abort, submit } = useElUpload()

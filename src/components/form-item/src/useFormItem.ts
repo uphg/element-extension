@@ -11,13 +11,15 @@ const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 
 
 export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
   const { elFormItem, clearValidate } = useElFormItem()
-  const { render, expose: customInputExpose } = useCustomInput(props, context, {
-    onKeyup(event) {
-      if (event.keyCode === 13) {
-        // enter
-      }
-    }
-  })
+  // const { render, expose: customInputExpose } = useCustomInput(props, context, {
+  //   onKeyup(event) {
+  //     if (event.keyCode === 13) {
+  //       // enter
+  //     }
+  //   }
+  // })
+
+  const { render: renderInput, expose: customInputExpose } = useCustomInput(props, context) || {}
 
   const expose = {
     ...(customInputExpose ? customInputExpose : {}),
@@ -40,7 +42,7 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
     }, [
       renderSlot(context, 'label'),
       context.slots.itemPrefix?.(),
-      (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [render()],
+      (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [renderInput?.()],
       context.slots.itemSuffix?.(),
     ])
   }

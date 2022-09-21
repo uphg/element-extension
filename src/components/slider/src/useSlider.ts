@@ -4,14 +4,15 @@ import { ElSlider } from "element-ui/types/slider";
 import { GlobalSliderProps, SliderProps } from "./sliderProps";
 import { configPropertyMap } from "../../../shared/configPropertyMap";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
+import { ObjectLike } from "../../../types/object-like";
 
 const propNames = ['value', 'disabled']
 const globalPropNames = configPropertyMap.slider.propNames
 
-export function useSlider(
-  props: SliderProps,
+export function useSlider<T extends ObjectLike>(
+  props: SliderProps | T,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<SliderProps, GlobalSliderProps>
+  options?: UseComponentParamsOptions<SliderProps | ObjectLike, GlobalSliderProps>
 ) {
   const elSlider = ref<ElSlider | null>(null)
   const { handleProps } = options || {}

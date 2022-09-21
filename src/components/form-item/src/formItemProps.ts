@@ -122,6 +122,9 @@ export const formItemExtendsProps = {
   popperOptions: commonProps.popperOptions,
   transformOrigin: commonProps.transformOrigin,
 
+  // slider
+  label: commonProps.label,
+
   // date
   defaultValue: commonProps.defaultValue,
   defaultTime: commonProps.defaultTime,
@@ -171,6 +174,9 @@ export const formItemExtendsProps = {
   listType: commonProps.listType,
   httpRequest: commonProps.httpRequest,
   onExceed: commonProps.onExceed,
+  action: commonProps.action,
+  headers: commonProps.headers,
+  multiple: commonProps.multiple,
 
   // slider
   // value - default: 0

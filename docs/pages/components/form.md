@@ -83,7 +83,7 @@ form/label
 | placeholder     | 输入框占位文本                                               | string                            | —                                                            | —                   |
 | clearable       | 是否可清空                                                   | boolean                           | —                                                            | false               |
 | disabled        | 禁用                                                         | boolean                           | —                                                            | false               |
-| size            | 输入框尺寸，只在 `type!="textarea"` 时有效                   | string                            | medium / small / mini                                        | —                   |
+| size            | 尺寸，只在支持 size 的组件中有效                             | string                            | medium / small / mini                                        | —                   |
 | rows            | 输入框行数，只对 `type="textarea"` 有效                      | number                            | —                                                            | 2                   |
 | autosize        | 自适应内容高度，只对 `type="textarea"` 有效，可传入对象，如，{ minRows: 2, maxRows: 6 } | boolean / object                  | —                                                            | false               |
 | autocomplete    | 原生属性，自动补全                                           | string                            | on, off                                                      | off                 |
@@ -98,10 +98,10 @@ form/label
 | label           | 输入框关联的label文字                                        | string                            | —                                                            | —                   |
 | tabindex        | 输入框的tabindex                                             | string                            | -                                                            | -                   |
 | show-password   | 是否显示切换密码图标                                         | boolean                           | —                                                            | false               |
-| show-word-limit | 是否显示输入字数统计，只在 `type = "text"` 或 `type = "textarea"` 时有效 | boolean                           | —                                                            | false               |
+| show-word-limit | 是否显示输入字数统计                                         | boolean                           | —                                                            | false               |
 | validate-event  | 输入时是否触发表单的校验                                     | boolean                           | -                                                            | true                |
-| options         | Select / Radio / Checkbox 选项                               | array                             | array, object                                                | []                  |
-| option-groups   | Select 组件分组选项                                          | array                             | array, object                                                | []                  |
+| options         | Select / Radio / Checkbox / Cascader 的选项                  | array                             | array, object                                                | []                  |
+| option-groups   | Select 组件分组列表                                          | array                             | array, object                                                | []                  |
 | action          | 必选参数，上传的地址                                         | string                            | —                                                            | —                   |
 | headers         | 设置上传的请求头部                                           | object                            | —                                                            | —                   |
 | multiple        | 是否支持多选文件                                             | boolean                           | —                                                            | —                   |
