@@ -7,19 +7,20 @@ import { renderSlot } from '../../../utils/renderSlot'
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
+import { globalTablePropNames } from "../../../shared/configPropertyMap";
+import { ObjectLike } from "../../../types/object-like";
 
 const propNames = ['data', 'width', 'height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load']
-const globalPropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
 
 export function useTable(
   props: TableProps,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<TableProps, GlobalTableProps>
+  options?: UseComponentParamsOptions<TableProps | ObjectLike, GlobalTableProps>
 ) {
   const { handleProps } = options || {}
   const { elTable, setRef, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const on = useElTableEmit(context.emit)
-  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTablePropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
 
   return {

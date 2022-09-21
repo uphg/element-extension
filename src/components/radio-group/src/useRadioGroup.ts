@@ -4,9 +4,9 @@ import { ElRadioGroup } from "element-ui/types/radio-group"
 import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { ObjectLike } from "../../../types/object-like"
+import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 
 const propNames = ['value', 'disabled', 'options'] // el props
-const globalPropNames = ['size', 'textColor', 'fill'] // global el props
 
 export function useRadioGroup<T extends ObjectLike>(
   props: RadioGroupProps | T,
@@ -15,7 +15,7 @@ export function useRadioGroup<T extends ObjectLike>(
 ) {
   const { handleProps } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
-  const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
+  const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
   const setRef = ((el: ElRadioGroup) => elRadioGroup.value = el) as unknown as string
 
   const input = (value: string | number | boolean) => {

@@ -12,60 +12,71 @@ export const globalSliderKey = Symbol('config-slider')
 export const globalDatePickerKey = Symbol('config-date-picker')
 export const globalTimePickerKey = Symbol('config-time-picker')
 export const globalTimeSelectKey = Symbol('config-time-select')
-
 export const globalUploadKey = Symbol('config-upload')
 export const globalFormKey = Symbol('config-form')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
 
+export const globalRadioGroupPropNames = ['size', 'textColor', 'fill']
+export const globalCheckboxGroupPropNames = ['min', 'max', 'textColor', 'fill', 'size']
+export const globalInputPropNames = ['clearable', 'showWordLimit', 'autosize', 'size', 'suffixIcon', 'prefixIcon']
+export const globalInputNumberPropNames = ['min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
+export const globalSelectPropNames = ['valueKey', 'size', 'multiple', 'multipleLimit', 'clearable', 'popperClass', 'popperAppendToBody']
+export const globalCascaderPropNames = ['options', 'props', 'size', 'clearable', 'popperClass', 'separator', 'showAllLevels', 'collapseTags']
+export const globalSwitchPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
+export const globalSliderPropNames = ['min', 'max', 'step', 'showInput', 'showInputControls', 'inputSize', 'showStops', 'showTooltip', 'formatTooltip', 'range', 'vertical', 'height', 'label', 'debounce', 'tooltipClass', 'marks']
+export const globalDatePropNames = ['size', 'editable', 'clearable', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'format', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'pickerOptions', 'prefixIcon', 'clearIcon', 'validateEvent']
 export const globalUploadPropNames = ['withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
-const publicDatePropNames = ['size', 'editable', 'clearable', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'format', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'pickerOptions', 'prefixIcon', 'clearIcon', 'validateEvent']
+export const globalFormPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
+export const globalTablePropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
+export const globalTableColumnPropNames = ['className', 'resizable', 'showOverflowTooltip']
+export const globalPaginationPropNames = ['small', 'background', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'hideOnSinglePage']
 
 export const configPropertyMap = {
   radioGroup: {
     key: globalRadioGroupKey,
-    propNames: ['size', 'textColor', 'fill', 'withBorder', 'withButton']
+    propNames: globalRadioGroupPropNames.concat(['withBorder', 'withButton'])
   },
   checkboxGroup: {
     key: globalCheckboxGroupKey,
-    propNames: ['min', 'max', 'size', 'textColor', 'fill', 'withBorder', 'withButton']
+    propNames: globalCheckboxGroupPropNames.concat(['withBorder', 'withButton'])
   },
   input: {
     key: globalInputKey,
-    propNames: ['clearable', 'showWordLimit', 'autosize', 'size', 'maxlength', 'suffixIcon', 'prefixIcon', 'maxlength']
+    propNames: globalInputPropNames.concat(['maxlength'])
   },
   inputNumber: {
     key: globalInputNumberKey,
-    propNames: ['min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
+    propNames: globalInputNumberPropNames
   },
   select: {
     key: globalSelectKey,
-    propNames: ['valueKey', 'size', 'multiple', 'multipleLimit', 'clearable', 'popperClass', 'popperAppendToBody']
+    propNames: globalSelectPropNames
   },
   cascader: {
     key: globalCascaderKey,
-    propNames: ['options', 'props', 'size', 'clearable', 'popperClass', 'separator', 'showAllLevels', 'collapseTags']
+    propNames: globalCascaderPropNames
   },
   switch: {
     key: globalSwitchKey,
-    propNames: ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
+    propNames: globalSwitchPropNames
   },
   slider: {
     key: globalSliderKey,
-    propNames: ['min', 'max', 'step', 'showInput', 'showInputControls', 'inputSize', 'showStops', 'showTooltip', 'formatTooltip', 'range', 'vertical', 'height', 'label', 'debounce', 'tooltipClass', 'marks']
+    propNames: globalSliderPropNames
   },
   datePicker: {
     key: globalDatePickerKey,
-    propNames: publicDatePropNames
+    propNames: globalDatePropNames
   },
   timePicker: {
     key: globalTimePickerKey,
-    propNames: publicDatePropNames
+    propNames: globalDatePropNames
   },
   timeSelect: {
     key: globalTimeSelectKey,
-    propNames: publicDatePropNames
+    propNames: globalDatePropNames
   },
   upload: {
     key: globalUploadKey,
@@ -73,18 +84,18 @@ export const configPropertyMap = {
   },
   form: {
     key: globalFormKey,
-    propNames: ['inline', 'labelPosition', 'labelWidth', 'inlineMessage', 'size']
+    propNames: globalFormPropNames
   },
   table: {
     key: globalTableKey,
-    propNames: ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
+    propNames: globalTablePropNames
   },
   tableColumn: {
     key: globalTableColumnKey,
-    propNames: ['className', 'resizable', 'showOverflowTooltip']
+    propNames: globalTableColumnPropNames
   },
   pagination: {
     key: globalPaginationKey,
-    propNames: ['small', 'background', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'hideOnSinglePage']
+    propNames: globalPaginationPropNames
   }
 }

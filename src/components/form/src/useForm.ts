@@ -5,20 +5,21 @@ import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
 import { generateEmits } from "../../../utils/generateEmits"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
+import { globalFormPropNames } from "../../../shared/configPropertyMap"
+import { ObjectLike } from "../../../types/object-like"
 
 const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
-const globalPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
 const emitNames = ['validate']
 
 export function useForm(
   props: FormProps,
   context: SetupContext<{}>,
-  options?: UseComponentParamsOptions<FormProps, GlobalFormProps>
+  options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
   const { handleProps } = options || {}
   const { elForm, validate, validateField, clearValidate } = useElForm()
   
-  const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalFormPropNames, handleProps })
 
   const on = generateEmits(context.emit, emitNames)
   const setRef = function(el: ElForm) {

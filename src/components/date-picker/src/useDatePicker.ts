@@ -2,15 +2,14 @@ import { h, ref, SetupContext } from "vue"
 import { DatePicker as _DatePicker, TimeSelect, TimePicker } from "element-ui"
 import { GlobalDateProps, PublicDateProps } from "./dateProps"
 import { useComponentProps } from "../../../composables/useComponentProps"
-import { configPropertyMap } from "../../../shared/configPropertyMap"
+import { globalDatePropNames } from "../../../shared/configPropertyMap"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../types/object-like"
 import { ElDatePicker } from "element-ui/types/date-picker"
 import { ElTimePicker } from "element-ui/types/time-picker"
 import { ElTimeSelect } from "element-ui/types/time-select"
 
-const publicPropNames = ['value', 'size', 'format', 'valueFormat', 'readonly', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'prefixIcon', 'clearIcon', 'name', 'disabled', 'clearable', 'id', 'popperClass', 'editable', 'align', 'defaultValue', 'defaultTime', 'rangeSeparator', 'pickerOptions', 'unlinkPanels', 'validateEvent', 'isRange', 'arrowControl', 'timeArrowControl']
-const globalPropNames = configPropertyMap.datePicker.propNames
+const publicPropNames = ['value', 'readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
 
 type UseDatePickerOptions<Props> = {
   type: 1 | 2 | 3 // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
@@ -38,7 +37,7 @@ export function useDatePicker<T extends ObjectLike>(
   const DatePicker = componentMap[options.type][1]
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
   const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames, ]
-  const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
   const on = {
     input(value: DatePickerValue) {
       context.emit('input', value)

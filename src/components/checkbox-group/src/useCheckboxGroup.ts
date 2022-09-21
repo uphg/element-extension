@@ -4,9 +4,9 @@ import { ElCheckboxGroup } from "element-ui/types/checkbox-group";
 import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 import { ObjectLike } from "../../../types/object-like";
+import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap";
 
 const propNames = ['value', 'disabled']
-const globalPropNames = ['min', 'max', 'size', 'fill', 'textColor']
 
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
@@ -15,7 +15,7 @@ export function useCheckboxGroup<T extends ObjectLike>(
 ) {
   const { handleProps } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)
-  const { createProps, globalProps } = useComponentProps(props as CheckboxGroupProps, 'form', { propNames, globalPropNames, handleProps })
+  const { createProps, globalProps } = useComponentProps(props,'form', { propNames, globalPropNames: globalCheckboxGroupPropNames, handleProps })
   const setRef = ((el: ElCheckboxGroup) => elCheckboxGroup.value = el) as unknown as string
 
   const input = (value: string | number | boolean) => {

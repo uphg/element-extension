@@ -8,6 +8,7 @@ import { generateEmits } from "../../../utils/generateEmits";
 import { renderSlots } from '../../../utils/renderSlot'
 import { useElInput } from "../../../composables/useElInput";
 import { ObjectLike } from "../../../types/object-like";
+import { globalInputPropNames } from "../../../shared/configPropertyMap";
 import pick from "../../../utils/pick";
 
 export interface UseInputOptins {
@@ -16,8 +17,6 @@ export interface UseInputOptins {
 }
 
 const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
-const globalPropNames = ['clearable', 'showWordLimit', 'autosize', 'size', 'suffixIcon', 'prefixIcon']
-
 const _attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
 const globalAttrNames = ['maxlength']
 
@@ -27,14 +26,14 @@ const slotNames = ['suffix', 'prefix', 'prepend', 'append']
 export function useInputProps(props: InputProps | ObjectLike, context: SetupContext<{}>, options?: UseInputOptins) {
   const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
-  const propNames = globalInputProps ? _propNames : [..._propNames, ...globalPropNames]
+  const propNames = globalInputProps ? _propNames : [..._propNames, ...globalInputPropNames]
   const attrNames = globalInputProps ? _attrNames : [..._attrNames, ...globalAttrNames]
 
   const createProps = handleProps
     ? handleProps(props, globalInputProps)
     : () => ({
         ...pick(props, propNames),
-        ...withDefaultProps(props, globalInputProps, globalPropNames)
+        ...withDefaultProps(props, globalInputProps, globalInputPropNames)
       })
 
   const createAttrs = handleAttrs

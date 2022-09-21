@@ -6,10 +6,9 @@ import { UseComponentParamsOptions, useComponentProps } from "../../../composabl
 import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../types/object-like"
+import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
 
 const propNames = ['value', 'placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
-const globalPropNames = ['options', 'props', 'size', 'clearable', 'popperClass', 'separator', 'showAllLevels', 'collapseTags']
-
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
 
 export function useCascader<T extends ObjectLike>(
@@ -19,7 +18,11 @@ export function useCascader<T extends ObjectLike>(
 ) {
   const { handleProps } = options || {}
   const { elCascader, setRef, getCheckedNodes } = useElCascader()
-  const { createProps } = useComponentProps(props, 'cascader', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'cascader', {
+    propNames,
+    globalPropNames: globalCascaderPropNames,
+    handleProps
+  })
   const on = generateEmits(context.emit, emitNames)
 
   return {

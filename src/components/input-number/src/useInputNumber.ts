@@ -5,9 +5,9 @@ import { generateEmits } from "../../../utils/generateEmits"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
 import { ObjectLike } from "../../../types/object-like"
+import { globalInputNumberPropNames } from "../../../shared/configPropertyMap"
 
 const propNames = ['value', 'name', 'disabled', 'label', 'placeholder']
-const globalPropNames = ['min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
 const emitNames = ['change', 'blur', 'focus']
 
 export function useInputNumber<T extends ObjectLike>(
@@ -19,7 +19,7 @@ export function useInputNumber<T extends ObjectLike>(
   const { elInputNumber, setRef, focus, select } = useElInputNumber()
   const expose = { focus, select, get elInputNumber() { return elInputNumber.value } }
 
-  const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames: globalInputNumberPropNames, handleProps })
 
   const input = (newVal: number) => {
     if (props.value === newVal) return
