@@ -8,7 +8,7 @@ export interface MapRules {
   (options: { type?: string, key: string, label: string }): FormRule[] | []
 }
 
-export type FormulateExpandsProps = ExtractPropTypes<typeof formulateExpandsProps>
+export type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
 export type FormulateField =  {
   label: string;
@@ -52,7 +52,7 @@ export interface FormulateFields {
 
 export type FormulateProps = ExtractPropTypes<typeof formulateProps>
 
-const formulateExpandsProps = {
+const formulateDataProps = {
   ...elFormProps,
   fields: {
     type: [Array, Object] as PropType<FormulateFields | FormulateFields[]>,
@@ -63,6 +63,6 @@ const formulateExpandsProps = {
 }
 
 export const formulateProps = {
-  ...formulateExpandsProps,
-  expands: [Object] as PropType<FormulateExpandsProps>
+  ...formulateDataProps,
+  data: [Object] as PropType<FormulateDataProps>
 }

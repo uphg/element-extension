@@ -1,20 +1,23 @@
 import { h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
-import { isArray, isObject } from "../../../utils"
 import renderCustomInput from './renderCustomInput'
+import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
+import { isArray, isObject, pick } from "../../../utils"
 import { CustomInputValue } from "../../../types/customInput"
 import { FormRules, FormData } from '../../../types/form'
 import { useElForm } from '../../../composables/useElForm'
-import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
-import { GlobalFormProps, GlobalInputProps } from "../../../components/config-provider/src/configProviderProps"
+import { GlobalFormProps } from "../../form/src/formProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { ElForm } from "element-ui/types/form"
+import { globalFormPropNames } from "../../../shared/configPropertyMap"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
 }
+
+const _formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
 function initFormData(baseFields: FormulateFields | FormulateFields[]) {
   const result: { [key: string]: CustomInputValue } = {}
@@ -48,9 +51,7 @@ function resetFormData(formData: { [key: string]: CustomInputValue }, baseFields
           formData[key] = false
           break;
         default:
-          if (/^\$/.test(key)) {
-            break
-          }
+          if (/^\$/.test(key)) { break }
           formData[key] = ''
       }
     })
@@ -125,7 +126,7 @@ function renderFormItem(item: MapFieldsItem, index: string | number, children: V
 }
 
 export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) {
-  const props = _props.expands || _props
+  const props = _props.data || _props
   if (!props.fields) {
     throw new Error('[ElementPart] "fields" attribute is required');
   }
@@ -134,10 +135,11 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   const { rules, handleRules } = useRules(props)
 
   const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
-
   const { elForm, validate, validateField, clearValidate } = useElForm()
-  const globalInputProps = useGlobalProps<GlobalInputProps>('input')
+  // const globalInputProps = useGlobalProps<GlobalInputProps>('input')
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
+
+  const formPropNames = globalFormProps ? _formPropNames : _formPropNames.concat(globalFormPropNames)
 
   const setRef = function(el: ElForm) {
     elForm.value = el
@@ -170,8 +172,8 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
     ? null
     : renderFormItem(item, id, 
       (isArray(item)
-        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context, globalInputProps }))
-        : [renderCustomInput(item, { elForm, formData, context, globalInputProps })]
+        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
+        : [renderCustomInput(item, { elForm, formData, context })]
       )
     )
   }
@@ -198,13 +200,9 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
         props: {
           rules: rules.value,
           model: formData.value,
-          labelSuffix: props.labelSuffix,
-          statusIcon: props.statusIcon,
-          showMessage: props.showMessage,
-          disabled: props.disabled,
-          validateOnRuleChange: props.validateOnRuleChange,
-          hideRequiredAsterisk: props.hideRequiredAsterisk,
-          ...withDefaultProps(props, globalFormProps, ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size'])
+
+          ...pick(props, formPropNames),
+          ...withDefaultProps(props, globalFormProps, globalFormPropNames)
         }
       },
       isArray(props.fields)
