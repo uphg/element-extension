@@ -1,8 +1,8 @@
 <template>
   <div class="test">
-    <TestConfig />
+    <!-- <TestConfig /> -->
     <!-- <TestTransition /> -->
-    <!-- <TestUpload /> -->
+    <TestUpload />
     <!-- <TestSelect /> -->
     <!-- <TestInput /> -->
   </div>

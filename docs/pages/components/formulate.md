@@ -104,10 +104,10 @@ export type FormulateField =  {
 
 除了支持 `<el-form>` 组件的默认属性，还支持以下属性
 
-| 参数    | 说明                                               | 类型   | 可选值 | 默认值 |
-| ------- | -------------------------------------------------- | ------ | ------ | ------ |
-| fields  | 字段描述，用于渲染表单内容                         | object | —      | —      |
-| expands | 允许除 expands 外的 props 以对象形式绑定在当前属性 | object | —      | {}     |
+| 参数   | 说明                                                | 类型   | 可选值 | 默认值 |
+| ------ | --------------------------------------------------- | ------ | ------ | ------ |
+| fields | 字段描述，用于渲染表单内容                          | object | —      | —      |
+| data   | 允许除 data 外的 props 以对象形式绑定在 data 属性中 | object | —      | {}     |
 
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'

@@ -1,5 +1,5 @@
 <template>
-  <e-formulate :expands="data" style="width: 100%"/>
+  <e-formulate :data="data" style="width: 100%"/>
 </template>
 
 <script setup lang="ts">
