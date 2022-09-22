@@ -14,7 +14,6 @@ export function useElUpload() {
     submit() {
       elUpload.value!.submit()
     },
-    elUpload,
-    setRef: ((el: ElUpload) => elUpload.value = el) as unknown as string
+    elUpload
   }
 }

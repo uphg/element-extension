@@ -7,6 +7,7 @@ import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../types/object-like"
 import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
+import { ElCalendar } from "../../../types/element-components"
 import { VNodeData } from "vue/types/umd"
 
 const propNames = ['value', 'placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
@@ -18,7 +19,8 @@ export function useCascader<T extends ObjectLike>(
   options?: UseComponentParamsOptions<CascaderProps | ObjectLike, GlobalCascaderProps>
 ) {
   const { handleProps } = options || {}
-  const { elCascader, setRef, getCheckedNodes } = useElCascader()
+  const { elCascader, getCheckedNodes } = useElCascader()
+  const setRef = (options?.setRef || ((el: ElCalendar) => elCascader.value = el)) as unknown as string
   const { createProps } = useComponentProps(props, 'cascader', {
     propNames,
     globalPropNames: globalCascaderPropNames,

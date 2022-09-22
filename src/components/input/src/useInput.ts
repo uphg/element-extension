@@ -1,5 +1,6 @@
 import { h, SetupContext } from "vue"
 import { Input } from "element-ui"
+import { ElInput } from "element-ui/types/input";
 import { InputProps, GlobalInputProps } from "./inputProps";
 import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
@@ -61,14 +62,17 @@ export function useInput<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseInputOptins
 ) {
-  const { elInput, setRef, focus, blur, select } = useElInput()
+  const { elInput, focus, blur, select } = useElInput()
+  const setRef = (
+    options?.setRef || ((el: ElInput) => elInput.value = el)
+  ) as unknown as string
+
   const on = context ? {
     input: useOnInput(props, context),
     ...generateEmits(context.emit, otherEmitNames)
   } : undefined
 
   const { createProps, createAttrs } = useInputProps(props, context, options)
-
   const expose = { focus, blur, select, get elInput() { return elInput.value } }
 
   return {

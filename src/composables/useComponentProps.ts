@@ -28,7 +28,7 @@ export interface HandleProps<Props, GlobalProps> {
   (props: Props, globalProps?: GlobalProps): () => Props
 }
 
-export interface SetRef{
+export interface SetRef {
   (el: ElRadioGroup | ElCheckboxGroup | ElInput | ElInputNumber | ElSelect | ElCalendar | ElSwitch | ElSlider | ElTimeSelect | ElTimePicker | ElDatePicker | ElUpload): void
 }
 

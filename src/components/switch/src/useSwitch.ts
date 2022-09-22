@@ -18,7 +18,7 @@ export function useSwitch<T extends ObjectLike>(
 
   const { createProps } = useComponentProps(props, 'switch', { propNames, globalPropNames: globalSwitchPropNames, handleProps })
   
-  const setRef = ((el: ElSwitch) => elSwitch.value = el) as unknown as string
+  const setRef = (options?.setRef || ((el: ElSwitch) => elSwitch.value = el)) as unknown as string
   const on = context && {
     input(value: string | number | boolean) {
       context.emit('input', value)

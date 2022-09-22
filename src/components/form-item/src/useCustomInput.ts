@@ -21,7 +21,7 @@ import { ObjectLike } from "src/types/object-like";
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
 const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon']
 
-const globalChoosePropNames = ['size', 'withBorder', 'withButton']
+const globalChoosePropNames = ['size']
 const globalChooseExtendNames = ['textColor', 'fill']
 
 type CustomInputReturn = {

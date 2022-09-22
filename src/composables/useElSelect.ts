@@ -1,5 +1,6 @@
-import { ref } from "vue"
 import { ElSelect } from "element-ui/types/select"
+import { ref } from "vue"
+
 
 export function useElSelect() {
   const elSelect = ref<ElSelect | null>(null)
@@ -10,7 +11,6 @@ export function useElSelect() {
     blur() {
       elSelect.value?.blur()
     },
-    setRef: ((el: ElSelect) => elSelect.value = el) as unknown as string,
     elSelect
   }
 }

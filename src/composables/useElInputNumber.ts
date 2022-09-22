@@ -11,7 +11,6 @@ export function useElInputNumber() {
     select() {
       elInputNumber.value?.select()
     },
-    setRef: ((el: ElInputNumber) => { elInputNumber.value = el }) as unknown as string,
     elInputNumber
   }
 }

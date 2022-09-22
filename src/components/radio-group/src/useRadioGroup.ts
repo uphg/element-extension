@@ -6,6 +6,7 @@ import { useComponentProps, UseComponentParamsOptions } from "../../../composabl
 import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 import { empty } from "../../../shared/_commonProps"
 import { ObjectLike } from "../../../types/object-like"
+import isNil from "../../../utils/isNil"
 
 const propNames = ['value', 'disabled', 'options'] // el props
 
@@ -14,10 +15,12 @@ export function useRadioGroup<T extends ObjectLike>(
   context?: SetupContext<{}> | null,
   options?: UseComponentParamsOptions<RadioGroupProps | ObjectLike, GlobalRadioGroupProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, setRef: _setRef } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
   const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
-  const setRef = ((el: ElRadioGroup) => elRadioGroup.value = el) as unknown as string
+  const setRef = (
+    _setRef || ((el: ElRadioGroup) => elRadioGroup.value = el)
+  ) as unknown as string
 
   const on = context ? {
     input: (value: string | number | boolean) => {
@@ -28,8 +31,8 @@ export function useRadioGroup<T extends ObjectLike>(
     }
   } : empty
 
-  const Radio = (props.withButton || globalProps?.withButton) ? RadioButton : _Radio
-  const withBorder = (props.withBorder || globalProps?.withBorder)
+  const Radio = (isNil(props.withButton) ? globalProps?.withButton : props.withButton) ? RadioButton : _Radio
+  const withBorder = (isNil(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
 
   return {
     render: () => h(RadioGroup, {

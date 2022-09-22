@@ -1,5 +1,6 @@
 import { h, SetupContext } from "vue"
 import { Select } from "element-ui"
+import { ElSelect } from "element-ui/types/select"
 import { SelectProps, GlobalSelectProps } from "./selectProps"
 import { renderSelectOptions } from '../../../utils/renderSelectOptions'
 import { generateEmits } from "../../../utils/generateEmits"
@@ -18,10 +19,11 @@ export function useSelect<T extends ObjectLike>(
   options?: UseComponentParamsOptions<SelectProps | ObjectLike, GlobalSelectProps>
 ) {
   const { handleProps } = options || {}
-  const { elSelect, setRef, focus, blur } = useElSelect()
-  const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
-
+  const { elSelect, focus, blur } = useElSelect()
+  const setRef = (options?.setRef || ((el: ElSelect) => elSelect.value = el)) as unknown as string
   const on = context && generateEmits(context.emit, emitNames)
+
+  const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
 
   return {
     expose: { focus, blur, get elSelect() { return elSelect } },

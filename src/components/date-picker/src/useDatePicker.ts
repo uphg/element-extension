@@ -1,7 +1,7 @@
 import { h, ref, SetupContext } from "vue"
 import { DatePicker as _DatePicker, TimeSelect, TimePicker } from "element-ui"
 import { GlobalDateProps, PublicDateProps } from "./dateProps"
-import { useComponentProps } from "../../../composables/useComponentProps"
+import { SetRef, useComponentProps } from "../../../composables/useComponentProps"
 import { globalDatePropNames } from "../../../shared/configPropertyMap"
 import { renderSlot } from "../../../utils/renderSlot"
 import { empty } from "../../../shared/_commonProps"
@@ -13,8 +13,9 @@ import { ElTimeSelect } from "element-ui/types/time-select"
 const publicPropNames = ['value', 'readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
 
 type UseDatePickerOptions<Props> = {
-  type: 1 | 2 | 3 // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
-  handleProps?: (props: Props, globalProps?: GlobalDateProps) => () => Props
+  type: 1 | 2 | 3; // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
+  handleProps?: (props: Props, globalProps?: GlobalDateProps) => () => Props;
+  setRef?: SetRef;
 }
 
 type DatePickerValue = Date | string | number | (string | number)[]
@@ -37,7 +38,7 @@ export function useDatePicker<T extends ObjectLike>(
   const { handleProps } = options || {} 
   const DatePicker = componentMap[options.type][1]
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
-  const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames, ]
+  const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames]
   const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
   const on = context ? {
     input(value: DatePickerValue) {
@@ -54,7 +55,9 @@ export function useDatePicker<T extends ObjectLike>(
     }
   } : empty
 
-  const setRef = ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el) as unknown as string
+  const setRef = (
+    options.setRef || ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el)
+  ) as unknown as string
 
   return {
     expose: {

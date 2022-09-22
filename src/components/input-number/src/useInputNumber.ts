@@ -1,6 +1,7 @@
 import { h, SetupContext } from "vue"
 import { InputNumber } from 'element-ui'
 import { InputNumberProps, GlobalInputNumberProps } from "./inputNumberProps"
+import { ElInputNumber } from "../../../types/element-components"
 import { generateEmits } from "../../../utils/generateEmits"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
@@ -16,9 +17,12 @@ export function useInputNumber<T extends ObjectLike>(
   options?: UseComponentParamsOptions<InputNumberProps | ObjectLike, GlobalInputNumberProps>
 ) {
   const { handleProps } = options || {}
-  const { elInputNumber, setRef, focus, select } = useElInputNumber()
-  const expose = { focus, select, get elInputNumber() { return elInputNumber.value } }
+  const { elInputNumber, focus, select } = useElInputNumber()
+  const setRef = (
+    options?.setRef || ((el: ElInputNumber) => { elInputNumber.value = el })
+  ) as unknown as string
 
+  const expose = { focus, select, get elInputNumber() { return elInputNumber.value } }
   const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames: globalInputNumberPropNames, handleProps })
 
   const on = context && {

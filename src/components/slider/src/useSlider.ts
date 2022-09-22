@@ -15,6 +15,9 @@ export function useSlider<T extends ObjectLike>(
 ) {
   const elSlider = ref<ElSlider | null>(null)
   const { handleProps } = options || {}
+  const setRef = (
+    options?.setRef || ((el: ElSlider) => { elSlider.value = el })
+  ) as unknown as string
   const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
   const on = context && {
     change(value: number) {
@@ -31,7 +34,7 @@ export function useSlider<T extends ObjectLike>(
       }
     },
     render() {
-      return h(Slider, { props: createProps(), on })
+      return h(Slider, { ref: setRef, props: createProps(), on })
     }
   }
 }

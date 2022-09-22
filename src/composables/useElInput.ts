@@ -13,7 +13,6 @@ export function useElInput() {
     select() {
       elInput.value?.select()
     },
-    elInput,
-    setRef: ((el: ElInput) => elInput.value = el) as unknown as string
+    elInput
   }
 }
