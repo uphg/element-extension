@@ -7,13 +7,14 @@ import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../types/object-like"
 import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
+import { VNodeData } from "vue/types/umd"
 
 const propNames = ['value', 'placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
 
 export function useCascader<T extends ObjectLike>(
   props: CascaderProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<CascaderProps | ObjectLike, GlobalCascaderProps>
 ) {
   const { handleProps } = options || {}
@@ -23,7 +24,7 @@ export function useCascader<T extends ObjectLike>(
     globalPropNames: globalCascaderPropNames,
     handleProps
   })
-  const on = generateEmits(context.emit, emitNames)
+  const on = context && generateEmits(context.emit, emitNames)
 
   return {
     expose: {
@@ -33,14 +34,17 @@ export function useCascader<T extends ObjectLike>(
       }
     },
     render() {
+      const scopedSlots: VNodeData['scopedSlots'] | undefined = context && {
+        default: (params) => context.slots.default?.(params)
+      }
+      const slots = context && [renderSlot(context, 'empty')]
+
       return h(Cascader, {
         ref: setRef,
         props: createProps(),
         on,
-        scopedSlots: {
-          default: (params) => context.slots.default?.(params)
-        }
-      }, [renderSlot(context, 'empty')])
+        scopedSlots: scopedSlots
+      }, slots)
     }
   }
 }

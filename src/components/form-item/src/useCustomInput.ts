@@ -21,6 +21,9 @@ import { ObjectLike } from "src/types/object-like";
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
 const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon']
 
+const globalChoosePropNames = ['size', 'withBorder', 'withButton']
+const globalChooseExtendNames = ['textColor', 'fill']
+
 type CustomInputReturn = {
   render: () => VNode;
   expose?: ObjectLike;
@@ -29,41 +32,37 @@ type CustomInputReturn = {
 export function useCustomInput<T extends FormItemProps>(props: T, context: SetupContext<{}>): CustomInputReturn | undefined {
   switch(props.type) {
     case 'radio':
-    case 'radio-group':
+    case 'radio-group': {
       return useRadioGroup<T>(props, context, {
         handleProps: (_props, globalProps) => () => ({
           value: props.value,
           disabled: props.disabled,
           options: props.options,
-          size: props.size || globalProps?.size,
 
-          withBorder: !!(props.withBorder || globalProps?.withBorder),
-          withButton: !!(props.withButton || globalProps?.withButton),
-
-          ...withDefaultProps(props.extends, globalProps, ['textColor', 'fill'])
+          ...withDefaultProps(props, globalProps, globalChoosePropNames),
+          ...withDefaultProps(props.extends, globalProps, globalChooseExtendNames)
         })
       })
+    }
 
     case 'checkbox':
-    case 'checkbox-group':
+    case 'checkbox-group': {
       return useCheckboxGroup<T>(props, context, {
         handleProps: (_props, globalProps) => () => ({
           value: props.value,
           disabled: props.disabled,
           options: props.options,
-          size: props.size || globalProps?.size,
 
-          withBorder: !!(props.withBorder || globalProps?.withBorder),
-          withButton: !!(props.withButton || globalProps?.withButton),
-
-          ...withDefaultProps(props.extends, globalProps, ['min', 'max', 'textColor', 'fill']),
+          ...withDefaultProps(props, globalProps, globalChoosePropNames),
+          ...withDefaultProps(props.extends, globalProps, globalChooseExtendNames.concat(['min', 'max'])),
         })
       })
-    
+    }
+
     case 'text':
     case 'password':
     case 'textarea':
-    case 'input':
+    case 'input': {
       return useInput<T>(props, context, {
         handleProps: (_props, globalProps?) => () => ({
           value: props.value,
@@ -94,9 +93,10 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           ...withDefaultProps(context.attrs, globalProps, ['maxlength'])
         })
       })
+    }
 
     case 'number':
-    case 'input-number':
+    case 'input-number': {
       return useInputNumber(props, context, {
         handleProps: (_props, globalProps) => () => ({
           value: props.value,
@@ -108,8 +108,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           ...withDefaultProps(props.extends, globalProps, ['min', 'max', 'step', 'stepStrictly', 'precision', 'controls', 'controlsPosition'])
         })
       })
+    }
 
-    case 'select':
+    case 'select': {
       const extendPropNames = ['autocomplete', 'automaticDropdown', 'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'defaultFirstOption', 'reserveKeyword', 'collapseTags', 'id']
       return useSelect(props, context, {
         handleProps: (_props, globalProps) => () => ({
@@ -124,8 +125,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           ...withDefaultProps(props.extends, globalProps, ['valueKey', 'multiple', 'multipleLimit', 'popperClass', 'popperAppendToBody'])
         })
       })
-    
-    case 'cascader':
+    }
+
+    case 'cascader': {
       return useCascader<T>(props, context, {
         handleProps(_props, globalProps) {
           const globalPropNames = ['options', 'size', 'clearable']
@@ -145,8 +147,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
-    
-    case 'switch':
+    }
+
+    case 'switch': {
       return useSwitch<T>(props, context, {
         handleProps(_props, globalProps) {
           const globalPropNames = ['validateEvent']
@@ -162,8 +165,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
-    
-    case 'slider':
+    }
+
+    case 'slider': {
       return useSlider(props, context, {
         handleProps(_props, globalProps) {
           const globalPropNames = ['min', 'max', 'step', 'showInput', 'showInputControls', 'inputSize', 'showStops', 'showTooltip', 'formatTooltip', 'range', 'vertical', 'height', 'label', 'debounce', 'tooltipClass', 'marks']
@@ -175,9 +179,10 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
-    
+    }
+
     case 'date':
-    case 'date-picker':
+    case 'date-picker': {
       return useDatePicker<T>(props, context, {
         type: 1,
         handleProps(_props, globalProps) {
@@ -195,9 +200,10 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
-    
+    }
+
     case 'time':
-    case 'time-picker':
+    case 'time-picker': {
       return useDatePicker<T>(props, context, {
         type: 2,
         handleProps(_props, globalProps) {
@@ -214,8 +220,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
+    }
     
-    case 'time-select':
+    case 'time-select': {
       return useDatePicker<T>(props, context, {
         type: 3,
         handleProps(_props, globalProps) {
@@ -233,9 +240,10 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
+    }
     
     case 'file':
-    case 'upload':
+    case 'upload': {
       const globalPropNames = ['withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'listType', 'autoUpload', 'httpRequest']
       return useUpload<T>(props, context, {
         handleProps(_props, globalProps) {
@@ -252,5 +260,7 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           })
         }
       })
+    }
+      
   }
 }

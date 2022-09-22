@@ -8,6 +8,7 @@ export const FakeSlot = defineComponent({
 })
 
 export function renderSlot(context: SetupContext<{}>, slotName: string) {
+  // if (!context) return
   const slots = context.slots?.[slotName]?.()
   const data = { slot: slotName }
   return slots && (

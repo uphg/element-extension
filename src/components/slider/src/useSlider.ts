@@ -10,13 +10,13 @@ const propNames = ['value', 'disabled']
 
 export function useSlider<T extends ObjectLike>(
   props: SliderProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<SliderProps | ObjectLike, GlobalSliderProps>
 ) {
   const elSlider = ref<ElSlider | null>(null)
   const { handleProps } = options || {}
   const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
-  const on = {
+  const on = context && {
     change(value: number) {
       context.emit('change', value)
     },

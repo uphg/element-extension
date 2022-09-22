@@ -4,6 +4,7 @@ import { GlobalDateProps, PublicDateProps } from "./dateProps"
 import { useComponentProps } from "../../../composables/useComponentProps"
 import { globalDatePropNames } from "../../../shared/configPropertyMap"
 import { renderSlot } from "../../../utils/renderSlot"
+import { empty } from "../../../shared/_commonProps"
 import { ObjectLike } from "../../../types/object-like"
 import { ElDatePicker } from "element-ui/types/date-picker"
 import { ElTimePicker } from "element-ui/types/time-picker"
@@ -30,7 +31,7 @@ const componentMap = {
 
 export function useDatePicker<T extends ObjectLike>(
   props: PublicDateProps | T,
-  context: SetupContext<{}>,
+  context: SetupContext<{}> | undefined,
   options: UseDatePickerOptions<T | ObjectLike>
 ) {
   const { handleProps } = options || {} 
@@ -38,7 +39,7 @@ export function useDatePicker<T extends ObjectLike>(
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
   const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames, ]
   const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
-  const on = {
+  const on = context ? {
     input(value: DatePickerValue) {
       context.emit('input', value)
     },
@@ -51,7 +52,7 @@ export function useDatePicker<T extends ObjectLike>(
     focus(event: FocusEvent) {
       context.emit('focus', event)
     }
-  }
+  } : empty
 
   const setRef = ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el) as unknown as string
 
@@ -65,9 +66,8 @@ export function useDatePicker<T extends ObjectLike>(
       }
     },
     render() {
-      return h(DatePicker!, { ref: setRef, props: createProps(), on }, [
-        renderSlot(context, 'range-separator')
-      ])
+      const slots = context && [renderSlot(context, 'range-separator')]
+      return h(DatePicker!, { ref: setRef, props: createProps(), on }, slots)
     }
   }
 }

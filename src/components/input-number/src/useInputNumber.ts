@@ -12,7 +12,7 @@ const emitNames = ['change', 'blur', 'focus']
 
 export function useInputNumber<T extends ObjectLike>(
   props: InputNumberProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<InputNumberProps | ObjectLike, GlobalInputNumberProps>
 ) {
   const { handleProps } = options || {}
@@ -21,12 +21,13 @@ export function useInputNumber<T extends ObjectLike>(
 
   const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames: globalInputNumberPropNames, handleProps })
 
-  const input = (newVal: number) => {
-    if (props.value === newVal) return
-    context.emit('input', newVal)
+  const on = context && {
+    input: (newVal: number) => {
+      if (props.value === newVal) return
+      context.emit('input', newVal)
+    },
+    ...generateEmits(context.emit, emitNames)
   }
-  const otherOn = generateEmits(context.emit, emitNames)
-  const on = { input, ...otherOn }
 
   return {
     expose,

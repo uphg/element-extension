@@ -15,7 +15,7 @@ const globalPropNames = globalUploadPropNames
 
 export function useUpload<T extends ObjectLike>(
   props: UploadProps | T,
-  context:  SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<UploadProps | ObjectLike, GlobalUploadProps>
 ) {
   const { handleProps } = options || {}
@@ -57,13 +57,29 @@ export function useUpload<T extends ObjectLike>(
           }
         },
         scopedSlots: {
-          default: (props) => {
+          default: context && ((props) => {
             if (context.slots.file) {
               return context.slots.file({ file: props.file })
             }
-          }
+          })
         }
       })
+
+      const slots = context && (listType === 'picture-card'
+        ? [
+            renderSlot(context, 'tip'),
+            renderSlot(context, 'trigger'),
+            renderSlot(context, 'default'),
+          ]
+        : [
+            context.slots.default && (
+              context.slots.trigger
+                ? context.slots.default().concat(renderSlot(context, 'trigger')!)
+                : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
+            ),
+            context.slots.tip?.(),
+            showFileList && uploadList
+          ])
 
       return h(Upload, {
         ref: setRef,
@@ -71,26 +87,7 @@ export function useUpload<T extends ObjectLike>(
           ...uploadProps,
           showFileList: listType === 'picture-card' ? showFileList : false
         },
-      },
-        listType === 'picture-card'
-          ? [
-              renderSlot(context, 'tip'),
-              renderSlot(context, 'trigger'),
-              renderSlot(context, 'default'),
-            ]
-          : [
-              context.slots.default && (
-                context.slots.trigger
-                  ? context.slots.default().concat(renderSlot(context, 'trigger')!)
-                  : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
-              ),
-              context.slots.tip?.(),
-              showFileList && uploadList
-            ]
-      )
+      }, slots)
     }
   }
 }
-
-// trigger
-// default

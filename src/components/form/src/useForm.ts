@@ -13,7 +13,7 @@ const emitNames = ['validate']
 
 export function useForm(
   props: FormProps,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
   const { handleProps } = options || {}
@@ -21,7 +21,7 @@ export function useForm(
   
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalFormPropNames, handleProps })
 
-  const on = generateEmits(context.emit, emitNames)
+  const on = context && generateEmits(context.emit, emitNames)
   const setRef = function(el: ElForm) {
     elForm.value = el
   } as unknown as string
@@ -33,13 +33,16 @@ export function useForm(
       clearValidate,
       get elForm() { return elForm.value }
     },
-    render: () => h(Form, {
-      ref: setRef,
-      props: createProps(),
-      on,
-      scopedSlots: {
-        default: () => context.slots.default?.()
-      }
-    })
+    render() {
+      const slots = context && (() => context.slots.default?.())
+      return h(Form, {
+        ref: setRef,
+        props: createProps(),
+        on,
+        scopedSlots: {
+          default: slots
+        }
+      })
+    }
   }
 }

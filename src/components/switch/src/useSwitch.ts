@@ -10,7 +10,7 @@ const propNames = ['value', 'disabled', 'name']
 
 export function useSwitch<T extends ObjectLike>(
   props: SwitchProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<SwitchProps | ObjectLike, GlobalSwitchProps>
 ) {
   const { handleProps } = options || {}
@@ -19,13 +19,14 @@ export function useSwitch<T extends ObjectLike>(
   const { createProps } = useComponentProps(props, 'switch', { propNames, globalPropNames: globalSwitchPropNames, handleProps })
   
   const setRef = ((el: ElSwitch) => elSwitch.value = el) as unknown as string
-  const input = (value: string | number | boolean) => {
-    context.emit('input', value)
+  const on = context && {
+    input(value: string | number | boolean) {
+      context.emit('input', value)
+    },
+    change(value: string | number | boolean) {
+      context.emit('change', value)
+    }
   }
-  const change = (value: string | number | boolean) => {
-    context.emit('change', value)
-  }
-  const on = { input, change }
 
   return {
     expose: {

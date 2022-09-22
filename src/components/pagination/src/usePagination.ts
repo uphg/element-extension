@@ -11,14 +11,14 @@ const emitNames = ['size-change', 'current-change', 'prev-click', 'next-click']
 
 export function usePagination(
   props: PaginationProps,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<PaginationProps | ObjectLike, GlobalPaginationProps>
 ) {
   const { handleProps } = options || {}
   const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames: globalPaginationPropNames, handleProps })
-  const on = generateEmits(context.emit, emitNames)
+  const on = context && generateEmits(context.emit, emitNames)
 
   return {
-    render: () => h(Pagination, { props: createProps(), on }, context.slots.default?.())
+    render: () => h(Pagination, { props: createProps(), on }, context?.slots.default?.())
   }
 }

@@ -9,7 +9,7 @@ import { renderSlot } from '../../../utils/renderSlot'
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
-export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
+export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   const { elFormItem, clearValidate } = useElFormItem()
   // const { render, expose: customInputExpose } = useCustomInput(props, context, {
   //   onKeyup(event) {
@@ -19,7 +19,7 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
   //   }
   // })
 
-  const { render: renderInput, expose: customInputExpose } = useCustomInput(props, context) || {}
+  const { render: renderInput, expose: customInputExpose } = context && useCustomInput(props, context) || {}
 
   const expose = {
     ...(customInputExpose ? customInputExpose : {}),
@@ -33,17 +33,20 @@ export function useFormItem(props: FormItemProps, context: SetupContext<{}>) {
 
   return {
     expose,
-    render: () => h(FormItem, {
-      ref: setRef,
-      props: pick(props, propNames),
-      scopedSlots: {
-        error: (params) => context.slots.error?.(params),
-      }
-    }, [
-      renderSlot(context, 'label'),
-      context.slots.itemPrefix?.(),
-      (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [renderInput?.()],
-      context.slots.itemSuffix?.(),
-    ])
+    render() {
+      const slots = context && [
+        renderSlot(context, 'label'),
+        context.slots.itemPrefix?.(),
+        (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [renderInput?.()],
+        context.slots.itemSuffix?.(),
+      ]
+      return h(FormItem, {
+        ref: setRef,
+        props: pick(props, propNames),
+        scopedSlots: {
+          error: context && ((params) => context.slots.error?.(params)),
+        }
+      }, slots)
+    }
   }
 }

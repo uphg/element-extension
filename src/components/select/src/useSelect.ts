@@ -14,21 +14,24 @@ const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
 
 export function useSelect<T extends ObjectLike>(
   props: SelectProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<SelectProps | ObjectLike, GlobalSelectProps>
 ) {
   const { handleProps } = options || {}
   const { elSelect, setRef, focus, blur } = useElSelect()
   const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
 
-  const on = generateEmits(context.emit, emitNames)
+  const on = context && generateEmits(context.emit, emitNames)
 
   return {
     expose: { focus, blur, get elSelect() { return elSelect } },
-    render: () => h(Select, { ref: setRef, props: createProps(), on }, [
-      renderSlot(context, 'prefix'),
-      renderSlot(context, 'empty'),
-      ...renderSelectOptions(props, context)!,
-    ])
+    render() {
+      const slots = context && [
+        renderSlot(context, 'prefix'),
+        renderSlot(context, 'empty'),
+        ...renderSelectOptions(props, context)!,
+      ]
+      return h(Select, { ref: setRef, props: createProps(), on }, slots)
+    }
   }
 }

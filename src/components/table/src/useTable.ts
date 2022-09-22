@@ -14,12 +14,12 @@ const propNames = ['data', 'width', 'height', 'rowKey', 'context', 'showSummary'
 
 export function useTable(
   props: TableProps,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<TableProps | ObjectLike, GlobalTableProps>
 ) {
   const { handleProps } = options || {}
   const { elTable, setRef, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
-  const on = useElTableEmit(context.emit)
+  const on = context && useElTableEmit(context.emit)
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTablePropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
 
@@ -30,15 +30,14 @@ export function useTable(
         return elTable.value
       }
     },
-    render: () => h(Table, {
-      ref: setRef,
-      props: createProps(),
-      on,
-    }, (
+    render() {
+      const slots = context && (
         [...props.columns?.length
           ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
           : [context.slots.default?.()]]
       ).concat([renderSlot(context, 'append')])
-    )
+
+      return h(Table, { ref: setRef, props: createProps(), on }, slots)
+    }
   }
 }

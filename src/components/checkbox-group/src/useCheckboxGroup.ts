@@ -10,7 +10,7 @@ const propNames = ['value', 'disabled']
 
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
-  context: SetupContext<{}>,
+  context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<CheckboxGroupProps | ObjectLike, GlobalCheckboxGroupProps>
 ) {
   const { handleProps } = options || {}
@@ -18,11 +18,13 @@ export function useCheckboxGroup<T extends ObjectLike>(
   const { createProps, globalProps } = useComponentProps(props,'form', { propNames, globalPropNames: globalCheckboxGroupPropNames, handleProps })
   const setRef = ((el: ElCheckboxGroup) => elCheckboxGroup.value = el) as unknown as string
 
-  const input = (value: string | number | boolean) => {
-    context.emit('input', value)
-  }
-  const change = (value: string | number | boolean) => {
-    context.emit('change', value)
+  const on = context && {
+    input(value: string | number | boolean) {
+      context.emit('input', value)
+    },
+    change(value: string | number | boolean) {
+      context.emit('change', value)
+    }
   }
 
   const Checkbox = (props.withButton || globalProps?.withButton) ? CheckboxButton : _Checkbox
@@ -32,7 +34,7 @@ export function useCheckboxGroup<T extends ObjectLike>(
     render: () => h(CheckboxGroup, {
       ref: setRef,
       props: createProps(),
-      on: { input, change }
+      on
     }, props.options?.map((item: CheckboxGroupOption) => h(Checkbox, {
       props: {
         label: item.value,
