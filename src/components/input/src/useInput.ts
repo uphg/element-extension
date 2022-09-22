@@ -14,12 +14,13 @@ import { SetRef } from "../../../composables/useComponentProps";
 import pick from "../../../utils/pick";
 
 export interface UseInputOptins {
-  handleProps: (props: InputProps | ObjectLike, globalProps?: GlobalInputProps) => () => ObjectLike;
-  handleAttrs: (props: InputProps | ObjectLike, globalProps?: GlobalInputProps) => () => ObjectLike;
+  status: 0 | 1,
+  handleProps: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { propNames: string[]; globalPropNames: string[] }) => () => ObjectLike;
+  handleAttrs: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
   setRef?: SetRef
 }
 
-const _propNames = ['value', 'resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
+const basePropNames = ['resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
 const _attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
 const globalAttrNames = ['maxlength']
 
@@ -33,18 +34,19 @@ export function useInputProps(
 ) {
   const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
+  const _propNames = options?.status === 1 ? basePropNames : basePropNames.concat(['value'])
   const propNames = globalInputProps ? _propNames : [..._propNames, ...globalInputPropNames]
   const attrNames = globalInputProps ? _attrNames : [..._attrNames, ...globalAttrNames]
 
   const createProps = handleProps
-    ? handleProps(props, globalInputProps)
+    ? handleProps(props, globalInputProps, { propNames, globalPropNames: globalInputPropNames })
     : () => ({
         ...pick(props, propNames),
         ...withDefaultProps(props, globalInputProps, globalInputPropNames)
       })
 
   const createAttrs = handleAttrs
-    ? handleAttrs(props, globalInputProps)
+    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames })
     : () => (context && {
       ...pick(context.attrs, attrNames),
       ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)

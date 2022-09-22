@@ -21,11 +21,12 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 
 export type UseComponentParamsOptions<Props, GlobalProps> = {
   handleProps?: HandleProps<Props, GlobalProps>,
-  setRef?: SetRef
+  setRef?: SetRef,
+  status?: 0 | 1
 }
 
 export interface HandleProps<Props, GlobalProps> {
-  (props: Props, globalProps?: GlobalProps): () => Props
+  (props: Props, globalProps: GlobalProps | undefined, _options: { propNames: string[], globalPropNames: string[]}): () => Props
 }
 
 export interface SetRef {
@@ -42,7 +43,7 @@ export function useComponentProps<Props extends ObjectLike, GlobalProps extends 
   const propNames = globalProps ? _propNames : [..._propNames, ...globalPropNames]
 
   const createProps = typeof handleProps === 'function'
-    ? handleProps(props, globalProps)
+    ? handleProps(props, globalProps, { propNames, globalPropNames })
     : () => ({ ...pick(props, propNames), ...withDefaultProps(props, globalProps, globalPropNames) }) as Props
   return { createProps, globalProps }
 }

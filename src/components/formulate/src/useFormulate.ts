@@ -12,6 +12,7 @@ import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { ElForm } from "element-ui/types/form"
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
+import { createInputRender } from "./createInputRender"
 
 interface MapFieldsItem extends FormulateField {
   key: string;
@@ -78,18 +79,18 @@ function useRules(props: FormulateProps) {
   return { rules, handleRules }
 }
 
-function mapFields(
+function mapFields<T extends MapFieldsItem>(
   baseFields: FormulateFields | FormulateFields[],
-  fn: ((item: MapFieldsItem) => void) | null
+  fn: ((item: MapFieldsItem) => T)
 ): MapFieldsItem[] | MapFieldsItem[][] {
   if (isArray(baseFields)) {
     return baseFields.map((_baseFields) => mapFields(_baseFields, fn)) as MapFieldsItem[][]
   } else {
     const fieldKeys = Object.keys(baseFields)
     return fieldKeys.map<MapFieldsItem>((key) => {
-      const item: MapFieldsItem = {...baseFields[key], key}
-      fn && fn(item)
-      return item
+      const item: MapFieldsItem = {...baseFields[key], type: baseFields[key].type || 'text', key}
+      
+      return fn && fn(item)
     })
   }
 }
@@ -97,7 +98,7 @@ function mapFields(
 function renderFormItem(item: MapFieldsItem, index: string | number, children: VNodeChildren) {
 
   return h(FormItem, {
-    key: `s.form.item.${index}`,
+    key: `e.form.item.${index}`,
     props: {
       label: item.label,
       labelWidth: item.labelWidth,
@@ -134,9 +135,16 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   const formData = ref(initFormData(props.fields))
   const { rules, handleRules } = useRules(props)
 
-  const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, handleRules))
+  const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, (item) => {
+    handleRules(item)
+
+    const result = {
+      ...item,
+      '$render': createInputRender(item, { formData, setRef: item.ref })
+    }
+    return result
+  }))
   const { elForm, validate, validateField, clearValidate } = useElForm()
-  // const globalInputProps = useGlobalProps<GlobalInputProps>('input')
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
 
   const formPropNames = globalFormProps ? _formPropNames : _formPropNames.concat(globalFormPropNames)
@@ -168,15 +176,24 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   }
 
   function renderFormBlock(item: MapFieldsItem, id: string | number) {
-    return item.vIf && !item.vIf(formData.value)
-    ? null
-    : renderFormItem(item, id, 
-      (isArray(item)
-        ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
-        : [renderCustomInput(item, { elForm, formData, context })]
-      )
-    )
-  }
+
+    return (item.vIf && !item.vIf(formData.value))
+      ? null
+      : renderFormItem(item, id, (
+        isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
+      ))
+  } 
+
+  // function renderFormBlock(item: MapFieldsItem, id: string | number) {
+  //   return item.vIf && !item.vIf(formData.value)
+  //   ? null
+  //   : renderFormItem(item, id, 
+  //     (isArray(item)
+  //       ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
+  //       : [renderCustomInput(item, { elForm, formData, context })]
+  //     )
+  //   )
+  // }
 
   return {
     expose: {
@@ -207,10 +224,10 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
       },
       isArray(props.fields)
         ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-          (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
-            (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
-          ))
-        ))]
+            (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
+              (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
+            ))
+          ))]
         : (formulateFields.value as MapFieldsItem[]).map((formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, index))
       )
     }

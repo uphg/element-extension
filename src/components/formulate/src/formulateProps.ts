@@ -1,3 +1,4 @@
+import { SetRef } from "../../../composables/useComponentProps"
 import { ExtractPropTypes, PropType, VNodeChildren } from "vue"
 import { VNode, VNodeData } from "vue/types/umd"
 import { elFormProps, ElFormItemProps, CustomInputProps } from "../../../shared/_commonProps"
@@ -19,8 +20,9 @@ export type FormulateField =  {
   vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
   itemPrefix?: VNodeChildren;
   itemSuffix?: VNodeChildren;
-  ref: string;
+  ref?: SetRef;
   children: VNode[];
+  $render: (() => VNode) | undefined;
   extra: string | VNode;
   tips: string[];
   key: string;

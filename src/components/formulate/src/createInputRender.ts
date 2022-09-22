@@ -20,10 +20,11 @@ import { globalCascaderPropNames, globalCheckboxGroupPropNames, globalDatePropNa
 import pick from "../../../utils/pick";
 
 const datePropNames = ['readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
+const uploadPropNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
 
 export function createInputRender(
   props: FormulateField,
-  context: SetupContext<{}> | undefined,
+  // context: SetupContext<{}> | undefined,
   _options: {
     formData: Ref<FormData>
     setRef?: SetRef
@@ -33,12 +34,11 @@ export function createInputRender(
   switch (props.type) {
     case 'radio': {
       const { render } = useRadioGroup(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
+            ...pick(props, propNames),
             value: formData.value[props.key],
-            disabled: props.disabled,
-            options: props.options,
-            ...withDefaultProps(props, globalProps, globalRadioGroupPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
         setRef
@@ -48,12 +48,11 @@ export function createInputRender(
 
     case 'checkbox': {
       const { render } = useCheckboxGroup(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
-            disabled: props.disabled,
-            options: props.options,
-            ...withDefaultProps(props, globalProps, globalCheckboxGroupPropNames)
+            ...pick(props, propNames),
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
         setRef
@@ -64,25 +63,22 @@ export function createInputRender(
     case 'text':
     case 'textarea':
     case 'password': {
-      const propNames = ['resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
-      const attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
-      const globalAttrNames = ['maxlength']
-
       const { render } = useInput(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
-            ...withDefaultProps(props, globalProps, globalInputPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
-        handleAttrs(_props, globalProps) {
+        handleAttrs(_props, globalProps, { attrNames, globalAttrNames }) {
           return () => ({
             ...pick(props, attrNames),
             ...withDefaultProps(props, globalProps, globalAttrNames)
           })
         },
-        setRef
+        setRef,
+        status: 1
       })
       return render
     }
@@ -169,7 +165,8 @@ export function createInputRender(
             ...withDefaultProps(props, globalProps, globalDatePropNames)
           })
         },
-        type: 2
+        type: 2,
+        status: 1
       })
 
       return render
@@ -177,15 +174,15 @@ export function createInputRender(
 
     case 'time-select': {
       const { render } = useDatePicker(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
-            type: props.type,
-            ...pick(props, datePropNames),
-            ...withDefaultProps(props, globalProps, globalDatePropNames)
+            ...pick(props, propNames),
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
-        type: 3
+        type: 3,
+        status: 1
       })
 
       return render
@@ -202,16 +199,15 @@ export function createInputRender(
     case 'datetimerange':
     case 'date-picker': {
       const { render } = useDatePicker(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
-            type: props.type,
-            timeArrowControl: props.timeArrowControl,
-            ...pick(props, datePropNames),
-            ...withDefaultProps(props, globalProps, globalDatePropNames)
+            ...pick(props, propNames),
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
-        type: 1
+        type: 1,
+        status: 1
       })
 
       return render
@@ -219,12 +215,11 @@ export function createInputRender(
 
     case 'file':
     case 'upload': {
-      const propNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
       const { render } = useUpload(props, empty, {
-        handleProps(_props, globalProps) {
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             ...pick(props, propNames),
-            ...withDefaultProps(props, globalProps, globalUploadPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         },
         setRef

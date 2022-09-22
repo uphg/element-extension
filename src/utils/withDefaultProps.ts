@@ -6,7 +6,8 @@ export function withDefaultProps<T extends ObjectLike>(props: ObjectLike, defaul
   const result: T | ObjectLike = {}
   if (!defaults) return result
   keys?.forEach((key) => {
-    result[key] = props[key] !== empty ? props[key] : defaults?.[key] || empty
+    const value = props[key] !== empty ? props[key] : defaults?.[key]
+    value !== empty && (result[key] = value)
   })
   return result as T
 }
