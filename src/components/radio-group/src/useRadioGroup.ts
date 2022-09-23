@@ -9,10 +9,10 @@ import isNil from "../../../utils/isNil"
 
 const _propNames = ['disabled', 'options'] // el props
 
-export function useRadioGroup<T extends ObjectLike>(
+export function useRadioGroup<T extends ObjectLike, U extends GlobalRadioGroupProps>(
   props: RadioGroupProps | T,
   context?: SetupContext<{}> | null,
-  options?: UseComponentParamsOptions<RadioGroupProps | ObjectLike, GlobalRadioGroupProps>
+  options?: UseComponentParamsOptions<RadioGroupProps | ObjectLike, U>
 ) {
   const { handleProps, setRef: _setRef } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
