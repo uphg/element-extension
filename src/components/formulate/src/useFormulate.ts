@@ -1,7 +1,6 @@
-import { h, ref, SetupContext, VNodeChildren } from "vue"
+import { computed, h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
-import renderCustomInput from './renderCustomInput'
 import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
 import { isArray, isObject, pick } from "../../../utils"
 import { CustomInputValue } from "../../../types/customInput"
@@ -18,7 +17,7 @@ interface MapFieldsItem extends FormulateField {
   key: string;
 }
 
-const _formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
+const formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
 function initFormData(baseFields: FormulateFields | FormulateFields[]) {
   const result: { [key: string]: CustomInputValue } = {}
@@ -96,7 +95,6 @@ function mapFields<T extends MapFieldsItem>(
 }
 
 function renderFormItem(item: MapFieldsItem, index: string | number, children: VNodeChildren) {
-
   return h(FormItem, {
     key: `e.form.item.${index}`,
     props: {
@@ -134,25 +132,15 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
 
   const formData = ref(initFormData(props.fields))
   const { rules, handleRules } = useRules(props)
-
   const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, (item) => {
     handleRules(item)
-
-    const result = {
-      ...item,
-      '$render': createInputRender(item, { formData, setRef: item.ref })
-    }
-    return result
+    return { ...item, '$render': createInputRender(item, { formData, setRef: item.ref }) }
   }))
   const { elForm, validate, validateField, clearValidate } = useElForm()
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
+  const rowSpan = computed(() => (24 / (Number(props.fields?.length)) || 0))
 
-  const formPropNames = globalFormProps ? _formPropNames : _formPropNames.concat(globalFormPropNames)
-
-  const setRef = function(el: ElForm) {
-    elForm.value = el
-  } as unknown as string
-
+  const setRef = function(el: ElForm) { elForm.value = el } as unknown as string
 
   function resetFields() {
     resetFormData(formData.value, props.fields!)
@@ -184,32 +172,11 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
       ))
   } 
 
-  // function renderFormBlock(item: MapFieldsItem, id: string | number) {
-  //   return item.vIf && !item.vIf(formData.value)
-  //   ? null
-  //   : renderFormItem(item, id, 
-  //     (isArray(item)
-  //       ? item.map((piece, i) => renderCustomInput(piece, { elForm, formData, context }))
-  //       : [renderCustomInput(item, { elForm, formData, context })]
-  //     )
-  //   )
-  // }
-
   return {
     expose: {
-      validate,
-      validateField,
-      resetFields,
-      clearValidate,
-      setValues,
-      getValues,
-      submit,
-      get formData() {
-        return formData.value
-      },
-      get elForm() {
-        return elForm.value
-      }
+      validate, validateField, resetFields, clearValidate, setValues, getValues, submit,
+      get formData() { return formData.value },
+      get elForm() { return elForm.value }
     },
     render: () => {
       return h(Form, {
@@ -224,7 +191,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
       },
       isArray(props.fields)
         ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
-            (row: MapFieldsItem[], rowId) => h(Col, { props: { span: 24 / (Number(props.fields?.length) || 0) }, }, row.map(
+            (row: MapFieldsItem[], rowId) => h(Col, { props: { span: rowSpan.value }, }, row.map(
               (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
             ))
           ))]
