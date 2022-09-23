@@ -89,7 +89,7 @@ export function useUpload<T extends ObjectLike>(
           ...uploadProps,
           showFileList: listType === 'picture-card' ? showFileList : false
         },
-      }, slots?.concat(listType === 'picture-card' ? showFileList && uploadList : []))
+      }, slots?.concat((listType === 'picture-card' ? [] : showFileList && uploadList )))
     }
   }
 }
