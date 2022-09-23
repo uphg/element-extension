@@ -60,6 +60,7 @@ const formulateDataProps = {
     type: [Array, Object] as PropType<FormulateFields | FormulateFields[]>,
     default: () => ({})
   },
+  gutter: Number as PropType<number>, // 多列布局的分栏间隔
   withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
   mapRules: Function as PropType<MapRules>, // 是否添加 map rules 函数，添加后自动开启验证，mapRules({ type, key, label })
 }

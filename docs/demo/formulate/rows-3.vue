@@ -7,6 +7,7 @@ import { ref } from 'vue';
 
 const data = ref({
   labelWidth: '80px',
+  gutter: 20,
   fields: [{
     name: { label: '用户名', placeholder: '请输入用户名' },
     phone: { label: '手机号', placeholder: '请输入手机号' }

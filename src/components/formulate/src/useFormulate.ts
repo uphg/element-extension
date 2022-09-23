@@ -170,7 +170,8 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
           isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
         ))
   } 
-
+  console.log('props.gutter')
+  console.log(props.gutter)
   return {
     expose: {
       validate, validateField, resetFields, clearValidate, setValues, getValues, submit,
@@ -189,7 +190,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
         }
       },
       isArray(props.fields)
-        ? [h(Row, (formulateFields.value as MapFieldsItem[][]).map(
+        ? [h(Row, { props: { gutter: props.gutter } }, (formulateFields.value as MapFieldsItem[][]).map(
             (row: MapFieldsItem[], rowId) => h(Col, { props: { span: rowSpan.value }, }, row.map(
               (formItem: MapFieldsItem, index: number) => renderFormBlock(formItem, `${rowId}-${index}`)
             ))
