@@ -8,8 +8,6 @@ type OptionProps = {
 } 
 
 export function renderSelectOptions<T extends OptionProps>(props: T, context: SetupContext<{}> | undefined) {
-  console.log('props')
-  console.log(props)
 
   const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
     key: `e.s.opt.${index}`,
