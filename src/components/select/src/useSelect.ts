@@ -28,12 +28,11 @@ export function useSelect<T extends ObjectLike>(
   return {
     expose: { focus, blur, get elSelect() { return elSelect } },
     render() {
-      const slots = context && [
+      const namedSlots = context && [
         renderSlot(context, 'prefix'),
         renderSlot(context, 'empty'),
-        ...renderSelectOptions(props, context)!,
       ]
-      return h(Select, { ref: setRef, props: createProps(), on }, slots)
+      return h(Select, { ref: setRef, props: createProps(), on }, [namedSlots, ...renderSelectOptions(props, context)!])
     }
   }
 }

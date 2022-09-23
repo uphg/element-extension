@@ -2,12 +2,14 @@ import { h, SetupContext } from "vue"
 import { Option, OptionGroup } from "element-ui"
 import { CustomInputOptions } from "../types/customInput"
 
-type optionProps = {
+type OptionProps = {
   options?: CustomInputOptions[],
   optionGroups?: CustomInputOptions[]
 } 
 
-export function renderSelectOptions<T extends optionProps>(props: T, context: SetupContext<{}>) {
+export function renderSelectOptions<T extends OptionProps>(props: T, context: SetupContext<{}> | undefined) {
+  console.log('props')
+  console.log(props)
 
   const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
     key: `e.s.opt.${index}`,
@@ -16,7 +18,7 @@ export function renderSelectOptions<T extends optionProps>(props: T, context: Se
       value: item.value,
       disabled: item.disabled
     }
-  }, [context.slots.options?.(item)])
+  }, context && [context.slots.options?.(item)])
 
   return props.optionGroups
     ? (props.optionGroups as CustomInputOptions[])?.map(
