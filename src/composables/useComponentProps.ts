@@ -1,3 +1,4 @@
+import { VNodeData } from "vue";
 import { ConfigPropertyName } from "../shared/configPropertyMap";
 import { useGlobalProps } from "./useGlobalProps"
 import { withDefaultProps } from "../utils/withDefaultProps";
@@ -22,7 +23,8 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 export type UseComponentParamsOptions<Props, GlobalProps> = {
   handleProps?: HandleProps<Props, GlobalProps>,
   setRef?: SetRef,
-  status?: 0 | 1
+  status?: 0 | 1,
+  on?: VNodeData['on']
 }
 
 export interface HandleProps<Props, GlobalProps> {
@@ -38,12 +40,11 @@ export function useComponentProps<Props extends ObjectLike, GlobalProps extends 
   configPropertyName: ConfigPropertyName,
   options: ComponentPropsOptions<Props, GlobalProps>
 ) {
-  const { propNames: _propNames, globalPropNames, handleProps } = options || {}
+  const { propNames, globalPropNames, handleProps } = options || {}
   const globalProps = useGlobalProps<GlobalProps>(configPropertyName)
-  const propNames = globalProps ? _propNames : [..._propNames, ...globalPropNames]
 
   const createProps = typeof handleProps === 'function'
     ? handleProps(props, globalProps, { propNames, globalPropNames })
-    : () => ({ ...pick(props, propNames), ...withDefaultProps(props, globalProps, globalPropNames) }) as Props
+    : () => ({ ...pick(props, propNames), ...withDefaultProps(props, globalProps, globalPropNames) }) as (Props | GlobalProps)
   return { createProps, globalProps }
 }

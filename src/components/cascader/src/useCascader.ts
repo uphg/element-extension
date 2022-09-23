@@ -10,7 +10,7 @@ import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
 import { ElCalendar } from "../../../types/element-components"
 import { VNodeData } from "vue/types/umd"
 
-const propNames = ['value', 'placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
+const _propNames = ['placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
 
 export function useCascader<T extends ObjectLike>(
@@ -21,12 +21,9 @@ export function useCascader<T extends ObjectLike>(
   const { handleProps } = options || {}
   const { elCascader, getCheckedNodes } = useElCascader()
   const setRef = (options?.setRef || ((el: ElCalendar) => elCascader.value = el)) as unknown as string
-  const { createProps } = useComponentProps(props, 'cascader', {
-    propNames,
-    globalPropNames: globalCascaderPropNames,
-    handleProps
-  })
-  const on = context && generateEmits(context.emit, emitNames)
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
+  const { createProps } = useComponentProps(props, 'cascader', { propNames, globalPropNames: globalCascaderPropNames, handleProps })
+  const on = context ? generateEmits(context.emit, emitNames) : options?.on
 
   return {
     expose: {

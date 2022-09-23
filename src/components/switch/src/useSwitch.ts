@@ -6,7 +6,7 @@ import { useComponentProps, UseComponentParamsOptions } from "../../../composabl
 import { globalSwitchPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../types/object-like"
 
-const propNames = ['value', 'disabled', 'name']
+const _propNames = ['disabled', 'name']
 
 export function useSwitch<T extends ObjectLike>(
   props: SwitchProps | T,
@@ -15,18 +15,18 @@ export function useSwitch<T extends ObjectLike>(
 ) {
   const { handleProps } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
-
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'switch', { propNames, globalPropNames: globalSwitchPropNames, handleProps })
   
   const setRef = (options?.setRef || ((el: ElSwitch) => elSwitch.value = el)) as unknown as string
-  const on = context && {
+  const on = context ? {
     input(value: string | number | boolean) {
       context.emit('input', value)
     },
     change(value: string | number | boolean) {
       context.emit('change', value)
     }
-  }
+  } : options?.on
 
   return {
     expose: {

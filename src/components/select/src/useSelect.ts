@@ -10,7 +10,7 @@ import { UseComponentParamsOptions, useComponentProps } from "../../../composabl
 import { globalSelectPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../types/object-like"
 
-const propNames = ['name', 'id', 'value', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
+const _propNames = ['name', 'id', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
 const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
 
 export function useSelect<T extends ObjectLike>(
@@ -21,8 +21,8 @@ export function useSelect<T extends ObjectLike>(
   const { handleProps } = options || {}
   const { elSelect, focus, blur } = useElSelect()
   const setRef = (options?.setRef || ((el: ElSelect) => elSelect.value = el)) as unknown as string
-  const on = context && generateEmits(context.emit, emitNames)
-
+  const on = context ? generateEmits(context.emit, emitNames) : options?.on
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
 
   return {

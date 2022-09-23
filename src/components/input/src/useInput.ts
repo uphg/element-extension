@@ -12,16 +12,18 @@ import { ObjectLike } from "../../../types/object-like";
 import { globalInputPropNames } from "../../../shared/configPropertyMap";
 import { SetRef } from "../../../composables/useComponentProps";
 import pick from "../../../utils/pick";
+import { VNodeData } from "vue/types/umd";
 
 export interface UseInputOptins {
-  status: 0 | 1,
-  handleProps: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { propNames: string[]; globalPropNames: string[] }) => () => ObjectLike;
-  handleAttrs: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
-  setRef?: SetRef
+  status?: 0 | 1;
+  setRef?: SetRef;
+  on?: VNodeData['on'];
+  handleProps?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { propNames: string[]; globalPropNames: string[] }) => () => ObjectLike;
+  handleAttrs?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
 }
 
-const basePropNames = ['resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
-const _attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
+const _propNames = ['resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
+const attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
 const globalAttrNames = ['maxlength']
 
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
@@ -34,9 +36,7 @@ export function useInputProps(
 ) {
   const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
-  const _propNames = options?.status === 1 ? basePropNames : basePropNames.concat(['value'])
-  const propNames = globalInputProps ? _propNames : [..._propNames, ...globalInputPropNames]
-  const attrNames = globalInputProps ? _attrNames : [..._attrNames, ...globalAttrNames]
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
 
   const createProps = handleProps
     ? handleProps(props, globalInputProps, { propNames, globalPropNames: globalInputPropNames })
@@ -72,7 +72,7 @@ export function useInput<T extends ObjectLike>(
   const on = context ? {
     input: useOnInput(props, context),
     ...generateEmits(context.emit, otherEmitNames)
-  } : undefined
+  } : options?.on
 
   const { createProps, createAttrs } = useInputProps(props, context, options)
   const expose = { focus, blur, select, get elInput() { return elInput.value } }

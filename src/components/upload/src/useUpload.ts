@@ -11,7 +11,7 @@ import { ObjectLike } from "../../../types/object-like"
 import { globalUploadPropNames } from "../../../shared/configPropertyMap"
 import { ElUpload } from "../../../types/element-components"
 
-const basePropNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
+const _propNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
 const globalPropNames = globalUploadPropNames
 
 export function useUpload<T extends ObjectLike>(
@@ -24,7 +24,7 @@ export function useUpload<T extends ObjectLike>(
   const setRef = (
     options?.setRef || ((el: ElUpload) => elUpload.value = el)
   ) as unknown as string
-  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames: [...basePropNames, 'showFileList'], globalPropNames, handleProps })
+  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames: [..._propNames, 'showFileList'], globalPropNames, handleProps })
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
 

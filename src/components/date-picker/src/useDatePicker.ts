@@ -4,19 +4,20 @@ import { GlobalDateProps, PublicDateProps } from "./dateProps"
 import { SetRef, useComponentProps } from "../../../composables/useComponentProps"
 import { globalDatePropNames } from "../../../shared/configPropertyMap"
 import { renderSlot } from "../../../utils/renderSlot"
-import { empty } from "../../../shared/_commonProps"
 import { ObjectLike } from "../../../types/object-like"
 import { ElDatePicker } from "element-ui/types/date-picker"
 import { ElTimePicker } from "element-ui/types/time-picker"
 import { ElTimeSelect } from "element-ui/types/time-select"
+import { VNodeData } from "vue/types/umd"
 
 const _publicPropNames = ['readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
 
 type UseDatePickerOptions<Props> = {
-  status: 0 | 1, // 1: has value; 0: default;
   type: 1 | 2 | 3; // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
-  handleProps?: (props: Props, globalProps: GlobalDateProps | undefined, _options: { propNames: string[], globalPropNames: string[] }) => () => Props;
+  status?: 0 | 1; // 1: has value; 0: default;
   setRef?: SetRef;
+  on?: VNodeData['on'];
+  handleProps?: (props: Props, globalProps: GlobalDateProps | undefined, _options: { propNames: string[], globalPropNames: string[] }) => () => Props;
 }
 
 type DatePickerValue = Date | string | number | (string | number)[]
@@ -55,7 +56,7 @@ export function useDatePicker<T extends ObjectLike>(
     focus(event: FocusEvent) {
       context.emit('focus', event)
     }
-  } : empty
+  } : options?.on
 
   const setRef = (
     options.setRef || ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el)

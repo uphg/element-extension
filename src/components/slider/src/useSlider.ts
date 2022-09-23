@@ -6,7 +6,7 @@ import { globalSliderPropNames } from "../../../shared/configPropertyMap";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { ObjectLike } from "../../../types/object-like";
 
-const propNames = ['value', 'disabled']
+const disabledName = 'disabled'
 
 export function useSlider<T extends ObjectLike>(
   props: SliderProps | T,
@@ -15,18 +15,18 @@ export function useSlider<T extends ObjectLike>(
 ) {
   const elSlider = ref<ElSlider | null>(null)
   const { handleProps } = options || {}
-  const setRef = (
-    options?.setRef || ((el: ElSlider) => { elSlider.value = el })
-  ) as unknown as string
+  const setRef = (options?.setRef || ((el: ElSlider) => { elSlider.value = el })) as unknown as string
+  const propNames = options?.status === 1 ? [disabledName] : ['value', disabledName]
   const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
-  const on = context && {
+  const on = context ? {
     change(value: number) {
       context.emit('change', value)
     },
     input(value: number) {
       context.emit('input', value)
     }
-  }
+  } : options?.on
+  
   return {
     expose: {
       get elSlider() {

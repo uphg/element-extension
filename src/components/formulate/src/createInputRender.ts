@@ -14,13 +14,8 @@ import { useUpload } from "../../upload"
 
 import { empty } from "../../../shared/_commonProps"
 import { SetRef } from "../../../composables/useComponentProps"
-
 import { withDefaultProps } from "../../../utils/withDefaultProps"
-import { globalCascaderPropNames, globalCheckboxGroupPropNames, globalDatePropNames, globalInputNumberPropNames, globalInputPropNames, globalRadioGroupPropNames, globalSelectPropNames, globalSliderPropNames, globalSwitchPropNames, globalUploadPropNames } from "../../../shared/configPropertyMap"
 import pick from "../../../utils/pick";
-
-const datePropNames = ['readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
-const uploadPropNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
 
 export function createInputRender(
   props: FormulateField,
@@ -31,31 +26,38 @@ export function createInputRender(
   }
 ) {
   const { formData, setRef } = _options
+  const input = (value: string | number | boolean) => {
+    formData.value[props.key] = value
+  }
   switch (props.type) {
     case 'radio': {
       const { render } = useRadioGroup(props, empty, {
+        status: 1,
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
-            ...pick(props, propNames),
             value: formData.value[props.key],
+            ...pick(props, propNames),
             ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        setRef
+        }
       })
       return render
     }
 
     case 'checkbox': {
       const { render } = useCheckboxGroup(props, empty, {
+        status: 1,
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
             ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        setRef
+        }
       })
       return render
     }
@@ -64,6 +66,9 @@ export function createInputRender(
     case 'textarea':
     case 'password': {
       const { render } = useInput(props, empty, {
+        status: 1,
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
@@ -76,51 +81,54 @@ export function createInputRender(
             ...pick(props, attrNames),
             ...withDefaultProps(props, globalProps, globalAttrNames)
           })
-        },
-        setRef,
-        status: 1
+        }
       })
       return render
     }
     
     case 'number':
     case 'input-number': {
-      const propNames = ['name', 'disabled', 'label', 'placeholder']
       const { render } = useInputNumber(props, empty, {
-        handleProps(_props, globalProps) {
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
-            ...withDefaultProps(props, globalProps, globalInputNumberPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        setRef
+        }
       })
       return render
     }
 
     case 'select': {
-      const propNames = ['name', 'id', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
       const { render } = useSelect(props, empty, {
-        handleProps(_props, globalProps) {
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
-            ...withDefaultProps(props, globalProps, globalSelectPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
+        }
       })
       return render
     }
     
     case 'cascader': {
-      const propNames = ['placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
       const { render } = useCascader(props, empty, {
-        handleProps(_props, globalProps) {
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
-            ...withDefaultProps(props, globalProps, globalCascaderPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         }
       })
@@ -129,12 +137,15 @@ export function createInputRender(
 
     case 'switch': {
       const { render } = useSwitch(props, empty, {
-        handleProps(_props, globalProps) {
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             disabled: props.disabled,
             name: props.name,
-            ...withDefaultProps(props, globalProps, globalSwitchPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
         }
       })
@@ -143,14 +154,16 @@ export function createInputRender(
 
     case 'slider': {
       const { render } = useSlider(props, empty, {
-        handleProps(_props, globalProps) {
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { globalPropNames }) {
           return () => ({
             value: props.value,
             disabled: props.disabled,
-            ...withDefaultProps(props, globalProps, globalSliderPropNames)
+            ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        setRef
+        }
       })
       return render
     }
@@ -158,33 +171,35 @@ export function createInputRender(
     case 'time':
     case 'time-picker': {
       const { render } = useDatePicker(props, empty, {
-        handleProps(_props, globalProps) {
-          return () => ({
-            value: formData.value[props.key],
-            ...pick(props, datePropNames),
-            ...withDefaultProps(props, globalProps, globalDatePropNames)
-          })
-        },
         type: 2,
-        status: 1
-      })
-
-      return render
-    }
-
-    case 'time-select': {
-      const { render } = useDatePicker(props, empty, {
+        status: 1,
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
             ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        type: 3,
-        status: 1
+        }
       })
+      return render
+    }
 
+    case 'time-select': {
+      const { render } = useDatePicker(props, empty, {
+        type: 3,
+        status: 1,
+        setRef,
+        on: { input },
+        handleProps(_props, globalProps, { propNames, globalPropNames }) {
+          return () => ({
+            value: formData.value[props.key],
+            ...pick(props, propNames),
+            ...withDefaultProps(props, globalProps, globalPropNames)
+          })
+        }
+      })
       return render
     }
 
@@ -199,32 +214,33 @@ export function createInputRender(
     case 'datetimerange':
     case 'date-picker': {
       const { render } = useDatePicker(props, empty, {
+        type: 1,
+        status: 1,
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             value: formData.value[props.key],
             ...pick(props, propNames),
             ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        type: 1,
-        status: 1
+        }
       })
-
       return render
     }
 
     case 'file':
     case 'upload': {
       const { render } = useUpload(props, empty, {
+        setRef,
+        on: { input },
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             ...pick(props, propNames),
             ...withDefaultProps(props, globalProps, globalPropNames)
           })
-        },
-        setRef
+        }
       })
-
       return render
     }  
   }

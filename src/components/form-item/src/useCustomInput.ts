@@ -64,34 +64,31 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
     case 'textarea':
     case 'input': {
       return useInput<T>(props, context, {
-        handleProps: (_props, globalProps?) => () => ({
-          value: props.value,
-          validateEvent: props.validateEvent,
-          label: props.label,
-          showPassword: props.showPassword,
-          type: props.type,
-          disabled: props.disabled,
-          readonly: props.readonly,
-          resize: props.extends.resize,
-          form: props.extends.form,
-          autocomplete: props.extends.autocomplete,
-          tabindex: props.extends.tabindex,
-
-          // global
-          ...withDefaultProps(props, globalProps, ['clearable', 'showWordLimit', 'size']),
-          ...withDefaultProps(props.extends, globalProps, ['autosize', 'suffixIcon', 'prefixIcon'])
-        }),
-        handleAttrs: (_props, globalProps) => () => ({
-          placeholder: context.attrs.placeholder,
-          name: context.attrs.name,
-          step: context.attrs.step,
-          autofocus: context.attrs.autofocus,
-          rows: context.attrs.rows,
-          minlength: context.attrs.minlength,
-          max: context.attrs.max,
-          min: context.attrs.min,
-          ...withDefaultProps(context.attrs, globalProps, ['maxlength'])
-        })
+        handleProps(_props, globalProps?) {
+          return () => ({
+            value: props.value,
+            validateEvent: props.validateEvent,
+            label: props.label,
+            showPassword: props.showPassword,
+            type: props.type,
+            disabled: props.disabled,
+            readonly: props.readonly,
+            resize: props.extends.resize,
+            form: props.extends.form,
+            autocomplete: props.extends.autocomplete,
+            tabindex: props.extends.tabindex,
+  
+            // global
+            ...withDefaultProps(props, globalProps, ['clearable', 'showWordLimit', 'size']),
+            ...withDefaultProps(props.extends, globalProps, ['autosize', 'suffixIcon', 'prefixIcon'])
+          })
+        },
+        handleAttrs(_props, globalProps, { attrNames }) {
+          return () => ({
+            ...pick(context.attrs, attrNames),
+            ...withDefaultProps(context.attrs, globalProps, ['maxlength'])
+          })
+        }
       })
     }
 
@@ -157,9 +154,7 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           return () => ({
             value: props.value,
             disabled: props.disabled,
-            validateEvent: props.validateEvent,
             name: context.attrs.name,
-
             ...withDefaultProps(props, globalProps, globalPropNames),
             ...withDefaultProps(props.extends, globalProps, globalExtendsNames)
           })
@@ -174,7 +169,6 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
           return () => ({
             value: props.value || 0,
             disabled: props.disabled,
-            
             ...withDefaultProps(props.extends, globalProps, globalPropNames)
           })
         }
@@ -194,9 +188,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             name: context.attrs.name,
             
             // global props
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
+            placeholder: context.attrs.placeholder || globalProps?.placeholder,
           })
         }
       })
@@ -214,9 +208,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             name: context.attrs.name,
 
             // global props
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
+            placeholder: context.attrs.placeholder || globalProps?.placeholder,
           })
         }
       })
@@ -234,9 +228,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             name: context.attrs.name,
 
             // global props
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
+            placeholder: context.attrs.placeholder || globalProps?.placeholder,
           })
         }
       })
@@ -255,12 +249,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             name: context.attrs.name,
 
             // global props
-            accept: props.accept || globalProps?.accept || empty,
             ...withDefaultProps(props.extends, globalProps, globalPropNames),
+            accept: props.accept || globalProps?.accept || empty,
           })
         }
       })
     }
-      
   }
 }

@@ -4,11 +4,10 @@ import { ElRadioGroup } from "element-ui/types/radio-group"
 import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
-import { empty } from "../../../shared/_commonProps"
 import { ObjectLike } from "../../../types/object-like"
 import isNil from "../../../utils/isNil"
 
-const propNames = ['value', 'disabled', 'options'] // el props
+const _propNames = ['disabled', 'options'] // el props
 
 export function useRadioGroup<T extends ObjectLike>(
   props: RadioGroupProps | T,
@@ -17,6 +16,7 @@ export function useRadioGroup<T extends ObjectLike>(
 ) {
   const { handleProps, setRef: _setRef } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
   const setRef = (
     _setRef || ((el: ElRadioGroup) => elRadioGroup.value = el)
@@ -29,7 +29,7 @@ export function useRadioGroup<T extends ObjectLike>(
     change: (value: string | number | boolean) => {
       context.emit('change', value)
     }
-  } : empty
+  } : options?.on
 
   const Radio = (isNil(props.withButton) ? globalProps?.withButton : props.withButton) ? RadioButton : _Radio
   const withBorder = (isNil(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean

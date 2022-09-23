@@ -7,7 +7,7 @@ import { ObjectLike } from "../../../types/object-like"
 import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap"
 import isNil from "../../../utils/isNil"
 
-const propNames = ['value', 'disabled']
+const _propNames = ['disabled']
 
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
@@ -16,19 +16,20 @@ export function useCheckboxGroup<T extends ObjectLike>(
 ) {
   const { handleProps, setRef: _setRef } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)
+  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps, globalProps } = useComponentProps(props,'form', { propNames, globalPropNames: globalCheckboxGroupPropNames, handleProps })
   const setRef = (
     _setRef || ((el: ElCheckboxGroup) => elCheckboxGroup.value = el)
   ) as unknown as string
 
-  const on = context && {
+  const on = context ? {
     input(value: string | number | boolean) {
       context.emit('input', value)
     },
     change(value: string | number | boolean) {
       context.emit('change', value)
     }
-  }
+  } : options?.on
 
   const Checkbox = (isNil(props.withButton) ? globalProps?.withButton : props.withButton) ? CheckboxButton : _Checkbox
   const withBorder = (isNil(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
