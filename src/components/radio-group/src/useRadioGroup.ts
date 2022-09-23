@@ -18,9 +18,7 @@ export function useRadioGroup<T extends ObjectLike, U extends GlobalRadioGroupPr
   const elRadioGroup = ref<ElRadioGroup | null>(null)
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
-  const setRef = (
-    _setRef || ((el: ElRadioGroup) => elRadioGroup.value = el)
-  ) as unknown as string
+  const setRef = (_setRef || ((el: ElRadioGroup) => elRadioGroup.value = el)) as unknown as string
 
   const on = context ? {
     input: (value: string | number | boolean) => {

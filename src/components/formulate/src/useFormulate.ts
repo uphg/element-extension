@@ -94,9 +94,9 @@ function mapFields<T extends MapFieldsItem>(
   }
 }
 
-function renderFormItem(item: MapFieldsItem, index: string | number, children: VNodeChildren) {
+function renderFormItem(item: MapFieldsItem, id: string | number, children: VNodeChildren) {
   return h(FormItem, {
-    key: `e.form.item.${index}`,
+    key: `e.form.item.${id}`,
     props: {
       label: item.label,
       labelWidth: item.labelWidth,
@@ -164,12 +164,11 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   }
 
   function renderFormBlock(item: MapFieldsItem, id: string | number) {
-
     return (item.vIf && !item.vIf(formData.value))
       ? null
       : renderFormItem(item, id, (
-        isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
-      ))
+          isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
+        ))
   } 
 
   return {

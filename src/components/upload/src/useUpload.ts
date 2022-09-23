@@ -21,12 +21,16 @@ export function useUpload<T extends ObjectLike>(
 ) {
   const { handleProps } = options || {}
   const { elUpload, clearFiles, abort, submit } = useElUpload()
-  const setRef = (
-    options?.setRef || ((el: ElUpload) => elUpload.value = el)
-  ) as unknown as string
+  const setRef = (options?.setRef || ((el: ElUpload) => elUpload.value = el)) as unknown as string
   const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames: [..._propNames, 'showFileList'], globalPropNames, handleProps })
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
+
+  const uploadListOn = {
+    remove(file: ElUploadFile) {
+      elUpload.value?.handleRemove(file)
+    }
+  }
 
   return {
     expose: {
@@ -54,13 +58,9 @@ export function useUpload<T extends ObjectLike>(
           listType,
           handlePreview: props.onPreview
         },
-        on: {
-          remove(file: ElUploadFile) {
-            elUpload.value?.handleRemove(file)
-          }
-        },
+        on: uploadListOn,
         scopedSlots: {
-          default: context && ((props) => {
+          default: context && ((props: ObjectLike) => {
             if (context.slots.file) {
               return context.slots.file({ file: props.file })
             }
@@ -81,7 +81,6 @@ export function useUpload<T extends ObjectLike>(
                 : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
             ),
             context.slots.tip?.(),
-            showFileList && uploadList
           ])
 
       return h(Upload, {
@@ -90,7 +89,7 @@ export function useUpload<T extends ObjectLike>(
           ...uploadProps,
           showFileList: listType === 'picture-card' ? showFileList : false
         },
-      }, slots)
+      }, slots?.concat(listType === 'picture-card' ? showFileList && uploadList : []))
     }
   }
 }
