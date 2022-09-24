@@ -2,9 +2,10 @@
   <div class="test">
     <!-- <TestConfig /> -->
     <!-- <TestTransition /> -->
-    <TestUpload />
+    <!-- <TestUpload /> -->
     <!-- <TestSelect /> -->
     <!-- <TestInput /> -->
+    <TestForm />
   </div>
 </template>
 
@@ -14,4 +15,5 @@ import TestUpload from './upload.vue'
 import TestSelect from './select.vue'
 import TestTransition from './transition.vue'
 import TestInput from './input.vue'
+import TestForm from './form.vue'
 </script>
