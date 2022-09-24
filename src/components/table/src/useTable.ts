@@ -19,7 +19,7 @@ export function useTable(
 ) {
   const { handleProps } = options || {}
   const { elTable, setRef, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
-  const on = context && useElTableEmit(context.emit)
+  const on = context ? useElTableEmit(context.emit) : options?.on
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTablePropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
 

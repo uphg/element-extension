@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from "vue"
+import { ElUpload } from "element-ui/types/upload"
+import { ExtractPropTypes, PropType } from "vue"
 import { empty } from "../../../shared/_commonProps"
 
 export type GlobalUploadProps = ExtractPropTypes<typeof globalUploadProps>
@@ -44,7 +45,7 @@ export const globalUploadProps = {
     default: empty // true
   },
   httpRequest: {
-    type: Function,
+    type: Function as PropType<ElUpload["httpRequest"]>,
     default: empty
   },
 }

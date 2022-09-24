@@ -1,1 +1,1 @@
-export type ObjectLike = {[key: string]: any}
+export type ObjectLike = {[key: string]: ObjectLike | unknown | any}

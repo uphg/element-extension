@@ -15,6 +15,14 @@ import { empty } from "../../../shared/_commonProps"
 import { SetRef } from "../../../composables/useComponentProps"
 import { withDefaultProps } from "../../../utils/withDefaultProps"
 import pick from "../../../utils/pick";
+import { ObjectLike } from "../../../types/object-like"
+import { ComponentProps, ComponentGlobalProps } from "../../../types/component"
+
+type HandleProps = (
+  props: ComponentProps | FormulateField | ObjectLike,
+  globalProps: ComponentGlobalProps | ObjectLike,
+  options: { propNames: string[]; globalPropNames: string[] }
+) => () => ObjectLike
 
 export function createInputRender(
   props: FormulateField,
@@ -30,7 +38,7 @@ export function createInputRender(
     }
   }
 
-  const handleProps = (_props: any, globalProps: any, { propNames, globalPropNames }: { propNames: string[]; globalPropNames: string[] }) => {
+  const handleProps: HandleProps = (_props, globalProps, { propNames, globalPropNames }) => {
     return () => ({
       value: formData.value[props.key],
       ...pick(props, propNames),

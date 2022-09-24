@@ -1,13 +1,11 @@
 import { Pagination } from "element-ui";
 import { h, SetupContext } from "vue";
 import { PaginationProps, GlobalPaginationProps } from "./paginationProps";
-import { generateEmits } from "../../../utils/generateEmits";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 import { globalPaginationPropNames } from "../../../shared/configPropertyMap";
 import { ObjectLike } from "../../../types/object-like";
 
 const propNames = ['pageSize', 'total', 'pageCount', 'currentPage', 'disabled']
-const emitNames = ['size-change', 'current-change', 'prev-click', 'next-click']
 
 export function usePagination(
   props: PaginationProps,
@@ -16,7 +14,20 @@ export function usePagination(
 ) {
   const { handleProps } = options || {}
   const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames: globalPaginationPropNames, handleProps })
-  const on = context && generateEmits(context.emit, emitNames)
+  const on = context ? {
+    'size-change': (size: number) => {
+      context?.emit('size-change', size)
+    },
+    'current-change': (current: number) => {
+      context?.emit('current-change', current)
+    },
+    'prev-click': (current: number) => {
+      context?.emit('prev-click', current)
+    },
+    'next-click': (current: number) => {
+      context?.emit('next-click', current)
+    }
+  } : options?.on
 
   return {
     render: () => h(Pagination, { props: createProps(), on }, context?.slots.default?.())
