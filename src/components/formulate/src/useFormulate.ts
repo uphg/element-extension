@@ -169,9 +169,8 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
       : renderFormItem(item, id, (
           isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
         ))
-  } 
-  console.log('props.gutter')
-  console.log(props.gutter)
+  }
+
   return {
     expose: {
       validate, validateField, resetFields, clearValidate, setValues, getValues, submit,
