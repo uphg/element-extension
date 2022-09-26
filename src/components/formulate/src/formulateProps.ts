@@ -25,6 +25,7 @@ export type ButtonProps = {
 
 export type FormulateField =  {
   label: string;
+  default: CustomInputValue;
   type?: CustomInputTypes;
   rules?: FormRule[];
   required?: boolean;

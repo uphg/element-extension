@@ -2,7 +2,7 @@ import { computed, h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
 import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
-import { isArray, isObject, pick } from "../../../utils"
+import { isArray, isObject, pick, isNil } from "../../../utils"
 import { CustomInputValue } from "../../../types/customInput"
 import { FormRules, FormData } from '../../../types/form'
 import { useElForm } from '../../../composables/useElForm'
@@ -34,7 +34,14 @@ function resetFormData(formData: { [key: string]: CustomInputValue }, baseFields
   } else {
     fieldKeys.forEach(key => {
       const type = baseFields[key].type
-      if (!key) return
+      const defaultValue = baseFields[key].default
+      if (!key) {
+        return
+      }
+      if (!isNil(defaultValue)) {
+        formData[key] = defaultValue
+        return
+      }
       switch (type) {
         case 'cascader':
         case 'checkbox':
