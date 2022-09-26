@@ -1,4 +1,4 @@
-import { VNodeData } from "vue";
+import { VNodeChildren, VNodeData } from "vue";
 import { ConfigPropertyName } from "../shared/configPropertyMap";
 import { useGlobalProps } from "./useGlobalProps"
 import { withDefaultProps } from "../utils/withDefaultProps";
@@ -13,6 +13,7 @@ import { ElSlider } from "element-ui/types/slider";
 import { ElTimeSelect } from "element-ui/types/time-select";
 import { ElTimePicker } from "element-ui/types/time-picker";
 import { ElDatePicker } from "element-ui/types/date-picker";
+import { VNode } from "vue/types/umd";
 
 type ComponentPropsOptions<Props, GlobalProps> = {
   propNames: string[];
@@ -24,7 +25,8 @@ export type UseComponentParamsOptions<Props, GlobalProps> = {
   handleProps?: HandleProps<Props, GlobalProps>,
   setRef?: SetRef,
   status?: 0 | 1,
-  on?: VNodeData['on']
+  on?: VNodeData['on'],
+  children?: () => VNodeChildren | VNode
 }
 
 export interface HandleProps<Props, GlobalProps> {

@@ -11,6 +11,18 @@ export interface MapRules {
 
 export type FormulateDataProps = ExtractPropTypes<typeof formulateDataProps>
 
+export type ButtonProps = {
+  hue?: string;
+  size?: string;
+  plain?: boolean;
+  round?: boolean;
+  circle?: boolean;
+  autofocus?: string;
+  icon?: string;
+  text?: string;
+  onClick?: (event: MouseEvent) => void;
+}
+
 export type FormulateField =  {
   label: string;
   type?: CustomInputTypes;
@@ -35,16 +47,7 @@ export type FormulateField =  {
   scopedSlots: VNodeData['scopedSlots'];
   tipClass: string;
   tipItemClass: string;
-  button: {
-    hue: string;
-    size: string;
-    plain: boolean;
-    round: boolean;
-    circle: boolean;
-    autofocus: boolean;
-    icon: string;
-    text: string;
-  }
+  button: ButtonProps
   onClick: (event: MouseEvent) => void
 } & ElFormItemProps & CustomInputProps
 

@@ -1,5 +1,5 @@
-import { Ref } from "vue"
-import { FormulateField } from "./formulateProps"
+import { h, Ref, VNodeChildren } from "vue"
+import { ButtonProps, FormulateField } from "./formulateProps"
 import { FormData } from '../../../types/form'
 import { useRadioGroup } from "../../radio-group"
 import { useCheckboxGroup } from "../../checkbox-group"
@@ -17,6 +17,7 @@ import { withDefaultProps } from "../../../utils/withDefaultProps"
 import pick from "../../../utils/pick";
 import { ObjectLike } from "../../../types/object-like"
 import { ComponentProps, ComponentGlobalProps } from "../../../types/component"
+import { Button } from "element-ui"
 
 type HandleProps = (
   props: ComponentProps | FormulateField | ObjectLike,
@@ -127,6 +128,8 @@ export function createInputRender(
 
     case 'file':
     case 'upload': {
+      const { button, tips } = props || {}
+      const renderButton = useButton(button)
       const { render } = useUpload(props, empty, {
         setRef,
         on,
@@ -140,4 +143,29 @@ export function createInputRender(
       return render
     }  
   }
+}
+
+function renderTips<T extends { tipClass?: string; tipItemClass?: string; tips: string[]; }>(props: T) {
+  return h('div', {
+      class: props.tipClass || 'el-upload__tip',
+      slot: 'tip',
+    }, props.tips.map((item: string) => h('div', {
+      class: props.tipItemClass || 'el-upload__tip-item',
+    }, [item]))
+  )
+}
+
+function useButton(props: ButtonProps, _children?: VNodeChildren | string) {
+  const children = _children || props.text && [props.text] 
+  return () => h(Button, {
+    props: {
+      hue: props.hue,
+      size: props.size,
+      plain: props.plain,
+      round: props.round,
+      circle: props.circle,
+      autofocus: props.autofocus,
+      icon: props.icon
+    }
+  },  children)
 }
