@@ -16,7 +16,7 @@ const globalPropNames = globalUploadPropNames
 
 export function useUpload<T extends ObjectLike>(
   props: UploadProps | T,
-  context?: SetupContext<{}>,
+  context?: Partial<SetupContext<{}>>,
   options?: UseComponentParamsOptions<UploadProps | ObjectLike, GlobalUploadProps>
 ) {
   const { handleProps } = options || {}
@@ -26,7 +26,7 @@ export function useUpload<T extends ObjectLike>(
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
 
-  const uploadListOn = {
+  const uploadListOn = context?.emit && {
     remove(file: ElUploadFile) {
       elUpload.value?.handleRemove(file)
     }
@@ -61,7 +61,7 @@ export function useUpload<T extends ObjectLike>(
         on: uploadListOn,
         scopedSlots: {
           default: context && ((props: ObjectLike) => {
-            if (context.slots.file) {
+            if (context.slots?.file) {
               return context.slots.file({ file: props.file })
             }
           })
@@ -70,17 +70,17 @@ export function useUpload<T extends ObjectLike>(
 
       const slots = context && (listType === 'picture-card'
         ? [
-            renderSlot(context, 'tip'),
-            renderSlot(context, 'trigger'),
-            renderSlot(context, 'default'),
+            renderSlot(context as SetupContext<{}>, 'tip'),
+            renderSlot(context as SetupContext<{}>, 'trigger'),
+            renderSlot(context as SetupContext<{}>, 'default'),
           ]
         : [
-            context.slots.default && (
-              context.slots.trigger
-                ? context.slots.default().concat(renderSlot(context, 'trigger')!)
+            context.slots?.default && (
+              context.slots?.trigger
+                ? context.slots.default().concat(renderSlot(context as SetupContext<{}>, 'trigger')!)
                 : h(FakeSlot, { slot: 'trigger' }, context.slots.default ? context.slots.default() : [null])
             ),
-            context.slots.tip?.(),
+            context.slots?.tip?.(),
           ])
 
       return h(Upload, {

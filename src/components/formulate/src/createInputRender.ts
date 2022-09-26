@@ -130,7 +130,10 @@ export function createInputRender(
     case 'upload': {
       const { button, tips } = props || {}
       const renderButton = useButton(button)
-      const { render } = useUpload(props, empty, {
+      const { render } = useUpload(props, { slots: {
+        default: () => [renderButton()],
+        tip: () => [renderTips(props)]
+      } }, {
         setRef,
         on,
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
@@ -159,7 +162,7 @@ function useButton(props: ButtonProps, _children?: VNodeChildren | string) {
   const children = _children || props.text && [props.text] 
   return () => h(Button, {
     props: {
-      hue: props.hue,
+      type: props.hue,
       size: props.size,
       plain: props.plain,
       round: props.round,

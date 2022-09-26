@@ -22,11 +22,11 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 }
 
 export type UseComponentParamsOptions<Props, GlobalProps> = {
+  setRef?: SetRef;
+  status?: 0 | 1;
+  on?: VNodeData['on'];
+  children?: () => VNodeChildren | VNode;
   handleProps?: HandleProps<Props, GlobalProps>,
-  setRef?: SetRef,
-  status?: 0 | 1,
-  on?: VNodeData['on'],
-  children?: () => VNodeChildren | VNode
 }
 
 export interface HandleProps<Props, GlobalProps> {

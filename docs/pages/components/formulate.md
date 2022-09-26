@@ -12,6 +12,16 @@ formulate/base
 
 :::
 
+## 前缀/后缀
+
+可以使用 `itemPrefix`/`itemSuffix` 添加每个字段的 FormItem 前缀/后缀
+
+::: demo
+
+formulate/prefix-or-suffix
+
+:::
+
 ## 多列
 
 可传入数组设置多列
@@ -111,6 +121,7 @@ export type FormulateField =  {
 
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
+import FormulatePrefixOrSuffix from 'docs/demo/formulate/prefix-or-suffix.vue'
 import FormulateRows2 from 'docs/demo/formulate/rows-2.vue'
 import FormulateRows3 from 'docs/demo/formulate/rows-3.vue'
 import FormulateValidate from 'docs/demo/formulate/validate.vue'
