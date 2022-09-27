@@ -1,4 +1,4 @@
-import { defineComponent, h, ref, VNodeChildren } from "vue"
+import { defineComponent, h, onMounted, ref, VNodeChildren, nextTick, computed } from "vue"
 import { t } from 'element-ui/src/locale';
 import { Progress } from "element-ui";
 import { StaggeredTransitionGroup } from "../../staggered-transition-group";
@@ -11,6 +11,7 @@ export default defineComponent({
   emits: ['remove'],
   setup(props, context) {
     const focusing = ref(false)
+    const stop = ref(true)
     const fileOn = {
       focus() { focusing.value = true },
       blur() { focusing.value = false },
@@ -29,6 +30,12 @@ export default defineComponent({
       ? h('li', { class: 'el-upload-list__item-wrap', key: data.key }, [h('div', { ...data, key: 'div' + data.key }, children)])
       : h('li', data, children)
 
+    onMounted(() => {
+      nextTick(() => {
+        stop.value = false
+      })
+    })
+
     return () => h(
       props.listType === 'text' || props.listType === 'picture' ? StaggeredTransitionGroup : 'ul', {
       class: [
@@ -36,7 +43,7 @@ export default defineComponent({
         'el-upload-list--' + props.listType,
         { 'is-disabled': props.disabled }
       ],
-      props: props.listType === 'text' || props.listType === 'picture' ? { tag: 'ul', appear: true } : {}
+      props: props.listType === 'text' || props.listType === 'picture' ? { tag: 'ul', appear: true, stop: stop.value } : {}
     }, props.files.map(
         (file) => liWrap({
           class: ['el-upload-list__item', 'is-' + file.status, focusing.value ? 'focusing' : ''],

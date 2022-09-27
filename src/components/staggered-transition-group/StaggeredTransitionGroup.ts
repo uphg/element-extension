@@ -95,8 +95,8 @@ const EStaggeredTransitionGroup = defineComponent({
         css: false,
         appear: props.appear
       }
-      const tag = props.stop ? props.tag : 'transition-group'
-      return h(tag, {
+      // const tag = props.stop ? props.tag : 
+      return h('transition-group', {
         props: {
           tag: props.tag,
           ..._props

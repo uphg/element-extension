@@ -47,7 +47,7 @@ export function useUpload<T extends ObjectLike>(
         return elUpload.value?.uploadFiles
       }
     },
-    render: () => {
+    render() {
       const uploadProps = createProps()
       const showFileList = uploadProps.showFileList || globalProps?.showFileList || true
       const listType = props.listType || globalProps?.showFileList || 'text'

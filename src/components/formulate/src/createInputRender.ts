@@ -130,10 +130,12 @@ export function createInputRender(
     case 'upload': {
       const { button, tips } = props || {}
       const renderButton = useButton(button)
-      const { render } = useUpload(props, { slots: {
-        default: () => [renderButton()],
-        tip: () => [renderTips(props)]
-      } }, {
+      const renderTips = useTips(props)
+      const context = { slots: {
+        default: button && (() => [renderButton()]),
+        tip: tips && (() => [renderTips()])
+      } }
+      const { render } = useUpload(props, context, {
         setRef,
         on,
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
@@ -148,8 +150,8 @@ export function createInputRender(
   }
 }
 
-function renderTips<T extends { tipClass?: string; tipItemClass?: string; tips: string[]; }>(props: T) {
-  return h('div', {
+function useTips<T extends { tipClass?: string; tipItemClass?: string; tips: string[]; }>(props: T) {
+  return () => h('div', {
       class: props.tipClass || 'el-upload__tip',
       slot: 'tip',
     }, props.tips.map((item: string) => h('div', {
