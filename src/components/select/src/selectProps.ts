@@ -1,6 +1,20 @@
 import { ExtractPropTypes, PropType } from "vue"
+import { ObjectLike } from "../../../types/object-like"
 import { commonProps, empty } from "../../../shared/_commonProps"
-import { CustomInputOptions } from "../../../types/customInput"
+
+export interface SelectOption {
+  value: string | number | ObjectLike;
+  label: string | number;
+  disabled: boolean;
+}
+
+export type SelectOptionGroup = {
+  label: string;
+  disabled: boolean;
+  options: SelectOption
+}[]
+
+export type SelectOptions = SelectOption[]
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>
 export type GlobalSelectProps = ExtractPropTypes<typeof globalSelectProps>
@@ -59,6 +73,10 @@ export const selectProps = {
   ...globalSelectProps,
 
   // customize props
-  options: [Object, Array] as PropType<CustomInputOptions[]>,
-  optionGroups: commonProps.optionGroups
+  options: {
+    type: [Array] as PropType<SelectOptions>
+  },
+  optionGroups: {
+    type: [Array] as PropType<SelectOptionGroup>
+  }
 }

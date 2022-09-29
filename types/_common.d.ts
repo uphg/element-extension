@@ -1,5 +1,9 @@
-import { VNode, VNodeChildren } from "vue";
-import { ScopedSlot } from "vue/types/vnode";
+import { VNodeChildren } from "vue"
+import { ScopedSlot, VNode } from "vue/types/vnode"
+
+export type ObjectLike = {
+  [key: string]: ObjectLike | unknown | any
+}
 
 export type CustomInputTypes = 'button' | 'radio' | 'checkbox' | 'text' | 'password' | 'textarea' | 'number' | 'input-number' | 'select' | 'cascader' | 'date' | 'date-picker' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'time-select' | 'time-picker' | 'switch' | 'slider' | 'file' | 'upload'
 

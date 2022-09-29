@@ -1,3 +1,3 @@
-import { ElInputNumber } from "element-ui/types/input-number";
+import { ElInputNumber } from "./_element-components";
 
 export declare class EInputNumber extends ElInputNumber { }
