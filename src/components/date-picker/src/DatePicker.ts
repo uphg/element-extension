@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { datePickerProps } from "./dateProps";
 import { useDatePicker } from "./useDatePicker";
-import { ElementPartComponent } from "../../../types";
+import { ElementPartComponent } from "../../../../types/_common"
 
 const EDatePicker = defineComponent({
   name: 'EDatePicker',

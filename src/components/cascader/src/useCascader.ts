@@ -5,9 +5,9 @@ import { useElCascader } from "../../../composables/useElCascader"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from "../../../utils/renderSlot"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
-import { ElCalendar } from "../../../types/element-components"
+import { ElCalendar } from "../../../../types/_element-ui"
 import { VNodeData } from "vue/types/umd"
 
 const _propNames = ['placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']

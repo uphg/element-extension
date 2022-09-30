@@ -3,7 +3,7 @@ import { h, SetupContext } from "vue";
 import { PaginationProps, GlobalPaginationProps } from "./paginationProps";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
 import { globalPaginationPropNames } from "../../../shared/configPropertyMap";
-import { ObjectLike } from "../../../types/object-like";
+import { ObjectLike } from "../../../../types/_common";
 
 const propNames = ['pageSize', 'total', 'pageCount', 'currentPage', 'disabled']
 

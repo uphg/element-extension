@@ -1,15 +1,15 @@
 import { h, SetupContext } from "vue"
 import { Option, OptionGroup } from "element-ui"
-import { CustomInputOptions } from "../types/customInput"
+import { SelectOptionGroup, SelectOption } from "src/components/select/src/selectProps"
 
-type OptionProps = {
-  options?: CustomInputOptions[],
-  optionGroups?: CustomInputOptions[]
+interface OptionProps {
+  options?: SelectOption[];
+  optionGroups?: SelectOptionGroup;
 } 
 
 export function renderSelectOptions<T extends OptionProps>(props: T, context: SetupContext<{}> | undefined) {
 
-  const renderOptions = (item: CustomInputOptions, index: number) => h(Option, {
+  const renderOptions = (item: SelectOption, index: number) => h(Option, {
     key: `e.s.opt.${index}`,
     props: {
       label: item.label,
@@ -19,7 +19,7 @@ export function renderSelectOptions<T extends OptionProps>(props: T, context: Se
   }, context && [context.slots.options?.(item)])
 
   return props.optionGroups
-    ? (props.optionGroups as CustomInputOptions[])?.map(
+    ? props.optionGroups?.map(
       (group, i) => h(OptionGroup, {
         key: `e.s.opt.g${i}`,
         props: {

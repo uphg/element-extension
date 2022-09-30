@@ -3,8 +3,8 @@ import { Checkbox as _Checkbox, CheckboxButton, CheckboxGroup } from "element-ui
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group"
 import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
-import { ObjectLike } from "../../../types/object-like"
 import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap"
+import { ObjectLike } from "../../../../types/_common"
 import isNil from "../../../utils/isNil"
 
 const _propNames = ['disabled']

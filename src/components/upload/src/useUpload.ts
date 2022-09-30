@@ -7,7 +7,7 @@ import { FakeSlot, renderSlot } from "../../../utils/renderSlot"
 import { ElUploadFile } from "./uploadListProps"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { useElUpload } from "../../../composables/useElUpload"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 import { globalUploadPropNames } from "../../../shared/configPropertyMap"
 import { ElUpload } from "../../../types/element-components"
 

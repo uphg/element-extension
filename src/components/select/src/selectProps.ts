@@ -1,35 +1,37 @@
+import { QueryChangeHandler } from "element-ui/types/select";
 import { ExtractPropTypes, PropType } from "vue"
-import { ObjectLike } from "../../../types/object-like"
-import { commonProps, empty } from "../../../shared/_commonProps"
+import { ObjectLike } from "../../../../types/_common"
+import { commonProps, empty } from "../../../shared/commonProps"
 
 export interface SelectOption {
   value: string | number | ObjectLike;
   label: string | number;
   disabled: boolean;
 }
-
 export type SelectOptionGroup = {
   label: string;
   disabled: boolean;
-  options: SelectOption
+  options: SelectOptions
 }[]
-
 export type SelectOptions = SelectOption[]
-
 export type SelectProps = ExtractPropTypes<typeof selectProps>
 export type GlobalSelectProps = ExtractPropTypes<typeof globalSelectProps>
 
+const booleanProp = Boolean as PropType<boolean>
+const stringProp = String as PropType<string>
+const queryChangeHandler = Function as PropType<QueryChangeHandler>
+
 export const globalSelectProps = {
   valueKey: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   size: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   multiple: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   multipleLimit: {
@@ -37,39 +39,44 @@ export const globalSelectProps = {
     default: empty
   },
   clearable: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   popperClass: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   popperAppendToBody: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   }
 }
 
 export const selectProps = {
-  value: commonProps.value,
-  name: commonProps.name,
-  id: commonProps.id,
-  autocomplete: commonProps.autocomplete,
-  automaticDropdown: commonProps.automaticDropdown,
-  disabled: commonProps.disabled,
-  filterable: commonProps.filterable,
-  allowCreate: commonProps.allowCreate,
-  loading: commonProps.loading,
-  remote: commonProps.remote,
-  loadingText: commonProps.loadingText,
-  noMatchText: commonProps.noMatchText,
-  noDataText: commonProps.noDataText,
-  remoteMethod: commonProps.remoteMethod,
-  filterMethod: commonProps.filterMethod,
-  placeholder: commonProps.placeholder,
-  defaultFirstOption: commonProps.defaultFirstOption,
-  reserveKeyword: commonProps.reserveKeyword,
-  collapseTags: commonProps.collapseTags,
+  value: {
+    required: true
+  },
+  name: stringProp,
+  id: stringProp,
+  autocomplete: {
+    type: stringProp,
+    default: 'off'
+  },
+  automaticDropdown: booleanProp,
+  disabled: booleanProp,
+  loading: booleanProp,
+  filterable: booleanProp,
+  allowCreate: booleanProp,
+  remote: booleanProp,
+  loadingText: stringProp,
+  noMatchText: stringProp,
+  noDataText: stringProp,
+  remoteMethod: queryChangeHandler,
+  filterMethod: queryChangeHandler,
+  placeholder: stringProp,
+  defaultFirstOption: booleanProp,
+  reserveKeyword: booleanProp,
+  collapseTags: booleanProp,
   ...globalSelectProps,
 
   // customize props

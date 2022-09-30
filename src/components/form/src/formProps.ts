@@ -1,43 +1,54 @@
-import { ExtractPropTypes } from 'vue'
-import { commonProps, empty } from '../../../shared/_commonProps'
+import { ExtractPropTypes, PropType } from 'vue'
+import { ObjectLike } from '../../../../types/_common'
+import { commonProps, empty } from '../../../shared/commonProps'
 
 export type GlobalFormProps = ExtractPropTypes<typeof globalFormProps>
 export type FormProps = ExtractPropTypes<typeof formProps>
 
+const booleanProp = Boolean as PropType<boolean>
+const stringProp = String as PropType<string>
+
 export const globalFormProps = {
   labelWidth: {
-    type: commonProps.labelWidth.type,
+    type: stringProp,
     default: empty
   },
   labelPosition: {
-    type: commonProps.labelPosition.type,
+    type: stringProp,
     default: empty
   },
   inline: {
-    type: commonProps.inline.type,
+    type: booleanProp,
     default: empty
   },
   inlineMessage: {
-    type: commonProps.inlineMessage.type,
+    type: booleanProp,
     default: empty
   },
-  size: {
-    type: commonProps.size.type,
-    default: empty
-  }
+  size: commonProps.size
 }
 
 export const formProps = {
-  model: commonProps.model,
-  rules: commonProps.rules,
-  labelSuffix: commonProps.labelSuffix,
-  statusIcon: commonProps.statusIcon,
-  showMessage: commonProps.showMessage,
-  disabled: commonProps.disabled,
-  validateOnRuleChange: commonProps.validateOnRuleChange,
-  hideRequiredAsterisk: commonProps.hideRequiredAsterisk,
+  model: {
+    type: Object as PropType<ObjectLike>
+  },
+  rules: {
+    type: [Object, Array] as PropType<ObjectLike>
+  },
+  labelSuffix: {
+    type: stringProp,
+    default: ''
+  },
+  statusIcon: booleanProp,
+  showMessage: booleanProp,
+  disabled: booleanProp,
+  validateOnRuleChange: {
+    type: booleanProp,
+    default: true // el 默认 true
+  },
+  hideRequiredAsterisk: booleanProp,
   ...globalFormProps,
 
   // customize props
-  // withEnterNext: Boolean as PropType<boolean>, // 是否开启回车换行
+  // withEnterNext: booleanProp // 是否开启回车换行
 }

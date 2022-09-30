@@ -4,7 +4,7 @@ import { SwitchProps, GlobalSwitchProps } from "./switchProps"
 import { ElSwitch } from "../../../types/element-components"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalSwitchPropNames } from "../../../shared/configPropertyMap"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 
 const _propNames = ['disabled', 'name']
 

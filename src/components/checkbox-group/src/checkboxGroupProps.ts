@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue"
-import { commonProps, empty } from "../../../shared/_commonProps"
+import { commonProps, empty } from "../../../shared/commonProps"
 
 export type CheckboxGroupOption = {
   value:  string | number | boolean;
@@ -30,10 +30,7 @@ export const globalCheckboxGroupProps = {
     type: [Number, undefined] as PropType<number | undefined>,
     default: empty
   },
-  size: {
-    type: commonProps.size.type,
-    default: empty
-  },
+  size: commonProps.size,
   textColor: {
     type: [String, undefined] as PropType<string | undefined>,
     default: empty

@@ -35,6 +35,39 @@ export const globalCascaderProps = {
     default: true
   },
   collapseTags: Boolean,
+
+  // mixin props
+  placement: {
+    type: [String, undefined],
+    default: empty //  'bottom-start'
+  },
+  appendToBody: {
+    type: [Boolean, undefined],
+    default: empty // true
+  },
+  visibleArrow: {
+    type: Boolean,
+    default: empty // true
+  },
+  arrowOffset: {
+    type: [Number, undefined],
+    default: empty // 35
+  },
+  offset: {
+    default: empty // 0
+  },
+  boundariesPadding: {
+    type: [Number, undefined],
+    default: empty // 5
+  },
+  popperOptions: {
+    type: [Object, undefined],
+    default: empty // () => ({ gpuAcceleration: false })
+  },
+  transformOrigin: {
+    type: [Boolean, String, undefined],
+    default: empty // true
+  }
 }
 
 export const cascaderProps = {

@@ -1,17 +1,20 @@
 import { ExtractPropTypes, PropType } from "vue"
-import { empty,commonProps } from '../../../shared/_commonProps'
-import { InputType } from '../../../types/input'
+import { ObjectLike } from "../../../../types/_common";
+import { empty, commonProps } from '../../../shared/commonProps'
 
 export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { maxlength?: number; }
 export type InputProps = ExtractPropTypes<typeof inputProps>
 
+const booleanProp = Boolean as PropType<boolean>
+const stringProp = String as PropType<string>
+
 export const globalInputProps = {
   clearable: {
-    type: [Boolean] as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   showWordLimit: {
-    type: [Boolean] as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   size: {
@@ -19,30 +22,42 @@ export const globalInputProps = {
     default: empty
   },
   autosize: {
-    type: commonProps.autosize.type,
-    default: empty
+    type: [Boolean, Object] as PropType<boolean | ObjectLike>,
+    default: empty // false
   }
 }
 
 export const inputProps = {
   value: [String, Number] as PropType<string | number>,
   type: {
-    type: String as PropType<InputType>,
+    type: stringProp,
     default: 'text'
   },
-  resize: commonProps.resize,
-  form: commonProps.form,
-  disabled: commonProps.disabled,
-  readonly: commonProps.readonly,
-  autocomplete: commonProps.autocomplete,
-  validateEvent: commonProps.validateEvent,
-  suffixIcon: commonProps.suffixIcon,
-  prefixIcon: commonProps.prefixIcon,
-  label: String as PropType<string>,
-  showPassword: commonProps.showPassword,
-  tabindex: commonProps.tabindex,
+  resize: stringProp,
+  form: stringProp,
+  disabled: booleanProp,
+  readonly: booleanProp,
+  autocomplete: {
+    type: stringProp,
+    default: 'off'
+  },
+  validateEvent: {
+    type: booleanProp,
+    default: true
+  },
+  suffixIcon: stringProp,
+  prefixIcon: stringProp,
+  label: stringProp,
+  showPassword: {
+    type: booleanProp,
+    default: false
+  },
+  tabindex: stringProp,
   ...globalInputProps,
 
   // customize props
-  exclude: commonProps.exclude,
+  exclude: {
+    type: [String, Number, RegExp] as PropType<string | number | RegExp>,
+    default: null
+  },
 }

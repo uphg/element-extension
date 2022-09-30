@@ -1,4 +1,4 @@
-import { commonProps, empty } from "../../../shared/_commonProps";
+import { commonProps, empty } from "../../../shared/commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
 export type GlobalDateProps = ExtractPropTypes<typeof globalDateProps>
@@ -9,39 +9,38 @@ export type PublicDateProps = ExtractPropTypes<typeof dateProps>
 
 export type DateType = 'date' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'time-select' | 'time-picker'
 
+const booleanProp = Boolean as PropType<boolean>
+const stringProp = String as PropType<string>
+const defaultNull = {
+  default: '',
+}
 const datePickerTypes = ['date', 'year', 'month', 'dates', 'week', 'daterange', 'monthrange', 'datetime', 'datetimerange',]
 
 export const globalDateProps = {
-  size: {
-    type: commonProps.size.type,
-    default: empty
-  },
+  size: commonProps.size,
   editable: {
-    type: Boolean,
+    type: booleanProp,
     default: empty // true
   },
-  clearable: {
-    type: Boolean,
-    default: empty // true
-  },
+  clearable: booleanProp,
   placeholder: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   startPlaceholder: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   endPlaceholder: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   format: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   align: {
-    type: String,
+    type: stringProp,
     default: empty // 'left'
   },
   rangeSeparator: {
@@ -57,15 +56,15 @@ export const globalDateProps = {
     default: empty
   },
   valueFormat: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   unlinkPanels: {
-    type: Boolean,
+    type: booleanProp,
     default: empty
   },
   popperClass: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   pickerOptions: {
@@ -73,29 +72,25 @@ export const globalDateProps = {
     default: empty // {}
   },
   prefixIcon: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   clearIcon: {
-    type: String,
+    type: stringProp,
     default: empty // 'el-icon-circle-close'
   },
   validateEvent: {
-    type: Boolean,
+    type: booleanProp,
     default: empty // true
   },
 }
 
 export const dateProps = {
-  readonly: Boolean,
-  name: {
-    default: '',
-  },
-  disabled: Boolean,
-  id: {
-    default: '',
-  },
   value: {},
+  name: defaultNull,
+  id: defaultNull,
+  readonly: booleanProp,
+  disabled: booleanProp,
   ...globalDateProps
 }
 
@@ -108,18 +103,18 @@ export const datePickerProps = {
     }
   },
   ...dateProps,
-  timeArrowControl: Boolean
+  timeArrowControl: booleanProp
 }
 
 export const timePickerProps = {
   ...dateProps,
-  isRange: Boolean,
-  arrowControl: Boolean,
+  isRange: booleanProp,
+  arrowControl: booleanProp,
 }
 
 export const timeSelectProps = {
   type: {
-    type: String,
+    type: stringProp,
     default: 'time-select'
   },
   ...dateProps

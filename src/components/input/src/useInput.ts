@@ -8,7 +8,7 @@ import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
 import { renderSlots } from '../../../utils/renderSlot'
 import { useElInput } from "../../../composables/useElInput";
-import { ObjectLike } from "../../../types/object-like";
+import { ObjectLike } from "../../../../types/_common";
 import { globalInputPropNames } from "../../../shared/configPropertyMap";
 import { SetRef } from "../../../composables/useComponentProps";
 import pick from "../../../utils/pick";

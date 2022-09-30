@@ -4,7 +4,7 @@ import { ElSlider } from "element-ui/types/slider";
 import { GlobalSliderProps, SliderProps } from "./sliderProps";
 import { globalSliderPropNames } from "../../../shared/configPropertyMap";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
-import { ObjectLike } from "../../../types/object-like";
+import { ObjectLike } from "../../../../types/_common";
 
 const disabledName = 'disabled'
 

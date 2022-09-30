@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { tableProps } from "./tableProps"
 import { useTable } from "./useTable"
-import { ElementPartComponent } from "../../../types"
+import { ElementPartComponent } from "../../../../types/_common"
 
 const ETable = defineComponent({
   name: 'ETable',

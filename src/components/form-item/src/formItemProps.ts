@@ -1,13 +1,28 @@
 import { CascaderOption } from "element-ui/types/cascader-panel";
-import { CheckboxGroupOptions } from "src/components/checkbox-group/src/checkboxGroupProps";
-import { RadioGroupOptions } from "src/components/radio-group/src/radioGroupProps";
-import { SelectOptions } from "src/components/select/src/selectProps";
+import { cascaderProps } from "src/components/cascader";
+import { CheckboxGroupOptions, checkboxGroupProps } from "src/components/checkbox-group/src/checkboxGroupProps";
+import { datePickerProps, dateProps, timePickerProps } from "src/components/date-picker/src/dateProps";
+import { inputProps } from "src/components/input";
+import { inputNumberProps } from "src/components/input-number";
+import { RadioGroupOptions, radioGroupProps } from "src/components/radio-group/src/radioGroupProps";
+import { SelectOptions, selectProps } from "src/components/select/src/selectProps";
+import { sliderProps } from "src/components/slider";
+import { switchProps } from "src/components/switch";
+import { uploadProps } from "src/components/upload";
 import { ExtractPropTypes, PropType } from "vue";
-import { commonProps, elFormItemProps, empty } from "../../../shared/_commonProps";
+import { ObjectLike } from "../../../../types/_common";
+import { commonProps, empty } from "../../../shared/_commonProps";
 
 export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+
+const booleanProp = Boolean as PropType<boolean>
+const stringProp = String as PropType<string>
+const emptyStringProp = {
+  type: stringProp,
+  default: ''
+}
 
 export const formItemBaseProps = {
   type: {
@@ -18,33 +33,36 @@ export const formItemBaseProps = {
     type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
     default: ''
   },
-  clearable: commonProps.clearable,
-  size: commonProps.size,
-  disabled: commonProps.disabled,
-  readonly: commonProps.readonly,
-  showPassword: commonProps.showPassword,
-  showWordLimit: commonProps.showWordLimit,
-  validateEvent: commonProps.validateEvent,
   options: {
     type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
   },
-  action: commonProps.action,
-  headers: commonProps.headers,
-  multiple: commonProps.multiple,
-  fileList: commonProps.fileList,
-  accept: commonProps.accept,
-  format: commonProps.format,
-  pickerOptions: commonProps.pickerOptions,
+  clearable: commonProps.clearable,
+  disabled: booleanProp,
+  readonly: booleanProp,
+  showPassword: booleanProp,
+  showWordLimit: booleanProp,
+  validateEvent: {
+    type: booleanProp,
+    default: empty
+  },
+  action: uploadProps.action,
+  multiple: uploadProps.multiple,
+  headers: uploadProps.headers,
+  fileList: uploadProps.fileList,
+  accept: uploadProps.accept,
+  format: dateProps.format,
+  pickerOptions: dateProps.pickerOptions,
+  size: commonProps.size,
 
   // custom props
-  exclude: commonProps.exclude,
-  optionGroups: commonProps.optionGroups,
+  exclude: inputProps.exclude,
+  optionGroups: selectProps.optionGroups,
   withBorder: {
-    type: Boolean,
+    type: booleanProp,
     default: empty
   },
   withButton: {
-    type: Boolean,
+    type: booleanProp,
     default: empty
   }
 }
@@ -53,154 +71,159 @@ export const formItemExtendsProps = {
   popperClass: commonProps.popperClass,
   debounce: commonProps.debounce,
 
-  // radio
-  size: {
-    type: [commonProps.size.type, undefined],
-    default: empty
-  },
-  textColor: {
-    type: [String, undefined],
-    default: empty
-  },
-  fill: {
-    type: [String, undefined],
-    default: empty
-  },
+  // --- Radio
+  size: commonProps.size,
+  textColor: radioGroupProps.textColor,
+  fill: radioGroupProps.fill,
 
-  // checkout
-  min: {
-    type: [Number, undefined],
-    default: empty
-  },
-  max: {
-    type: [Number, undefined],
-    default: empty
-  },
+  // --- Checkout
+  min: checkboxGroupProps.min,
+  max: checkboxGroupProps.max,
 
-  // input
-  tabindex: commonProps.tabindex,
-  resize: commonProps.resize,
-  form: commonProps.form,
-  autocomplete: commonProps.autocomplete,
-  autosize: commonProps.autosize,
-  suffixIcon: commonProps.suffixIcon,
-  prefixIcon: commonProps.prefixIcon,
+  // --- Input
+  tabindex: inputProps.tabindex,
+  resize: inputProps.resize,
+  form: inputProps.form,
+  autocomplete: inputProps.autocomplete,
+  autosize: inputProps.autosize,
+  suffixIcon: inputProps.suffixIcon,
+  prefixIcon: inputProps.prefixIcon,
 
-  // input - number
-  step: commonProps.step,
-  stepStrictly: commonProps.stepStrictly,
-  precision: commonProps.precision,
-  controls: commonProps.controls,
-  controlsPosition: commonProps.controlsPosition,
+  // --- InputNumber
+  step: inputNumberProps.step,
+  stepStrictly: inputNumberProps.stepStrictly,
+  precision: inputNumberProps.precision,
+  controls: inputNumberProps.controls,
+  controlsPosition: inputNumberProps.controlsPosition,
 
-  // select
-  id: String,
-  automaticDropdown: commonProps.automaticDropdown,
-  filterable: commonProps.filterable,
-  allowCreate: commonProps.allowCreate,
-  loading: commonProps.loading,
-  remote: commonProps.remote,
-  loadingText: commonProps.loadingText,
-  noMatchText: commonProps.noMatchText,
-  noDataText: commonProps.noDataText,
-  remoteMethod: commonProps.remoteMethod,
-  filterMethod: commonProps.filterMethod,
-  multipleLimit: commonProps.multipleLimit,
-  defaultFirstOption: commonProps.defaultFirstOption,
-  reserveKeyword: commonProps.reserveKeyword,
-  valueKey: commonProps.valueKey,
-  collapseTags: commonProps.collapseTags,
-  popperAppendToBody: commonProps.popperAppendToBody,
+  // --- Select
+  id: selectProps.id,
+  automaticDropdown: selectProps.automaticDropdown,
+  filterable: selectProps.filterable,
+  allowCreate: selectProps.allowCreate,
+  loading: selectProps.loading,
+  remote: selectProps.remote,
+  loadingText: selectProps.loadingText,
+  noMatchText: selectProps.noMatchText,
+  noDataText: selectProps.noDataText,
+  remoteMethod: selectProps.remoteMethod,
+  filterMethod: selectProps.filterMethod,
+  multipleLimit: selectProps.multipleLimit,
+  defaultFirstOption: selectProps.defaultFirstOption,
+  reserveKeyword: selectProps.reserveKeyword,
+  valueKey: selectProps.valueKey,
+  collapseTags: selectProps.collapseTags,
+  popperAppendToBody: selectProps.popperAppendToBody,
 
-  // cascader
-  props: commonProps.props,
-  separator: commonProps.separator,
-  showAllLevels: commonProps.showAllLevels,
-  beforeFilter: commonProps.beforeFilter,
+  // --- Cascader
+  props: cascaderProps.props,
+  separator: cascaderProps.separator,
+  showAllLevels: cascaderProps.showAllLevels,
+  beforeFilter: cascaderProps.beforeFilter,
+  // Cascader: PopperMixin
+  placement: cascaderProps.placement,
+  appendToBody: cascaderProps.appendToBody,
+  visibleArrow: cascaderProps.visibleArrow,
+  arrowOffset: cascaderProps.arrowOffset,
+  offset: cascaderProps.offset,
+  boundariesPadding: cascaderProps.boundariesPadding,
+  popperOptions: cascaderProps.popperOptions,
+  transformOrigin: cascaderProps.transformOrigin,
 
-  // cascader - PopperMixin
-  placement: commonProps.placement,
-  appendToBody: commonProps.appendToBody,
-  visibleArrow: commonProps.visibleArrow,
-  arrowOffset: commonProps.arrowOffset,
-  offset: commonProps.offset,
-  boundariesPadding: commonProps.boundariesPadding,
-  popperOptions: commonProps.popperOptions,
-  transformOrigin: commonProps.transformOrigin,
+  // --- Date
+  defaultValue: dateProps.defaultValue,
+  defaultTime: dateProps.defaultTime,
+  valueFormat: dateProps.valueFormat,
+  startPlaceholder: dateProps.startPlaceholder,
+  endPlaceholder: dateProps.endPlaceholder,
+  clearIcon: dateProps.clearIcon,
+  editable: dateProps.editable,
+  align: dateProps.align,
+  rangeSeparator: dateProps.rangeSeparator,
+  unlinkPanels: dateProps.unlinkPanels,
 
-  // slider
-  label: commonProps.label,
+  // --- DatePicker
+  timeArrowControl: datePickerProps.timeArrowControl,
 
-  // date
-  defaultValue: commonProps.defaultValue,
-  defaultTime: commonProps.defaultTime,
-  valueFormat: commonProps.valueFormat,
-  startPlaceholder: commonProps.startPlaceholder,
-  endPlaceholder: commonProps.endPlaceholder,
-  clearIcon: commonProps.clearIcon,
-  editable: commonProps.editable,
-  align: commonProps.align,
-  rangeSeparator: commonProps.rangeSeparator,
-  unlinkPanels: commonProps.unlinkPanels,
+  // --- TimePicker
+  isRange: timePickerProps.isRange,
+  arrowControl: timePickerProps.arrowControl,
 
-  // DatePicker
-  timeArrowControl: commonProps.timeArrowControl,
+  // --- Switch
+  width: switchProps.width,
+  activeIconClass: switchProps.activeIconClass,
+  inactiveIconClass: switchProps.inactiveIconClass,
+  activeText: switchProps.activeText,
+  inactiveText: switchProps.inactiveText,
+  activeColor: switchProps.activeColor,
+  inactiveColor: switchProps.inactiveColor,
+  activeValue: switchProps.activeValue,
+  inactiveValue: switchProps.inactiveValue,
 
-  // TimePicker
-  isRange: commonProps.isRange,
-  arrowControl: commonProps.arrowControl,
-
-  // switch
-  width: commonProps.width,
-  activeIconClass: commonProps.activeIconClass,
-  inactiveIconClass: commonProps.inactiveIconClass,
-  activeText: commonProps.activeText,
-  inactiveText: commonProps.inactiveText,
-  activeColor: commonProps.activeColor,
-  inactiveColor: commonProps.inactiveColor,
-  activeValue: commonProps.activeValue,
-  inactiveValue: commonProps.inactiveValue,
-
-  // upload
-  limit: commonProps.limit,
-  drag: commonProps.drag,
-  data: commonProps.data,
-  dragger: commonProps.dragger,
-  withCredentials: commonProps.withCredentials,
-  showFileList: commonProps.showFileList,
-  beforeUpload: commonProps.beforeUpload,
-  beforeRemove: commonProps.beforeRemove,
-  onRemove: commonProps.onRemove,
-  onChange: commonProps.onChange,
-  onPreview: commonProps.onPreview,
-  onSuccess: commonProps.onSuccess,
-  onProgress: commonProps.onProgress,
-  onError: commonProps.onError,
-  autoUpload: commonProps.autoUpload,
-  listType: commonProps.listType,
-  httpRequest: commonProps.httpRequest,
-  onExceed: commonProps.onExceed,
-  action: commonProps.action,
-  headers: commonProps.headers,
-  multiple: commonProps.multiple,
-
-  // slider
+  // --- Slider
   // value - default: 0
   // min - default: 0
   // max - default: 100
   // step - default: 1
-  showInput: commonProps.showInput,
-  showInputControls: commonProps.showInputControls,
-  inputSize: commonProps.inputSize,
-  showStops: commonProps.showStops,
-  showTooltip: commonProps.showTooltip,
-  formatTooltip: commonProps.formatTooltip,
-  range: commonProps.range,
-  vertical: commonProps.vertical,
-  height: commonProps.height,
-  tooltipClass: commonProps.tooltipClass,
-  marks: commonProps.marks
+  label: sliderProps.label,
+  showInput: sliderProps.showInput,
+  showInputControls: sliderProps.showInputControls,
+  inputSize: sliderProps.inputSize,
+  showStops: sliderProps.showStops,
+  showTooltip: sliderProps.showTooltip,
+  formatTooltip: sliderProps.formatTooltip,
+  range: sliderProps.range,
+  vertical: sliderProps.vertical,
+  height: sliderProps.height,
+  tooltipClass: sliderProps.tooltipClass,
+  marks: sliderProps.marks,
+
+  // --- Upload
+  limit: uploadProps.limit,
+  drag: uploadProps.drag,
+  data: uploadProps.data,
+  dragger: uploadProps.dragger,
+  withCredentials: uploadProps.withCredentials,
+  showFileList: uploadProps.showFileList,
+  beforeUpload: uploadProps.beforeUpload,
+  beforeRemove: uploadProps.beforeRemove,
+  onRemove: uploadProps.onRemove,
+  onChange: uploadProps.onChange,
+  onPreview: uploadProps.onPreview,
+  onSuccess: uploadProps.onSuccess,
+  onProgress: uploadProps.onProgress,
+  onError: uploadProps.onError,
+  autoUpload: uploadProps.autoUpload,
+  listType: uploadProps.listType,
+  httpRequest: uploadProps.httpRequest,
+  onExceed: uploadProps.onExceed,
+  action: uploadProps.action,
+  headers: uploadProps.headers,
+  multiple: uploadProps.multiple,
 }
+
+export const elFormItemProps = {
+  label: emptyStringProp,
+  labelWidth: emptyStringProp,
+  prop: stringProp,
+  required: {
+    type: booleanProp,
+    default: empty
+  },
+  rules: [Object, Array] as PropType<ObjectLike | ObjectLike[]>,
+  error: stringProp,
+  validateStatus: stringProp,
+  for: stringProp,
+  inlineMessage: booleanProp,
+  showMessage: {
+    type: booleanProp,
+    default: true
+  },
+
+  // ?...
+  size: String as PropType<'medium' | 'small' | 'mini'>
+}
+
 
 export const formItemProps = {
   ...elFormItemProps,

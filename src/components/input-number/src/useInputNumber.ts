@@ -5,7 +5,7 @@ import { ElInputNumber } from "../../../types/element-components"
 import { generateEmits } from "../../../utils/generateEmits"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 import { globalInputNumberPropNames } from "../../../shared/configPropertyMap"
 
 const _propNames = ['name', 'disabled', 'label', 'placeholder']

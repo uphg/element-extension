@@ -15,7 +15,7 @@ import { empty } from "../../../shared/_commonProps"
 import { SetRef } from "../../../composables/useComponentProps"
 import { withDefaultProps } from "../../../utils/withDefaultProps"
 import pick from "../../../utils/pick";
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 import { ComponentProps, ComponentGlobalProps } from "../../../types/component"
 import { Button } from "element-ui"
 

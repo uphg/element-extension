@@ -8,7 +8,7 @@ import { UseComponentParamsOptions, useComponentProps } from "../../../composabl
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
 import { globalTablePropNames } from "../../../shared/configPropertyMap";
-import { ObjectLike } from "../../../types/object-like";
+import { ObjectLike } from "../../../../types/_common";
 
 const propNames = ['data', 'width', 'height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load']
 

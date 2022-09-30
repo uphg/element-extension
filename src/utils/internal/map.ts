@@ -1,4 +1,4 @@
-import { ObjectLike } from "src/types/object-like";
+import { ObjectLike } from "../../../types/_common";
 import isArray from "../isArray";
 
 export function map(obj: ObjectLike | unknown[], callback: (item: unknown, index: number | string, obj: ObjectLike) => unknown[]) {

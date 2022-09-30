@@ -1,3 +1,4 @@
+import { VueConstructor } from "vue"
 import { VNodeChildren } from "vue"
 import { ScopedSlot, VNode } from "vue/types/vnode"
 
@@ -18,3 +19,7 @@ export type CustomOptions = {
   children?: (VNode | VNodeChildren | ScopedSlot)[]
   options?: CustomOptions[]
 }
+
+export declare type ElementPartComponent<T> = {
+  install: (Vue: VueConstructor) => void
+} & T

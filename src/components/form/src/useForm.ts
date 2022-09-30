@@ -5,7 +5,7 @@ import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 
 const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 

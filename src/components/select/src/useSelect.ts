@@ -8,7 +8,7 @@ import { renderSlot } from '../../../utils/renderSlot'
 import { useElSelect } from "../../../composables/useElSelect"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { globalSelectPropNames } from "../../../shared/configPropertyMap"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 
 const _propNames = ['name', 'id', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
 const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']

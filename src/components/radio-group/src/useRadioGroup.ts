@@ -4,7 +4,7 @@ import { ElRadioGroup } from "element-ui/types/radio-group"
 import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
-import { ObjectLike } from "../../../types/object-like"
+import { ObjectLike } from "../../../../types/_common"
 import isNil from "../../../utils/isNil"
 
 const _propNames = ['disabled', 'options'] // el props

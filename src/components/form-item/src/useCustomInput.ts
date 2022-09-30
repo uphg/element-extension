@@ -16,7 +16,7 @@ import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { empty } from "../../../shared/_commonProps";
 import { pick } from "../../../utils";
 import { VNode } from "vue/types/umd";
-import { ObjectLike } from "src/types/object-like";
+import { ObjectLike } from "../../../../types/_common";
 
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
 const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon']
