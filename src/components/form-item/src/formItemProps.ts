@@ -1,3 +1,7 @@
+import { CascaderOption } from "element-ui/types/cascader-panel";
+import { CheckboxGroupOptions } from "src/components/checkbox-group/src/checkboxGroupProps";
+import { RadioGroupOptions } from "src/components/radio-group/src/radioGroupProps";
+import { SelectOptions } from "src/components/select/src/selectProps";
 import { ExtractPropTypes, PropType } from "vue";
 import { commonProps, elFormItemProps, empty } from "../../../shared/_commonProps";
 
@@ -21,7 +25,9 @@ export const formItemBaseProps = {
   showPassword: commonProps.showPassword,
   showWordLimit: commonProps.showWordLimit,
   validateEvent: commonProps.validateEvent,
-  options: commonProps.options,
+  options: {
+    type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
+  },
   action: commonProps.action,
   headers: commonProps.headers,
   multiple: commonProps.multiple,

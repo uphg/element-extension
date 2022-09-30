@@ -16,7 +16,7 @@ export declare class ElUpload extends _ElUpload {
   uploadDisabled: boolean;
   uploadFiles: { [key: string]: any }[];
   handleRemove: (file: any, raw?: string) => void;
-} 
+}
 
 export declare class ElCalendar extends _ElCalendar {
   getCheckedNodes: (leafOnly: boolean) => ObjectLike
