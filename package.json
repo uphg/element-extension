@@ -4,16 +4,19 @@
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "require": "./dist/index.umd.js",
+      "types": "./types/index.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "src"
-  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
