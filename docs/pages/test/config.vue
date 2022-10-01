@@ -59,7 +59,7 @@
   import { Table as ElTable, TableColumn as ElTableColumn } from 'element-ui';
   import { ref } from 'vue';
   import dayjs from 'dayjs'
-  import { RowCallbackParams } from 'src/types/table';
+  import { RowCallbackParams } from '../../../types/_element-ui';
   
   const tableData = ref([{
     date: new Date().getTime(),

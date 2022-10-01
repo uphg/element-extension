@@ -41,19 +41,9 @@ const routes: RouteConfig[] = [
     redirect: '/components/hello-world',
     children: [
       {
-        path: 'input',
-        name: 'ComponentsInput',
-        component: () => import('docs/pages/components/input.md')
-      },
-      {
-        path: 'select',
-        name: 'ComponentsSelect',
-        component: () => import('docs/pages/components/select.md')
-      },
-      {
-        path: 'switch',
-        name: 'ComponentsSwitch',
-        component: () => import('docs/pages/components/switch.md')
+        path: 'expand',
+        name: 'ComponentsExpand',
+        component: () => import('docs/pages/components/expand.md')
       },
       {
         path: 'form',
@@ -66,14 +56,9 @@ const routes: RouteConfig[] = [
         component: () => import('docs/pages/components/formulate.md')
       },
       {
-        path: 'table',
-        name: 'ComponentsTable',
-        component: () => import('docs/pages/components/table.md')
-      },
-      {
-        path: 'upload',
-        name: 'ComponentsUpload',
-        component: () => import('docs/pages/components/upload.md')
+        path: 'config-provider',
+        name: 'ComponentsConfigProvider',
+        component: () => import('docs/pages/components/config-provider.md')
       }
     ]
   }

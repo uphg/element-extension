@@ -8,33 +8,32 @@
 
 <script setup lang="ts">
 import { Message } from 'element-ui';
-import { RowCallbackParams } from 'src/types/table'
+import { RowCallbackParams } from '../../../types/_element-ui'
 import { ref, h } from 'vue';
 
 const tableData = ref([{
-  date: new Date().getTime(),
+  date: '2022-10-06',
   name: '王小虎',
   address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }, {
-  date: 1462320000000,
+  date: '2016-05-02',
   name: '李小妹',
   address: '上海市普陀区金沙江路 1518 弄',
   sex: 1
 }, {
-  date: 1462060800000,
+  date: '2016-05-03',
   name: '王小虎',
   address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }, {
-  date: 1462233600000,
+  date: '2016-05-06',
   name: '王小虎',
   address: '上海市普陀区金沙江路 1518 弄',
   sex: 0
 }])
 
 const tableColumns = [{
-  type: 'datetime',
   prop: 'date',
   label: '日期',
   width: '160',

@@ -34,19 +34,9 @@ const sidebars = [
     title: '组件',
     children: [
       {
-        title: 'Input 输入框',
-        name: 'ComponentsInput',
-        link: '/components/input'
-      },
-      {
-        title: 'Select 选择器',
-        name: 'ComponentsSelect',
-        link: '/components/select'
-      },
-      {
-        title: 'Switch 表单',
-        name: 'ComponentsSwitch',
-        link: '/components/switch'
+        title: '功能拓展',
+        name: 'ComponentsExpand',
+        link: '/components/expand'
       },
       {
         title: 'Form 表单',
@@ -59,14 +49,9 @@ const sidebars = [
         link: '/components/formulate'
       },
       {
-        title: 'Table 表格',
-        name: 'ComponentsTable',
-        link: '/components/table'
-      },
-      {
-        title: 'Upload 上传',
-        name: 'ComponentsUpload',
-        link: '/components/upload'
+        title: 'ConfigProvider 配置',
+        name: 'ComponentsConfigProvider',
+        link: '/components/config-provider'
       }
     ]
   }
