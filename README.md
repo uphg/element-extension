@@ -1,8 +1,8 @@
 # Element Part
 
-更加简单易用，数据化的 Element 组件 
+Element 组件模块化配置、表单简化
 
-## Form 表单支持列表
+## Form 表单支持组件列表
 
 - ✅ Radio 单选框
 - ✅ Checkbox 多选框
