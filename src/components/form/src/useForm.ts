@@ -18,7 +18,7 @@ export function useForm(
   const { elForm, validate, validateField, clearValidate } = useElForm()
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalFormPropNames, handleProps })
 
-  const on = context ? {
+  const on = context?.emit ? {
     validate(prop: string, errors: boolean, validateMessage: string | null) {
       context.emit('validate', prop, errors, validateMessage)
     }
@@ -33,7 +33,7 @@ export function useForm(
       get elForm() { return elForm.value }
     },
     render() {
-      const slots = context && (() => context.slots.default?.())
+      const slots = context?.slots && (() => context.slots.default?.())
       return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots: { default: slots } })
     }
   }

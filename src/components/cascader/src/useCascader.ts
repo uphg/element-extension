@@ -23,7 +23,7 @@ export function useCascader<T extends ObjectLike>(
   const handleRef = (_handleRef || ((el: ElCalendar) => elCascader.value = el)) as unknown as string
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'cascader', { propNames, globalPropNames: globalCascaderPropNames, handleProps })
-  const on = context ? generateEmits(context.emit, emitNames) : options?.on
+  const on = context?.emit ? generateEmits(context.emit, emitNames) : options?.on
 
   return {
     expose: {
@@ -33,10 +33,10 @@ export function useCascader<T extends ObjectLike>(
       }
     },
     render() {
-      const scopedSlots: VNodeData['scopedSlots'] | undefined = context && {
+      const scopedSlots: VNodeData['scopedSlots'] | undefined = context?.slots && {
         default: (params) => context.slots.default?.(params)
       }
-      const slots = context && [renderSlot(context, 'empty')]
+      const slots = context?.slots && [renderSlot(context, 'empty')]
 
       return h(Cascader, {
         ref: handleRef,

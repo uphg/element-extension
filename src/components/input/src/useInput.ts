@@ -5,13 +5,11 @@ import { ElInput } from "element-ui/types/input";
 import { InputProps, GlobalInputProps } from "./inputProps";
 import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { generateEmits } from "../../../utils/generateEmits";
-import { renderSlots } from '../../../utils/renderSlot'
 import { useElInput } from "../../../composables/useElInput";
 import { ObjectLike } from "../../../../types/_common";
-import { globalInputPropNames } from "../../../shared/configPropertyMap";
+import { globalInputPropNames, globalInputAttrNames } from "../../../shared/configPropertyMap";
 import { HandleRef } from "../../../composables/useComponentProps";
-import { pick, withDefaultProps } from "../../../utils";
+import { pick, withDefaultProps, generateEmits, renderSlots } from "../../../utils";
 
 export interface UseInputOptins {
   status?: 0 | 1;
@@ -21,9 +19,8 @@ export interface UseInputOptins {
   handleAttrs?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
 }
 
-const _propNames = ['resize', 'form', 'disabled', 'readonly', 'type', 'autocomplete', 'validateEvent', 'label', 'showPassword', 'tabindex']
-const attrNames = ['placeholder', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
-const globalAttrNames = ['maxlength']
+const _propNames = ['disabled', 'readonly']
+const attrNames = ['placeholder']
 
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
 const slotNames = ['suffix', 'prefix', 'prepend', 'append']
@@ -45,10 +42,10 @@ export function useInputProps(
       })
 
   const createAttrs = handleAttrs
-    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames })
-    : () => (context && {
+    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames: globalInputAttrNames })
+    : () => (context?.slots && {
       ...pick(context.attrs, attrNames),
-      ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
+      ...withDefaultProps(context.attrs, globalInputProps, globalInputAttrNames)
     })
 
   return {
@@ -66,7 +63,7 @@ export function useInput<T extends ObjectLike>(
   const { elInput, focus, blur, select } = useElInput()
   const handleRef = (options?.handleRef || ((el: ElInput) => elInput.value = el)) as unknown as string
 
-  const on = context ? {
+  const on = context?.emit ? {
     input: useOnInput(props, context),
     ...generateEmits(context.emit, otherEmitNames)
   } : options?.on
@@ -77,7 +74,7 @@ export function useInput<T extends ObjectLike>(
   return {
     expose,
     render() {
-      const slots = context && renderSlots(context, slotNames)
+      const slots = context?.slots?.slots && renderSlots(context, slotNames)
       return h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, slots)
     }
   }

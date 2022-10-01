@@ -15,7 +15,7 @@ export function renderSelectOptions<T extends OptionProps>(props: T, context: Se
       value: item.value,
       disabled: item.disabled
     }
-  }, context && [context.slots.options?.(item)])
+  }, context?.slots && [context.slots.options?.(item)])
 
   return props.optionGroups
     ? props.optionGroups?.map(

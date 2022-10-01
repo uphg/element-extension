@@ -21,7 +21,7 @@ export function useTable(
   const { handleProps, handleRef: _handleRef } = options || {}
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const handleRef = (_handleRef || ((el: ElTable) => elTable.value = el)) as unknown as string
-  const on = context ? useElTableEmit(context.emit) : options?.on
+  const on = context?.emit ? useElTableEmit(context.emit) : options?.on
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTablePropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
 
@@ -33,7 +33,7 @@ export function useTable(
       }
     },
     render() {
-      const slots = context && (
+      const slots = context?.slots && (
         [...props.columns?.length
           ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
           : [context.slots.default?.()]]

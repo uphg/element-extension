@@ -25,7 +25,7 @@ export function useTableColumn(
 
   return {
     render() {
-      const scopedSlots: VNodeData['scopedSlots'] | undefined = context && {
+      const scopedSlots: VNodeData['scopedSlots'] | undefined = context?.slots && {
         default: (scope) => context.slots.default?.(scope),
         header: (scope) => context.slots.header?.(scope),
       }

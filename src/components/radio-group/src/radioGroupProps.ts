@@ -38,7 +38,7 @@ export const globalRadioGroupProps = {
 
 export const radioGroupProps = {
   value: {
-    type: stringProp,
+    type: [String, Number, Boolean] as PropType<string | number | boolean>,
     default: empty
   },
   disabled: booleanProp,

@@ -20,8 +20,8 @@ export const globalPaginationKey = Symbol('config-pagination')
 
 export const globalRadioGroupPropNames = ['size', 'textColor', 'fill']
 export const globalCheckboxGroupPropNames = ['min', 'max', 'textColor', 'fill', 'size']
-export const globalInputPropNames = ['clearable', 'showWordLimit', 'autosize', 'size', 'suffixIcon', 'prefixIcon']
-export const globalInputNumberPropNames = ['min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
+export const globalInputPropNames = ['type', 'resize', 'form', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex', 'clearable', 'showWordLimit', 'size', 'autosize']
+export const globalInputNumberPropNames = ['label', 'name', 'min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
 export const globalSelectPropNames = ['valueKey', 'size', 'multiple', 'multipleLimit', 'clearable', 'popperClass', 'popperAppendToBody']
 export const globalCascaderPropNames = ['options', 'props', 'size', 'clearable', 'popperClass', 'separator', 'showAllLevels', 'collapseTags', 'placement', 'appendToBody', 'visibleArrow', 'arrowOffset', 'offset', 'boundariesPadding', 'popperOptions', 'transformOrigin']
 export const globalSwitchPropNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
@@ -32,6 +32,8 @@ export const globalFormPropNames = ['labelPosition', 'labelWidth', 'inline', 'in
 export const globalTablePropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
 export const globalTableColumnPropNames = ['className', 'resizable', 'showOverflowTooltip']
 export const globalPaginationPropNames = ['small', 'background', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'hideOnSinglePage']
+
+export const globalInputAttrNames = ['maxlength', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
 
 export const configPropertyMap = {
   radioGroup: {
@@ -44,7 +46,7 @@ export const configPropertyMap = {
   },
   input: {
     key: globalInputKey,
-    propNames: globalInputPropNames.concat(['maxlength'])
+    propNames: globalInputPropNames.concat(globalInputAttrNames)
   },
   inputNumber: {
     key: globalInputNumberKey,

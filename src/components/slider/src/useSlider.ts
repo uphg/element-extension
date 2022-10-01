@@ -18,7 +18,7 @@ export function useSlider<T extends ObjectLike>(
   const handleRef = (_handleRef || ((el: ElSlider) => { elSlider.value = el })) as unknown as string
   const propNames = options?.status === 1 ? [disabledName] : ['value', disabledName]
   const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
-  const on = context ? {
+  const on = context?.emit ? {
     change(value: number) {
       context.emit('change', value)
     },

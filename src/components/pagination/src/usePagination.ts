@@ -14,7 +14,7 @@ export function usePagination(
 ) {
   const { handleProps } = options || {}
   const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames: globalPaginationPropNames, handleProps })
-  const on = context ? {
+  const on = context?.emit ? {
     'size-change': (size: number) => {
       context?.emit('size-change', size)
     },

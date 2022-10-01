@@ -5,7 +5,7 @@ import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radi
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import isNil from "../../../utils/isNil"
+import { isNil } from "../../../utils"
 
 const _propNames = ['disabled', 'options'] // el props
 
@@ -20,7 +20,7 @@ export function useRadioGroup<T extends ObjectLike>(
   const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
   const handleRef = (_handleRef || ((el: ElRadioGroup) => elRadioGroup.value = el)) as unknown as string
 
-  const on = context ? {
+  const on = context?.emit ? {
     input: (value: string | number | boolean) => {
       context.emit('input', value)
     },

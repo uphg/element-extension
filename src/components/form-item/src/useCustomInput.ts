@@ -63,26 +63,18 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
         handleProps(_props, globalProps?) {
           return () => ({
             value: props.value,
-            validateEvent: props.validateEvent,
-            label: props.label,
-            showPassword: props.showPassword,
-            type: props.type,
             disabled: props.disabled,
             readonly: props.readonly,
-            resize: props.extends.resize,
-            form: props.extends.form,
-            autocomplete: props.extends.autocomplete,
-            tabindex: props.extends.tabindex,
-  
+
             // global
-            ...withDefaultProps(props, globalProps, ['clearable', 'showWordLimit', 'size']),
-            ...withDefaultProps(props.extends, globalProps, ['autosize', 'suffixIcon', 'prefixIcon'])
+            ...withDefaultProps(props, globalProps, ['type', 'label', 'showPassword', 'validateEvent',  'clearable', 'showWordLimit', 'size']),
+            ...withDefaultProps(props.extends, globalProps, ['resize', 'form', 'tabindex', 'autocomplete', 'autosize', 'suffixIcon', 'prefixIcon'])
           })
         },
-        handleAttrs(_props, globalProps, { attrNames }) {
+        handleAttrs(_props, globalProps, { attrNames, globalAttrNames }) {
           return () => ({
             ...pick(context.attrs, attrNames),
-            ...withDefaultProps(context.attrs, globalProps, ['maxlength'])
+            ...withDefaultProps(context.attrs, globalProps, globalAttrNames)
           })
         }
       })
@@ -94,10 +86,9 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
         handleProps: (_props, globalProps) => () => ({
           value: props.value,
           disabled: props.disabled,
-          label: props.label,
-          name: context.attrs.name,
           placeholder: context.attrs.placeholder,
-          ...withDefaultProps(props, globalProps, ['size']),
+          ...withDefaultProps(context.attrs, globalProps, ['name']),
+          ...withDefaultProps(props, globalProps, ['label', 'size']),
           ...withDefaultProps(props.extends, globalProps, ['min', 'max', 'step', 'stepStrictly', 'precision', 'controls', 'controlsPosition'])
         })
       })

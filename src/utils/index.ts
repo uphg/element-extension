@@ -8,3 +8,4 @@ export { default as isNil } from './isNil'
 export { withDefaultProps } from "./withDefaultProps";
 export { generateEmits } from './generateEmits'
 export { createExclude } from './createExclude'
+export * from './renderSlot'

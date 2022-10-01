@@ -21,14 +21,14 @@ export function useSelect<T extends ObjectLike>(
   const { handleProps, handleRef: _handleRef } = options || {}
   const { elSelect, focus, blur } = useElSelect()
   const handleRef = (_handleRef || ((el: ElSelect) => elSelect.value = el)) as unknown as string
-  const on = context ? generateEmits(context.emit, emitNames) : options?.on
+  const on = context?.emit ? generateEmits(context.emit, emitNames) : options?.on
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
 
   return {
     expose: { focus, blur, get elSelect() { return elSelect } },
     render() {
-      const namedSlots = context && [
+      const namedSlots = context?.slots && [
         renderSlot(context, 'prefix'),
         renderSlot(context, 'empty'),
       ]

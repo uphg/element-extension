@@ -19,7 +19,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   //   }
   // })
 
-  const { render: renderInput, expose: customInputExpose } = context && useCustomInput(props, context) || {}
+  const { render: renderInput, expose: customInputExpose } = context?.slots && useCustomInput(props, context) || {}
 
   const expose = {
     ...(customInputExpose ? customInputExpose : {}),
@@ -34,7 +34,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   return {
     expose,
     render() {
-      const slots = context && [
+      const slots = context?.slots && [
         renderSlot(context, 'label'),
         context.slots.itemPrefix?.(),
         (context.slots.default && (props.type === 'text' || !props.type) && context.slots.default?.()) || [renderInput?.()],
@@ -44,7 +44,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
         ref: handleRef,
         props: pick(props, propNames),
         scopedSlots: {
-          error: context && ((params) => context.slots.error?.(params)),
+          error: context?.slots?.error && ((params) => context.slots.error?.(params)),
         }
       }, slots)
     }

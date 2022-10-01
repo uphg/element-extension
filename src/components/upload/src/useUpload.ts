@@ -60,7 +60,7 @@ export function useUpload<T extends ObjectLike>(
         },
         on: uploadListOn,
         scopedSlots: {
-          default: context && ((props: ObjectLike) => {
+          default: context?.slots && ((props: ObjectLike) => {
             if (context.slots?.file) {
               return context.slots.file({ file: props.file })
             }
@@ -68,7 +68,7 @@ export function useUpload<T extends ObjectLike>(
         }
       })
 
-      const slots = context && (listType === 'picture-card'
+      const slots = context?.slots && (listType === 'picture-card'
         ? [
             renderSlot(context as SetupContext<{}>, 'tip'),
             renderSlot(context as SetupContext<{}>, 'trigger'),

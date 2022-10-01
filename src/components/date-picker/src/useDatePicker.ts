@@ -43,7 +43,7 @@ export function useDatePicker<T extends ObjectLike>(
   const publicPropNames = options?.status === 1 ? _publicPropNames : _publicPropNames.concat(['value'])   
   const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames]
   const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
-  const on = context ? {
+  const on = context?.emit ? {
     input(value: DatePickerValue) {
       context.emit('input', value)
     },
@@ -70,7 +70,7 @@ export function useDatePicker<T extends ObjectLike>(
       }
     },
     render() {
-      const slots = context && [renderSlot(context, 'range-separator')]
+      const slots = context?.slots && [renderSlot(context, 'range-separator')]
       return h(DatePicker!, { ref: handleRef, props: createProps(), on }, slots)
     }
   }

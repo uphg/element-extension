@@ -19,7 +19,6 @@ export type TableColumnChildrenProps = {
   onClick: (scope: RowCallbackParams) => void
 }
 
-
 export type TableObjectColumnProps = {
   children?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
   scopedSlots?: { [key: string]: ScopedSlot | undefined };

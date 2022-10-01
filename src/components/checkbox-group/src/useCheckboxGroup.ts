@@ -5,7 +5,7 @@ import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } fro
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import isNil from "../../../utils/isNil"
+import { isNil } from "../../../utils"
 
 const _propNames = ['disabled']
 
@@ -22,7 +22,7 @@ export function useCheckboxGroup<T extends ObjectLike>(
     _handleRef || ((el: ElCheckboxGroup) => elCheckboxGroup.value = el)
   ) as unknown as string
 
-  const on = context ? {
+  const on = context?.emit ? {
     input(value: string | number | boolean) {
       context.emit('input', value)
     },

@@ -6,6 +6,28 @@ export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { max
 export type InputProps = ExtractPropTypes<typeof inputProps>
 
 export const globalInputProps = {
+  type: {
+    type: stringProp,
+    default: 'text'
+  },
+  resize: stringProp,
+  form: stringProp,
+  autocomplete: {
+    type: stringProp,
+    default: 'off'
+  },
+  validateEvent: {
+    type: booleanProp,
+    default: true
+  },
+  suffixIcon: stringProp,
+  prefixIcon: stringProp,
+  label: stringProp,
+  showPassword: {
+    type: booleanProp,
+    default: false
+  },
+  tabindex: stringProp,
   clearable: {
     type: booleanProp,
     default: empty
@@ -23,35 +45,13 @@ export const globalInputProps = {
 
 export const inputProps = {
   value: [String, Number] as PropType<string | number>,
-  type: {
-    type: stringProp,
-    default: 'text'
-  },
-  resize: stringProp,
-  form: stringProp,
   disabled: booleanProp,
   readonly: booleanProp,
-  autocomplete: {
-    type: stringProp,
-    default: 'off'
-  },
-  validateEvent: {
-    type: booleanProp,
-    default: true
-  },
-  suffixIcon: stringProp,
-  prefixIcon: stringProp,
-  label: stringProp,
-  showPassword: {
-    type: booleanProp,
-    default: false
-  },
-  tabindex: stringProp,
   ...globalInputProps,
 
   // customize props
   exclude: {
     type: [String, Number, RegExp] as PropType<string | number | RegExp>,
     default: null
-  },
+  }
 }
