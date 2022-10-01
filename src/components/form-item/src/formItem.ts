@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { formItemProps } from "./formItemProps"
 import { useFormItem } from "./useFormItem"
-import { ElementPartComponent } from "../../../types"
+import { ElementPartComponent } from "../../../../types/component"
 
 const EFormItem = defineComponent({
   name: 'EFormItem',

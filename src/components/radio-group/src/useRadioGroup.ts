@@ -14,11 +14,11 @@ export function useRadioGroup<T extends ObjectLike>(
   context?: SetupContext<{}> | null,
   options?: UseComponentParamsOptions<RadioGroupProps | ObjectLike, GlobalRadioGroupProps>
 ) {
-  const { handleProps, setRef: _setRef } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
-  const setRef = (_setRef || ((el: ElRadioGroup) => elRadioGroup.value = el)) as unknown as string
+  const handleRef = (_handleRef || ((el: ElRadioGroup) => elRadioGroup.value = el)) as unknown as string
 
   const on = context ? {
     input: (value: string | number | boolean) => {
@@ -34,7 +34,7 @@ export function useRadioGroup<T extends ObjectLike>(
 
   return {
     render: () => h(RadioGroup, {
-      ref: setRef,
+      ref: handleRef,
       props: createProps(),
       on
     }, props.options?.map((item: RadioGroupOption) => h(Radio, {

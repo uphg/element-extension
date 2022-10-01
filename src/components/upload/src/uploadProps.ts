@@ -1,6 +1,6 @@
 import { ElUpload } from "element-ui/types/upload"
 import { ExtractPropTypes, PropType } from "vue"
-import { empty } from "../../../shared/_commonProps"
+import { empty } from "../../../shared/commonProps"
 
 export type GlobalUploadProps = ExtractPropTypes<typeof globalUploadProps>
 export type UploadProps = ExtractPropTypes<typeof uploadProps>

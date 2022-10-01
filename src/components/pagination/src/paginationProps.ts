@@ -1,4 +1,4 @@
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
 export type GlobalPaginationProps = ExtractPropTypes<typeof globalPaginationProps>

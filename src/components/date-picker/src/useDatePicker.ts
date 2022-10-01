@@ -1,7 +1,7 @@
 import { h, ref, SetupContext } from "vue"
 import { DatePicker as _DatePicker, TimeSelect, TimePicker } from "element-ui"
 import { GlobalDateProps, PublicDateProps } from "./dateProps"
-import { SetRef, useComponentProps } from "../../../composables/useComponentProps"
+import { HandleRef, useComponentProps } from "../../../composables/useComponentProps"
 import { globalDatePropNames } from "../../../shared/configPropertyMap"
 import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../../types/_common"
@@ -15,7 +15,7 @@ const _publicPropNames = ['readonly', 'name', 'id', 'disabled', 'isRange', 'arro
 type UseDatePickerOptions<Props> = {
   type: 1 | 2 | 3; // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
   status?: 0 | 1; // 1: has value; 0: default;
-  setRef?: SetRef;
+  handleRef?: HandleRef;
   on?: VNodeData['on'];
   handleProps?: (props: Props, globalProps: GlobalDateProps | undefined, _options: { propNames: string[], globalPropNames: string[] }) => () => Props;
 }
@@ -37,7 +37,7 @@ export function useDatePicker<T extends ObjectLike>(
   context: SetupContext<{}> | undefined,
   options: UseDatePickerOptions<T | ObjectLike>
 ) {
-  const { handleProps } = options || {} 
+  const { handleProps, handleRef: _handleRef } = options || {} 
   const DatePicker = componentMap[options.type][1]
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
   const publicPropNames = options?.status === 1 ? _publicPropNames : _publicPropNames.concat(['value'])   
@@ -58,9 +58,7 @@ export function useDatePicker<T extends ObjectLike>(
     }
   } : options?.on
 
-  const setRef = (
-    options.setRef || ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el)
-  ) as unknown as string
+  const handleRef = (_handleRef || ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el)) as unknown as string
 
   return {
     expose: {
@@ -73,7 +71,7 @@ export function useDatePicker<T extends ObjectLike>(
     },
     render() {
       const slots = context && [renderSlot(context, 'range-separator')]
-      return h(DatePicker!, { ref: setRef, props: createProps(), on }, slots)
+      return h(DatePicker!, { ref: handleRef, props: createProps(), on }, slots)
     }
   }
 }

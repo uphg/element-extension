@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { paginationProps } from "./paginationProps"
 import { usePagination } from "./usePagination"
-import { ElementPartComponent } from "../../../types"
+import { ElementPartComponent } from "../../../../types/component"
 
 const EPagination = defineComponent({
   name: 'EPagination',

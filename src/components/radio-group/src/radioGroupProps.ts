@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { commonProps, empty } from "../../../shared/commonProps";
+import { sizeProp, empty, booleanProp, stringProp } from "../../../shared/commonProps";
 
 export type GlobalRadioGroupProps = ExtractPropTypes<typeof globalRadioGroupProps>
 export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>
@@ -15,33 +15,33 @@ export type RadioGroupOption = {
 export type RadioGroupOptions = Array<RadioGroupOption>
 
 export const globalRadioGroupProps = {
-  size: commonProps.size,
+  size: sizeProp,
   textColor: {
-    type: [String, undefined] as PropType<string | undefined>,
+    type: stringProp,
     default: empty
   },
   fill: {
-    type: [String, undefined] as PropType<string | undefined>,
+    type: stringProp,
     default: empty
   },
 
   // customize props
   withBorder: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: false,
   },
   withButton: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: false,
   }
 }
 
 export const radioGroupProps = {
   value: {
-    type: String,
+    type: stringProp,
     default: empty
   },
-  disabled: commonProps.disabled,
+  disabled: booleanProp,
   ...globalRadioGroupProps,
 
   options: {

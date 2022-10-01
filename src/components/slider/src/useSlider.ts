@@ -14,8 +14,8 @@ export function useSlider<T extends ObjectLike>(
   options?: UseComponentParamsOptions<SliderProps | ObjectLike, GlobalSliderProps>
 ) {
   const elSlider = ref<ElSlider | null>(null)
-  const { handleProps } = options || {}
-  const setRef = (options?.setRef || ((el: ElSlider) => { elSlider.value = el })) as unknown as string
+  const { handleProps, handleRef: _handleRef } = options || {}
+  const handleRef = (_handleRef || ((el: ElSlider) => { elSlider.value = el })) as unknown as string
   const propNames = options?.status === 1 ? [disabledName] : ['value', disabledName]
   const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
   const on = context ? {
@@ -34,7 +34,7 @@ export function useSlider<T extends ObjectLike>(
       }
     },
     render() {
-      return h(Slider, { ref: setRef, props: createProps(), on })
+      return h(Slider, { ref: handleRef, props: createProps(), on })
     }
   }
 }

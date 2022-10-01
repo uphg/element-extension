@@ -1,4 +1,4 @@
-import { empty } from "../../../shared/_commonProps"
+import { empty } from "../../../shared/commonProps"
 import { ExtractPropTypes } from "vue"
 
 export type GlobalSwitchProps = ExtractPropTypes<typeof globalSwitchProps>

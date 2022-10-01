@@ -21,3 +21,19 @@ export declare class ElUpload extends _ElUpload {
 export declare class ElCalendar extends _ElCalendar {
   getCheckedNodes: (leafOnly: boolean) => ObjectLike
 }
+
+// --- Table
+export interface RowCallbackParams {
+  row: { [key: string]: any },
+  rowIndex: number
+}
+
+// --- Form
+export interface ElFormRule {
+  required?: boolean;
+  message: string;
+  pattern?: RegExp | string;
+  trigger?: string;
+  min?: number;
+  max?: number;
+}

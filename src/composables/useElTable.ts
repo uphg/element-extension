@@ -8,8 +8,6 @@ const elTableEmitNames = ['select', 'select-all', 'selection-change', 'cell-mous
 export function useElTable() {
   const elTable = ref<ElTable | null>(null)
 
-  const setRef = ((el: ElTable) => elTable.value = el) as unknown as string
-
   function clearSelection() {
     elTable.value?.clearSelection()
   }
@@ -52,7 +50,6 @@ export function useElTable() {
 
   return {
     elTable,
-    setRef,
     clearSelection,
     toggleRowSelection,
     toggleAllSelection,

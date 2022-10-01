@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import { ElInputNumber } from "../types/element-components"
+import { ElInputNumber } from "../../types/_element-ui"
 
 
 export function useElInputNumber() {

@@ -5,5 +5,6 @@ export { default as omitBy } from './omitBy'
 export { default as isArray } from './isArray'
 export { default as isObject } from './isObject'
 export { default as isNil } from './isNil'
+export { withDefaultProps } from "./withDefaultProps";
 export { generateEmits } from './generateEmits'
 export { createExclude } from './createExclude'

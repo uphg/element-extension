@@ -14,7 +14,7 @@ export function useForm(
   context: SetupContext<{}> | undefined,
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const { elForm, validate, validateField, clearValidate } = useElForm()
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalFormPropNames, handleProps })
 
@@ -23,7 +23,7 @@ export function useForm(
       context.emit('validate', prop, errors, validateMessage)
     }
   } : options?.on
-  const setRef = (options?.setRef || ((el: ElForm) => elForm.value = el)) as unknown as string
+  const handleRef = (_handleRef || ((el: ElForm) => elForm.value = el)) as unknown as string
 
   return {
     expose: {
@@ -34,7 +34,7 @@ export function useForm(
     },
     render() {
       const slots = context && (() => context.slots.default?.())
-      return h(Form, { ref: setRef, props: createProps(), on, scopedSlots: { default: slots } })
+      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots: { default: slots } })
     }
   }
 }

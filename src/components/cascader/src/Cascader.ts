@@ -1,4 +1,4 @@
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 import { defineComponent } from "vue"
 import { cascaderProps } from "./cascaderProps"
 import { useCascader } from "./useCascader"

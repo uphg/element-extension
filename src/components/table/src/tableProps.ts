@@ -2,9 +2,9 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 import { VNode } from "vue/types/umd";
-import { RowCallbackParams } from "../../../types/table";
+import { RowCallbackParams } from "../../../../types/_element-ui";
 import { TableColumnProps } from "../../../components/table-column/src/tableColumnProps";
 import { TableColumn } from "element-ui";
 

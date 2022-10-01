@@ -1,17 +1,14 @@
 import { h, SetupContext } from "vue"
 import { TableColumn } from "element-ui";
+import { VNodeData } from "vue/types/umd";
 import { createDateFormat } from "./createDateFormat";
-import { extendColumnTypes, elTableColumnTypes, TableColumnProps, GlobalTableColumnProps } from "./tableColumnProps";
+import { handleColumnType } from "./handleColumnType";
+import { extendColumnTypes, TableColumnProps, GlobalTableColumnProps } from "./tableColumnProps";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { globalTableColumnPropNames } from '../../../shared/configPropertyMap'
 import { ObjectLike } from "../../../../types/_common";
-import { VNodeData } from "vue/types/umd";
 
 const propNames = ['label', 'labelClassName', 'property', 'prop', 'width', 'minWidth', 'renderHeader', 'sortable', 'sortMethod', 'sortBy', 'columnKey', 'align', 'headerAlign', 'showTooltipWhenOverflow', 'fixed', 'formatter', 'selectable', 'reserveSelection', 'filterMethod', 'filteredValue', 'filters', 'filterPlacement', 'filterMultiple', 'index', 'sortOrders']
-
-function handleColumnType(type: string) {
-  return elTableColumnTypes.includes(type) ? type : void 0
-}
 
 export function useTableColumn(
   props: TableColumnProps,

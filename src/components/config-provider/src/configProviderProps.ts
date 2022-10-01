@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue"
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 import { GlobalCheckboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps";
 import { GlobalInputProps } from "../../input/src/inputProps";
 import { GlobalInputNumberProps } from "../../input-number/src/inputNumberProps";

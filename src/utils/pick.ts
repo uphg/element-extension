@@ -1,4 +1,4 @@
-import { ObjectLike } from "../types/object-like"
+import { ObjectLike } from "../../types/_common"
 
 function pick<T extends ObjectLike>(obj: T, keys: string[]) {
   let index = -1

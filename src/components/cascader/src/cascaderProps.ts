@@ -1,9 +1,13 @@
 import { t } from 'element-ui/src/locale';
-import { empty } from '../../../shared/_commonProps';
+import { empty, booleanProp } from '../../../shared/commonProps';
 import { ExtractPropTypes, PropType } from 'vue';
+import { ObjectLike } from '../../../../types/_common';
 
 export type GlobalCascaderProps = ExtractPropTypes<typeof globalCascaderProps>
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
+
+const stringProp = String as PropType<string>
+const numberProp = Number as PropType<number>
 
 export const globalCascaderProps = {
   options: {
@@ -38,34 +42,34 @@ export const globalCascaderProps = {
 
   // mixin props
   placement: {
-    type: [String, undefined],
+    type: stringProp,
     default: empty //  'bottom-start'
   },
   appendToBody: {
-    type: [Boolean, undefined],
+    type: booleanProp,
     default: empty // true
   },
   visibleArrow: {
-    type: Boolean,
+    type: booleanProp,
     default: empty // true
   },
   arrowOffset: {
-    type: [Number, undefined],
+    type: numberProp,
     default: empty // 35
   },
   offset: {
     default: empty // 0
   },
   boundariesPadding: {
-    type: [Number, undefined],
+    type: numberProp,
     default: empty // 5
   },
   popperOptions: {
-    type: [Object, undefined],
+    type: [Object, undefined] as PropType<ObjectLike>,
     default: empty // () => ({ gpuAcceleration: false })
   },
   transformOrigin: {
-    type: [Boolean, String, undefined],
+    type: [Boolean, String, undefined] as PropType<boolean | string>,
     default: empty // true
   }
 }

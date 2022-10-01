@@ -1,10 +1,8 @@
-import { toString } from "../utils"
-import { CustomInputValue } from "../types/customInput"
-import { InputExclude } from "../types/input"
-import { createExclude } from "../utils/createExclude"
 import { SetupContext } from "vue"
+import { toString, createExclude } from "../utils"
+import { CustomInputValue } from "../../types/_common"
 
-export function useOnInput<T extends { exclude?: InputExclude }>(props: T, context: SetupContext<{}>) {
+export function useOnInput<T extends { exclude?: string | number | RegExp }>(props: T, context: SetupContext<{}>) {
   const onInput = props.exclude ? (value: CustomInputValue) => {
     const exclude = createExclude(props.exclude!)
     const newVal = toString(value).replace(exclude, '')

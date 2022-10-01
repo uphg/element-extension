@@ -1,24 +1,23 @@
 import { CascaderOption } from "element-ui/types/cascader-panel";
-import { cascaderProps } from "src/components/cascader";
-import { CheckboxGroupOptions, checkboxGroupProps } from "src/components/checkbox-group/src/checkboxGroupProps";
-import { datePickerProps, dateProps, timePickerProps } from "src/components/date-picker/src/dateProps";
-import { inputProps } from "src/components/input";
-import { inputNumberProps } from "src/components/input-number";
-import { RadioGroupOptions, radioGroupProps } from "src/components/radio-group/src/radioGroupProps";
-import { SelectOptions, selectProps } from "src/components/select/src/selectProps";
-import { sliderProps } from "src/components/slider";
-import { switchProps } from "src/components/switch";
-import { uploadProps } from "src/components/upload";
+import { cascaderProps } from "../../cascader";
+import { CheckboxGroupOptions, checkboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps";
+import { datePickerProps, dateProps, timePickerProps } from "../../date-picker/src/dateProps";
+import { inputProps } from "../../input";
+import { inputNumberProps } from "../../input-number";
+import { RadioGroupOptions, radioGroupProps } from "../../radio-group/src/radioGroupProps";
+import { SelectOptions, selectProps } from "../../select/src/selectProps";
+import { sliderProps } from "../../slider";
+import { switchProps } from "../../switch";
+import { uploadProps } from "../../upload";
 import { ExtractPropTypes, PropType } from "vue";
 import { ObjectLike } from "../../../../types/_common";
-import { commonProps, empty } from "../../../shared/_commonProps";
+import { commonProps, sizeProp, empty, booleanProp, stringProp } from "../../../shared/commonProps";
 
 export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+export type FormItemType = 'button' | 'radio' | 'radio-group' | 'checkbox' | 'checkbox-group' | 'input' | 'text' | 'password' | 'textarea' | 'number' | 'input-number' | 'select' | 'cascader' | 'date' | 'date-picker' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'time-select' | 'time-picker' | 'switch' | 'slider' | 'file' | 'upload'
 
-const booleanProp = Boolean as PropType<boolean>
-const stringProp = String as PropType<string>
 const emptyStringProp = {
   type: stringProp,
   default: ''
@@ -26,7 +25,7 @@ const emptyStringProp = {
 
 export const formItemBaseProps = {
   type: {
-    type: String as PropType<string>,
+    type: String as PropType<FormItemType>,
     default: 'text'
   },
   value: {
@@ -36,7 +35,7 @@ export const formItemBaseProps = {
   options: {
     type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
   },
-  clearable: commonProps.clearable,
+  clearable: booleanProp,
   disabled: booleanProp,
   readonly: booleanProp,
   showPassword: booleanProp,
@@ -52,7 +51,7 @@ export const formItemBaseProps = {
   accept: uploadProps.accept,
   format: dateProps.format,
   pickerOptions: dateProps.pickerOptions,
-  size: commonProps.size,
+  size: sizeProp,
 
   // custom props
   exclude: inputProps.exclude,
@@ -72,7 +71,7 @@ export const formItemExtendsProps = {
   debounce: commonProps.debounce,
 
   // --- Radio
-  size: commonProps.size,
+  size: sizeProp,
   textColor: radioGroupProps.textColor,
   fill: radioGroupProps.fill,
 

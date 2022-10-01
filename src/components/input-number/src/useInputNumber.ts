@@ -1,7 +1,7 @@
 import { h, SetupContext } from "vue"
 import { InputNumber } from 'element-ui'
 import { InputNumberProps, GlobalInputNumberProps } from "./inputNumberProps"
-import { ElInputNumber } from "../../../types/element-components"
+import { ElInputNumber } from "../../../../types/_element-ui"
 import { generateEmits } from "../../../utils/generateEmits"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
@@ -16,11 +16,9 @@ export function useInputNumber<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<InputNumberProps | ObjectLike, GlobalInputNumberProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const { elInputNumber, focus, select } = useElInputNumber()
-  const setRef = (
-    options?.setRef || ((el: ElInputNumber) => { elInputNumber.value = el })
-  ) as unknown as string
+  const handleRef = (_handleRef || ((el: ElInputNumber) => { elInputNumber.value = el })) as unknown as string
 
   const expose = { focus, select, get elInputNumber() { return elInputNumber.value } }
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
@@ -36,6 +34,6 @@ export function useInputNumber<T extends ObjectLike>(
 
   return {
     expose,
-    render: () => h(InputNumber, { ref: setRef, props: createProps(), on })
+    render: () => h(InputNumber, { ref: handleRef, props: createProps(), on })
   }
 }

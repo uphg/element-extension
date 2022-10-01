@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { configProviderProps } from "./configProviderProps"
 import { useConfigProvider } from "./useConfigProvider"
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const EConfigProvider = defineComponent({
   name: 'EConfigProvider',

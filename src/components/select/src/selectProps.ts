@@ -1,7 +1,7 @@
 import { QueryChangeHandler } from "element-ui/types/select";
 import { ExtractPropTypes, PropType } from "vue"
 import { ObjectLike } from "../../../../types/_common"
-import { commonProps, empty } from "../../../shared/commonProps"
+import { empty, booleanProp, stringProp, numberProp } from "../../../shared/commonProps"
 
 export interface SelectOption {
   value: string | number | ObjectLike;
@@ -17,8 +17,6 @@ export type SelectOptions = SelectOption[]
 export type SelectProps = ExtractPropTypes<typeof selectProps>
 export type GlobalSelectProps = ExtractPropTypes<typeof globalSelectProps>
 
-const booleanProp = Boolean as PropType<boolean>
-const stringProp = String as PropType<string>
 const queryChangeHandler = Function as PropType<QueryChangeHandler>
 
 export const globalSelectProps = {
@@ -35,7 +33,7 @@ export const globalSelectProps = {
     default: empty
   },
   multipleLimit: {
-    type: Number as PropType<number>,
+    type: numberProp,
     default: empty
   },
   clearable: {

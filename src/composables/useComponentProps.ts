@@ -1,10 +1,9 @@
 import { VNodeChildren, VNodeData } from "vue";
 import { ConfigPropertyName } from "../shared/configPropertyMap";
 import { useGlobalProps } from "./useGlobalProps"
-import { withDefaultProps } from "../utils/withDefaultProps";
-import { ObjectLike } from "../types/object-like";
-import pick from "../utils/pick";
-import { ElInputNumber, ElSwitch, ElUpload, ElCalendar } from "../types/element-components";
+import { ObjectLike } from "../../types/_common";
+import { pick, withDefaultProps } from "../utils";
+import { ElInputNumber, ElSwitch, ElUpload, ElCalendar } from "../../types/_element-ui";
 import { ElInput } from "element-ui/types/input";
 import { ElSelect } from "element-ui/types/select";
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group";
@@ -22,10 +21,10 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 }
 
 export type UseComponentParamsOptions<Props, GlobalProps> = {
-  setRef?: SetRef;
   status?: 0 | 1;
   on?: VNodeData['on'];
   children?: () => VNodeChildren | VNode;
+  handleRef?: HandleRef;
   handleProps?: HandleProps<Props, GlobalProps>,
 }
 
@@ -33,7 +32,7 @@ export interface HandleProps<Props, GlobalProps> {
   (props: Props, globalProps: GlobalProps | undefined, _options: { propNames: string[], globalPropNames: string[]}): () => Props
 }
 
-export interface SetRef {
+export interface HandleRef {
   (el: ElRadioGroup | ElCheckboxGroup | ElInput | ElInputNumber | ElSelect | ElCalendar | ElSwitch | ElSlider | ElTimeSelect | ElTimePicker | ElDatePicker | ElUpload): void
 }
 

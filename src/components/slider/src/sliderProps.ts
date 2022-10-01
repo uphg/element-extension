@@ -1,5 +1,5 @@
 import { ExtractPropTypes } from "vue"
-import { empty } from "../../../shared/_commonProps"
+import { empty } from "../../../shared/commonProps"
 
 export type GlobalSliderProps = ExtractPropTypes<typeof globalSliderProps>
 export type SliderProps = ExtractPropTypes<typeof sliderProps>

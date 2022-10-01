@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { checkboxGroupProps } from "./checkboxGroupProps";
 import { useCheckboxGroup } from "./useCheckboxGroup";
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const ECheckboxGroup = defineComponent({
   name: 'ECheckboxGroup',

@@ -1,6 +1,6 @@
 import { h, SetupContext } from "vue"
 import { Option, OptionGroup } from "element-ui"
-import { SelectOptionGroup, SelectOption } from "src/components/select/src/selectProps"
+import { SelectOptionGroup, SelectOption } from "./selectProps"
 
 interface OptionProps {
   options?: SelectOption[];
@@ -8,7 +8,6 @@ interface OptionProps {
 } 
 
 export function renderSelectOptions<T extends OptionProps>(props: T, context: SetupContext<{}> | undefined) {
-
   const renderOptions = (item: SelectOption, index: number) => h(Option, {
     key: `e.s.opt.${index}`,
     props: {

@@ -1,7 +1,7 @@
-import { addClass, removeClass, setStyle } from "../../utils/dom"
 import { defineComponent, h } from "vue"
-import { ElementPartComponent } from "../../types"
 import { VNodeData } from "vue/types/umd"
+import { addClass, removeClass, setStyle } from "../../utils/dom"
+import { ElementPartComponent } from "../../../types/component"
 
 const staggeredProps = {
   tag: {
@@ -95,7 +95,7 @@ const EStaggeredTransitionGroup = defineComponent({
         css: false,
         appear: props.appear
       }
-      // const tag = props.stop ? props.tag : 
+
       return h('transition-group', {
         props: {
           tag: props.tag,

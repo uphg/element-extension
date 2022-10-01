@@ -1,4 +1,4 @@
-import { ElementPartComponent } from "../../../types/component";
+import { ElementPartComponent } from "../../../../types/component";
 import { defineComponent } from "vue"
 import { inputProps } from "./inputProps";
 import { useInput } from "./useInput";

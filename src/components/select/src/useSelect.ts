@@ -2,7 +2,7 @@ import { h, SetupContext } from "vue"
 import { Select } from "element-ui"
 import { ElSelect } from "element-ui/types/select"
 import { SelectProps, GlobalSelectProps } from "./selectProps"
-import { renderSelectOptions } from '../../../utils/renderSelectOptions'
+import { renderSelectOptions } from './renderSelectOptions'
 import { generateEmits } from "../../../utils/generateEmits"
 import { renderSlot } from '../../../utils/renderSlot'
 import { useElSelect } from "../../../composables/useElSelect"
@@ -18,9 +18,9 @@ export function useSelect<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<SelectProps | ObjectLike, GlobalSelectProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const { elSelect, focus, blur } = useElSelect()
-  const setRef = (options?.setRef || ((el: ElSelect) => elSelect.value = el)) as unknown as string
+  const handleRef = (_handleRef || ((el: ElSelect) => elSelect.value = el)) as unknown as string
   const on = context ? generateEmits(context.emit, emitNames) : options?.on
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'select', { propNames, globalPropNames: globalSelectPropNames, handleProps })
@@ -32,7 +32,7 @@ export function useSelect<T extends ObjectLike>(
         renderSlot(context, 'prefix'),
         renderSlot(context, 'empty'),
       ]
-      return h(Select, { ref: setRef, props: createProps(), on }, [namedSlots, ...renderSelectOptions(props, context)!])
+      return h(Select, { ref: handleRef, props: createProps(), on }, [namedSlots, ...renderSelectOptions(props, context)!])
     }
   }
 }

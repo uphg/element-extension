@@ -1,12 +1,9 @@
 import { ExtractPropTypes, PropType } from 'vue'
 import { ObjectLike } from '../../../../types/_common'
-import { commonProps, empty } from '../../../shared/commonProps'
+import { sizeProp, empty, booleanProp, stringProp, objectProp } from '../../../shared/commonProps'
 
 export type GlobalFormProps = ExtractPropTypes<typeof globalFormProps>
 export type FormProps = ExtractPropTypes<typeof formProps>
-
-const booleanProp = Boolean as PropType<boolean>
-const stringProp = String as PropType<string>
 
 export const globalFormProps = {
   labelWidth: {
@@ -25,12 +22,12 @@ export const globalFormProps = {
     type: booleanProp,
     default: empty
   },
-  size: commonProps.size
+  size: sizeProp
 }
 
 export const formProps = {
   model: {
-    type: Object as PropType<ObjectLike>
+    type: objectProp
   },
   rules: {
     type: [Object, Array] as PropType<ObjectLike>

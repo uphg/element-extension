@@ -1,6 +1,6 @@
 import { h, Ref, VNodeChildren } from "vue"
-import { ButtonProps, FormulateField } from "./formulateProps"
-import { FormData } from '../../../types/form'
+import { Button } from "element-ui"
+import { ButtonProps, FormulateField } from "./interface"
 import { useRadioGroup } from "../../radio-group"
 import { useCheckboxGroup } from "../../checkbox-group"
 import { useInput } from "../../input"
@@ -11,28 +11,26 @@ import { useSwitch } from "../../switch"
 import { useSlider } from "../../slider"
 import { useDatePicker } from "../../date-picker"
 import { useUpload } from "../../upload"
-import { empty } from "../../../shared/_commonProps"
-import { SetRef } from "../../../composables/useComponentProps"
-import { withDefaultProps } from "../../../utils/withDefaultProps"
-import pick from "../../../utils/pick";
-import { ObjectLike } from "../../../../types/_common"
-import { ComponentProps, ComponentGlobalProps } from "../../../types/component"
-import { Button } from "element-ui"
+import { empty } from "../../../shared/commonProps"
+import { ObjectLike, CustomInputValue } from '../../../../types/_common'
+import { HandleRef } from "../../../composables/useComponentProps"
+import { pick, withDefaultProps } from "../../../utils";
+import { ComponentProps, ComponentGlobalProps } from "../../../../types/_common"
 
 type HandleProps = (
-  props: ComponentProps | FormulateField | ObjectLike,
-  globalProps: ComponentGlobalProps | ObjectLike,
+  props: ComponentProps | FormulateField | ObjectLike | undefined,
+  globalProps: ComponentGlobalProps | ObjectLike | undefined,
   options: { propNames: string[]; globalPropNames: string[] }
 ) => () => ObjectLike
 
 export function createInputRender(
   props: FormulateField,
   _options: {
-    formData: Ref<FormData>
-    setRef?: SetRef
+    formData: Ref<{ [key: string]: CustomInputValue }>
+    handleRef?: HandleRef
   }
 ) {
-  const { formData, setRef } = _options
+  const { formData, handleRef } = _options
   const on = {
     input(value: string | number | boolean) {
       formData.value[props.key] = value
@@ -47,7 +45,12 @@ export function createInputRender(
     })
   }
 
-  const customOptions = { status: 1 as (0 | 1 | undefined), setRef, on, handleProps }
+  const customOptions = {
+    status: 1 as (0 | 1 | undefined),
+    handleRef,
+    on,
+    handleProps
+  }
 
   switch (props.type) {
     case 'radio': {
@@ -136,8 +139,8 @@ export function createInputRender(
         tip: tips && (() => [renderTips()])
       } }
       const { render } = useUpload(props, context, {
-        setRef,
         on,
+        handleRef,
         handleProps(_props, globalProps, { propNames, globalPropNames }) {
           return () => ({
             ...pick(props, propNames),

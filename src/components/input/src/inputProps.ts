@@ -1,12 +1,9 @@
 import { ExtractPropTypes, PropType } from "vue"
 import { ObjectLike } from "../../../../types/_common";
-import { empty, commonProps } from '../../../shared/commonProps'
+import { empty, sizeProp, booleanProp, stringProp } from '../../../shared/commonProps'
 
 export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { maxlength?: number; }
 export type InputProps = ExtractPropTypes<typeof inputProps>
-
-const booleanProp = Boolean as PropType<boolean>
-const stringProp = String as PropType<string>
 
 export const globalInputProps = {
   clearable: {
@@ -17,10 +14,7 @@ export const globalInputProps = {
     type: booleanProp,
     default: empty
   },
-  size: {
-    type: commonProps.size.type,
-    default: empty
-  },
+  size: sizeProp,
   autosize: {
     type: [Boolean, Object] as PropType<boolean | ObjectLike>,
     default: empty // false

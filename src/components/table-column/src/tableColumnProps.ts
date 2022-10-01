@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 
 export type GlobalTableColumnProps = ExtractPropTypes<typeof globalTableColumnProps>
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>

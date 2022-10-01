@@ -1,7 +1,7 @@
 import { h, ref, SetupContext } from "vue"
 import { Switch } from "element-ui"
 import { SwitchProps, GlobalSwitchProps } from "./switchProps"
-import { ElSwitch } from "../../../types/element-components"
+import { ElSwitch } from "../../../../types/_element-ui"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalSwitchPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
@@ -13,12 +13,12 @@ export function useSwitch<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<SwitchProps | ObjectLike, GlobalSwitchProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const elSwitch = ref<ElSwitch | null>(null)
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'switch', { propNames, globalPropNames: globalSwitchPropNames, handleProps })
   
-  const setRef = (options?.setRef || ((el: ElSwitch) => elSwitch.value = el)) as unknown as string
+  const handleRef = (_handleRef || ((el: ElSwitch) => elSwitch.value = el)) as unknown as string
   const on = context ? {
     input(value: string | number | boolean) {
       context.emit('input', value)
@@ -37,6 +37,6 @@ export function useSwitch<T extends ObjectLike>(
         elSwitch.value?.focus()
       }
     },
-    render: () => h(Switch, { ref: setRef, props: createProps(), on })
+    render: () => h(Switch, { ref: handleRef, props: createProps(), on })
   }
 }

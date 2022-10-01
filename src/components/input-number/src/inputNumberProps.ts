@@ -1,5 +1,5 @@
 import { ExtractPropTypes } from "vue";
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 
 export type GlobalInputNumberProps = ExtractPropTypes<typeof globalInputNumberProps>
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>

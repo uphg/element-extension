@@ -1,22 +1,21 @@
 import { h, SetupContext } from "vue"
+import { VNodeData } from "vue/types/umd";
 import { Input } from "element-ui"
 import { ElInput } from "element-ui/types/input";
 import { InputProps, GlobalInputProps } from "./inputProps";
 import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { withDefaultProps } from "../../../utils/withDefaultProps";
 import { generateEmits } from "../../../utils/generateEmits";
 import { renderSlots } from '../../../utils/renderSlot'
 import { useElInput } from "../../../composables/useElInput";
 import { ObjectLike } from "../../../../types/_common";
 import { globalInputPropNames } from "../../../shared/configPropertyMap";
-import { SetRef } from "../../../composables/useComponentProps";
-import pick from "../../../utils/pick";
-import { VNodeData } from "vue/types/umd";
+import { HandleRef } from "../../../composables/useComponentProps";
+import { pick, withDefaultProps } from "../../../utils";
 
 export interface UseInputOptins {
   status?: 0 | 1;
-  setRef?: SetRef;
+  handleRef?: HandleRef;
   on?: VNodeData['on'];
   handleProps?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { propNames: string[]; globalPropNames: string[] }) => () => ObjectLike;
   handleAttrs?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
@@ -65,9 +64,7 @@ export function useInput<T extends ObjectLike>(
   options?: UseInputOptins
 ) {
   const { elInput, focus, blur, select } = useElInput()
-  const setRef = (
-    options?.setRef || ((el: ElInput) => elInput.value = el)
-  ) as unknown as string
+  const handleRef = (options?.handleRef || ((el: ElInput) => elInput.value = el)) as unknown as string
 
   const on = context ? {
     input: useOnInput(props, context),
@@ -81,7 +78,7 @@ export function useInput<T extends ObjectLike>(
     expose,
     render() {
       const slots = context && renderSlots(context, slotNames)
-      return h(Input, { ref: setRef, props: createProps(), attrs: createAttrs(), on }, slots)
+      return h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, slots)
     }
   }
 }

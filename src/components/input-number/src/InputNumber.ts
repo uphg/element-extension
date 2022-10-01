@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { inputNumberProps } from "./inputNumberProps";
 import { useInputNumber } from "./useInputNumber";
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const EInputNumber = defineComponent({
   name: 'EInputNumber',

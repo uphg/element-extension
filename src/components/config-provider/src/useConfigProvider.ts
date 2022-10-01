@@ -3,7 +3,7 @@ import { ConfigProviderProps } from "./configProviderProps";
 import { each } from "../../../utils/each";
 import { ObjectLike } from "../../../../types/_common";
 import { configPropertyMap, ConfigPropertyMap } from "../../../shared/configPropertyMap";
-import { empty } from "../../../shared/_commonProps";
+import { empty } from "../../../shared/commonProps";
 
 type ConfigPropertyItem = ConfigPropertyMap[keyof ConfigPropertyMap]
 

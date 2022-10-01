@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { uploadProps } from "./uploadProps"
 import { useUpload } from "./useUpload"
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const EUpload = defineComponent({
   name: 'EUpload',

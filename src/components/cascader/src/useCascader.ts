@@ -1,4 +1,5 @@
 import { h, SetupContext } from "vue"
+import { VNodeData } from "vue/types/umd"
 import { Cascader } from "element-ui"
 import { CascaderProps, GlobalCascaderProps } from "./cascaderProps"
 import { useElCascader } from "../../../composables/useElCascader"
@@ -8,7 +9,6 @@ import { renderSlot } from "../../../utils/renderSlot"
 import { ObjectLike } from "../../../../types/_common"
 import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
 import { ElCalendar } from "../../../../types/_element-ui"
-import { VNodeData } from "vue/types/umd"
 
 const _propNames = ['placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
@@ -18,9 +18,9 @@ export function useCascader<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseComponentParamsOptions<CascaderProps | ObjectLike, GlobalCascaderProps>
 ) {
-  const { handleProps } = options || {}
+  const { handleProps, handleRef: _handleRef } = options || {}
   const { elCascader, getCheckedNodes } = useElCascader()
-  const setRef = (options?.setRef || ((el: ElCalendar) => elCascader.value = el)) as unknown as string
+  const handleRef = (_handleRef || ((el: ElCalendar) => elCascader.value = el)) as unknown as string
   const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
   const { createProps } = useComponentProps(props, 'cascader', { propNames, globalPropNames: globalCascaderPropNames, handleProps })
   const on = context ? generateEmits(context.emit, emitNames) : options?.on
@@ -39,7 +39,7 @@ export function useCascader<T extends ObjectLike>(
       const slots = context && [renderSlot(context, 'empty')]
 
       return h(Cascader, {
-        ref: setRef,
+        ref: handleRef,
         props: createProps(),
         on,
         scopedSlots: scopedSlots

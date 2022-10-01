@@ -16,6 +16,7 @@ import { EFormulate } from './formulate'
 import { ETable } from './table'
 import { ETableColumn } from './table-column'
 import { EPagination } from './pagination'
+import { EStaggeredTransitionGroup } from './staggered-transition-group'
 import { EConfigProvider } from './config-provider'
 
 export class RadioGroup extends ERadioGroup {}
@@ -36,6 +37,7 @@ export class Formulate extends EFormulate {}
 export class Table extends ETable {}
 export class TableColumn extends ETableColumn {}
 export class Pagination extends EPagination {}
+export class StaggeredTransitionGroup extends EStaggeredTransitionGroup {}
 export class ConfigProvider extends EConfigProvider {}
 
 export { useRadioGroup } from './radio'

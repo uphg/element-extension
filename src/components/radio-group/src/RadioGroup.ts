@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { radioGroupProps } from "./radioGroupProps";
 import { useRadioGroup } from "./useRadioGroup";
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const ERadioGroup = defineComponent({
   name: 'ERadioGroup',

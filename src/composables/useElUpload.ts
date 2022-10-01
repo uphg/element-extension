@@ -1,6 +1,6 @@
 import { ref } from "vue"
-import { ElUpload } from "../types/element-components"
 import { ElUploadInternalFileDetail } from "element-ui/types/upload"
+import { ElUpload } from "../../types/_element-ui"
 
 export function useElUpload() {
   const elUpload = ref<ElUpload | null>(null)

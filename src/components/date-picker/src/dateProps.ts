@@ -1,4 +1,4 @@
-import { commonProps, empty } from "../../../shared/commonProps";
+import { sizeProp, empty, booleanProp, stringProp, objectProp } from "../../../shared/commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
 export type GlobalDateProps = ExtractPropTypes<typeof globalDateProps>
@@ -9,15 +9,13 @@ export type PublicDateProps = ExtractPropTypes<typeof dateProps>
 
 export type DateType = 'date' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'time-select' | 'time-picker'
 
-const booleanProp = Boolean as PropType<boolean>
-const stringProp = String as PropType<string>
 const defaultNull = {
   default: '',
 }
 const datePickerTypes = ['date', 'year', 'month', 'dates', 'week', 'daterange', 'monthrange', 'datetime', 'datetimerange',]
 
 export const globalDateProps = {
-  size: commonProps.size,
+  size: sizeProp,
   editable: {
     type: booleanProp,
     default: empty // true
@@ -68,7 +66,7 @@ export const globalDateProps = {
     default: empty
   },
   pickerOptions: {
-    type: Object,
+    type: objectProp,
     default: empty // {}
   },
   prefixIcon: {
@@ -114,7 +112,7 @@ export const timePickerProps = {
 
 export const timeSelectProps = {
   type: {
-    type: stringProp,
+    type: stringProp, // ?...
     default: 'time-select'
   },
   ...dateProps

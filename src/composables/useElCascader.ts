@@ -1,5 +1,5 @@
-import { ElCalendar } from "../types/element-components"
 import { ref } from "vue"
+import { ElCalendar } from "../../types/_element-ui"
 
 export function useElCascader() {
   const elCascader = ref<ElCalendar | null>(null)

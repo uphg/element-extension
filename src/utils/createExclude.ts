@@ -1,6 +1,5 @@
 import { toString } from '../utils'
-import { InputExclude } from '../types/input'
 
-export function createExclude(exclude: InputExclude) {
+export function createExclude(exclude: string | number | RegExp) {
   return typeof exclude === 'number' ? toString(exclude) : exclude
 }

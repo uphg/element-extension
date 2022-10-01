@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
 import { sliderProps } from "./sliderProps"
 import { useSlider } from "./useSlider"
-import { ElementPartComponent } from "../../../types/component"
+import { ElementPartComponent } from "../../../../types/component"
 
 const ESlider = defineComponent({
   name: 'ESlider',

@@ -1,20 +1,37 @@
 import { computed, h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
-import { FormulateField, FormulateFields, FormulateProps } from "./formulateProps"
-import { isArray, isObject, pick, isNil } from "../../../utils"
-import { CustomInputValue } from "../../../types/customInput"
-import { FormRules, FormData } from '../../../types/form'
+import { FormulateProps } from "./formulateProps"
+import { FormulateField, FormulateFields } from './interface'
+import { isArray, isObject, pick, withDefaultProps, isNil } from "../../../utils"
+import { CustomInputValue } from "../../../../types/_common"
 import { useElForm } from '../../../composables/useElForm'
 import { GlobalFormProps } from "../../form/src/formProps"
 import { useGlobalProps } from "../../../composables/useGlobalProps"
-import { withDefaultProps } from "../../../utils/withDefaultProps"
 import { ElForm } from "element-ui/types/form"
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
 import { createInputRender } from "./createInputRender"
 
-interface MapFieldsItem extends FormulateField {
+type MapFieldsItem = {
   key: string;
+} & FormulateField
+
+interface FormData {
+  [key: string]: CustomInputValue
+}
+
+export type FormRule = {
+  required?: boolean;
+  message: string;
+  pattern?: RegExp | string;
+  trigger?: string;
+  min?: number;
+  max?: number;
+  [key: string]: any;
+}
+
+export type FormRules = {
+  [key: string]: FormRule[]
 }
 
 const formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
@@ -141,13 +158,13 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   const { rules, handleRules } = useRules(props)
   const formulateFields = ref<MapFieldsItem[] | Array<MapFieldsItem[]>>(mapFields(props.fields, (item) => {
     handleRules(item)
-    return { ...item, '$render': createInputRender(item, { formData, setRef: item.ref }) }
+    return { ...item, '$render': createInputRender(item, { formData, handleRef: item.ref }) }
   }))
   const { elForm, validate, validateField, clearValidate } = useElForm()
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
   const rowSpan = computed(() => (24 / (Number(props.fields?.length)) || 0))
 
-  const setRef = function(el: ElForm) { elForm.value = el } as unknown as string
+  const handleRef = function(el: ElForm) { elForm.value = el } as unknown as string
 
   function resetFields() {
     resetFormData(formData.value, props.fields!)
@@ -186,7 +203,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
     },
     render: () => {
       return h(Form, {
-        ref: setRef,
+        ref: handleRef,
         props: {
           rules: rules.value,
           model: formData.value,

@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { useSwitch } from './useSwitch'
 import { switchProps } from "./switchProps";
-import { ElementPartComponent } from "../../../../types/_common"
+import { ElementPartComponent } from "../../../../types/component"
 
 const ESwitch = defineComponent({
   name: 'ESwitch',

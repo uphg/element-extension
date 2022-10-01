@@ -4,7 +4,7 @@ import { Link, Button } from "element-ui"
 import { isArray } from "../../../utils"
 import { extendColumnTypes } from '../../table-column/src/tableColumnProps'
 import { TableObjectColumnProps, TableColumnChildrenProps } from "./tableProps"
-import { RowCallbackParams } from "../../../types/table"
+import { RowCallbackParams } from "../../../../types/_element-ui"
 import { handleColumnType } from "../../table-column/src/handleColumnType";
 import { createDateFormat } from "../../table-column/src/createDateFormat"
 

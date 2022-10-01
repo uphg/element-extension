@@ -1,6 +1,6 @@
 import { SetupContext } from "vue"
+import { VNode } from "vue/types/umd";
 import { FormItemProps } from "./formItemProps";
-
 import { useRadioGroup } from "../../radio-group";
 import { useCheckboxGroup } from "../../checkbox-group";
 import { useInput } from "../../input";
@@ -11,16 +11,12 @@ import { useSwitch } from "../../switch";
 import { useSlider } from "../../slider";
 import { useDatePicker } from "../../date-picker";
 import { useUpload } from "../../upload";
-
-import { withDefaultProps } from "../../../utils/withDefaultProps";
-import { empty } from "../../../shared/_commonProps";
-import { pick } from "../../../utils";
-import { VNode } from "vue/types/umd";
+import { pick, withDefaultProps } from "../../../utils";
+import { empty } from "../../../shared/commonProps";
 import { ObjectLike } from "../../../../types/_common";
 
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
 const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon']
-
 const globalChoosePropNames = ['size']
 const globalChooseExtendNames = ['textColor', 'fill']
 

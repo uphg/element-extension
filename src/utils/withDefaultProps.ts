@@ -1,4 +1,4 @@
-import { ObjectLike } from "../types/object-like"
+import { ObjectLike } from "../../types/_common"
 
 const empty = void 0
 
