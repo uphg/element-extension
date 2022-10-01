@@ -11,7 +11,6 @@ import { GlobalSwitchProps } from '../src/components/switch/src/switchProps';
 import { GlobalTableColumnProps } from '../src/components/table-column/src/tableColumnProps';
 import { GlobalTableProps } from '../src/components/table/src/tableProps';
 import { GlobalUploadProps } from '../src/components/upload/src/uploadProps';
-import { useConfigProvider } from '../src/components/config-provider'
 
 export declare class EConfigProvider {
   radioGroup: GlobalRadioGroupProps;
@@ -28,4 +27,3 @@ export declare class EConfigProvider {
   tableColumn: GlobalTableColumnProps;
   pagination: GlobalPaginationProps;
 }
-export declare type useConfigProvider = typeof useConfigProvider

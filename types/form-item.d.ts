@@ -5,7 +5,6 @@ import { TimeSelectOptions } from "element-ui/types/time-select";
 import { TimePickerOptions } from "element-ui/types/time-picker";
 import { DatePickerOptions } from "element-ui/types/date-picker";
 import { ObjectLike } from "./_common";
-import { useFormItem } from '../src/components/form-item'
 import { CheckboxGroupOptions } from "../src/components/checkbox-group/src/checkboxGroupProps";
 import { RadioGroupOptions } from "../src/components/radio-group/src/radioGroupProps";
 import { SelectOptionGroup, SelectOptions } from "../src/components/select/src/selectProps";
@@ -35,4 +34,3 @@ export declare class EFormItem extends ElFormItem {
   withButton: boolean;
   extends: FormItemExtendsProps
 }
-export declare type useFormItem = typeof useFormItem

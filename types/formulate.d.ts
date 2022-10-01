@@ -1,6 +1,6 @@
 import { ElForm } from "element-ui/types/form";
-import { useFormulate } from '../src/components/formulate'
-import { FormulateDataProps, FormulateFields, MapRules } from "../src/components/formulate/src/formulateProps";
+import { FormulateDataProps } from "../src/components/formulate/src/formulateProps";
+import { FormulateFields, MapRules } from "../src/components/formulate/src/interface";
 
 export declare class EFormulate extends ElForm {
   fields: FormulateFields | FormulateFields[];
@@ -9,4 +9,3 @@ export declare class EFormulate extends ElForm {
   mapRules: MapRules;
   data: FormulateDataProps;
 }
-export declare type useFormulate = typeof useFormulate
