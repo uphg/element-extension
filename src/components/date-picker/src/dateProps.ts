@@ -1,4 +1,4 @@
-import { sizeProp, empty, booleanProp, stringProp, objectProp } from "../../../shared/commonProps";
+import { sizeProp, empty, booleanProp, stringProp, objectProp, popper } from "../../../shared/commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
 export type GlobalDateProps = ExtractPropTypes<typeof globalDateProps>
@@ -15,6 +15,8 @@ const defaultNull = {
 const datePickerTypes = ['date', 'year', 'month', 'dates', 'week', 'daterange', 'monthrange', 'datetime', 'datetimerange',]
 
 export const globalDateProps = {
+  name: defaultNull,
+  id: defaultNull,
   size: sizeProp,
   editable: {
     type: booleanProp,
@@ -81,12 +83,18 @@ export const globalDateProps = {
     type: booleanProp,
     default: empty // true
   },
+
+  // NewPopper
+  appendToBody: popper.appendToBody,
+  offset: popper.offset,
+  boundariesPadding: popper.boundariesPadding,
+  arrowOffset: popper.arrowOffset,
+  placement: popper.placement,
+  transformOrigin: popper.transformOrigin,
 }
 
 export const dateProps = {
   value: {},
-  name: defaultNull,
-  id: defaultNull,
   readonly: booleanProp,
   disabled: booleanProp,
   ...globalDateProps

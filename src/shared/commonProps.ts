@@ -21,6 +21,28 @@ export const commonProps = {
   }
 }
 
-export const elFormProps = {
-  
+export const popper = {
+  appendToBody: {
+    type: booleanProp,
+    default: empty // true
+  },
+  offset: {
+    default: empty // 0
+  },
+  boundariesPadding: {
+    type: numberProp,
+    default: empty // 5
+  },
+  arrowOffset: {
+    type: numberProp,
+    default: empty // 35
+  },
+  placement: {
+    type: stringProp,
+    default: empty // 'bottom'
+  },
+  transformOrigin: {
+    type: [Boolean, String],
+    default: empty // true
+  },
 }

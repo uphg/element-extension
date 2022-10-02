@@ -15,8 +15,10 @@ import { pick, withDefaultProps } from "../../../utils";
 import { empty } from "../../../shared/commonProps";
 import { ObjectLike } from "../../../../types/_common";
 
+const globalDateAttrNames = ['id', 'name', 'placeholder']
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
-const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon']
+const globalDateExtendNames = ['editable', 'startPlaceholder', 'endPlaceholder', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'prefixIcon', 'clearIcon', 'appendToBody', 'offset', 'boundariesPadding', 'arrowOffset', 'placement', 'transformOrigin']
+
 const globalChoosePropNames = ['size']
 const globalChooseExtendNames = ['textColor', 'fill']
 
@@ -95,18 +97,19 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
     }
 
     case 'select': {
-      const extendPropNames = ['autocomplete', 'automaticDropdown', 'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'defaultFirstOption', 'reserveKeyword', 'collapseTags', 'id']
+      const globalAttrNames = ['name']
+      const globalPropNames = ['size', 'multiple', 'clearable']
+      const extendGlobalPropNames = ['autocomplete', 'name', 'id', 'automaticDropdown', 'filterable', 'allowCreate', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'defaultFirstOption', 'reserveKeyword', 'collapseTags', 'valueKey', 'multipleLimit', 'popperClass', 'popperAppendToBody']
       return useSelect(props, context, {
         handleProps: (_props, globalProps) => () => ({
           value: props.value,
           disabled: props.disabled,
-          ...pick(props.extends, extendPropNames),          
-          name: context.attrs.name,
+          loading: props.loading,
           placeholder: context.attrs.placeholder,
-          
-          // global
-          ...withDefaultProps(props, globalProps, ['size', 'clearable']),
-          ...withDefaultProps(props.extends, globalProps, ['valueKey', 'multiple', 'multipleLimit', 'popperClass', 'popperAppendToBody'])
+
+          ...withDefaultProps(context.attrs, globalProps, globalAttrNames),
+          ...withDefaultProps(props, globalProps, globalPropNames),
+          ...withDefaultProps(props.extends, globalProps, extendGlobalPropNames)
         })
       })
     }
@@ -115,15 +118,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
       return useCascader<T>(props, context, {
         handleProps(_props, globalProps) {
           const globalPropNames = ['options', 'size', 'clearable']
-          const globalExtendsNames = ['props', 'popperClass', 'separator', 'showAllLevels', 'collapseTags']
+          const globalExtendsNames = ['props', 'popperClass', 'separator', 'filterable', 'filterMethod', 'beforeFilter', 'debounce', 'showAllLevels', 'collapseTags']
 
           return () => ({
             value: props.value,
             disabled: props.disabled,
-            filterable: props.extends.filterable,
-            filterMethod: props.extends.filterMethod,
-            debounce: props.extends.debounce,
-            beforeFilter: props.extends.beforeFilter,
             placeholder: context.attrs.placeholder,
   
             ...withDefaultProps(props, globalProps, globalPropNames),
@@ -136,12 +135,14 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
     case 'switch': {
       return useSwitch<T>(props, context, {
         handleProps(_props, globalProps) {
-          const globalPropNames = ['validateEvent']
-          const globalExtendsNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor']
+          const globalPropNames = ['activeValue', 'inactiveValue', 'validateEvent']
+          const globalAttrNames = ['name', 'id']
+          const globalExtendsNames = ['width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeColor', 'inactiveColor']
           return () => ({
             value: props.value,
             disabled: props.disabled,
-            name: context.attrs.name,
+  
+            ...withDefaultProps(context.attrs, globalProps, globalAttrNames),
             ...withDefaultProps(props, globalProps, globalPropNames),
             ...withDefaultProps(props.extends, globalProps, globalExtendsNames)
           })
@@ -172,12 +173,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
-            name: context.attrs.name,
             
             // global props
+            ...withDefaultProps(context.attrs, globalProps, globalDateAttrNames),
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
           })
         }
       })
@@ -192,12 +192,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
-            name: context.attrs.name,
 
             // global props
+            ...withDefaultProps(context.attrs, globalProps, globalDateAttrNames),
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
           })
         }
       })
@@ -212,12 +211,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
-            name: context.attrs.name,
 
             // global props
+            ...withDefaultProps(context.attrs, globalProps, globalDateAttrNames),
             ...withDefaultProps(props, globalProps, globalDatePropNames),
-            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames),
-            placeholder: context.attrs.placeholder || globalProps?.placeholder,
+            ...withDefaultProps(props.extends, globalProps, globalDateExtendNames)
           })
         }
       })
@@ -225,18 +223,17 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
     
     case 'file':
     case 'upload': {
-      const globalPropNames = ['withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'listType', 'autoUpload', 'httpRequest']
+      const globalPropNames = ['dragger', 'withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'listType', 'autoUpload', 'httpRequest']
       return useUpload<T>(props, context, {
         handleProps(_props, globalProps) {
           return () => ({
             type: 'select',
             fileList: props.fileList,
             disabled: props.disabled,
-            dragger: props.extends.dragger,
-            name: context.attrs.name,
 
             // global props
             ...withDefaultProps(props.extends, globalProps, globalPropNames),
+            name: context.attrs.name || globalProps?.name || empty,
             accept: props.accept || globalProps?.accept || empty,
           })
         }

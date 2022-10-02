@@ -10,7 +10,7 @@ import { ObjectLike } from "../../../../types/_common"
 import { globalCascaderPropNames } from "../../../shared/configPropertyMap"
 import { ElCalendar } from "../../../../types/_element-ui"
 
-const _propNames = ['placeholder', 'disabled', 'filterable', 'filterMethod', 'debounce', 'beforeFilter']
+const _propNames = ['placeholder', 'disabled']
 const emitNames = ['change', 'expand-change', 'blur', 'focus', 'visible-change', 'remove-tag']
 
 export function useCascader<T extends ObjectLike>(

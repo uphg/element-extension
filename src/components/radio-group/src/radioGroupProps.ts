@@ -3,7 +3,6 @@ import { sizeProp, empty, booleanProp, stringProp } from "../../../shared/common
 
 export type GlobalRadioGroupProps = ExtractPropTypes<typeof globalRadioGroupProps>
 export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>
-
 export type RadioGroupOption = {
   label: string | number | boolean;
   value: string | number | boolean;
@@ -11,7 +10,6 @@ export type RadioGroupOption = {
   disabled?: boolean;
   border?: boolean;
 }
-
 export type RadioGroupOptions = Array<RadioGroupOption>
 
 export const globalRadioGroupProps = {
@@ -44,6 +42,7 @@ export const radioGroupProps = {
   disabled: booleanProp,
   ...globalRadioGroupProps,
 
+  // customize props
   options: {
     type: [Array, Object] as PropType<RadioGroupOptions>,
     default: () => []

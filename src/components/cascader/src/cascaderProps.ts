@@ -1,13 +1,10 @@
 import { t } from 'element-ui/src/locale';
-import { empty, booleanProp } from '../../../shared/commonProps';
+import { empty, booleanProp, stringProp, numberProp, objectProp } from '../../../shared/commonProps';
 import { ExtractPropTypes, PropType } from 'vue';
 import { ObjectLike } from '../../../../types/_common';
 
 export type GlobalCascaderProps = ExtractPropTypes<typeof globalCascaderProps>
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
-
-const stringProp = String as PropType<string>
-const numberProp = Number as PropType<number>
 
 export const globalCascaderProps = {
   options: {
@@ -15,30 +12,49 @@ export const globalCascaderProps = {
     default: empty
   },
   props: {
-    type: Object,
+    type: objectProp,
     default: empty
   },
   size: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   clearable: {
-    type: Boolean,
+    type: booleanProp,
     default: empty
   },
   popperClass: {
-    type: String,
+    type: stringProp,
     default: empty
   },
   separator: {
-    type: String,
-    default: ' / '
+    type: stringProp,
+    default: empty // ' / '
+  },
+  filterable: {
+    type: booleanProp,
+    default: empty
+  },
+  filterMethod: {
+    type: Function,
+    default: empty
+  },
+  beforeFilter: {
+    type: Function,
+    default: empty // () => (() => {})
   },
   showAllLevels: {
-    type: Boolean,
-    default: true
+    type: booleanProp,
+    default: empty // true
   },
-  collapseTags: Boolean,
+  collapseTags: {
+    type: booleanProp,
+    default: empty
+  },
+  debounce: {
+    type: numberProp,
+    default: empty // 300
+  },
 
   // mixin props
   placement: {
@@ -65,7 +81,7 @@ export const globalCascaderProps = {
     default: empty // 5
   },
   popperOptions: {
-    type: [Object, undefined] as PropType<ObjectLike>,
+    type: objectProp,
     default: empty // () => ({ gpuAcceleration: false })
   },
   transformOrigin: {
@@ -80,19 +96,10 @@ export const cascaderProps = {
     default: {}
   },
   placeholder: {
-    type: String,
+    type: stringProp,
     default: () => t('el.cascader.placeholder')
   },
-  disabled: Boolean,
-  filterable: Boolean,
-  filterMethod: Function,
-  debounce: {
-    type: Number,
-    default: 300
-  },
-  beforeFilter: {
-    type: Function,
-    default: () => (() => {})
-  },
+  disabled: booleanProp,
+
   ...globalCascaderProps
 }

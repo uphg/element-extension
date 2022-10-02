@@ -6,6 +6,14 @@ export type SwitchProps = ExtractPropTypes<typeof switchProps>
 
 export const globalSwitchProps = {
   // global props
+  name: {
+    type: String,
+    default: empty // ''
+  },
+  id: {
+    type: String,
+    default: empty
+  },
   width: {
     type: Number,
     default: empty
@@ -57,10 +65,5 @@ export const switchProps = {
     type: Boolean,
     default: false
   },
-  name: {
-    type: String,
-    default: ''
-  },
-  id: String,
   ...globalSwitchProps
 }

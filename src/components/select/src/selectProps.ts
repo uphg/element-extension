@@ -20,6 +20,66 @@ export type GlobalSelectProps = ExtractPropTypes<typeof globalSelectProps>
 const queryChangeHandler = Function as PropType<QueryChangeHandler>
 
 export const globalSelectProps = {
+  autocomplete: {
+    type: stringProp,
+    default: 'off'
+  },
+  name:{
+    type:  stringProp,
+    default: empty
+  },
+  id:{
+    type:  stringProp,
+    default: empty
+  },
+  automaticDropdown:{
+    type:  booleanProp,
+    default: empty
+  },
+  filterable:{
+    type:  booleanProp,
+    default: empty
+  },
+  allowCreate:{
+    type:  booleanProp,
+    default: empty
+  },
+  remote:{
+    type:  booleanProp,
+    default: empty
+  },
+  loadingText:{
+    type:  stringProp,
+    default: empty
+  },
+  noMatchText:{
+    type:  stringProp,
+    default: empty
+  },
+  noDataText:{
+    type:  stringProp,
+    default: empty
+  },
+  remoteMethod:{
+    type:  queryChangeHandler,
+    default: empty
+  },
+  filterMethod:{
+    type:  queryChangeHandler,
+    default: empty
+  },
+  defaultFirstOption:{
+    type:  booleanProp,
+    default: empty
+  },
+  reserveKeyword:{
+    type:  booleanProp,
+    default: empty
+  },
+  collapseTags:{
+    type:  booleanProp,
+    default: empty
+  },
   valueKey: {
     type: stringProp,
     default: empty
@@ -54,27 +114,9 @@ export const selectProps = {
   value: {
     required: true
   },
-  name: stringProp,
-  id: stringProp,
-  autocomplete: {
-    type: stringProp,
-    default: 'off'
-  },
-  automaticDropdown: booleanProp,
   disabled: booleanProp,
   loading: booleanProp,
-  filterable: booleanProp,
-  allowCreate: booleanProp,
-  remote: booleanProp,
-  loadingText: stringProp,
-  noMatchText: stringProp,
-  noDataText: stringProp,
-  remoteMethod: queryChangeHandler,
-  filterMethod: queryChangeHandler,
   placeholder: stringProp,
-  defaultFirstOption: booleanProp,
-  reserveKeyword: booleanProp,
-  collapseTags: booleanProp,
   ...globalSelectProps,
 
   // customize props

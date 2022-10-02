@@ -10,7 +10,7 @@ import { UseComponentParamsOptions, useComponentProps } from "../../../composabl
 import { globalSelectPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
 
-const _propNames = ['name', 'id', 'disabled', 'autocomplete', 'automaticDropdown',  'filterable', 'allowCreate', 'loading', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'placeholder', 'defaultFirstOption', 'reserveKeyword', 'collapseTags']
+const _propNames = ['disabled', 'loading', 'placeholder']
 const emitNames = ['input', 'change', 'visibleChange', 'blur', 'clear']
 
 export function useSelect<T extends ObjectLike>(

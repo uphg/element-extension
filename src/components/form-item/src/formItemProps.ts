@@ -35,6 +35,7 @@ export const formItemBaseProps = {
   options: {
     type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
   },
+  loading: booleanProp,
   clearable: booleanProp,
   disabled: booleanProp,
   readonly: booleanProp,
@@ -44,14 +45,22 @@ export const formItemBaseProps = {
     type: booleanProp,
     default: empty
   },
+  size: sizeProp,
+
+  // --- Switch
+  activeValue: switchProps.activeValue,
+  inactiveValue: switchProps.inactiveValue,
+
+  // --- Date
+  format: dateProps.format,
+  pickerOptions: dateProps.pickerOptions,
+
+  // --- Upload
   action: uploadProps.action,
   multiple: uploadProps.multiple,
   headers: uploadProps.headers,
   fileList: uploadProps.fileList,
   accept: uploadProps.accept,
-  format: dateProps.format,
-  pickerOptions: dateProps.pickerOptions,
-  size: sizeProp,
 
   // custom props
   exclude: inputProps.exclude,
@@ -69,6 +78,16 @@ export const formItemBaseProps = {
 export const formItemExtendsProps = {
   popperClass: commonProps.popperClass,
   debounce: commonProps.debounce,
+
+  // --- Mixin Popper
+  placement: cascaderProps.placement,
+  appendToBody: cascaderProps.appendToBody,
+  visibleArrow: cascaderProps.visibleArrow,
+  arrowOffset: cascaderProps.arrowOffset,
+  offset: cascaderProps.offset,
+  boundariesPadding: cascaderProps.boundariesPadding,
+  popperOptions: cascaderProps.popperOptions,
+  transformOrigin: cascaderProps.transformOrigin,
 
   // --- Radio
   size: sizeProp,
@@ -119,15 +138,6 @@ export const formItemExtendsProps = {
   separator: cascaderProps.separator,
   showAllLevels: cascaderProps.showAllLevels,
   beforeFilter: cascaderProps.beforeFilter,
-  // Cascader: PopperMixin
-  placement: cascaderProps.placement,
-  appendToBody: cascaderProps.appendToBody,
-  visibleArrow: cascaderProps.visibleArrow,
-  arrowOffset: cascaderProps.arrowOffset,
-  offset: cascaderProps.offset,
-  boundariesPadding: cascaderProps.boundariesPadding,
-  popperOptions: cascaderProps.popperOptions,
-  transformOrigin: cascaderProps.transformOrigin,
 
   // --- Date
   defaultValue: dateProps.defaultValue,
@@ -156,8 +166,6 @@ export const formItemExtendsProps = {
   inactiveText: switchProps.inactiveText,
   activeColor: switchProps.activeColor,
   inactiveColor: switchProps.inactiveColor,
-  activeValue: switchProps.activeValue,
-  inactiveValue: switchProps.inactiveValue,
 
   // --- Slider
   // value - default: 0
@@ -196,9 +204,6 @@ export const formItemExtendsProps = {
   listType: uploadProps.listType,
   httpRequest: uploadProps.httpRequest,
   onExceed: uploadProps.onExceed,
-  action: uploadProps.action,
-  headers: uploadProps.headers,
-  multiple: uploadProps.multiple,
 }
 
 export const elFormItemProps = {
@@ -232,4 +237,7 @@ export const formItemProps = {
     default: () => ({})
   }
 }
+
+console.log('FormItem Props Number')
+console.log(Object.keys(formItemProps).length)
 

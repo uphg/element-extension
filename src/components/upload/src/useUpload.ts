@@ -11,7 +11,7 @@ import { ObjectLike } from "../../../../types/_common"
 import { globalUploadPropNames } from "../../../shared/configPropertyMap"
 import { ElUpload } from "../../../../types/_element-ui"
 
-const _propNames = ['name', 'dragger', 'type', 'fileList', 'disabled']
+const _propNames = [/* 'name', 'dragger',  */'type', 'fileList', 'disabled']
 const globalPropNames = globalUploadPropNames
 
 export function useUpload<T extends ObjectLike>(

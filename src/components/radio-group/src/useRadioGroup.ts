@@ -7,7 +7,7 @@ import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
 import { isNil } from "../../../utils"
 
-const _propNames = ['disabled', 'options'] // el props
+const _propNames = ['disabled'] // el props
 
 export function useRadioGroup<T extends ObjectLike>(
   props: RadioGroupProps | T,

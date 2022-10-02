@@ -10,7 +10,7 @@ import { ElTimePicker } from "element-ui/types/time-picker"
 import { ElTimeSelect } from "element-ui/types/time-select"
 import { VNodeData } from "vue/types/umd"
 
-const _publicPropNames = ['readonly', 'name', 'id', 'disabled', 'isRange', 'arrowControl', 'timeArrowControl']
+const _publicPropNames = ['readonly', 'disabled']
 
 type UseDatePickerOptions<Props> = {
   type: 1 | 2 | 3; // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
@@ -23,13 +23,13 @@ type UseDatePickerOptions<Props> = {
 type DatePickerValue = Date | string | number | (string | number)[]
 
 const componentMap = {
-  1: ['datePicker', _DatePicker, 'elDatePicker'],
-  2: ['timePicker', TimePicker, 'elTimePicker'],
-  3: ['timeSelect', TimeSelect, 'elTimeSelect'],
+  1: ['datePicker', _DatePicker, 'elDatePicker', ['type', 'timeArrowControl']],
+  2: ['timePicker', TimePicker, 'elTimePicker', ['isRange', 'arrowControl']],
+  3: ['timeSelect', TimeSelect, 'elTimeSelect', ['type']],
 } as {
-  1: ['datePicker', typeof _DatePicker, 'elDatePicker'];
-  2: ['timePicker', typeof TimePicker, 'elTimePicker'];
-  3: ['timeSelect', typeof TimeSelect, 'elTimeSelect'];
+  1: ['datePicker', typeof _DatePicker, 'elDatePicker', ['type', 'timeArrowControl']];
+  2: ['timePicker', typeof TimePicker, 'elTimePicker', ['isRange', 'arrowControl']];
+  3: ['timeSelect', typeof TimeSelect, 'elTimeSelect', ['type']];
 }
 
 export function useDatePicker<T extends ObjectLike>(
@@ -41,7 +41,7 @@ export function useDatePicker<T extends ObjectLike>(
   const DatePicker = componentMap[options.type][1]
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
   const publicPropNames = options?.status === 1 ? _publicPropNames : _publicPropNames.concat(['value'])   
-  const propNames = [...(options.type === 1 ? ['type', 'timeArrowControl'] : (options.type === 3 ? ['type'] : [])), ...publicPropNames]
+  const propNames = [...componentMap[options.type][3], ...publicPropNames]
   const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
   const on = context?.emit ? {
     input(value: DatePickerValue) {

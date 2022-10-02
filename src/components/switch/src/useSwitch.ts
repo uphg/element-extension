@@ -6,7 +6,7 @@ import { useComponentProps, UseComponentParamsOptions } from "../../../composabl
 import { globalSwitchPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
 
-const _propNames = ['disabled', 'name']
+const _propNames = ['disabled']
 
 export function useSwitch<T extends ObjectLike>(
   props: SwitchProps | T,
