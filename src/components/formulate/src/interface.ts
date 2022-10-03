@@ -60,6 +60,28 @@ export type FormulateField =  {
   key: string;
 } & FormItemProps & CustomInputProps
 
+export type FormRule = {
+  required?: boolean;
+  message: string;
+  pattern?: RegExp | string;
+  trigger?: string;
+  min?: number;
+  max?: number;
+  [key: string]: any;
+}
+
+export type FormRules = {
+  [key: string]: FormRule[]
+}
+
+export type MapFieldsItem = {
+  key: string;
+} & FormulateField
+
+export interface FormData {
+  [key: string]: CustomInputValue
+}
+
 export interface MapRules {
   (options: { type?: string, key: string, label: string }): ElFormRule[] | []
 }

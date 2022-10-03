@@ -2,7 +2,7 @@ import { computed, h, ref, SetupContext, VNodeChildren } from "vue"
 import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
 import { FormulateProps } from "./formulateProps"
-import { FormulateField, FormulateFields } from './interface'
+import { FormulateFields, MapFieldsItem, FormData, FormRules } from './interface'
 import { isArray, isObject, pick, withDefaultProps, isNil } from "../../../utils"
 import { CustomInputValue } from "../../../../types/_common"
 import { useElForm } from '../../../composables/useElForm'
@@ -11,28 +11,6 @@ import { useGlobalProps } from "../../../composables/useGlobalProps"
 import { ElForm } from "element-ui/types/form"
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
 import { createInputRender } from "./createInputRender"
-
-type MapFieldsItem = {
-  key: string;
-} & FormulateField
-
-interface FormData {
-  [key: string]: CustomInputValue
-}
-
-export type FormRule = {
-  required?: boolean;
-  message: string;
-  pattern?: RegExp | string;
-  trigger?: string;
-  min?: number;
-  max?: number;
-  [key: string]: any;
-}
-
-export type FormRules = {
-  [key: string]: FormRule[]
-}
 
 const formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
 
@@ -166,7 +144,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
   const rowSpan = computed(() => (24 / (Number(props.fields?.length)) || 0))
 
-  const resetFields = () => {
+  const resetValues = () => {
     resetFormData(formData.value, props.fields!)
   }
 
@@ -196,7 +174,7 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
 
   return {
     expose: {
-      validate, validateField, resetFields, clearValidate, setValues, getValues, submit,
+      validate, validateField, resetValues, clearValidate, setValues, getValues, submit,
       get formData() { return formData.value },
       get elForm() { return elForm.value }
     },
