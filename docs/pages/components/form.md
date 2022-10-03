@@ -1,6 +1,6 @@
 # Form 表单
 
-将常用组件与 ElFormItem 组件结合，添加常用属性
+将常用组件与 `<el-form-item>` 组件结合，添加常用属性
 
 ## 基本用法
 
@@ -52,7 +52,7 @@ form/option-groups
 
 ## 表单验证
 
-添加表单验证功能，与 ElFormItem 相同
+添加表单验证功能，与 `<el-form-item>` 相同
 
 ::: demo
 
@@ -62,7 +62,7 @@ form/validate
 
 ## label 插槽
 
-与 ElFormItem label 插槽作用相同
+与 `<el-form-item>` label 插槽作用相同
 
 ::: demo
 
@@ -113,7 +113,7 @@ form/label
 
 ## Form-Item Slot
 
-在 ElFormItem 默认插槽基础上添加了以下插槽
+在 `<el-form-item>` 默认插槽基础上添加了以下插槽
 
 | name       | 说明                                                      |
 | :--------- | :-------------------------------------------------------- |

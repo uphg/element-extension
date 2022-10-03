@@ -104,6 +104,21 @@ formulate/file
 | gutter   | 多列布局的分栏间隔                                           | number   | —      | —      |
 | mapRules | 是否添加 map rules 函数，添加后自动根据返回值添加表单验证，mapRules({ type, key, label }) | Function | —      | —      |
 
+## Formulate Methods
+
+| 方法名      | 说明                    | 参数                                        |
+| :---------- | :---------------------- | :------------------------------------------ |
+| resetValues | 重置表单内所有 Value 值 | Function()                                  |
+| setValues   | 设置表单部分内容值      | `(object: FormData) => void`                |
+| getValues   | 获取表单所有值          | `() => { [key: string]: CustomInputValue }` |
+
+## Formulate Readonly Attributes
+
+| 参数     | 说明                 |
+| -------- | -------------------- |
+| formData | 当前表单值组成的对象 |
+| elForm   | `<el-form>` 组件实例 |
+
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
 import FormulatePrefixOrSuffix from 'docs/demo/formulate/prefix-or-suffix.vue'

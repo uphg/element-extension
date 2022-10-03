@@ -16,7 +16,7 @@ config-provider/base
 
 以下是组件支持全局配置的属性列表
 
-### RadioGroup
+### RadioGroup 单选框组
 
 | 参数       | 说明                                                       | 类型    | 可选值                | 默认值  |
 | :--------- | :--------------------------------------------------------- | :------ | :-------------------- | :------ |
@@ -26,7 +26,7 @@ config-provider/base
 | withBorder | radio 是否以按钮形式渲染                                   | boolean | —                     | false   |
 | withButton | 是否显示边框                                               | boolean | —                     | false   |
 
-### CheckboxGroup
+### CheckboxGroup 多选框组
 
 | 参数       | 说明                                                         | 类型    | 可选值                | 默认值  |
 | :--------- | :----------------------------------------------------------- | :------ | :-------------------- | :------ |
@@ -38,7 +38,7 @@ config-provider/base
 | withBorder | radio 是否以按钮形式渲染                                     | boolean | —                     | false   |
 | withButton | 是否显示边框                                                 | boolean | —                     | false   |
 
-### Input
+### Input 输入框
 
 | 参数            | 说明                                                         | 类型             | 可选值                                                       | 默认值 |
 | :-------------- | :----------------------------------------------------------- | :--------------- | :----------------------------------------------------------- | :----- |
@@ -65,7 +65,7 @@ config-provider/base
 | tabindex        | 输入框的tabindex                                             | string           | -                                                            | -      |
 | validate-event  | 输入时是否触发表单的校验                                     | boolean          | -                                                            | true   |
 
-### InputNumber
+### InputNumber 计数器
 
 | 参数              | 说明                     | 类型    | 可选值       | 默认值    |
 | :---------------- | :----------------------- | :------ | :----------- | :-------- |
@@ -80,7 +80,7 @@ config-provider/base
 | name              | 原生属性                 | string  | —            | —         |
 | label             | 输入框关联的label文字    | string  | —            | —         |
 
-### Select
+### Select 选择器
 
 | 参数                  | 说明                                                         | 类型     | 可选值            | 默认值     |
 | :-------------------- | :----------------------------------------------------------- | :------- | :---------------- | :--------- |
@@ -107,7 +107,7 @@ config-provider/base
 | popper-append-to-body | 是否将弹出框插入至 body 元素。在弹出框的定位出现问题时，可将该属性设置为 false | boolean  | -                 | true       |
 | automatic-dropdown    | 对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单 | boolean  | -                 | false      |
 
-###  Cascader
+###  Cascader 级联选择器
 
 | 参数            | 说明                                      | 类型    | 可选值                | 默认值    |
 | :-------------- | :---------------------------------------- | :------ | :-------------------- | :-------- |
@@ -121,7 +121,7 @@ config-provider/base
 | debounce        | 搜索关键词输入的去抖延迟，毫秒            | number  | —                     | 300       |
 | popper-class    | 自定义浮层类名                            | string  | —                     | —         |
 
-### Switch
+### Switch 开关
 
 | 参数                | 说明                                                         | 类型                      | 可选值 | 默认值  |
 | :------------------ | :----------------------------------------------------------- | :------------------------ | :----- | :------ |
@@ -158,7 +158,7 @@ config-provider/base
 | tooltip-class       | tooltip 的自定义类名                                         | string          | —                             | —      |
 | marks               | 标记， key 的类型必须为 number 且取值在闭区间 `[min, max]` 内，每个标记可以单独设置样式 | object          | —                             | —      |
 
-###  TimePicker & TimeSelect & DatePicker
+### TimePicker 时间选择器 & DatePicker 日期选择器 &  DateTimePicker 日期时间选择器
 
 | 参数              | 说明                                           | 类型     | 可选值                                                       | 默认值               |
 | :---------------- | :--------------------------------------------- | :------- | :----------------------------------------------------------- | :------------------- |
@@ -183,7 +183,7 @@ config-provider/base
 | validate-event    | 输入时是否触发表单的校验                       | boolean  | -                                                            | true                 |
 | append-to-body    | DetePicker 自身是否插入至 body 元素上。        | boolean  | —                                                            | true                 |
 
-### Upload
+### Upload 上传
 
 | 参数             | 说明                                                         | 类型                               | 可选值                    | 默认值 |
 | :--------------- | :----------------------------------------------------------- | :--------------------------------- | :------------------------ | :----- |
@@ -210,9 +210,17 @@ config-provider/base
 | limit            | 最大允许上传个数                                             | number                             | —                         | —      |
 | on-exceed        | 文件超出个数限制时的钩子                                     | function(files, fileList)          | —                         | -      |
 
+### Table 表格
 
-
-
+| 参数         | 说明                                                   | 类型          | 可选值                | 默认值 |
+| :----------- | :----------------------------------------------------- | :------------ | :-------------------- | :----- |
+| max-height   | Table 的最大高度。合法的值为数字或者单位为 px 的高度。 | string/number | —                     | —      |
+| stripe       | 是否为斑马纹 table                                     | boolean       | —                     | false  |
+| border       | 是否带有纵向边框                                       | boolean       | —                     | false  |
+| size         | Table 的尺寸                                           | string        | medium / small / mini | —      |
+| fit          | 列的宽度是否自撑开                                     | boolean       | —                     | true   |
+| show-header  | 是否显示表头                                           | boolean       | —                     | true   |
+| show-summary | 是否在表尾显示合计行                                   | Boolean       | —                     | false  |
 
 
 

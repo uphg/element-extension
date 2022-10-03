@@ -2,7 +2,7 @@
 
 拓展 Element UI 部分组件的功能
 
-## RadioGroup
+## RadioGroup 单选框组
 
 添加 `options` 选项，用与以数据方式渲染 `<el-radio>`
 
@@ -12,7 +12,7 @@ radio/options
 
 :::
 
-## CheckboxGroup
+## CheckboxGroup 多选框组
 
 同样支持 `options` 选项
 
@@ -22,7 +22,7 @@ checkbox/options
 
 :::
 
-## Input
+## Input 输入框
 
 添加了 `exclude` 属性，表示要排除的字符串规则，该属性支持字符串、数字、正则
 
@@ -32,7 +32,7 @@ input/exclude
 
 :::
 
-## Select
+## Select 选择器
 
 支持 `options` 数据格式传入（不支持默认插槽）
 
@@ -66,7 +66,7 @@ select/slot-option-groups
 
 :::
 
-## Table
+## Table 表格
 
 `<el-table>` 的基础上添加了 `columns` 属性，以数据的方式渲染 `<el-table-column>`
 
@@ -86,9 +86,7 @@ table/type
 
 :::
 
-### type 属性
-
-时间格式化属性支持
+**type 属性时间格式列表**
 
 | 值       | 格式                  |
 | -------- | --------------------- |
@@ -100,7 +98,7 @@ table/type
 
 ## 其他组件支持
 
-除了上述组件，还支持使用：InputNumber、Cascader、Switch、Slider、TimePicker、DatePicker、TimeSelect、Upload、TableColumn，使用方法均为把组件 "el" 前缀改为 "e"，如下：
+除了上述组件，还支持使用 Element UI 的 InputNumber、Cascader、Switch、Slider、TimePicker、DatePicker、TimeSelect、Upload、TableColumn 使用方法均为把组件 "el" 前缀改为 "e"，如下：
 
 ```vue
 <e-radio-group>
@@ -115,6 +113,7 @@ table/type
 <e-date-picker>
 <e-time-select>
 <e-upload>
+<e-table>
 <e-table-column>
 <e-pagination>
 ```
