@@ -223,6 +223,12 @@ config-provider/base
 | validate-on-rule-change | 是否在 `rules` 属性改变后立即触发一次验证                    | boolean | —                     | true   |
 | size                    | 用于控制该表单内组件的尺寸                                   | string  | medium / small / mini | —      |
 
+### FormItem 表单项
+
+| 参数 | 说明     | 类型   | 可选值                                                       | 默认值 |
+| :--- | :------- | :----- | :----------------------------------------------------------- | :----- |
+| type | 组件类型 | string | text，textarea 和其他 [原生 input 的 type 值](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form__types) | text   |
+
 ### Table 表格
 
 | 参数                    | 说明                                                         | 类型                                                  | 可选值                         | 默认值                                                     |

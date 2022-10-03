@@ -1,9 +1,11 @@
 <template>
-  <div class="layout">
+  <e-config-provider :form-item="{ type: 'text' }">
+    <div class="layout">
     <!-- <Navbar /> -->
     <Sidebar />
     <Content />
-  </div>
+    </div>
+  </e-config-provider>
 </template>
 
 <script setup lang="ts">
