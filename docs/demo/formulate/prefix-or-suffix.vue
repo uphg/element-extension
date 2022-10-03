@@ -11,8 +11,8 @@ const data = ref({
     user: {
       label: '审批人',
       default: '张三',
-      itemPrefix: h('span', ['（@_@）']),
-      itemSuffix: '20个字符以内'
+      itemPrefix: () => h('span', ['（@_@）']),
+      itemSuffix: () => '20个字符以内'
     }
   }
 })

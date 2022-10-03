@@ -71,7 +71,7 @@ const data = ref({
         { label: '线下场地免费', value: 1 },
       ],
       rules: [{ required: true, message: '请选择活动资源', trigger: 'change' }],
-      itemSuffix: h('div', 'hi'),
+      itemSuffix: () => h('div', 'hi'),
     },
     desc: {
       label: '活动形式',
