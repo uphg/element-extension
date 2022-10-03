@@ -14,6 +14,7 @@ export const globalTimePickerKey = Symbol('config-time-picker')
 export const globalTimeSelectKey = Symbol('config-time-select')
 export const globalUploadKey = Symbol('config-upload')
 export const globalFormKey = Symbol('config-form')
+export const globalFormItemKey = Symbol('config-form-item')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
@@ -31,6 +32,7 @@ export const globalDatePropNames = ['size', 'editable', 'clearable', 'placeholde
 export const globalUploadPropNames = ['name', 'dragger', 'withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
 
 export const globalFormPropNames = ['inline', 'labelPosition', 'labelWidth', 'hideRequiredAsterisk', 'showMessage', 'inlineMessage', 'validateOnRuleChange', 'size']
+export const globalFormItemPropNames = ['type']
 
 export const globalTablePropNames = ['height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load', 'size', 'maxHeight', 'stripe', 'border', 'fit', 'showHeader', 'highlightCurrentRow']
 export const globalTableColumnPropNames = ['className', 'resizable', 'showOverflowTooltip']
@@ -90,6 +92,10 @@ export const configPropertyMap = {
   form: {
     key: globalFormKey,
     propNames: globalFormPropNames
+  },
+  formItem: {
+    key: globalFormItemKey,
+    propNames: globalFormItemPropNames
   },
   table: {
     key: globalTableKey,

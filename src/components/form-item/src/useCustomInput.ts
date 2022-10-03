@@ -1,6 +1,6 @@
 import { SetupContext } from "vue"
 import { VNode } from "vue/types/umd";
-import { FormItemProps } from "./formItemProps";
+import { FormItemProps, FormItemType } from "./formItemProps";
 import { useRadioGroup } from "../../radio-group";
 import { useCheckboxGroup } from "../../checkbox-group";
 import { useInput } from "../../input";
@@ -27,8 +27,9 @@ type CustomInputReturn = {
   expose?: ObjectLike;
 }
 
-export function useCustomInput<T extends FormItemProps>(props: T, context: SetupContext<{}>): CustomInputReturn | undefined {
-  switch(props.type) {
+export function useCustomInput<T extends FormItemProps>(props: T, _options: { context: SetupContext<{}>, type: FormItemType }): CustomInputReturn | undefined {
+  const { context, type } = _options
+  switch(type) {
     case 'radio':
     case 'radio-group': {
       return useRadioGroup<T>(props, context, {
@@ -169,10 +170,11 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
         type: 1,
         handleProps(_props, globalProps) {
           return () => ({
-            type: props.type,
+            type: type,
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
+            timeArrowControl: props.extends.timeArrowControl,
             
             // global props
             ...withDefaultProps(context.attrs, globalProps, globalDateAttrNames),
@@ -192,6 +194,8 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
+            isRange: props.extends.isRange,
+            arrowControl: props.extends.arrowControl,
 
             // global props
             ...withDefaultProps(context.attrs, globalProps, globalDateAttrNames),
@@ -207,7 +211,7 @@ export function useCustomInput<T extends FormItemProps>(props: T, context: Setup
         type: 3,
         handleProps(_props, globalProps) {
           return () => ({
-            type: props.type,
+            type: type,
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,

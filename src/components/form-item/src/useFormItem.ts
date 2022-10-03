@@ -3,9 +3,11 @@ import { FormItem } from 'element-ui'
 import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
-import { FormItemProps } from "./formItemProps"
-import { pick } from '../../../utils'
+import { FormItemProps, GlobalFormItemProps } from "./formItemProps"
+import { isNil, pick } from '../../../utils'
 import { renderSlot } from '../../../utils/renderSlot'
+import { useGlobalProps } from '../../../composables/useGlobalProps'
+import { empty } from '../../../shared/commonProps'
 
 const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
@@ -18,11 +20,13 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   //     }
   //   }
   // })
+  const globalProps = useGlobalProps<GlobalFormItemProps>('formItem')
+  const type = props.type === empty ? globalProps?.type : props.type 
 
-  const { render: renderInput, expose: customInputExpose } = context?.slots && useCustomInput(props, context) || {}
+  const { render: renderInput, expose: customInputExpose } = (context && type) && useCustomInput(props, { context, type }) || {}
 
   const expose = {
-    ...(customInputExpose ? customInputExpose : {}),
+    ...(customInputExpose || {}),
     clearValidate,
     get elFormItem() { return elFormItem.value }
   }

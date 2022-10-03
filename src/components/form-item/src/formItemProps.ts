@@ -15,6 +15,7 @@ import { commonProps, sizeProp, empty, booleanProp, stringProp } from "../../../
 
 export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
+export type GlobalFormItemProps = ExtractPropTypes<typeof globalFormItemProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 export type FormItemType = 'radio' | 'radio-group' | 'checkbox' | 'checkbox-group' | 'input' | 'text' | 'password' | 'textarea' | 'number' | 'input-number' | 'select' | 'cascader' | 'date' | 'date-picker' | 'year' | 'month' | 'dates' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange' | 'time' | 'time-select' | 'time-picker' | 'switch' | 'slider' | 'file' | 'upload'
 
@@ -23,11 +24,15 @@ const emptyStringProp = {
   default: ''
 }
 
-export const formItemBaseProps = {
+export const globalFormItemProps = {
   type: {
     type: String as PropType<FormItemType>,
-    default: 'text'
-  },
+    default: empty
+  }
+}
+
+export const formItemBaseProps = {
+  ...globalFormItemProps,
   value: {
     type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
     default: ''
