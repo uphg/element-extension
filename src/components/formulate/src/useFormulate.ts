@@ -12,7 +12,7 @@ import { ElForm } from "element-ui/types/form"
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
 import { createInputRender } from "./createInputRender"
 
-const formPropNames = ['labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
+const formPropNames = ['labelSuffix', 'statusIcon', 'disabled']
 
 function initFormData(baseFields: FormulateFields | FormulateFields[]) {
   const result: { [key: string]: CustomInputValue } = {}
@@ -184,7 +184,6 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
         props: {
           rules: rules.value,
           model: formData.value,
-
           ...pick(props, formPropNames),
           ...withDefaultProps(props, globalFormProps, globalFormPropNames)
         }

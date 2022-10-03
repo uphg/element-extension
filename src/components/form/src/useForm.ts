@@ -7,7 +7,7 @@ import { UseComponentParamsOptions, useComponentProps } from "../../../composabl
 import { globalFormPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
 
-const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'showMessage', 'disabled', 'validateOnRuleChange', 'hideRequiredAsterisk']
+const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'disabled']
 
 export function useForm(
   props: FormProps,

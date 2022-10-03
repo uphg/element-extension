@@ -6,21 +6,33 @@ export type GlobalFormProps = ExtractPropTypes<typeof globalFormProps>
 export type FormProps = ExtractPropTypes<typeof formProps>
 
 export const globalFormProps = {
-  labelWidth: {
-    type: stringProp,
+  inline: {
+    type: booleanProp,
     default: empty
   },
   labelPosition: {
     type: stringProp,
     default: empty
   },
-  inline: {
+  labelWidth: {
+    type: stringProp,
+    default: empty
+  },
+  hideRequiredAsterisk: {
+    type: booleanProp,
+    default: empty
+  },
+  showMessage: {
     type: booleanProp,
     default: empty
   },
   inlineMessage: {
     type: booleanProp,
     default: empty
+  },
+  validateOnRuleChange: {
+    type: booleanProp,
+    default: empty // true
   },
   size: sizeProp
 }
@@ -37,13 +49,7 @@ export const formProps = {
     default: ''
   },
   statusIcon: booleanProp,
-  showMessage: booleanProp,
   disabled: booleanProp,
-  validateOnRuleChange: {
-    type: booleanProp,
-    default: true // el 默认 true
-  },
-  hideRequiredAsterisk: booleanProp,
   ...globalFormProps,
 
   // customize props
