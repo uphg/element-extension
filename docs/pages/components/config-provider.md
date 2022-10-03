@@ -222,6 +222,22 @@ config-provider/base
 | show-header  | 是否显示表头                                           | boolean       | —                     | true   |
 | show-summary | 是否在表尾显示合计行                                   | Boolean       | —                     | false  |
 
+### Pagination 分页
+
+| 参数                | 说明                                     | 类型     | 可选值                                                       | 默认值                                 |
+| :------------------ | :--------------------------------------- | :------- | :----------------------------------------------------------- | :------------------------------------- |
+| small               | 是否使用小型分页样式                     | boolean  | —                                                            | false                                  |
+| background          | 是否为分页按钮添加背景色                 | boolean  | —                                                            | false                                  |
+| pager-count         | 页码按钮的数量，当总页数超过该值时会折叠 | number   | 大于等于 5 且小于等于 21 的奇数                              | 7                                      |
+| layout              | 组件布局，子组件名用逗号分隔             | String   | `sizes`, `prev`, `pager`, `next`, `jumper`, `->`, `total`, `slot` | 'prev, pager, next, jumper, ->, total' |
+| page-sizes          | 每页显示个数选择器的选项设置             | number[] | —                                                            | [10, 20, 30, 40, 50, 100]              |
+| popper-class        | 每页显示个数选择器的下拉框类名           | string   | —                                                            | —                                      |
+| prev-text           | 替代图标显示的上一页文字                 | string   | —                                                            | —                                      |
+| next-text           | 替代图标显示的下一页文字                 | string   | —                                                            | —                                      |
+| hide-on-single-page | 只有一页时是否隐藏                       | boolean  | —                                                            | -                                      |
+
+
+
 
 
 <script setup lang="ts">
