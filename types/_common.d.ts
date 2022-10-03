@@ -16,6 +16,8 @@ export type ObjectLike = {
   [key: string]: ObjectLike | unknown | any
 }
 
+export type Fn = (...args: unknown[]) => void
+
 export type CustomInputValue = string | boolean | number | Date | Date[] | string[]
 
 export type ComponentProps = RadioGroupProps | CheckboxGroupProps | InputProps | InputNumberProps | SelectProps | CascaderProps | SwitchProps | SliderProps | DatePickerProps | TimePickerProps | TimeSelectProps | UploadProps

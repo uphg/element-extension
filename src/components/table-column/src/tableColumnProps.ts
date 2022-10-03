@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { empty } from "../../../shared/commonProps";
+import { empty, stringProp } from "../../../shared/commonProps";
 
 export type GlobalTableColumnProps = ExtractPropTypes<typeof globalTableColumnProps>
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>
@@ -19,7 +19,7 @@ export const extendColumnTypes = ['date', 'time', 'datetime', 'month', 'year']
 
 export const globalTableColumnProps = {
   className: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   resizable: {
@@ -37,10 +37,10 @@ export const tableColumnProps = {
     type: String as PropType<'selection' | 'index' | 'expand' | TableColumnExtendsType>,
     default: 'default'
   },
-  label: String as PropType<string>,
-  labelClassName: String as PropType<string>,
-  property: String as PropType<string>,
-  prop: String as PropType<string>,
+  label: stringProp,
+  labelClassName: stringProp,
+  property: stringProp,
+  prop: stringProp,
   width: {} as PropType<object>,
   minWidth: {} as PropType<object>,
   renderHeader: Function as PropType<Function>,
@@ -50,10 +50,9 @@ export const tableColumnProps = {
   },
   sortMethod: Function as PropType<Function>,
   sortBy: [String, Function, Array] as PropType<string | Function | string[]>,
-
-  columnKey: String as PropType<string>,
-  align: String as PropType<string>,
-  headerAlign: String as PropType<string>,
+  columnKey: stringProp,
+  align: stringProp,
+  headerAlign: stringProp,
   showTooltipWhenOverflow: Boolean as PropType<boolean>,
   fixed: [Boolean, String] as PropType<boolean | string>,
   formatter: Function as PropType<Function>,
@@ -62,7 +61,7 @@ export const tableColumnProps = {
   filterMethod: Function as PropType<Function>,
   filteredValue: Array as PropType<unknown[]>,
   filters: Array as PropType<unknown[]>,
-  filterPlacement: String as PropType<string>,
+  filterPlacement: stringProp,
   filterMultiple: {
     type: Boolean as PropType<boolean>,
     default: true
@@ -81,7 +80,7 @@ export const tableColumnProps = {
 
   // 自定义属性
   emptyText: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: ''
   }
 }

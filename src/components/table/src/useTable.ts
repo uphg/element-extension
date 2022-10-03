@@ -1,4 +1,4 @@
-import { computed, h, SetupContext } from "vue"
+import { h, SetupContext } from "vue"
 import { Table, TableColumn } from "element-ui"
 import { TableProps, GlobalTableProps } from "./tableProps"
 import { handleColumnsData } from "./handleColumnsData";
@@ -11,7 +11,7 @@ import { globalTablePropNames } from "../../../shared/configPropertyMap";
 import { ObjectLike } from "../../../../types/_common";
 import { ElTable } from "element-ui/types/table";
 
-const propNames = ['data', 'width', 'height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load']
+const propNames = ['data']
 
 export function useTable(
   props: TableProps,

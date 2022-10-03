@@ -31,7 +31,8 @@ export const globalDatePropNames = ['size', 'editable', 'clearable', 'placeholde
 export const globalUploadPropNames = ['name', 'dragger', 'withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
 
 export const globalFormPropNames = ['labelPosition', 'labelWidth', 'inline', 'inlineMessage', 'size']
-export const globalTablePropNames = ['maxHeight', 'stripe', 'border', 'size', 'fit', 'showHeader', 'highlightCurrentRow']
+
+export const globalTablePropNames = ['height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load', 'size', 'maxHeight', 'stripe', 'border', 'fit', 'showHeader', 'highlightCurrentRow']
 export const globalTableColumnPropNames = ['className', 'resizable', 'showOverflowTooltip']
 export const globalPaginationPropNames = ['small', 'background', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'hideOnSinglePage']
 

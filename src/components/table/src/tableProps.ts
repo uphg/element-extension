@@ -2,11 +2,12 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
-import { empty } from "../../../shared/commonProps";
+import { empty, booleanProp, stringProp, numberProp, objectProp, functionProp, sizeProp } from "../../../shared/commonProps";
 import { VNode } from "vue/types/umd";
 import { RowCallbackParams } from "../../../../types/_element-ui";
 import { TableColumnProps } from "../../../components/table-column/src/tableColumnProps";
 import { TableColumn } from "element-ui";
+import { ObjectLike, Fn } from "../../../../types/_common";
 
 export type GlobalTableProps = ExtractPropTypes<typeof globalTableProps>
 export type TableProps = ExtractPropTypes<typeof tableProps>
@@ -24,32 +25,140 @@ export type TableObjectColumnProps = {
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
 } & TableColumnProps
 
+const stringOrFnProp = [String, Function] as PropType<string | Fn>
+const objectOrFnProp = [Object, Function] as PropType<ObjectLike | Fn>
+const stringOrNumberProp = [String, Number] as PropType<string | number>
+
 export const globalTableProps = {
   // global props
-  size: {
-    type: [String, undefined] as PropType<ElementUIComponentSize | undefined>,
+  height: {
+    type: stringOrNumberProp,
+    default: empty
+  },
+  rowKey: {
+    type: stringOrFnProp,
+    default: empty
+  },
+  context: {
+    default: empty // {}
+  },
+  showSummary: {
+    type: booleanProp,
+    default: empty
+  },
+  sumText: {
+    type: stringProp,
+    default: empty
+  },
+  summaryMethod: {
+    type: functionProp,
+    default: empty
+  },
+  rowClassName: {
+    type: stringOrFnProp,
+    default: empty
+  },
+  rowStyle: {
+    type: objectOrFnProp,
+    default: empty
+  },
+  cellClassName: {
+    type: stringOrFnProp,
+    default: empty
+  },
+  cellStyle: {
+    type: objectOrFnProp,
+    default: empty
+  },
+  headerRowClassName: {
+    type: stringOrFnProp,
+    default: empty
+  },
+  headerRowStyle: {
+    type: objectOrFnProp,
+    default: empty
+  },
+  headerCellClassName: {
+    type: stringOrFnProp,
+    default: empty
+  },
+  headerCellStyle: {
+    type: objectOrFnProp,
+    default: empty
+  },
+  currentRowKey: {
+    type: stringOrNumberProp,
+    default: empty
+  },
+  emptyText: {
+    type: stringProp,
+    default: empty
+  },
+  expandRowKeys: {
+    type: Array,
+    default: empty
+  },
+  defaultExpandAll: {
+    type: booleanProp,
+    default: empty
+  },
+  defaultSort: {
+    type: objectProp,
+    default: empty
+  },
+  tooltipEffect: {
+    type: stringProp,
+    default: empty
+  },
+  spanMethod: {
+    type: functionProp,
+    default: empty
+  },
+  selectOnIndeterminate: {
+    type: booleanProp,
+    default: empty // true
+  },
+  indent: {
+    type: numberProp,
+    default: empty // 16
+  },
+  treeProps: {
+    type: objectProp,
+    default: empty // () => ({ hasChildren: 'hasChildren', children: 'children' })
+  },
+  lazy: {
+    type: booleanProp,
+    default: empty
+  },
+  load: {
+    type: functionProp,
     default: empty
   },
   maxHeight: {
-    type: [String, Number] as PropType<string | number | undefined>
+    type: stringOrNumberProp,
+    default: empty
   },
   stripe: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    type: booleanProp,
     default: empty
   },
   border: {
-    type: [Boolean, undefined] as PropType<boolean | undefined>,
+    type: booleanProp,
     default: empty
   },
   fit: {
-    type: Boolean,
-    default: true
+    type: booleanProp,
+    default: empty // true
   },
   showHeader: {
-    type: Boolean,
-    default: true
+    type: booleanProp,
+    default: empty // true
   },
-  highlightCurrentRow: Boolean
+  highlightCurrentRow: {
+    type: booleanProp,
+    default: empty
+  },
+  size: sizeProp,
 }
 
 export const tableProps = {
@@ -59,52 +168,10 @@ export const tableProps = {
       return [];
     }
   },
-  width: [String, Number],
-  height: [String, Number],
-  rowKey: [String, Function],
-  context: {},
-  showSummary: Boolean,
-  sumText: String,
-  summaryMethod: Function,
-  rowClassName: [String, Function],
-  rowStyle: [Object, Function],
-  cellClassName: [String, Function],
-  cellStyle: [Object, Function],
-  headerRowClassName: [String, Function],
-  headerRowStyle: [Object, Function],
-  headerCellClassName: [String, Function],
-  headerCellStyle: [Object, Function],
-  currentRowKey: [String, Number],
-  emptyText: String,
-  expandRowKeys: Array,
-  defaultExpandAll: Boolean,
-  defaultSort: Object,
-  tooltipEffect: String,
-  spanMethod: Function,
-  selectOnIndeterminate: {
-    type: Boolean,
-    default: true
-  },
-  indent: {
-    type: Number,
-    default: 16
-  },
-  treeProps: {
-    type: Object,
-    default() {
-      return {
-        hasChildren: 'hasChildren',
-        children: 'children'
-      };
-    }
-  },
-  lazy: Boolean,
-  load: Function,
-  ...globalTableProps,
-
   // custom props
   columns: {
     type: Array as PropType<Array<TableObjectColumnProps>>,
     default: () => []
-  }
+  },
+  ...globalTableProps
 }
