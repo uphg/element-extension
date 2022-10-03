@@ -1,4 +1,4 @@
-import { empty } from "../../../shared/commonProps";
+import { empty, booleanProp, stringProp, numberProp } from "../../../shared/commonProps";
 import { ExtractPropTypes, PropType } from "vue";
 
 export type GlobalPaginationProps = ExtractPropTypes<typeof globalPaginationProps>
@@ -6,19 +6,19 @@ export type PaginationProps = ExtractPropTypes<typeof paginationProps>
 
 export const globalPaginationProps = {
   small: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   background: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   },
   pagerCount: {
-    type: Number as PropType<number>,
+    type: numberProp,
     default: empty // 7
   },
   layout: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty // 'prev, pager, next, jumper, ->, total'
   },
   pageSizes: {
@@ -26,34 +26,34 @@ export const globalPaginationProps = {
     default: empty // [10, 20, 30, 40, 50, 100]
   },
   popperClass: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   prevText: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   nextText: {
-    type: String as PropType<string>,
+    type: stringProp,
     default: empty
   },
   hideOnSinglePage: {
-    type: Boolean as PropType<boolean>,
+    type: booleanProp,
     default: empty
   }
 }
 
 export const paginationProps = {
   pageSize: {
-    type: Number as PropType<number>,
+    type: numberProp,
     default: 10
   },
-  total: Number as PropType<number>,
-  pageCount: Number as PropType<number>,
+  total: numberProp,
+  pageCount: numberProp,
   currentPage: {
-    type: Number as PropType<number>,
+    type: numberProp,
     default: 1
   },  
-  disabled: Boolean as PropType<boolean>,
+  disabled: booleanProp,
   ...globalPaginationProps
 }
