@@ -223,8 +223,6 @@ config-provider/base
 | validate-on-rule-change | 是否在 `rules` 属性改变后立即触发一次验证                    | boolean | —                     | true   |
 | size                    | 用于控制该表单内组件的尺寸                                   | string  | medium / small / mini | —      |
 
-
-
 ### Table 表格
 
 | 参数                    | 说明                                                         | 类型                                                  | 可选值                         | 默认值                                                     |
@@ -283,8 +281,6 @@ config-provider/base
 | prev-text           | 替代图标显示的上一页文字                 | string   | —                                                            | —                                      |
 | next-text           | 替代图标显示的下一页文字                 | string   | —                                                            | —                                      |
 | hide-on-single-page | 只有一页时是否隐藏                       | boolean  | —                                                            | -                                      |
-
-
 
 <script setup lang="ts">
 import ConfigProviderBase from 'docs/demo/config-provider/base.vue'
