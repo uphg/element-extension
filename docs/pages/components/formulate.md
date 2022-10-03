@@ -68,56 +68,41 @@ formulate/file
 
 :::
 
-## Formulate Fields
+## Fields Attributes
 
-fields 字段的类型
+`fields` 字段支持的**公共属性**
 
-```ts
-export type FormulateField =  {
-  label: string;
-  type?: CustomInputTypes;
-  rules?: FormRule[];
-  required?: boolean;
-  options?: CustomInputOptions;
-  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
-  itemPrefix?: VNodeChildren;
-  itemSuffix?: VNodeChildren;
-  ref: string;
-  children: VNode[];
-  extra: string | VNode;
-  tips: string[];
-  key: string;
-  placeholder: string;
-  name: string;
-  autofocus: string;
-  rows: string;
-  minlength: string;
-  maxlength: string;
-  scopedSlots: VNodeData['scopedSlots'];
-  tipClass: string;
-  tipItemClass: string;
-  button: {
-    hue: string;
-    size: string;
-    plain: boolean;
-    round: boolean;
-    circle: boolean;
-    autofocus: boolean;
-    icon: string;
-    text: string;
-  }
-  onClick: (event: MouseEvent) => void
-}
-```
+| 参数          | 说明                                                         | 类型                       | 可选值   | 默认值 |
+| ------------- | ------------------------------------------------------------ | -------------------------- | -------- | ------ |
+| label         | `FormItem`标签文本                                           | string                     | —        | —      |
+| labelWidth    | 表单域标签的的宽度，例如 '50px'。支持 `auto`。               | string                     | —        | —      |
+| required      | 是否必填，如不设置，则会根据校验规则自动生成                 | boolean                    | —        | false  |
+| rules         | 当前组件表单验证规则                                         | object                     | —        | —      |
+| error         | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string                     | —        | —      |
+| showMessage   | 是否显示校验错误信息                                         | boolean                    | —        | true   |
+| inlineMessage | 以行内形式展示校验信息                                       | boolean                    | —        | false  |
+| itemPrefix    | `FormItem` 内组件前的渲染内容                                | `() => VNodeChildren`      | —        | —      |
+| itemSuffix    | `FormItem` 内组件后的渲染内容                                | `() => VNodeChildren`      | —        | —      |
+| type          | 表单内渲染的组件类型                                         | string                     | string   | —      |
+| ref           | 表单内组件的 ref 引用函数                                    | `(el) => void `            | Function | —      |
+| default       | 表单内组件的默认值                                           | —                          | —        | —      |
+| vIf           | if 处理函数，判断该 `FormItem` 组件是否渲染                  | `(formData) => boolean`    | Function | —      |
+| options       | Select / RadioGroup / CheckboxGroup / Cascader 的 options 属性 | array                      | array    | —      |
+| children      | `FormItem` 内组件插槽内的内容（优先级高于 button 属性）      | `() => VNode[]`            | Function | —      |
+| scopedSlots   | VNodeData 的 scopedSlots 属性（命名插槽）                    | `VNodeData['scopedSlots']` | object   | —      |
+| extra         | 在组件下展示更多说明信息，可以是 html string，也可以是一个返回 `VNode[]` 的函数 | `string | (() => VNode[])` | —        | —      |
+| disabled      | 是否禁用组件                                                 | boolean                    | —        | —      |
 
 ## Formulate Attributes
 
 除了支持 `<el-form>` 组件的默认属性，还支持以下属性
 
-| 参数   | 说明                                                | 类型   | 可选值 | 默认值 |
-| ------ | --------------------------------------------------- | ------ | ------ | ------ |
-| fields | 字段描述，用于渲染表单内容                          | object | —      | —      |
-| data   | 允许除 data 外的 props 以对象形式绑定在 data 属性中 | object | —      | {}     |
+| 参数     | 说明                                                         | 类型     | 可选值 | 默认值 |
+| -------- | ------------------------------------------------------------ | -------- | ------ | ------ |
+| fields   | 字段描述，用于渲染表单内容                                   | object   | —      | —      |
+| data     | 允许除 data 外的 props 以对象形式绑定在 data 属性中          | object   | —      | {}     |
+| gutter   | 多列布局的分栏间隔                                           | number   | —      | —      |
+| mapRules | 是否添加 map rules 函数，添加后自动根据返回值添加表单验证，mapRules({ type, key, label }) | Function | —      | —      |
 
 <script setup lang="ts">
 import FormulateBase from 'docs/demo/formulate/base.vue'
