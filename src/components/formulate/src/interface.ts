@@ -1,6 +1,7 @@
-import { HandleRef } from "../../../composables/useComponentProps"
 import { VNodeChildren } from "vue"
 import { VNode, VNodeData } from "vue/types/umd"
+import { CascaderOption } from "element-ui/types/cascader-panel"
+import { HandleRef } from "../../../composables/useComponentProps"
 import { FormProps } from '../../form/src/formProps'
 import { CustomInputValue } from "../../../../types/_common"
 import { ElFormRule } from "../../../../types/_element-ui"
@@ -15,6 +16,49 @@ import { SliderProps } from "../../slider/src/sliderProps"
 import { SwitchProps } from "../../switch/src/switchProps"
 import { CascaderProps } from "../../cascader/src/cascaderProps"
 import { UploadProps } from "../../upload/src/uploadProps"
+
+export interface FormulateFields {
+  [key: string]: FormulateField
+}
+
+export type FormulateField =  {
+  label?: string;
+  labelWidth?: string;
+  required?: boolean;
+  rules?: ElFormRule[];
+  error?: string;
+  showMessage?: boolean;
+  inlineMessage?: boolean;
+  itemPrefix?: () => VNodeChildren;
+  itemSuffix?: () => VNodeChildren;
+
+  // custom input
+  type?: FormItemType;
+  ref?: HandleRef;
+  default?: CustomInputValue;
+  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
+  options?: SelectOptions | RadioGroupOptions | CheckboxGroupOptions | CascaderOption[];
+  children?: () => VNode[];
+  scopedSlots?: VNodeData['scopedSlots'];
+  extra?: string | (() => VNode[]);
+  disabled?: boolean;
+
+  // --- Upload
+  tips: string[];
+  tipClass: string;
+  tipItemClass: string;
+  button: ButtonProps
+  
+  // ?...
+  placeholder: string;
+  name: string;
+  autofocus: string;
+  minlength: string;
+  maxlength: string;
+
+  $render: (() => VNode) | undefined;
+  key: string;
+} & FormItemProps & CustomInputProps
 
 export interface MapRules {
   (options: { type?: string, key: string, label: string }): ElFormRule[] | []
@@ -32,37 +76,4 @@ export type ButtonProps = {
   icon?: string;
   text?: string;
   onClick?: (event: MouseEvent) => void;
-}
-
-export type FormulateField =  {
-  label: string;
-  default: CustomInputValue;
-  type?: FormItemType;
-  rules?: ElFormRule[];
-  required?: boolean;
-  options?: SelectOptions | RadioGroupOptions | CheckboxGroupOptions;
-  vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
-  itemPrefix?: VNodeChildren;
-  itemSuffix?: VNodeChildren;
-  ref?: HandleRef;
-  children: VNode[];
-  $render: (() => VNode) | undefined;
-  extra: string | VNode;
-  tips: string[];
-  key: string;
-  placeholder: string;
-  name: string;
-  autofocus: string;
-  rows: string;
-  minlength: string;
-  maxlength: string;
-  scopedSlots: VNodeData['scopedSlots'];
-  tipClass: string;
-  tipItemClass: string;
-  button: ButtonProps
-  onClick: (event: MouseEvent) => void
-} & FormProps & FormItemProps & CustomInputProps
-
-export interface FormulateFields {
-  [key: string]: FormulateField
 }

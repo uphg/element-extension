@@ -56,7 +56,7 @@ function resetFormData(formData: { [key: string]: CustomInputValue }, baseFields
         return
       }
       if (!isNil(defaultValue)) {
-        formData[key] = defaultValue
+        formData[key] = defaultValue!
         return
       }
       switch (type) {
@@ -136,14 +136,14 @@ function renderFormItem(item: MapFieldsItem, id: string | number, children: VNod
     }
   }, 
     [
-      item.itemPrefix,
+      item?.itemPrefix?.(),
       ...(children as VNodeChildrenArrayContents),
       item.extra && (
         typeof item.extra === 'string'
           ? h('div', { class: 'e-formulate__extra', domProps: { innerHTML: item.extra } })
-          : [item.extra]
+          : item?.extra?.()
       ),
-      item.itemSuffix
+      item?.itemSuffix?.()
     ]
   )
 }
@@ -161,39 +161,38 @@ export function useFormulate(_props: FormulateProps, context: SetupContext<{}>) 
     return { ...item, '$render': createInputRender(item, { formData, handleRef: item.ref }) }
   }))
   const { elForm, validate, validateField, clearValidate } = useElForm()
+  const handleRef = function(el: ElForm) { elForm.value = el } as unknown as string
+
   const globalFormProps = useGlobalProps<GlobalFormProps>('form')
   const rowSpan = computed(() => (24 / (Number(props.fields?.length)) || 0))
 
-  const handleRef = function(el: ElForm) { elForm.value = el } as unknown as string
-
-  function resetFields() {
+  const resetFields = () => {
     resetFormData(formData.value, props.fields!)
   }
 
-  function setValues(obj: FormData) {
+  const setValues = (obj: FormData) => {
     const keys = Object.keys(obj)
     keys.forEach((key) => {
       formData.value[key] = obj[key]
     })
   }
 
-  function getValues() {
-    return formData.value
-  }
-  
-  function submit(callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) {
+  const getValues = () => formData.value
+
+  const submit = (callback: (formData: FormData, options: { valid: boolean, errors: object }) => void) => {
     elForm.value?.validate((valid: boolean, errors: object) => {
       callback(formData.value, { valid, errors })
     })
   }
 
-  function renderFormBlock(item: MapFieldsItem, id: string | number) {
-    return (item.vIf && !item.vIf(formData.value))
+  const renderFormBlock = (item: MapFieldsItem, id: string | number) => 
+    (item.vIf && !item.vIf(formData.value))
       ? null
       : renderFormItem(item, id, (
-          isArray(item) ? item.map((piece, i) => piece.$render()) : [item.$render?.()]
+          isArray(item)
+            ? item.map((piece, i) => piece.$render())
+            : [item.$render?.()]
         ))
-  }
 
   return {
     expose: {
