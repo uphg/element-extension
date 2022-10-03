@@ -24,7 +24,5 @@ export function useConfigProvider(props: ConfigProviderProps, context?: SetupCon
     }
   })
 
-  console.log('provideProps')
-  console.log(provideProps)
   return context?.slots && (() => context.slots.default?.())
 }

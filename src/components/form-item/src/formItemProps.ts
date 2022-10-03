@@ -237,7 +237,3 @@ export const formItemProps = {
     default: () => ({})
   }
 }
-
-console.log('FormItem Props Number')
-console.log(Object.keys(formItemProps).length)
-
