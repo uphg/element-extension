@@ -1,6 +1,6 @@
 import { defineComponent, h } from "vue"
 import { VNodeData } from "vue/types/umd"
-import { addClass, removeClass, setStyle } from "../../utils/dom"
+import { addClass, removeClass, setStyle } from "../../utils"
 import { ElementPartComponent } from "../../../types/component"
 
 const staggeredProps = {

@@ -3,8 +3,7 @@ import { Select } from "element-ui"
 import { ElSelect } from "element-ui/types/select"
 import { SelectProps, GlobalSelectProps } from "./selectProps"
 import { renderSelectOptions } from './renderSelectOptions'
-import { generateEmits } from "../../../utils/generateEmits"
-import { renderSlot } from '../../../utils/renderSlot'
+import { generateEmits, renderSlot } from "../../../utils"
 import { useElSelect } from "../../../composables/useElSelect"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { globalSelectPropNames } from "../../../shared/configPropertyMap"

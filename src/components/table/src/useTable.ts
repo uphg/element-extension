@@ -3,7 +3,7 @@ import { Table, TableColumn } from "element-ui"
 import { TableProps, GlobalTableProps } from "./tableProps"
 import { handleColumnsData } from "./handleColumnsData";
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
-import { renderSlot } from '../../../utils/renderSlot'
+import { renderSlot } from '../../../utils'
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";

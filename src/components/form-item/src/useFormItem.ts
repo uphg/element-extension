@@ -4,8 +4,7 @@ import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
 import { FormItemProps, GlobalFormItemProps } from "./formItemProps"
-import { isNil, pick } from '../../../utils'
-import { renderSlot } from '../../../utils/renderSlot'
+import { pick, isUndefined, renderSlot } from '../../../utils'
 import { useGlobalProps } from '../../../composables/useGlobalProps'
 import { empty } from '../../../shared/commonProps'
 
@@ -21,7 +20,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   //   }
   // })
   const globalProps = useGlobalProps<GlobalFormItemProps>('formItem')
-  const type = props.type === empty ? globalProps?.type : props.type 
+  const type = isUndefined(props.type) ? globalProps?.type : props.type 
 
   const { render: renderInput, expose: customInputExpose } = (context && type) && useCustomInput(props, { context, type }) || {}
 

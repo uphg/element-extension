@@ -17,7 +17,6 @@ export type CheckboxGroupOption = {
 }
 
 export type CheckboxGroupOptions = Array<CheckboxGroupOption>
-
 export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
 export type GlobalCheckboxGroupProps = ExtractPropTypes<typeof globalCheckboxGroupProps>
 

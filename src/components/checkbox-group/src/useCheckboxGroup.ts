@@ -5,7 +5,7 @@ import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } fro
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import { isNil } from "../../../utils"
+import { isUndefined } from "../../../utils"
 
 const _propNames = ['disabled']
 
@@ -31,8 +31,8 @@ export function useCheckboxGroup<T extends ObjectLike>(
     }
   } : options?.on
 
-  const Checkbox = (isNil(props.withButton) ? globalProps?.withButton : props.withButton) ? CheckboxButton : _Checkbox
-  const withBorder = (isNil(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
+  const Checkbox = (isUndefined(props.withButton) ? globalProps?.withButton : props.withButton) ? CheckboxButton : _Checkbox
+  const withBorder = (isUndefined(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
 
   return {
     render: () => h(CheckboxGroup, {

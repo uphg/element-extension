@@ -5,7 +5,7 @@ import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radi
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import { isNil } from "../../../utils"
+import { isUndefined } from "../../../utils"
 
 const _propNames = ['disabled'] // el props
 
@@ -29,8 +29,9 @@ export function useRadioGroup<T extends ObjectLike>(
     }
   } : options?.on
 
-  const Radio = (isNil(props.withButton) ? globalProps?.withButton : props.withButton) ? RadioButton : _Radio
-  const withBorder = (isNil(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
+  const isButton = isUndefined(props.withButton) ? globalProps?.withButton : props.withButton
+  const Radio = isButton ? RadioButton : _Radio
+  const withBorder = (isUndefined(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
 
   return {
     render: () => h(RadioGroup, {

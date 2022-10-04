@@ -3,7 +3,7 @@ import { Col, Form, FormItem, Row } from "element-ui"
 import { VNodeChildrenArrayContents } from "vue/types/umd"
 import { FormulateProps } from "./formulateProps"
 import { FormulateFields, MapFieldsItem, FormData, FormRules } from './interface'
-import { isArray, isObject, pick, withDefaultProps, isNil } from "../../../utils"
+import { isArray, isObject, isUndefined, pick, withDefaultProps } from "../../../utils"
 import { CustomInputValue } from "../../../../types/_common"
 import { useElForm } from '../../../composables/useElForm'
 import { GlobalFormProps } from "../../form/src/formProps"
@@ -33,7 +33,7 @@ function resetFormData(formData: { [key: string]: CustomInputValue }, baseFields
       if (!key) {
         return
       }
-      if (!isNil(defaultValue)) {
+      if (!isUndefined(defaultValue)) {
         formData[key] = defaultValue!
         return
       }

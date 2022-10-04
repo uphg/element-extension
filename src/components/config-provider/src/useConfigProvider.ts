@@ -1,6 +1,6 @@
 import { provide, SetupContext } from "vue";
 import { ConfigProviderProps } from "./configProviderProps";
-import { each } from "../../../utils/each";
+import { each } from "../../../utils";
 import { ObjectLike } from "../../../../types/_common";
 import { configPropertyMap, ConfigPropertyMap } from "../../../shared/configPropertyMap";
 import { empty } from "../../../shared/commonProps";

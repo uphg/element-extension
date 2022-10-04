@@ -2,7 +2,7 @@ import { h, SetupContext } from "vue"
 import { InputNumber } from 'element-ui'
 import { InputNumberProps, GlobalInputNumberProps } from "./inputNumberProps"
 import { ElInputNumber } from "../../../../types/_element-ui"
-import { generateEmits } from "../../../utils/generateEmits"
+import { generateEmits } from "../../../utils"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
 import { ObjectLike } from "../../../../types/_common"
