@@ -1,13 +1,10 @@
 import { h, ref, SetupContext } from "vue"
 import { RadioGroup, RadioButton, Radio as _Radio } from "element-ui"
 import { ElRadioGroup } from "element-ui/types/radio-group"
-import { RadioGroupProps, GlobalRadioGroupProps, RadioGroupOption } from "./radioGroupProps"
+import { RadioGroupProps, globalRadioGroupBaseProps, GlobalRadioGroupProps, RadioGroupOption, radioGroupBaseProps } from "./radioGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
-import { globalRadioGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import { isUndefined } from "../../../utils"
-
-const _propNames = ['disabled'] // el props
+import { createNames, isUndefined, keys } from "../../../utils"
 
 export function useRadioGroup<T extends ObjectLike>(
   props: RadioGroupProps | T,
@@ -16,8 +13,9 @@ export function useRadioGroup<T extends ObjectLike>(
 ) {
   const { handleProps, handleRef: _handleRef } = options || {}
   const elRadioGroup = ref<ElRadioGroup | null>(null)
-  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
-  const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalRadioGroupPropNames, handleProps })
+  const propNames = createNames(radioGroupBaseProps, options?.status)
+  const globalPropNames = keys(globalRadioGroupBaseProps)
+  const { createProps, globalProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
   const handleRef = (_handleRef || ((el: ElRadioGroup) => elRadioGroup.value = el)) as unknown as string
 
   const on = context?.emit ? {
@@ -29,9 +27,10 @@ export function useRadioGroup<T extends ObjectLike>(
     }
   } : options?.on
 
-  const isButton = isUndefined(props.withButton) ? globalProps?.withButton : props.withButton
-  const Radio = isButton ? RadioButton : _Radio
+  const withButton = isUndefined(props.withButton) ? globalProps?.withButton : props.withButton
   const withBorder = (isUndefined(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
+
+  const Radio = withButton ? RadioButton : _Radio
 
   return {
     render: () => h(RadioGroup, {

@@ -1,6 +1,6 @@
 import isArray from "./isArray";
 
-export function each<T>(
+function each<T>(
   obj: T[] | { [key: string]: T },
   callback: (item: T, inedx: number | string, obj: T[] | { [key: string]: T }) => void
 ) {
@@ -20,3 +20,5 @@ export function each<T>(
     }
   }
 }
+
+export default each

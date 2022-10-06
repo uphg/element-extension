@@ -13,7 +13,6 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ObjectLike } from "../../../../types/_common";
 import { commonProps, sizeProp, empty, booleanProp, stringProp } from "../../../shared/commonProps";
 
-export type FormItemBaseProps = ExtractPropTypes<typeof formItemBaseProps>
 export type FormItemExtendsProps = ExtractPropTypes<typeof formItemExtendsProps>
 export type GlobalFormItemProps = ExtractPropTypes<typeof globalFormItemProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
@@ -27,55 +26,6 @@ const emptyStringProp = {
 export const globalFormItemProps = {
   type: {
     type: String as PropType<FormItemType>,
-    default: empty
-  }
-}
-
-export const formItemBaseProps = {
-  ...globalFormItemProps,
-  value: {
-    type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
-    default: ''
-  },
-  options: {
-    type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
-  },
-  loading: booleanProp,
-  clearable: booleanProp,
-  disabled: booleanProp,
-  readonly: booleanProp,
-  showPassword: booleanProp,
-  showWordLimit: booleanProp,
-  validateEvent: {
-    type: booleanProp,
-    default: empty
-  },
-  size: sizeProp,
-
-  // --- Switch
-  activeValue: switchProps.activeValue,
-  inactiveValue: switchProps.inactiveValue,
-
-  // --- Date
-  format: dateProps.format,
-  pickerOptions: dateProps.pickerOptions,
-
-  // --- Upload
-  action: uploadProps.action,
-  multiple: uploadProps.multiple,
-  headers: uploadProps.headers,
-  fileList: uploadProps.fileList,
-  accept: uploadProps.accept,
-
-  // custom props
-  exclude: inputProps.exclude,
-  optionGroups: selectProps.optionGroups,
-  withBorder: {
-    type: booleanProp,
-    default: empty
-  },
-  withButton: {
-    type: booleanProp,
     default: empty
   }
 }
@@ -233,9 +183,57 @@ export const elFormItemProps = {
   size: String as PropType<'medium' | 'small' | 'mini'>
 }
 
+export const formItemBaseProps = {
+  ...elFormItemProps,
+  value: {
+    type: [String, Number, Array, Boolean, Date] as PropType<string | number | Array<unknown> | boolean | Date>,
+    default: ''
+  },
+  options: {
+    type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
+  },
+  loading: booleanProp,
+  clearable: booleanProp,
+  disabled: booleanProp,
+  readonly: booleanProp,
+  showPassword: booleanProp,
+  showWordLimit: booleanProp,
+  validateEvent: {
+    type: booleanProp,
+    default: empty
+  },
+  size: sizeProp,
+
+  // --- Switch
+  activeValue: switchProps.activeValue,
+  inactiveValue: switchProps.inactiveValue,
+
+  // --- Date
+  format: dateProps.format,
+  pickerOptions: dateProps.pickerOptions,
+
+  // --- Upload
+  action: uploadProps.action,
+  multiple: uploadProps.multiple,
+  headers: uploadProps.headers,
+  fileList: uploadProps.fileList,
+  accept: uploadProps.accept,
+
+  // custom props
+  exclude: inputProps.exclude,
+  optionGroups: selectProps.optionGroups,
+  withBorder: {
+    type: booleanProp,
+    default: empty
+  },
+  withButton: {
+    type: booleanProp,
+    default: empty
+  }
+}
 
 export const formItemProps = {
-  ...elFormItemProps,
+  ...globalFormItemProps,
   ...formItemBaseProps,
   extends: {
     type: Object as PropType<FormItemExtendsProps>,

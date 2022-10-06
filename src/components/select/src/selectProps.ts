@@ -110,13 +110,17 @@ export const globalSelectProps = {
   }
 }
 
-export const selectProps = {
+export const selectBaseProps = {
   value: {
     required: true
   },
   disabled: booleanProp,
   loading: booleanProp,
   placeholder: stringProp,
+}
+
+export const selectProps = {
+  ...selectBaseProps,
   ...globalSelectProps,
 
   // customize props

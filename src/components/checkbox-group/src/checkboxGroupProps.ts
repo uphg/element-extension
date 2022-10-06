@@ -20,7 +20,7 @@ export type CheckboxGroupOptions = Array<CheckboxGroupOption>
 export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
 export type GlobalCheckboxGroupProps = ExtractPropTypes<typeof globalCheckboxGroupProps>
 
-export const globalCheckboxGroupProps = {
+export const globalCheckboxGroupBaseProps = {
   min: {
     type: numberProp,
     default: empty
@@ -37,9 +37,10 @@ export const globalCheckboxGroupProps = {
   fill: {
     type: stringProp,
     default: empty
-  },
+  }
+}
 
-  // customize props
+export const globalCheckboxGroupCustomizeProps = {
   withBorder: {
     type: booleanProp,
     default: false
@@ -50,9 +51,18 @@ export const globalCheckboxGroupProps = {
   }
 }
 
-export const checkboxGroupProps = {
+export const globalCheckboxGroupProps = {
+  ...globalCheckboxGroupBaseProps,
+  ...globalCheckboxGroupCustomizeProps
+}
+
+export const checkboxGroupBaseProps = {
   value: Array,
   disabled: booleanProp,
+}
+
+export const checkboxGroupProps = {
+  ...checkboxGroupBaseProps,
   ...globalCheckboxGroupProps,
 
   // customize props

@@ -99,10 +99,10 @@ export const globalUploadProps = {
   httpRequest: {
     type: Function as PropType<ElUpload["httpRequest"]>,
     default: empty
-  },
+  }
 }
 
-export const uploadProps = {
+export const uploadBaseProps = {
   type: {
     type: stringProp,
     default: 'select'
@@ -113,6 +113,10 @@ export const uploadProps = {
       return [];
     }
   },
-  disabled: booleanProp,
+  disabled: booleanProp
+}
+
+export const uploadProps = {
+  ...uploadBaseProps,
   ...globalUploadProps
 }

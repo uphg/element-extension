@@ -1,13 +1,11 @@
 import { h, SetupContext } from "vue"
 import { ElForm } from "element-ui/types/form"
-import { FormProps, GlobalFormProps } from "./formProps"
+import { formBaseProps, FormProps, globalFormProps, GlobalFormProps } from "./formProps"
 import { useElForm } from "../../../composables/useElForm"
 import { Form } from "element-ui"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
-import { globalFormPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-
-const propNames = ['model', 'rules', 'labelSuffix', 'statusIcon', 'disabled']
+import { keys } from "../../../utils"
 
 export function useForm(
   props: FormProps,
@@ -15,8 +13,10 @@ export function useForm(
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
   const { handleProps, handleRef: _handleRef } = options || {}
+  const propNames = keys(formBaseProps)
+  const globalPropNames = keys(globalFormProps)
+  const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
   const { elForm, validate, validateField, clearValidate } = useElForm()
-  const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames: globalFormPropNames, handleProps })
 
   const on = context?.emit ? {
     validate(prop: string, errors: boolean, validateMessage: string | null) {

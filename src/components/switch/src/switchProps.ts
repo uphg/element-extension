@@ -56,7 +56,7 @@ export const globalSwitchProps = {
   }
 }
 
-export const switchProps = {
+export const switchBaseProps = {
   value: {
     type: [Boolean, String, Number],
     default: false
@@ -64,6 +64,10 @@ export const switchProps = {
   disabled: {
     type: Boolean,
     default: false
-  },
+  }
+}
+
+export const switchProps = {
+  ...switchBaseProps,
   ...globalSwitchProps
 }

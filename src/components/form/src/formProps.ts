@@ -37,7 +37,7 @@ export const globalFormProps = {
   size: sizeProp
 }
 
-export const formProps = {
+export const formBaseProps = {
   model: {
     type: objectProp
   },
@@ -49,7 +49,11 @@ export const formProps = {
     default: ''
   },
   statusIcon: booleanProp,
-  disabled: booleanProp,
+  disabled: booleanProp
+}
+
+export const formProps = {
+  ...formBaseProps,
   ...globalFormProps,
 
   // customize props

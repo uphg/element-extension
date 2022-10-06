@@ -1,17 +1,14 @@
 import { h, SetupContext } from "vue"
 import { Table, TableColumn } from "element-ui"
-import { TableProps, GlobalTableProps } from "./tableProps"
+import { TableProps, GlobalTableProps, tableBaseProps, globalTableProps } from "./tableProps"
 import { handleColumnsData } from "./handleColumnsData";
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
-import { renderSlot } from '../../../utils'
+import { keys, renderSlot } from '../../../utils'
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
-import { globalTablePropNames } from "../../../shared/configPropertyMap";
 import { ObjectLike } from "../../../../types/_common";
 import { ElTable } from "element-ui/types/table";
-
-const propNames = ['data']
 
 export function useTable(
   props: TableProps,
@@ -22,7 +19,9 @@ export function useTable(
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const handleRef = (_handleRef || ((el: ElTable) => elTable.value = el)) as unknown as string
   const on = context?.emit ? useElTableEmit(context.emit) : options?.on
-  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTablePropNames, handleProps })
+  const propNames = keys(tableBaseProps)
+  const globalPropNames = keys(globalTableProps)
+  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
 
   return {

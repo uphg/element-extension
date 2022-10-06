@@ -1,8 +1,10 @@
-import basePickBy from "./basePickBy"
+import { ObjectLike } from '../../types/_common'
+import baseOmitBy from './internal/baseOmitBy'
+import { Key } from './internal/interfaces'
+import isNil from './isNil'
 
-function omitBy(obj: object, callback: (item: any, key: string, obj: object) => undefined | boolean) {
-  const keys = Object.keys(obj)
-  return basePickBy(obj, keys, (item, key, obj) => !callback(item, key, obj))
+function omitBy<T>(object: ObjectLike | { [key: string]: T }, callback: (value: T, key: Key) => boolean) {
+  return isNil(object) ? {} : baseOmitBy(object, callback)
 }
 
 export default omitBy

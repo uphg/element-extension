@@ -1,13 +1,10 @@
 import { h, ref, SetupContext } from "vue"
 import { Checkbox as _Checkbox, CheckboxButton, CheckboxGroup } from "element-ui"
 import { ElCheckboxGroup } from "element-ui/types/checkbox-group"
-import { CheckboxGroupOption, CheckboxGroupProps, GlobalCheckboxGroupProps } from "./checkboxGroupProps"
+import { CheckboxGroupOption, checkboxGroupBaseProps, CheckboxGroupProps, GlobalCheckboxGroupProps, globalCheckboxGroupProps } from "./checkboxGroupProps"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
-import { globalCheckboxGroupPropNames } from "../../../shared/configPropertyMap"
 import { ObjectLike } from "../../../../types/_common"
-import { isUndefined } from "../../../utils"
-
-const _propNames = ['disabled']
+import { createNames, isUndefined, keys } from "../../../utils"
 
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
@@ -16,8 +13,9 @@ export function useCheckboxGroup<T extends ObjectLike>(
 ) {
   const { handleProps, handleRef: _handleRef } = options || {}
   const elCheckboxGroup = ref<ElCheckboxGroup | null>(null)
-  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
-  const { createProps, globalProps } = useComponentProps(props,'form', { propNames, globalPropNames: globalCheckboxGroupPropNames, handleProps })
+  const propNames = createNames(checkboxGroupBaseProps, options?.status)
+  const globalPropNames = keys(globalCheckboxGroupProps)
+  const { createProps, globalProps } = useComponentProps(props,'form', { propNames, globalPropNames, handleProps })
   const handleRef = (
     _handleRef || ((el: ElCheckboxGroup) => elCheckboxGroup.value = el)
   ) as unknown as string

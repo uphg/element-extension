@@ -5,6 +5,16 @@ import { empty, sizeProp, booleanProp, stringProp } from '../../../shared/common
 export type GlobalInputProps = ExtractPropTypes<typeof globalInputProps> & { maxlength?: number; }
 export type InputProps = ExtractPropTypes<typeof inputProps>
 
+const stringEmptyProp = {
+  type: stringProp,
+  default: empty
+}
+
+const stringOrNumberEmptyProp = {
+  type: [String, Number] as PropType<string | number>,
+  default: empty
+}
+
 export const globalInputProps = {
   type: {
     type: stringProp,
@@ -43,10 +53,28 @@ export const globalInputProps = {
   }
 }
 
-export const inputProps = {
+export const globalInputAttrs = {
+  name: stringEmptyProp,
+  step: stringEmptyProp,
+  autofocus: {
+    type: booleanProp,
+    default: empty
+  },
+  rows: stringOrNumberEmptyProp,
+  maxlength: stringOrNumberEmptyProp,
+  minlength: stringOrNumberEmptyProp,
+  max: stringOrNumberEmptyProp,
+  min: stringOrNumberEmptyProp,
+}
+
+export const inputBaseProps = {
   value: [String, Number] as PropType<string | number>,
   disabled: booleanProp,
   readonly: booleanProp,
+}
+
+export const inputProps = {
+  ...inputBaseProps,
   ...globalInputProps,
 
   // customize props

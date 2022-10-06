@@ -1,14 +1,12 @@
 import { h, SetupContext } from "vue"
 import { InputNumber } from 'element-ui'
-import { InputNumberProps, GlobalInputNumberProps } from "./inputNumberProps"
+import { InputNumberProps, globalInputNumberProps, GlobalInputNumberProps, inputNumberBaseProps } from "./inputNumberProps"
 import { ElInputNumber } from "../../../../types/_element-ui"
-import { generateEmits } from "../../../utils"
+import { createNames, generateEmits, keys } from "../../../utils"
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { useElInputNumber } from "../../../composables/useElInputNumber"
 import { ObjectLike } from "../../../../types/_common"
-import { globalInputNumberPropNames } from "../../../shared/configPropertyMap"
 
-const _propNames = ['disabled', 'placeholder']
 const emitNames = ['change', 'blur', 'focus']
 
 export function useInputNumber<T extends ObjectLike>(
@@ -19,10 +17,11 @@ export function useInputNumber<T extends ObjectLike>(
   const { handleProps, handleRef: _handleRef } = options || {}
   const { elInputNumber, focus, select } = useElInputNumber()
   const handleRef = (_handleRef || ((el: ElInputNumber) => { elInputNumber.value = el })) as unknown as string
+  const globalPropNames = keys(globalInputNumberProps)
 
   const expose = { focus, select, get elInputNumber() { return elInputNumber.value } }
-  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
-  const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames: globalInputNumberPropNames, handleProps })
+  const propNames = createNames(inputNumberBaseProps, options?.status)
+  const { createProps } = useComponentProps(props, 'inputNumber', { propNames, globalPropNames, handleProps })
 
   const on = context?.emit ? {
     input: (newVal: number) => {

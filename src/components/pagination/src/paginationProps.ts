@@ -43,7 +43,7 @@ export const globalPaginationProps = {
   }
 }
 
-export const paginationProps = {
+export const paginationBaseProps = {
   pageSize: {
     type: numberProp,
     default: 10
@@ -54,6 +54,10 @@ export const paginationProps = {
     type: numberProp,
     default: 1
   },  
-  disabled: booleanProp,
+  disabled: booleanProp
+}
+
+export const paginationProps = {
+  ...paginationBaseProps,
   ...globalPaginationProps
 }

@@ -93,10 +93,14 @@ export const globalDateProps = {
   transformOrigin: popper.transformOrigin,
 }
 
-export const dateProps = {
+export const dateBaseProps = {
   value: {},
   readonly: booleanProp,
   disabled: booleanProp,
+}
+
+export const dateProps = {
+  ...dateBaseProps,
   ...globalDateProps
 }
 

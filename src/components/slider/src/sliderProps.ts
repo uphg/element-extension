@@ -71,7 +71,7 @@ export const globalSliderProps = {
   }
 }
 
-export const sliderProps = {
+export const sliderBaseProps = {
   value: {
     type: [Number, Array],
     default: 0
@@ -79,6 +79,10 @@ export const sliderProps = {
   disabled: {
     type: Boolean,
     default: false
-  },
+  }
+}
+
+export const sliderProps = {
+  ...sliderBaseProps,
   ...globalSliderProps
 }

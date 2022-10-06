@@ -1,11 +1,9 @@
 import { Pagination } from "element-ui";
 import { h, SetupContext } from "vue";
-import { PaginationProps, GlobalPaginationProps } from "./paginationProps";
+import { PaginationProps, GlobalPaginationProps, paginationBaseProps, globalPaginationProps } from "./paginationProps";
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps";
-import { globalPaginationPropNames } from "../../../shared/configPropertyMap";
 import { ObjectLike } from "../../../../types/_common";
-
-const propNames = ['pageSize', 'total', 'pageCount', 'currentPage', 'disabled']
+import { keys } from "../../../utils"
 
 export function usePagination(
   props: PaginationProps,
@@ -13,7 +11,9 @@ export function usePagination(
   options?: UseComponentParamsOptions<PaginationProps | ObjectLike, GlobalPaginationProps>
 ) {
   const { handleProps } = options || {}
-  const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames: globalPaginationPropNames, handleProps })
+  const propNames = keys(paginationBaseProps)
+  const globalPropNames = keys(globalPaginationProps)
+  const { createProps } = useComponentProps(props, 'pagination', { propNames, globalPropNames, handleProps })
   const on = context?.emit ? {
     'size-change': (size: number) => {
       context?.emit('size-change', size)

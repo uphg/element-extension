@@ -3,12 +3,10 @@ import { TableColumn } from "element-ui";
 import { VNodeData } from "vue/types/umd";
 import { createDateFormat } from "./createDateFormat";
 import { handleColumnType } from "./handleColumnType";
-import { extendColumnTypes, TableColumnProps, GlobalTableColumnProps } from "./tableColumnProps";
+import { extendColumnTypes, TableColumnProps, GlobalTableColumnProps, globalTableColumnProps, tableColumnBaseProps } from "./tableColumnProps";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
-import { globalTableColumnPropNames } from '../../../shared/configPropertyMap'
 import { ObjectLike } from "../../../../types/_common";
-
-const propNames = ['label', 'labelClassName', 'property', 'prop', 'width', 'minWidth', 'renderHeader', 'sortable', 'sortMethod', 'sortBy', 'columnKey', 'align', 'headerAlign', 'showTooltipWhenOverflow', 'fixed', 'formatter', 'selectable', 'reserveSelection', 'filterMethod', 'filteredValue', 'filters', 'filterPlacement', 'filterMultiple', 'index', 'sortOrders']
+import { keys } from "../../../utils"
 
 export function useTableColumn(
   props: TableColumnProps,
@@ -16,7 +14,9 @@ export function useTableColumn(
   options?: UseComponentParamsOptions<TableColumnProps | ObjectLike, GlobalTableColumnProps>
 ) {
   const { handleProps } = options || {}
-  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames: globalTableColumnPropNames, handleProps })
+  const propNames = keys(tableColumnBaseProps)
+  const globalPropNames = keys(globalTableColumnProps)
+  const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
   const type = handleColumnType(props.type)
   let formatter = props.formatter
   if (props.prop && extendColumnTypes.includes(props.type)) {

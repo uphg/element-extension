@@ -1,18 +1,15 @@
 import { computed, h, SetupContext } from "vue"
 import { Upload } from "element-ui"
 import { ElUpload as _ElUpload } from "element-ui/types/upload"
-import { GlobalUploadProps, UploadProps } from "./uploadProps"
+import { globalUploadProps, GlobalUploadProps, uploadBaseProps, UploadProps } from "./uploadProps"
 import UploadList from "./UploadList"
-import { FakeSlot, renderSlot } from "../../../utils"
+import { FakeSlot, isUndefined, keys, renderSlot } from "../../../utils"
 import { ElUploadFile } from "./uploadListProps"
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { useElUpload } from "../../../composables/useElUpload"
 import { ObjectLike } from "../../../../types/_common"
-import { globalUploadPropNames } from "../../../shared/configPropertyMap"
 import { ElUpload } from "../../../../types/_element-ui"
 
-const _propNames = [/* 'name', 'dragger',  */'type', 'fileList', 'disabled']
-const globalPropNames = globalUploadPropNames
 
 export function useUpload<T extends ObjectLike>(
   props: UploadProps | T,
@@ -22,7 +19,9 @@ export function useUpload<T extends ObjectLike>(
   const { handleProps, handleRef: _handleRef } = options || {}
   const { elUpload, clearFiles, abort, submit } = useElUpload()
   const handleRef = (_handleRef || ((el: ElUpload) => elUpload.value = el)) as unknown as string
-  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames: [..._propNames, 'showFileList'], globalPropNames, handleProps })
+  const propNames = [...keys(uploadBaseProps), 'showFileList']
+  const globalPropNames = keys(globalUploadProps)
+  const { createProps, globalProps } = useComponentProps(props, 'upload', { propNames, globalPropNames, handleProps })
   const uploadFiles = computed(() => elUpload.value?.uploadFiles)
   const uploadDisabled = computed(() => elUpload.value?.uploadDisabled)
 
@@ -49,7 +48,9 @@ export function useUpload<T extends ObjectLike>(
     },
     render() {
       const uploadProps = createProps()
-      const showFileList = uploadProps.showFileList || globalProps?.showFileList || true
+      const showFileList = isUndefined(uploadProps.showFileList)
+        ? (isUndefined(globalProps?.showFileList) ? true : globalProps?.showFileList)
+        : true
       const listType = props.listType || globalProps?.showFileList || 'text'
       const uploadList = h(UploadList, {
         props: {
@@ -89,7 +90,7 @@ export function useUpload<T extends ObjectLike>(
           ...uploadProps,
           showFileList: listType === 'picture-card' ? showFileList : false
         },
-      }, slots?.concat((listType === 'picture-card' ? [] : showFileList && uploadList )))
+      }, slots?.concat((listType === 'picture-card' ? [] : showFileList ? uploadList : void 0 )))
     }
   }
 }

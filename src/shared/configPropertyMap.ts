@@ -1,3 +1,20 @@
+import { keys } from "../utils"
+import { globalRadioGroupBaseProps, globalRadioGroupCustomizeProps } from "../components/radio-group/src/radioGroupProps"
+import { globalCheckboxGroupBaseProps, globalCheckboxGroupCustomizeProps } from "../components/checkbox-group/src/checkboxGroupProps"
+import { globalInputAttrs, globalInputProps } from '../components/input/src/inputProps'
+import { globalInputNumberProps } from "../components/input-number/src/inputNumberProps"
+import { globalSelectProps } from "../components/select/src/selectProps"
+import { globalCascaderProps } from "../components/cascader/src/cascaderProps"
+import { globalSwitchProps } from "../components/switch/src/switchProps"
+import { globalSliderProps } from "../components/slider/src/sliderProps"
+import { globalDateProps } from "../components/date-picker/src/dateProps"
+import { globalUploadProps } from "../components/upload/src/uploadProps"
+import { globalTableProps } from "../components/table/src/tableProps"
+import { globalTableColumnProps } from "../components/table-column/src/tableColumnProps"
+import { globalPaginationProps } from "../components/pagination/src/paginationProps"
+import { globalFormProps } from "../components/form/src/formProps"
+import { globalFormItemProps } from "../components/form-item/src/formItemProps"
+
 export type ConfigPropertyMap = typeof configPropertyMap
 export type ConfigPropertyName = keyof (typeof configPropertyMap)
 
@@ -18,36 +35,31 @@ export const globalFormItemKey = Symbol('config-form-item')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
-
-export const globalRadioGroupPropNames = ['size', 'textColor', 'fill']
-export const globalCheckboxGroupPropNames = ['min', 'max', 'textColor', 'fill', 'size']
-export const globalInputPropNames = ['type', 'resize', 'form', 'autocomplete', 'validateEvent', 'suffixIcon', 'prefixIcon', 'label', 'showPassword', 'tabindex', 'clearable', 'showWordLimit', 'size', 'autosize']
-export const globalInputNumberPropNames = ['label', 'name', 'min', 'max', 'step', 'stepStrictly', 'precision', 'size', 'controls', 'controlsPosition']
-export const globalSelectPropNames = ['autocomplete', 'name', 'id', 'automaticDropdown', 'filterable', 'allowCreate', 'remote', 'loadingText', 'noMatchText', 'noDataText', 'remoteMethod', 'filterMethod', 'defaultFirstOption', 'reserveKeyword', 'collapseTags', 'valueKey', 'size', 'multiple', 'multipleLimit', 'clearable', 'popperClass', 'popperAppendToBody']
-export const globalCascaderPropNames = ['options', 'props', 'size', 'clearable', 'popperClass', 'separator',  'filterable', 'filterMethod', 'beforeFilter', 'debounce', 'showAllLevels', 'collapseTags', 'placement', 'appendToBody', 'visibleArrow', 'arrowOffset', 'offset', 'boundariesPadding', 'popperOptions', 'transformOrigin']
-export const globalSwitchPropNames = ['name', 'id', 'width', 'activeIconClass', 'inactiveIconClass', 'activeText', 'inactiveText', 'activeValue', 'inactiveValue', 'activeColor', 'inactiveColor', 'validateEvent']
-export const globalSliderPropNames = ['min', 'max', 'step', 'showInput', 'showInputControls', 'inputSize', 'showStops', 'showTooltip', 'formatTooltip', 'range', 'vertical', 'height', 'label', 'debounce', 'tooltipClass', 'marks']
-export const globalDatePropNames = ['size', 'editable', 'clearable', 'placeholder', 'startPlaceholder', 'endPlaceholder', 'format', 'align', 'rangeSeparator', 'defaultValue', 'defaultTime', 'valueFormat', 'unlinkPanels', 'popperClass', 'pickerOptions', 'prefixIcon', 'clearIcon', 'validateEvent', 'appendToBody', 'offset', 'boundariesPadding', 'arrowOffset', 'placement', 'transformOrigin']
-
-export const globalUploadPropNames = ['name', 'dragger', 'withCredentials', 'drag', 'beforeUpload', 'beforeRemove', 'limit', 'onRemove', 'onChange', 'onPreview', 'onSuccess', 'onProgress', 'onError', 'onExceed', 'action', 'headers', 'multiple', 'data', 'drag', 'accept', 'listType', 'autoUpload', 'httpRequest']
-
-export const globalFormPropNames = ['inline', 'labelPosition', 'labelWidth', 'hideRequiredAsterisk', 'showMessage', 'inlineMessage', 'validateOnRuleChange', 'size']
-export const globalFormItemPropNames = ['type']
-
-export const globalTablePropNames = ['height', 'rowKey', 'context', 'showSummary', 'sumText', 'summaryMethod', 'rowClassName', 'rowStyle', 'cellClassName', 'cellStyle', 'headerRowClassName', 'headerRowStyle', 'headerCellClassName', 'headerCellStyle', 'currentRowKey', 'emptyText', 'expandRowKeys', 'defaultExpandAll', 'defaultSort', 'tooltipEffect', 'spanMethod', 'selectOnIndeterminate', 'indent', 'treeProps', 'lazy', 'load', 'size', 'maxHeight', 'stripe', 'border', 'fit', 'showHeader', 'highlightCurrentRow']
-export const globalTableColumnPropNames = ['className', 'resizable', 'showOverflowTooltip']
-export const globalPaginationPropNames = ['small', 'background', 'pagerCount', 'layout', 'pageSizes', 'popperClass', 'prevText', 'nextText', 'hideOnSinglePage']
-
-export const globalInputAttrNames = ['maxlength', 'name', 'step', 'autofocus', 'rows', 'minlength', 'max', 'min']
+export const globalRadioGroupPropNames = keys(globalRadioGroupBaseProps)
+export const globalCheckboxGroupPropNames = keys(globalCheckboxGroupBaseProps)
+export const globalInputPropNames = keys(globalInputProps)
+export const globalInputAttrNames = keys(globalInputAttrs)
+export const globalInputNumberPropNames = keys(globalInputNumberProps)
+export const globalSelectPropNames = keys(globalSelectProps)
+export const globalCascaderPropNames = keys(globalCascaderProps)
+export const globalSwitchPropNames = keys(globalSwitchProps)
+export const globalSliderPropNames = keys(globalSliderProps)
+export const globalDatePropNames = keys(globalDateProps)
+export const globalUploadPropNames = keys(globalUploadProps)
+export const globalFormPropNames = keys(globalFormProps)
+export const globalFormItemPropNames = keys(globalFormItemProps)
+export const globalTablePropNames = keys(globalTableProps)
+export const globalTableColumnPropNames = keys(globalTableColumnProps)
+export const globalPaginationPropNames = keys(globalPaginationProps)
 
 export const configPropertyMap = {
   radioGroup: {
     key: globalRadioGroupKey,
-    propNames: globalRadioGroupPropNames.concat(['withBorder', 'withButton'])
+    propNames: globalRadioGroupPropNames.concat(keys(globalRadioGroupCustomizeProps))
   },
   checkboxGroup: {
     key: globalCheckboxGroupKey,
-    propNames: globalCheckboxGroupPropNames.concat(['withBorder', 'withButton'])
+    propNames: globalCheckboxGroupPropNames.concat(keys(globalCheckboxGroupCustomizeProps))
   },
   input: {
     key: globalInputKey,

@@ -32,7 +32,7 @@ export const globalTableColumnProps = {
   }
 }
 
-export const tableColumnProps = {
+export const tableColumnBaseProps = {
   type: {
     type: String as PropType<'selection' | 'index' | 'expand' | TableColumnExtendsType>,
     default: 'default'
@@ -75,7 +75,11 @@ export const tableColumnProps = {
     validator(val: any) {
       return val.every((order: string) => ['ascending', 'descending', null].indexOf(order) > -1);
     }
-  },
+  }
+}
+
+export const tableColumnProps = {
+  ...tableColumnBaseProps,
   ...globalTableColumnProps,
 
   // 自定义属性

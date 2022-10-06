@@ -12,7 +12,7 @@ export type RadioGroupOption = {
 }
 export type RadioGroupOptions = Array<RadioGroupOption>
 
-export const globalRadioGroupProps = {
+export const globalRadioGroupBaseProps = {
   size: sizeProp,
   textColor: {
     type: stringProp,
@@ -21,9 +21,10 @@ export const globalRadioGroupProps = {
   fill: {
     type: stringProp,
     default: empty
-  },
+  }
+}
 
-  // customize props
+export const globalRadioGroupCustomizeProps = {
   withBorder: {
     type: booleanProp,
     default: false,
@@ -34,12 +35,21 @@ export const globalRadioGroupProps = {
   }
 }
 
-export const radioGroupProps = {
+export const radioGroupBaseProps = {
   value: {
     type: [String, Number, Boolean] as PropType<string | number | boolean>,
     default: empty
   },
   disabled: booleanProp,
+}
+
+export const globalRadioGroupProps = {
+  ...globalRadioGroupBaseProps,
+  ...globalRadioGroupCustomizeProps
+}
+
+export const radioGroupProps = {
+  ...radioGroupBaseProps,
   ...globalRadioGroupProps,
 
   // customize props

@@ -5,8 +5,14 @@ export type GlobalInputNumberProps = ExtractPropTypes<typeof globalInputNumberPr
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
 
 export const globalInputNumberProps = {
-  label: stringProp,
-  name: stringProp,
+  label: {
+    type: stringProp,
+    default: empty
+  },
+  name: {
+    type: stringProp,
+    default: empty
+  },
   step: {
     type: numberProp,
     default: empty
@@ -41,12 +47,16 @@ export const globalInputNumberProps = {
   }
 }
 
-export const inputNumberProps = {
+export const inputNumberBaseProps = {
   value: {
     type: [Number, Boolean, String],
     default: () => ({})
   },
   disabled: booleanProp,
   placeholder: stringProp,
+}
+
+export const inputNumberProps = {
+  ...inputNumberBaseProps,
   ...globalInputNumberProps
 }

@@ -1,7 +1,7 @@
-import type { StyleElement } from './internal/interface'
+import type { StyleElement } from './internal/interfaces'
 import isObject from './isObject'
 import camelize from "./_camelize";
-import { each } from './each'
+import each from './each'
 import mergeClass from './internal/mergeClass'
 import splitClass from './internal/splitClass'
 import toString from './toString'

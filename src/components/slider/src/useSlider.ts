@@ -1,12 +1,10 @@
 import { h, ref, SetupContext } from "vue";
 import { Slider } from "element-ui";
 import { ElSlider } from "element-ui/types/slider";
-import { GlobalSliderProps, SliderProps } from "./sliderProps";
-import { globalSliderPropNames } from "../../../shared/configPropertyMap";
+import { globalSliderProps, GlobalSliderProps, sliderBaseProps, SliderProps } from "./sliderProps";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { ObjectLike } from "../../../../types/_common";
-
-const disabledName = 'disabled'
+import { createNames, keys } from "../../../utils";
 
 export function useSlider<T extends ObjectLike>(
   props: SliderProps | T,
@@ -16,8 +14,9 @@ export function useSlider<T extends ObjectLike>(
   const elSlider = ref<ElSlider | null>(null)
   const { handleProps, handleRef: _handleRef } = options || {}
   const handleRef = (_handleRef || ((el: ElSlider) => { elSlider.value = el })) as unknown as string
-  const propNames = options?.status === 1 ? [disabledName] : ['value', disabledName]
-  const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames: globalSliderPropNames, handleProps })
+  const propNames = createNames(sliderBaseProps, options?.status)
+  const globalPropNames = keys(globalSliderProps)
+  const { createProps } = useComponentProps(props, 'slider', { propNames, globalPropNames, handleProps })
   const on = context?.emit ? {
     change(value: number) {
       context.emit('change', value)

@@ -90,7 +90,7 @@ export const globalCascaderProps = {
   }
 }
 
-export const cascaderProps = {
+export const cascaderBaseProps = {
   value: {
     type: [String, Number, Boolean, Symbol, Object] as PropType<any>,
     default: {}
@@ -100,6 +100,9 @@ export const cascaderProps = {
     default: () => t('el.cascader.placeholder')
   },
   disabled: booleanProp,
+}
 
+export const cascaderProps = {
+  ...cascaderBaseProps,
   ...globalCascaderProps
 }

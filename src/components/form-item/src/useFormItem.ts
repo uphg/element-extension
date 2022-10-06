@@ -3,12 +3,9 @@ import { FormItem } from 'element-ui'
 import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "element-ui/types/form-item"
-import { FormItemProps, GlobalFormItemProps } from "./formItemProps"
-import { pick, isUndefined, renderSlot } from '../../../utils'
+import { formItemBaseProps, FormItemProps, GlobalFormItemProps } from "./formItemProps"
+import { pick, isUndefined, renderSlot, keys } from '../../../utils'
 import { useGlobalProps } from '../../../composables/useGlobalProps'
-import { empty } from '../../../shared/commonProps'
-
-const propNames = ['label', 'labelWidth', 'prop', 'required', 'rules', 'error', 'validateStatus', 'for', 'inlineMessage', 'showMessage', 'size']
 
 export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   const { elFormItem, clearValidate } = useElFormItem()
@@ -19,6 +16,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   //     }
   //   }
   // })
+  const propNames = keys(formItemBaseProps)
   const globalProps = useGlobalProps<GlobalFormItemProps>('formItem')
   const type = isUndefined(props.type) ? globalProps?.type : props.type 
 

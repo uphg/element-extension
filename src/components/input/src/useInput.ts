@@ -2,14 +2,13 @@ import { h, SetupContext } from "vue"
 import { VNodeData } from "vue/types/umd";
 import { Input } from "element-ui"
 import { ElInput } from "element-ui/types/input";
-import { InputProps, GlobalInputProps } from "./inputProps";
+import { InputProps, GlobalInputProps, globalInputAttrs, inputBaseProps } from "./inputProps";
 import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { useElInput } from "../../../composables/useElInput";
 import { ObjectLike } from "../../../../types/_common";
-import { globalInputPropNames, globalInputAttrNames } from "../../../shared/configPropertyMap";
 import { HandleRef } from "../../../composables/useComponentProps";
-import { pick, withDefaultProps, generateEmits, renderSlots } from "../../../utils";
+import { pick, withDefaultProps, generateEmits, renderSlots, keys, createNames } from "../../../utils";
 
 export interface UseInputOptins {
   status?: 0 | 1;
@@ -32,20 +31,22 @@ export function useInputProps(
 ) {
   const { handleProps, handleAttrs } = options || {}
   const globalInputProps = useGlobalProps<GlobalInputProps>('input')
-  const propNames = options?.status === 1 ? _propNames : ['value', ..._propNames]
+  const propNames = createNames(inputBaseProps, options?.status)
+  const globalPropNames = keys(globalInputProps)
+  const globalAttrNames = keys(globalInputAttrs)
 
   const createProps = handleProps
-    ? handleProps(props, globalInputProps, { propNames, globalPropNames: globalInputPropNames })
+    ? handleProps(props, globalInputProps, { propNames, globalPropNames })
     : () => ({
         ...pick(props, propNames),
-        ...withDefaultProps(props, globalInputProps, globalInputPropNames)
+        ...withDefaultProps(props, globalInputProps, globalPropNames)
       })
 
   const createAttrs = handleAttrs
-    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames: globalInputAttrNames })
+    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames })
     : () => (context?.slots && {
       ...pick(context.attrs, attrNames),
-      ...withDefaultProps(context.attrs, globalInputProps, globalInputAttrNames)
+      ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
     })
 
   return {

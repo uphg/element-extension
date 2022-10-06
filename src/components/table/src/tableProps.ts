@@ -161,13 +161,17 @@ export const globalTableProps = {
   size: sizeProp,
 }
 
-export const tableProps = {
+export const tableBaseProps = {
   data: {
     type: Array,
     default: function() {
       return [];
     }
-  },
+  }
+}
+
+export const tableProps = {
+  ...tableBaseProps,
   // custom props
   columns: {
     type: Array as PropType<Array<TableObjectColumnProps>>,

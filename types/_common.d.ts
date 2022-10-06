@@ -13,7 +13,7 @@ import { GlobalSwitchProps, SwitchProps } from "../src/components/switch/src/swi
 import { GlobalUploadProps, UploadProps } from "../src/components/upload/src/uploadProps"
 
 export type ObjectLike = {
-  [key: string]: ObjectLike | unknown | any
+  [key: string]: ObjectLike | any
 }
 
 export type Fn = (...args: unknown[]) => void

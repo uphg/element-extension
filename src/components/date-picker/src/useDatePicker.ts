@@ -4,13 +4,11 @@ import { DatePicker as _DatePicker, TimeSelect, TimePicker } from "element-ui"
 import { ElDatePicker } from "element-ui/types/date-picker"
 import { ElTimePicker } from "element-ui/types/time-picker"
 import { ElTimeSelect } from "element-ui/types/time-select"
-import { GlobalDateProps, PublicDateProps } from "./dateProps"
+import { dateBaseProps, globalDateProps, GlobalDateProps, PublicDateProps } from "./dateProps"
 import { HandleRef, useComponentProps } from "../../../composables/useComponentProps"
 import { globalDatePropNames } from "../../../shared/configPropertyMap"
-import { renderSlot } from "../../../utils"
+import { createNames, keys, renderSlot } from "../../../utils"
 import { ObjectLike } from "../../../../types/_common"
-
-const _publicPropNames = ['readonly', 'disabled']
 
 type UseDatePickerOptions<Props> = {
   type: 1 | 2 | 3; // 1: DatePicker; 2: TimePicker; 3: TimeSelect;
@@ -40,9 +38,10 @@ export function useDatePicker<T extends ObjectLike>(
   const { handleProps, handleRef: _handleRef } = options || {} 
   const DatePicker = componentMap[options.type][1]
   const elDatePicker = ref<ElDatePicker | ElTimePicker | ElTimeSelect | null>(null)
-  const publicPropNames = options?.status === 1 ? _publicPropNames : _publicPropNames.concat(['value'])   
+  const publicPropNames = createNames(dateBaseProps, options.status) 
   const propNames = [...componentMap[options.type][3], ...publicPropNames]
-  const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames: globalDatePropNames, handleProps })
+  const globalPropNames = keys(globalDateProps)
+  const { createProps } = useComponentProps(props, componentMap[options.type][0], { propNames, globalPropNames, handleProps })
   const on = context?.emit ? {
     input(value: DatePickerValue) {
       context.emit('input', value)
