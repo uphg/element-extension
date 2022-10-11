@@ -12,7 +12,17 @@ config-provider/base
 
 :::
 
-### ConfigProvider Attributes
+## 继承
+
+ConfigProvider 可以嵌套使用，继承自最近的 ConfigProvider 组件
+
+::: demo
+
+config-provider/inherit
+
+:::
+
+## ConfigProvider Attributes
 
 以下是组件支持全局配置的属性列表
 
@@ -290,4 +300,12 @@ config-provider/base
 
 <script setup lang="ts">
 import ConfigProviderBase from 'docs/demo/config-provider/base.vue'
+import ConfigProviderInherit from 'docs/demo/config-provider/inherit.vue'
 </script>
+
+<style>
+.demo-config-provider .el-input {
+  max-width: 240px;
+  margin-bottom: 20px;
+}
+</style>
