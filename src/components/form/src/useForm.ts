@@ -26,6 +26,8 @@ export function useForm(
     }
   } : options?.on
 
+  const renderSlots = children ? children : (!scopedSlots && context?.slots.default)
+
   return {
     expose: {
       validate,
@@ -34,7 +36,7 @@ export function useForm(
       get elForm() { return elForm.value }
     },
     render() {
-      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots }, children ? [children()] : [context?.slots.default?.()])
+      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots }, renderSlots && [renderSlots()])
     }
   }
 }
