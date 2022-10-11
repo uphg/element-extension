@@ -12,18 +12,19 @@ export function useForm(
   context: SetupContext<{}> | undefined,
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
-  const { handleProps, handleRef: _handleRef } = options || {}
+  const { children, handleProps, handleRef: _handleRef, handleScopedSlots } = options || {}
   const propNames = keys(formBaseProps)
   const globalPropNames = keys(globalFormProps)
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
   const { elForm, validate, validateField, clearValidate } = useElForm()
+  const handleRef = (_handleRef || ((el: ElForm) => elForm.value = el)) as unknown as string
+  const scopedSlots = handleScopedSlots?.(context?.slots)
 
   const on = context?.emit ? {
     validate(prop: string, errors: boolean, validateMessage: string | null) {
       context.emit('validate', prop, errors, validateMessage)
     }
   } : options?.on
-  const handleRef = (_handleRef || ((el: ElForm) => elForm.value = el)) as unknown as string
 
   return {
     expose: {
@@ -33,8 +34,7 @@ export function useForm(
       get elForm() { return elForm.value }
     },
     render() {
-      const slots = context?.slots && (() => context.slots.default?.())
-      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots: { default: slots } })
+      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots }, children ? [children()] : [context?.slots.default?.()])
     }
   }
 }

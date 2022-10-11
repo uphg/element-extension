@@ -1,4 +1,4 @@
-import { VNodeChildren, VNodeData } from "vue";
+import { SetupContext, VNodeChildren, VNodeData } from "vue";
 import { ConfigPropertyName } from "../shared/configPropertyMap";
 import { useGlobalProps } from "./useGlobalProps"
 import { ObjectLike } from "../../types/_common";
@@ -26,6 +26,7 @@ export type UseComponentParamsOptions<Props, GlobalProps> = {
   children?: () => VNodeChildren | VNode;
   handleRef?: HandleRef;
   handleProps?: HandleProps<Props, GlobalProps>,
+  handleScopedSlots?: HandleScopedSlots,
 }
 
 export interface HandleProps<Props, GlobalProps> {
@@ -34,6 +35,10 @@ export interface HandleProps<Props, GlobalProps> {
 
 export interface HandleRef {
   (el: ElRadioGroup | ElCheckboxGroup | ElInput | ElInputNumber | ElSelect | ElCalendar | ElSwitch | ElSlider | ElTimeSelect | ElTimePicker | ElDatePicker | ElUpload): void
+}
+
+export interface HandleScopedSlots {
+  (slots: SetupContext['slots'] | undefined): VNodeData['scopedSlots']
 }
 
 export function useComponentProps<Props extends ObjectLike, GlobalProps extends ObjectLike>(
