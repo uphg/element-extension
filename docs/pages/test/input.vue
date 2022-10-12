@@ -8,6 +8,10 @@
         <i class="el-input__icon el-icon-search"></i>
       </template>
     </e-input>
+    <br>
+    <e-form>
+      <e-form-item label="用户名" v-model="username" placeholder="请输入用户名"/>
+    </e-form>
   </div>
 </template>
 
@@ -21,4 +25,5 @@ export default {
 import { ref } from 'vue'
 const input3 = ref('')
 const input4 = ref('')
+const username = ref('')
 </script>
