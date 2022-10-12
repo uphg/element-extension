@@ -195,11 +195,22 @@ export const formItemBaseProps = {
     type: [Array] as PropType<RadioGroupOptions | CheckboxGroupOptions | SelectOptions | CascaderOption[]>
   },
   loading: booleanProp,
-  clearable: booleanProp,
   disabled: booleanProp,
   readonly: booleanProp,
-  showPassword: booleanProp,
-  showWordLimit: booleanProp,
+
+  // global props
+  clearable: {
+    type: booleanProp,
+    default: empty
+  },
+  showPassword: {
+    type: booleanProp,
+    default: empty
+  },
+  showWordLimit: {
+    type: booleanProp,
+    default: empty
+  },
   validateEvent: {
     type: booleanProp,
     default: empty
