@@ -164,7 +164,6 @@ export function useCustomInput<T extends FormItemProps>(props: T, _options: { co
       })
     }
     case 'date-picker':
-    case 'date':
     case 'year':
     case 'month':
     case 'date':
