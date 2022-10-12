@@ -163,14 +163,25 @@ export function useCustomInput<T extends FormItemProps>(props: T, _options: { co
         }
       })
     }
-
+    case 'date-picker':
     case 'date':
-    case 'date-picker': {
+    case 'year':
+    case 'month':
+    case 'date':
+    case 'dates':
+    case 'months':
+    case 'years':
+    case 'week':
+    case 'datetime':
+    case 'datetimerange':
+    case 'daterange':
+    case 'monthrange': {
       return useDatePicker<T>(props, context, {
         type: 1,
         handleProps(_props, globalProps) {
+          const type = props.type === 'date-picker' ? 'date' : props.type
           return () => ({
-            type: type,
+            type,
             value: props.value,
             disabled: props.disabled,
             readonly: props.readonly,
