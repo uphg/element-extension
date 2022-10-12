@@ -18,7 +18,6 @@ export interface UseInputOptins {
   handleAttrs?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
 }
 
-const _propNames = ['disabled', 'readonly']
 const attrNames = ['placeholder']
 
 const otherEmitNames = ['blur', 'focus', 'change', 'clear']
@@ -75,7 +74,7 @@ export function useInput<T extends ObjectLike>(
   return {
     expose,
     render() {
-      const slots = context?.slots?.slots && renderSlots(context, slotNames)
+      const slots = context?.slots && renderSlots(context, slotNames)
       return h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, slots)
     }
   }
