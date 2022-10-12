@@ -26,7 +26,7 @@ export function useForm(
     }
   } : options?.on
 
-  const renderSlots = children ? children : (!scopedSlots && context?.slots.default)
+  const renderSlots = children ? children : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
 
   return {
     expose: {
