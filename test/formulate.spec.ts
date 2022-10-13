@@ -1,6 +1,8 @@
 import { createLocalVue, mount } from '@vue/test-utils'
 import { Formulate } from '../src/index'
 import ElementPart from '../src/index'
+import { ElForm } from 'element-ui/types/form'
+import { EFormulate } from '../types/formulate'
 
 const localVue = createLocalVue()
 localVue.use(ElementPart)
@@ -14,12 +16,18 @@ describe('form', () => {
         name: { label: '活动名称' }
       }
     }
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
-    expect(wrapper.props().expands).toBe(data)
-    expect(wrapper.vm.$el.querySelector('.el-form-item__label').style.width).toBe('80px')
-    expect(wrapper.vm.$el.querySelector('.el-form-item__content').style.marginLeft).toBe('80px')
+    const formDemo = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data })
+    }  
+    const wrapper = mount(formDemo, { localVue })
+
+    const formItemLabel = wrapper.vm.$el.querySelector('.el-form-item__label')
+    const formItemContent = wrapper.vm.$el.querySelector('.el-form-item__content')
+    expect((formItemLabel as HTMLElement)?.style.width).toBe('80px')
+    expect((formItemContent as HTMLElement)?.style.marginLeft).toBe('80px')
 
     wrapper.destroy()
   })
@@ -32,13 +40,18 @@ describe('form', () => {
         remark: { label: '活动备注内容' }
       }
     }
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
-    expect(wrapper.props().expands).toBe(data)
+
+    const formDemo = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data })
+    }  
+    const wrapper = mount(formDemo, { localVue })
+
     const formItems = wrapper.vm.$el.querySelectorAll('.el-form-item__content')
-    const marginLeft = parseInt(formItems[0].style.marginLeft, 10)
-    const marginLeft2 = parseInt(formItems[1].style.marginLeft, 10)
+    const marginLeft = parseInt((formItems[0] as HTMLElement).style.marginLeft, 10)
+    const marginLeft2 = parseInt((formItems[1] as HTMLElement).style.marginLeft, 10)
     expect(marginLeft).toBe(marginLeft2)
   })
 
@@ -50,9 +63,14 @@ describe('form', () => {
         remark: { label: '活动备注内容' }
       }
     }
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
+
+    const formDemo = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data })
+    }  
+    const wrapper = mount(formDemo, { localVue })
     expect(wrapper.find('.el-form--inline').exists()).toBeTruthy()
   })
 
@@ -71,9 +89,21 @@ describe('form', () => {
         remark: { label: '活动备注内容' }
       }
     }
+    const formDemo1 = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data: data1 })
+    }
+    const formDemo2 = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data: data2 })
+    }
 
-    const wrapper1 = mount(Formulate, { propsData: { expands: data1 } })
-    const wrapper2 = mount(Formulate, { propsData: { expands: data2 } })
+    const wrapper1 = mount(formDemo1, { localVue })
+    const wrapper2 = mount(formDemo2, { localVue })
 
     expect(wrapper1.find('.el-form--label-top').exists()).toBeTruthy()
     expect(wrapper2.find('.el-form--label-left').exists()).toBeTruthy()
@@ -86,9 +116,12 @@ describe('form', () => {
         name: { label: '活动名称' }
       }
     }
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
+    const formDemo = {
+      template: `<e-formulate :data="data"/>`,
+      data: () => ({ data })
+    }
+
+    const wrapper = mount(formDemo, { localVue })
 
     expect(wrapper.find('.el-form-item--mini').exists()).toBeTruthy()
   })
@@ -109,11 +142,14 @@ describe('form', () => {
         }
       }
     }
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
-    wrapper.vm.submit(async (formData: { [key: string]: any }, options:{ valid: boolean }) => {
-      expect(options.valid).toBeFalsy()
+    const formDemo = {
+      template: `<e-formulate ref="formulateRef" :data="data"/>`,
+      data: () => ({ data })
+    }
+    const wrapper = mount<EFormulate>(formDemo, { localVue })
+    const vm = wrapper.vm.$refs.formulateRef as EFormulate
+    vm?.validate(async (valid: boolean) => {
+      expect(valid).toBeFalsy()
 
       await wrapper.vm.$nextTick()
       expect(wrapper.find('.el-form-item__error').exists()).toBeTruthy()
@@ -160,18 +196,20 @@ describe('form', () => {
       }
     }
 
-    const wrapper = mount(Formulate, {
-      propsData: { expands: data }
-    })
+    const formDemo = {
+      template: `<e-formulate ref="formulateRef" :data="data"/>`,
+      data: () => ({ data })
+    }
 
-    const vm = wrapper.vm
+    const wrapper = mount<EFormulate>(formDemo, { localVue })
+    const vm = wrapper.vm.$refs.formulateRef as EFormulate
 
     vm.setValues({ name: 'jack', address: 'abc', type: [2] })
-    vm.resetFields()
+    vm.resetValues()
     await vm.$nextTick()
     expect(vm.formData.name).toBe('')
     expect(vm.formData.address).toBe('')
-    expect(vm.formData.type.length).toBe(0)
+    expect((vm.formData.type as number[]).length).toBe(0)
   })
 
   it('clear validate', async () => {
@@ -208,24 +246,28 @@ describe('form', () => {
       }
     }
 
-    const wrapper = mount(Formulate, { propsData: { expands: data } })
-    const vm = wrapper.vm
+    const formDemo = {
+      template: `<e-formulate ref="formulateRef" :data="data"/>`,
+      data: () => ({ data })
+    }
 
+    const wrapper = mount<EFormulate>(formDemo, { localVue })
+    const vm = wrapper.vm.$refs.formulateRef as EFormulate
     vm.validate(() => void 0)
 
     await vm.$nextTick()
     const nameField = vm.elForm.fields.find((field: { [key: string]: any }) => field.prop === 'name')
     const addressField = vm.elForm.fields.find((field: { [key: string]: any }) => field.prop === 'address')
-    expect(nameField.validateMessage).toBe('请输入活动名称')
-    expect(addressField.validateMessage).toBe('请选择活动区域')
+    expect(nameField?.validateMessage).toBe('请输入活动名称')
+    expect(addressField?.validateMessage).toBe('请选择活动区域')
 
     vm.clearValidate(['name'])
     await vm.$nextTick()
-    expect(nameField.validateMessage).toBe('');
+    expect(nameField?.validateMessage).toBe('');
     
     vm.clearValidate()
     await vm.$nextTick()
-    expect(addressField.validateMessage).toBe('')
+    expect(addressField?.validateMessage).toBe('')
   })
 
   it.skip('form item nest button', () => {
@@ -240,14 +282,21 @@ describe('form', () => {
       }
     }
 
-    const wrapper = mount(Formulate, { propsData: { expands: data } })
+    const formDemo = {
+      template: `
+        <e-formulate :data="data"/>
+      `,
+      data: () => ({ data })
+    }
+
+    const wrapper = mount<EFormulate>(formDemo, { localVue })
     expect(wrapper.find('.el-form-item__content .el-button--primary').exists()).toBeTruthy()
   })
 
   it('form rows', () => {
     const formDemo = {
       template: `
-        <e-formulate ref="formulateRef" :expands="data"/>
+        <e-formulate ref="formulateRef" :data="data"/>
       `,
       data() {
         return {
@@ -276,7 +325,7 @@ describe('form', () => {
   it('form extra', () => {
     const formDemo = {
       template: `
-        <e-formulate ref="formulateRef" :expands="data"/>
+        <e-formulate ref="formulateRef" :data="data"/>
       `,
       data: () => ({
         data: {

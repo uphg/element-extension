@@ -10,7 +10,11 @@
     </e-input>
     <br>
     <e-form>
-      <e-form-item label="用户名" v-model="username" placeholder="请输入用户名"/>
+      <e-form-item label="用户名" v-model="username" placeholder="请输入用户名">
+        <template v-slot:prefix>
+          <i class="el-input__icon el-icon-search"></i>
+        </template>
+      </e-form-item>
     </e-form>
   </div>
 </template>

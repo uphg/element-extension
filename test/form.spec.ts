@@ -1,5 +1,9 @@
 import { createLocalVue, mount } from '@vue/test-utils'
+import { VueConstructor } from 'vue'
 import ElementPart from '../src/index'
+import { EForm } from '../types/form'
+import { ElFormItem } from '../types/_element-ui'
+import { EFormItem } from '../types/form-item'
 
 const localVue = createLocalVue()
 localVue.use(ElementPart)
@@ -27,9 +31,10 @@ describe('form', () => {
       }
     }    
     const wrapper = mount(formDemo, { localVue })
-
-    expect(wrapper.vm.$el.querySelector('.el-form-item__label').style.width).toBe('80px')
-    expect(wrapper.vm.$el.querySelector('.el-form-item__content').style.marginLeft).toBe('80px')
+    const formItemLabel = wrapper.vm.$el.querySelector('.el-form-item__label') as HTMLElement
+    const formItemContent = wrapper.vm.$el.querySelector('.el-form-item__content') as HTMLElement
+    expect(formItemLabel?.style.width).toBe('80px')
+    expect(formItemContent?.style.marginLeft).toBe('80px')
 
     wrapper.destroy()
   })
@@ -53,8 +58,8 @@ describe('form', () => {
     }    
     const wrapper = mount(formDemo, { localVue })
     const formItems = wrapper.vm.$el.querySelectorAll('.el-form-item__content')
-    const marginLeft = parseInt(formItems[0].style.marginLeft, 10)
-    const marginLeft2 = parseInt(formItems[1].style.marginLeft, 10)
+    const marginLeft = parseInt((formItems[0] as HTMLElement).style.marginLeft, 10)
+    const marginLeft2 = parseInt((formItems[1] as HTMLElement).style.marginLeft, 10)
 
     expect(marginLeft).toBe(marginLeft2)
   })
@@ -79,9 +84,9 @@ describe('form', () => {
       }
     }    
     const wrapper = mount(formDemo, { localVue })
-
-    expect(wrapper.vm.$el.querySelector('.el-form-item__label').querySelector('.label-slot').nodeName).toBe('SPAN')
-    expect(wrapper.vm.$el.querySelector('.el-form-item__label').querySelector('.label-slot').textContent).toBe('活动名称')
+    const span = wrapper.vm.$el.querySelector('.el-form-item__label')!.querySelector('.label-slot') as HTMLSpanElement
+    expect(span.nodeName).toBe('SPAN')
+    expect(span.textContent).toBe('活动名称')
 
     wrapper.destroy()
   })
@@ -183,7 +188,8 @@ describe('form', () => {
       })
     }
     const wrapper = mount(formDemo, { localVue })
-    wrapper.vm.$refs.formRef.validate(async (valid: boolean) => {
+    const formRef = wrapper.vm.$refs.formRef as EForm
+    formRef.validate(async (valid: boolean) => {
       expect(valid).toBeFalsy()
       await wrapper.vm.$nextTick()
       expect(wrapper.find('.el-form-item__error').exists()).toBeTruthy()
@@ -219,13 +225,13 @@ describe('form', () => {
       }
     }
     const wrapper = mount(formDemo, { localVue })
-    const formRef = wrapper.vm.$refs.formRef
+    const formRef = wrapper.vm.$refs.formRef as EForm
 
     formRef.validate(() => void 0)
     await formRef.$nextTick()
     const elForm = formRef.elForm
-    const nameField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'name')
-    const addressField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'address')
+    const nameField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'name')!
+    const addressField = elForm.fields.find((field: { [key: string]: any }) => field.prop === 'address')!
     expect(nameField.validateMessage).toBe('请输入活动名称');
     expect(addressField.validateMessage).toBe('请选择活动区域');
 
@@ -265,7 +271,7 @@ describe('form', () => {
     }
 
     const wrapper = mount(formDemo, { localVue })
-    const formRef = wrapper.vm.$refs.formRef
+    const formRef = wrapper.vm.$refs.formRef as EForm
     formRef.validate((valid: boolean, error: any) => {
       expect(valid).toBeFalsy()
     })
@@ -279,30 +285,30 @@ describe('form', () => {
             <e-form-item label="活动名称" type="text" prop="name" v-model="form.name" ref="formItemRef"/>
           </e-form>
         `,
-        data() {
-          return {
-            form: {
-              name: ''
-            },
-            rules: {
-              name: [
-                { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
-              ]
-            }
-          };
-        },
+        data: () => ({
+          form: {
+            name: ''
+          },
+          rules: {
+            name: [
+              { required: true, message: '请输入活动名称', trigger: 'change', min: 3, max: 6 }
+            ]
+          }
+        }),
         methods: {
           setValue(this: { form: { name: string } },value: string) {
             this.form.name = value;
           }
         }
       }
-      const wrapper = mount(formDemo, { localVue })
-      const formRef = wrapper.vm.$refs.formRef
+
+      const wrapper = mount<any>(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef as EForm
       formRef.validate((valid: boolean) => {
         expect(valid).toBeFalsy()
       })
-      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      const formItemRef = wrapper.vm.$refs.formItemRef as EFormItem
+      const elFormItem = formItemRef!.elFormItem
       await formRef.elForm.$nextTick()
       expect(elFormItem.validateMessage).toBe('请输入活动名称')
 
@@ -340,12 +346,13 @@ describe('form', () => {
           }
         }
       }
-      const wrapper = mount(formDemo, { localVue })
-      const formRef = wrapper.vm.$refs.formRef
+      const wrapper = mount<any>(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef as EForm
       formRef.validate((valid: boolean) => {
         expect(valid).toBeFalsy()
       })
-      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      const formItemRef = wrapper.vm.$refs.formItemRef as EFormItem
+      const elFormItem = formItemRef.elFormItem 
       await formRef.elForm.$nextTick()
       expect(elFormItem.validateMessage).toBe('请输入活动名称')
 
@@ -388,12 +395,13 @@ describe('form', () => {
           };
         }
       }
-      const wrapper = mount(formDemo, { localVue })
-      const formRef = wrapper.vm.$refs.formRef
+      const wrapper = mount<any>(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef as EForm
       formRef.validate((valid: boolean) => {
         expect(valid).toBeFalsy()
       })
-      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      const formItemRef = wrapper.vm.$refs.formItemRef as EFormItem
+      const elFormItem = formItemRef.elFormItem
       await formRef.elForm.$nextTick()
       expect(elFormItem.validateMessage).toBe('请选择活动区域')
 
@@ -433,12 +441,13 @@ describe('form', () => {
           };
         }
       }
-      const wrapper = mount(formDemo, { localVue })
-      const formRef = wrapper.vm.$refs.formRef
+      const wrapper = mount<any>(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef as EForm
       formRef.validate((valid: boolean) => {
         expect(valid).toBeFalsy()
       })
-      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      const formItemRef = wrapper.vm.$refs.formItemRef as EFormItem
+      const elFormItem = formItemRef.elFormItem
       await formRef.elForm.$nextTick()
       expect(elFormItem.validateMessage).toBe('请选择日期')
 
@@ -478,12 +487,13 @@ describe('form', () => {
           };
         }
       }
-      const wrapper = mount(formDemo, { localVue })
-      const formRef = wrapper.vm.$refs.formRef
+      const wrapper = mount<any>(formDemo, { localVue })
+      const formRef = wrapper.vm.$refs.formRef as EForm
       formRef.validate((valid: boolean) => {
         expect(valid).toBeFalsy()
       })
-      const elFormItem = wrapper.vm.$refs.formItemRef.elFormItem
+      const formItemRef = wrapper.vm.$refs.formItemRef as EFormItem
+      const elFormItem = formItemRef.elFormItem
       await formRef.elForm.$nextTick()
       expect(elFormItem.validateMessage).toBe('请选择时间')
 
@@ -685,7 +695,7 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form>
-            <e-form-item label="活动名称" v-model="form.name" :extends="{ prefixIcon: 'el-icon-search' }"/>
+            <e-form-item label="活动名称" type="text" v-model="form.name" :extends="{ prefixIcon: 'el-icon-search' }"/>
           </e-form>
         `,
         data: () => ({
@@ -701,7 +711,7 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form>
-            <e-form-item label="活动名称" v-model="form.name">
+            <e-form-item label="活动名称" type="text" v-model="form.name">
               <template v-slot:prefix>
                 <i class="el-input__icon el-icon-search"></i>
               </template>
@@ -715,21 +725,6 @@ describe('form', () => {
 
       const wrapper = mount(formDemo, { localVue })
       expect(wrapper.find('.el-input__prefix .el-icon-search').exists()).toBeTruthy()
-    })
-
-    it('button slot:default', () => {
-      const formDemo = {
-        template: `
-          <e-form>
-            <e-form-item type="button">
-              <span class="slot-default">hi</span>
-            </e-form-item>
-          </e-form>
-        `
-      }
-
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.el-button .slot-default').exists()).toBeTruthy()
     })
 
     it('upload slot:default', () => {
