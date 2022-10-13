@@ -38,7 +38,7 @@ export type FormulateField =  {
   default?: CustomInputValue;
   vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
   options?: SelectOptions | RadioGroupOptions | CheckboxGroupOptions | CascaderOption[];
-  children?: () => VNode[];
+  renderChildren?: () => VNode[];
   scopedSlots?: VNodeData['scopedSlots'];
   extra?: string | (() => VNode[]);
   disabled?: boolean;

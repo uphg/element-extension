@@ -58,6 +58,7 @@ export function useDatePicker<T extends ObjectLike>(
   } : options?.on
 
   const handleRef = (_handleRef || ((el: ElDatePicker | ElTimePicker | ElTimeSelect) => elDatePicker.value = el)) as unknown as string
+  const renderChildren = context?.slots && (() => renderSlot(context, 'range-separator'))
 
   return {
     expose: {
@@ -68,9 +69,6 @@ export function useDatePicker<T extends ObjectLike>(
         return elDatePicker.value
       }
     },
-    render() {
-      const slots = context?.slots && [renderSlot(context, 'range-separator')]
-      return h(DatePicker!, { ref: handleRef, props: createProps(), on }, slots)
-    }
+    render: () => h(DatePicker!, { ref: handleRef, props: createProps(), on }, renderChildren && [renderChildren()])
   }
 }

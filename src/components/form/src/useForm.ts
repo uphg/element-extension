@@ -12,7 +12,7 @@ export function useForm(
   context: SetupContext<{}> | undefined,
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
-  const { handleProps, handleRef: _handleRef, handleScopedSlots, children } = options || {}
+  const { handleProps, handleRef: _handleRef, handleScopedSlots, renderChildren: _renderChildren } = options || {}
   const propNames = keys(formBaseProps)
   const globalPropNames = keys(globalFormProps)
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
@@ -26,7 +26,7 @@ export function useForm(
     }
   } : options?.on
 
-  const renderSlots = children ? children : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
+  const renderChildren = _renderChildren ? _renderChildren : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
 
   return {
     expose: {
@@ -36,7 +36,7 @@ export function useForm(
       get elForm() { return elForm.value }
     },
     render() {
-      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots }, renderSlots && [renderSlots()])
+      return h(Form, { ref: handleRef, props: createProps(), on, scopedSlots }, renderChildren && [renderChildren()])
     }
   }
 }

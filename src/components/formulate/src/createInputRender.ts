@@ -131,13 +131,15 @@ export function createInputRender(
 
     case 'file':
     case 'upload': {
-      const { button, children, tips } = props || {}
+      const { button, renderChildren, tips } = props || {}
       const renderButton = useButton(button)
       const renderTips = useTips(props)
-      const context = { slots: {
-        default: children ? children : (button && (() => [renderButton()])),
-        tip: tips && (() => [renderTips()])
-      } }
+      const context = {
+        slots: {
+          default: renderChildren ? renderChildren : (button && (() => [renderButton()])),
+          tip: tips && (() => [renderTips()])
+        }
+      }
       const { render } = useUpload(props, context, {
         on,
         handleRef,

@@ -69,7 +69,7 @@ export function useUpload<T extends ObjectLike>(
         }
       })
 
-      const slots = context?.slots && (listType === 'picture-card'
+      const children = context?.slots && (listType === 'picture-card'
         ? [
             renderSlot(context as SetupContext<{}>, 'tip'),
             renderSlot(context as SetupContext<{}>, 'trigger'),
@@ -90,7 +90,7 @@ export function useUpload<T extends ObjectLike>(
           ...uploadProps,
           showFileList: listType === 'picture-card' ? showFileList : false
         },
-      }, slots?.concat((listType === 'picture-card' ? [] : showFileList ? uploadList : void 0 )))
+      }, children?.concat((listType === 'picture-card' ? [] : showFileList ? uploadList : void 0 )))
     }
   }
 }

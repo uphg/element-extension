@@ -23,6 +23,11 @@ export function useTable(
   const globalPropNames = keys(globalTableProps)
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
+  const renderChildren = context?.slots && (() => (
+    [...props.columns?.length
+      ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
+      : [context.slots.default?.()]]
+  ).concat([renderSlot(context, 'append')]))
 
   return {
     expose: {
@@ -31,14 +36,6 @@ export function useTable(
         return elTable.value
       }
     },
-    render() {
-      const slots = context?.slots && (
-        [...props.columns?.length
-          ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
-          : [context.slots.default?.()]]
-      ).concat([renderSlot(context, 'append')])
-
-      return h(Table, { ref: handleRef, props: createProps(), on }, slots)
-    }
+    render: () => h(Table, { ref: handleRef, props: createProps(), on }, renderChildren && renderChildren())
   }
 }

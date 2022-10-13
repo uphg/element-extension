@@ -71,14 +71,14 @@ export function handleColumnsData(props: TableObjectColumnProps, key: string | n
     }
   }
 
-  if (props.children) {
-    if (isArray(props.children)) {
+  if (props.renderChildren) {
+    if (isArray(props.renderChildren)) {
       data.scopedSlots = {
-        default: (scope) => (props.children as TableColumnChildrenProps[])?.map((item) => renderChildrenNode(item, scope))
+        default: (scope) => (props.renderChildren as TableColumnChildrenProps[])?.map((item) => renderChildrenNode(item, scope))
       }
     } else {
       data.scopedSlots = {
-        default: props.children
+        default: props.renderChildren
       }
     }
 

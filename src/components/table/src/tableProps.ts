@@ -21,7 +21,7 @@ export type TableColumnChildrenProps = {
 }
 
 export type TableObjectColumnProps = {
-  children?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
+  renderChildren?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
 } & TableColumnProps
 

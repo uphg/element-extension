@@ -1,5 +1,5 @@
-import { h, SetupContext } from "vue"
-import { VNodeData } from "vue/types/umd";
+import { h, SetupContext, VNodeChildren } from "vue"
+import { VNode, VNodeData } from "vue/types/umd";
 import { Input } from "element-ui"
 import { ElInput } from "element-ui/types/input";
 import { InputProps, GlobalInputProps, globalInputAttrs, inputBaseProps } from "./inputProps";
@@ -12,8 +12,9 @@ import { pick, withDefaultProps, generateEmits, renderSlots, keys, createNames }
 
 export interface UseInputOptins {
   status?: 0 | 1;
-  handleRef?: HandleRef;
+  renderChildren?: () => VNodeChildren | VNode;
   on?: VNodeData['on'];
+  handleRef?: HandleRef;
   handleProps?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { propNames: string[]; globalPropNames: string[] }) => () => ObjectLike;
   handleAttrs?: (props: InputProps | ObjectLike, globalProps: GlobalInputProps | undefined, _options: { attrNames: string[]; globalAttrNames: string[] }) => () => ObjectLike;
 }
@@ -60,6 +61,7 @@ export function useInput<T extends ObjectLike>(
   context?: SetupContext<{}>,
   options?: UseInputOptins
 ) {
+  const { renderChildren: _renderChildren } = options || {}
   const { elInput, focus, blur, select } = useElInput()
   const handleRef = (options?.handleRef || ((el: ElInput) => elInput.value = el)) as unknown as string
 
@@ -71,11 +73,10 @@ export function useInput<T extends ObjectLike>(
   const { createProps, createAttrs } = useInputProps(props, context, options)
   const expose = { focus, blur, select, get elInput() { return elInput.value } }
 
+  const renderChildren = _renderChildren ? _renderChildren : context?.slots && (() => renderSlots(context, slotNames))
+
   return {
     expose,
-    render() {
-      const slots = context?.slots && renderSlots(context, slotNames)
-      return h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, slots)
-    }
+    render: () => h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, renderChildren && [renderChildren()])
   }
 }

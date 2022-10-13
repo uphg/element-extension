@@ -22,6 +22,10 @@ export function useCascader<T extends ObjectLike>(
   const globalPropNames = keys(globalCascaderProps)
   const { createProps } = useComponentProps(props, 'cascader', { propNames, globalPropNames, handleProps })
   const on = context?.emit ? generateEmits(context.emit, emitNames) : options?.on
+  const scopedSlots: VNodeData['scopedSlots'] | undefined = context?.slots && {
+    default: (params) => context.slots.default?.(params)
+  }
+  const renderChildren = context?.slots && (() => renderSlot(context, 'empty'))
 
   return {
     expose: {
@@ -31,17 +35,13 @@ export function useCascader<T extends ObjectLike>(
       }
     },
     render() {
-      const scopedSlots: VNodeData['scopedSlots'] | undefined = context?.slots && {
-        default: (params) => context.slots.default?.(params)
-      }
-      const slots = context?.slots && [renderSlot(context, 'empty')]
 
       return h(Cascader, {
         ref: handleRef,
         props: createProps(),
         on,
         scopedSlots: scopedSlots
-      }, slots)
+      }, renderChildren && [renderChildren()])
     }
   }
 }

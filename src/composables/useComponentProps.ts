@@ -23,7 +23,7 @@ type ComponentPropsOptions<Props, GlobalProps> = {
 export type UseComponentParamsOptions<Props, GlobalProps> = {
   status?: 0 | 1;
   on?: VNodeData['on'];
-  children?: () => VNodeChildren | VNode;
+  renderChildren?: () => VNodeChildren | VNode;
   handleRef?: HandleRef;
   handleProps?: HandleProps<Props, GlobalProps>,
   handleScopedSlots?: HandleScopedSlots,

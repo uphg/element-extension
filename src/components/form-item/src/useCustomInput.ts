@@ -60,8 +60,7 @@ export function useCustomInput<T extends FormItemProps>(props: T, _options: { co
 
     case 'text':
     case 'password':
-    case 'textarea':
-    case 'input': {
+    case 'textarea': {
       return useInput<T>(props, context, {
         handleProps(_props, globalProps?) {
           return () => ({

@@ -10,18 +10,18 @@ export function useButton<T extends ObjectLike>(
   context: SetupContext<{}>,
   options?: UseComponentParamsOptions<ButtonProps | ObjectLike, GlobalButtonProps>
 ) {
-  const { handleProps, handleRef, handleScopedSlots, children } = options || {}
+  const { handleProps, handleRef, handleScopedSlots, renderChildren: _renderChildren } = options || {}
   const globalPropNames = keys(globalButtonProps)
   const propNames = keys(buttonBaseProps)
   const { createProps } = useComponentProps(props, 'button', { propNames, globalPropNames, handleProps })
   const scopedSlots = handleScopedSlots?.(context?.slots)
-  const renderSlots = children ? children : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
+  const renderChildren = _renderChildren ? _renderChildren : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
 
   const render = () => h(Button, {
     ref: (handleRef as unknown as string),
     props: createProps(),
     scopedSlots
-  }, renderSlots && [renderSlots()])
+  }, renderChildren && [renderChildren()])
 
   return {
     render
