@@ -98,9 +98,10 @@ table/type
 
 ## 其他组件支持
 
-除了上述组件，还支持使用 Element UI 的 InputNumber、Cascader、Switch、Slider、TimePicker、DatePicker、TimeSelect、Upload、TableColumn 使用方法均为把组件 "el" 前缀改为 "e"，如下：
+除了上述组件，还支持使用 Element UI 的 Button、InputNumber、Cascader、Switch、Slider、TimePicker、DatePicker、TimeSelect、Upload、TableColumn 使用方法均为把组件 "el" 前缀改为 "e"，所有组件标签示例如下：
 
 ```vue
+<e-button>
 <e-radio-group>
 <e-checkbox-group>
 <e-input>
