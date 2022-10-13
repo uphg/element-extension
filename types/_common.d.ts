@@ -18,7 +18,7 @@ export type ObjectLike = {
 
 export type Fn = (...args: unknown[]) => void
 
-export type CustomInputValue = string | boolean | number | Date | Date[] | string[]
+export type CustomInputValue = string | boolean | number | Date | (string | number | Date)[]
 
 export type ComponentProps = RadioGroupProps | CheckboxGroupProps | InputProps | InputNumberProps | SelectProps | CascaderProps | SwitchProps | SliderProps | DatePickerProps | TimePickerProps | TimeSelectProps | UploadProps
 export type ComponentGlobalProps = GlobalRadioGroupProps | GlobalCheckboxGroupProps | GlobalInputProps | GlobalInputNumberProps | GlobalSelectProps | GlobalCascaderProps | GlobalSwitchProps | GlobalSliderProps | GlobalDateProps | GlobalUploadProps

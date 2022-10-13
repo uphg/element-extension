@@ -1,9 +1,9 @@
 import { CascaderOption } from "element-ui/types/cascader-panel";
 import { ElementUIComponentSize } from "element-ui/types/component";
-import { ElFormItem } from "element-ui/types/form-item";
 import { TimeSelectOptions } from "element-ui/types/time-select";
 import { TimePickerOptions } from "element-ui/types/time-picker";
 import { DatePickerOptions } from "element-ui/types/date-picker";
+import { ElFormItem } from "./_element-ui";
 import { ObjectLike } from "./_common";
 import { CheckboxGroupOptions } from "../src/components/checkbox-group/src/checkboxGroupProps";
 import { RadioGroupOptions } from "../src/components/radio-group/src/radioGroupProps";
@@ -11,6 +11,7 @@ import { SelectOptionGroup, SelectOptions } from "../src/components/select/src/s
 import { FormItemExtendsProps } from "../src/components/form-item/src/formItemProps";
 
 export declare class EFormItem extends ElFormItem {
+  readonly elFormItem: ElFormItem;
   type: string;
   value: string | number | Array<unknown> | boolean | Date;
   clearable: boolean;

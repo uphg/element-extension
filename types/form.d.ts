@@ -1,3 +1,5 @@
-import { ElForm } from "element-ui/types/form";
+import { ElForm } from "./_element-ui";
 
-export declare class EForm extends ElForm { }
+export declare class EForm extends ElForm {
+  readonly elForm: ElForm;
+}
