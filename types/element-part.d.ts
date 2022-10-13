@@ -1,3 +1,4 @@
+import { EButton } from './button'
 import { ERadioGroup } from './radio'
 import { ECheckboxGroup } from './checkbox'
 import { EInput } from './input'
@@ -19,6 +20,7 @@ import { EPagination } from './pagination'
 import { EStaggeredTransitionGroup } from './staggered-transition-group'
 import { EConfigProvider } from './config-provider'
 
+export class Button extends EButton {}
 export class RadioGroup extends ERadioGroup {}
 export class CheckboxGroup extends ECheckboxGroup {}
 export class Input extends EInput {}
@@ -40,6 +42,7 @@ export class Pagination extends EPagination {}
 export class StaggeredTransitionGroup extends EStaggeredTransitionGroup {}
 export class ConfigProvider extends EConfigProvider {}
 
+export { useButton, buttonProps } from '../src/components/button'
 export { useRadioGroup, radioGroupProps } from '../src/components/radio-group'
 export { useCheckboxGroup, checkboxGroupProps } from '../src/components/checkbox-group'
 export { useInput, inputProps } from '../src/components/input'

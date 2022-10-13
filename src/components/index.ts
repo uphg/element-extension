@@ -1,5 +1,5 @@
 import { VueConstructor } from 'vue/types/vue'
-
+import { Button, buttonProps, useButton } from './button'
 import { RadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
 import { CheckboxGroup, checkboxGroupProps, useCheckboxGroup } from './checkbox-group'
 import { Input, inputProps, useInput } from './input'
@@ -19,7 +19,7 @@ import { Pagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup } from './staggered-transition-group/index'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
-const components = [RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+const components = [Button, RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
@@ -29,6 +29,7 @@ function install(Vue: VueConstructor) {
 
 export {
   install,
+  Button,
   RadioGroup,
   CheckboxGroup,
   Input,
@@ -50,6 +51,7 @@ export {
   StaggeredTransitionGroup,
   ConfigProvider,
 
+  useButton,
   useRadioGroup,
   useCheckboxGroup,
   useInput,
@@ -68,6 +70,7 @@ export {
   usePagination,
   useConfigProvider,
 
+  buttonProps,
   radioGroupProps,
   checkboxGroupProps,  
   inputProps,
