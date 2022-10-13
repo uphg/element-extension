@@ -14,10 +14,15 @@ import { GlobalUploadProps } from "../../upload/src/uploadProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
 import { GlobalSliderProps } from "../../slider/src/sliderProps";
 import { GlobalFormItemProps } from '../../form-item/src/formItemProps'
+import { GlobalButtonProps } from "../../button/src/buttonProps";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
 export const configProviderProps = {
+  button: {
+    type: Object as PropType<GlobalButtonProps>,
+    default: empty
+  },
   radioGroup: {
     type: Object as PropType<GlobalRadioGroupProps>,
     default: empty

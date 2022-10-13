@@ -8,7 +8,7 @@ import { empty } from "../../../shared/commonProps";
 type ConfigPropertyItem = ConfigPropertyMap[keyof ConfigPropertyMap]
 
 export function useConfigProvider(props: ConfigProviderProps, context?: SetupContext<{}>) {
-  const provideProps: ObjectLike = {}
+  const provideProps: ObjectLike = {} // temp
   each<ConfigPropertyItem>(configPropertyMap, (item, propName) => {
     const currentProps = (props as ObjectLike)[propName]
     const tempProps: ObjectLike | undefined = currentProps ? {} : empty

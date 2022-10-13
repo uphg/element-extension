@@ -14,10 +14,12 @@ import { globalTableColumnProps } from "../components/table-column/src/tableColu
 import { globalPaginationProps } from "../components/pagination/src/paginationProps"
 import { globalFormProps } from "../components/form/src/formProps"
 import { globalFormItemProps } from "../components/form-item/src/formItemProps"
+import { globalButtonProps } from "src/components/button/src/buttonProps"
 
 export type ConfigPropertyMap = typeof configPropertyMap
 export type ConfigPropertyName = keyof (typeof configPropertyMap)
 
+export const globalButtonKey = Symbol('config-button')
 export const globalRadioGroupKey = Symbol('config-radio-group')
 export const globalCheckboxGroupKey = Symbol('config-checkbox-group')
 export const globalInputKey = Symbol('config-input')
@@ -35,6 +37,8 @@ export const globalFormItemKey = Symbol('config-form-item')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
+
+export const globalButtonPropNames = keys(globalButtonProps)
 export const globalRadioGroupPropNames = keys(globalRadioGroupBaseProps)
 export const globalCheckboxGroupPropNames = keys(globalCheckboxGroupBaseProps)
 export const globalInputPropNames = keys(globalInputProps)
@@ -53,6 +57,10 @@ export const globalTableColumnPropNames = keys(globalTableColumnProps)
 export const globalPaginationPropNames = keys(globalPaginationProps)
 
 export const configPropertyMap = {
+  button: {
+    key: globalButtonKey,
+    propNames: globalButtonPropNames
+  },
   radioGroup: {
     key: globalRadioGroupKey,
     propNames: globalRadioGroupPropNames.concat(keys(globalRadioGroupCustomizeProps))
