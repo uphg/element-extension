@@ -12,7 +12,7 @@ export function useForm(
   context: SetupContext<{}> | undefined,
   options?: UseComponentParamsOptions<FormProps | ObjectLike, GlobalFormProps>
 ) {
-  const { children, handleProps, handleRef: _handleRef, handleScopedSlots } = options || {}
+  const { handleProps, handleRef: _handleRef, handleScopedSlots, children } = options || {}
   const propNames = keys(formBaseProps)
   const globalPropNames = keys(globalFormProps)
   const { createProps } = useComponentProps(props, 'form', { propNames, globalPropNames, handleProps })
