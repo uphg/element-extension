@@ -14,7 +14,7 @@ import { globalTableColumnProps } from "../components/table-column/src/tableColu
 import { globalPaginationProps } from "../components/pagination/src/paginationProps"
 import { globalFormProps } from "../components/form/src/formProps"
 import { globalFormItemProps } from "../components/form-item/src/formItemProps"
-import { globalButtonProps } from "src/components/button/src/buttonProps"
+import { globalButtonProps } from "../components/button/src/buttonProps"
 
 export type ConfigPropertyMap = typeof configPropertyMap
 export type ConfigPropertyName = keyof (typeof configPropertyMap)
