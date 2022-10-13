@@ -5,6 +5,7 @@ import { RadioGroupProps, globalRadioGroupBaseProps, GlobalRadioGroupProps, Radi
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { ObjectLike } from "../../../../types/_common"
 import { createNames, isUndefined, keys } from "../../../utils"
+import { VNode } from "vue/types/umd"
 
 export function useRadioGroup<T extends ObjectLike>(
   props: RadioGroupProps | T,
@@ -32,18 +33,24 @@ export function useRadioGroup<T extends ObjectLike>(
 
   const Radio = withButton ? RadioButton : _Radio
 
+  const renderItemChildren = context?.slots.options
+  ? ((item: RadioGroupOption) => context.slots.options!(item))
+  : ((item: RadioGroupOption) => item.label)
+
+  const renderItem = (item: RadioGroupOption) => h(Radio, {
+    props: {
+      label: item.value,
+      name: item.name,
+      disabled: item.disabled,
+      border: item.border || withBorder
+    }
+  }, renderItemChildren(item) as VNode[])
+
   return {
     render: () => h(RadioGroup, {
       ref: handleRef,
       props: createProps(),
       on
-    }, props.options?.map((item: RadioGroupOption) => h(Radio, {
-      props: {
-        label: item.value,
-        name: item.name,
-        disabled: item.disabled,
-        border: item.border || withBorder
-      }
-    }, [item.label as string])))
+    }, props.options?.map(renderItem))
   }
 }

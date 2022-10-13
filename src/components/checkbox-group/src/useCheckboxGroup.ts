@@ -5,6 +5,7 @@ import { CheckboxGroupOption, checkboxGroupBaseProps, CheckboxGroupProps, Global
 import { useComponentProps, UseComponentParamsOptions } from "../../../composables/useComponentProps"
 import { ObjectLike } from "../../../../types/_common"
 import { createNames, isUndefined, keys } from "../../../utils"
+import { VNode } from "vue/types/umd"
 
 export function useCheckboxGroup<T extends ObjectLike>(
   props: CheckboxGroupProps | T,
@@ -32,18 +33,24 @@ export function useCheckboxGroup<T extends ObjectLike>(
   const Checkbox = (isUndefined(props.withButton) ? globalProps?.withButton : props.withButton) ? CheckboxButton : _Checkbox
   const withBorder = (isUndefined(props.withBorder) ? globalProps?.withBorder : props.withBorder) as boolean
 
+  const renderItemChildren = context?.slots.options
+    ? ((item: CheckboxGroupOption) => context.slots.options!(item))
+    : ((item: CheckboxGroupOption) => item.label)
+
+  const renderItem = (item: CheckboxGroupOption) => h(Checkbox, {
+    props: {
+      label: item.value,
+      name: item.name,
+      disabled: item.disabled,
+      border: item.border || withBorder
+    }
+  }, renderItemChildren(item) as VNode[])
+
   return {
     render: () => h(CheckboxGroup, {
       ref: handleRef,
       props: createProps(),
-      on
-    }, props.options?.map((item: CheckboxGroupOption) => h(Checkbox, {
-      props: {
-        label: item.value,
-        name: item.name,
-        disabled: item.disabled,
-        border: item.border || withBorder
-      }
-    }, [item.label as string])))
+      on,
+    }, props.options?.map(renderItem))
   }
 }

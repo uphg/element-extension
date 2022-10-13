@@ -2,7 +2,7 @@ import { h, SetupContext } from 'vue'
 import { FormItem } from 'element-ui'
 import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
-import { ElFormItem } from "element-ui/types/form-item"
+import { ElFormItem } from "../../../../types/_element-ui"
 import { formItemBaseProps, FormItemProps, FormItemType, GlobalFormItemProps } from "./formItemProps"
 import { pick, isUndefined, renderSlot, keys } from '../../../utils'
 import { useGlobalProps } from '../../../composables/useGlobalProps'
