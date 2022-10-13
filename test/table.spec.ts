@@ -88,21 +88,24 @@ describe('table', () => {
     it('height', async () => {
       const wrapper = mount(createTable('height="134"'), { localVue })
       await wrapper.vm.$nextTick(() => {})
-      expect(wrapper.vm.$el.style.height).toEqual('134px');
+      const table = wrapper.vm.$el as HTMLTableElement
+      expect(table.style.height).toEqual('134px');
       wrapper.destroy()
     });
 
     it('height as string', async () => {
       const wrapper = mount(createTable('height="100px"'), { localVue })
       await wrapper.vm.$nextTick(() => {})
-      expect(wrapper.vm.$el.style.height).toEqual('100px');
+      const table = wrapper.vm.$el as HTMLTableElement
+      expect(table.style.height).toEqual('100px');
       wrapper.destroy()
     });
 
     it('maxHeight', async () => {
       const wrapper = mount(createTable('max-height="134"'), { localVue })
       await wrapper.vm.$nextTick(() => {})
-      expect(wrapper.vm.$el.style.maxHeight).toEqual('134px');
+      const table = wrapper.vm.$el as HTMLTableElement
+      expect(table.style.maxHeight).toEqual('134px');
       wrapper.destroy()
     });
 
@@ -196,16 +199,16 @@ describe('table', () => {
         },
       }
 
-      const wrapper = mount(tableDemo, { localVue })
+      const wrapper = mount<any>(tableDemo, { localVue })
 
       wrapper.vm.currentRowKey = 1
-      const tr = wrapper.vm.$el.querySelector('.el-table__body-wrapper tbody tr');
+      const tr = wrapper.vm.$el.querySelector('.el-table__body-wrapper tbody tr') as HTMLTableRowElement;
       await wrapper.vm.$nextTick(() => {})
   
       expect(tr.classList.contains('current-row')).toBeTruthy();
 
       wrapper.vm.currentRowKey = 2
-      const rows = wrapper.vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr');
+      const rows = wrapper.vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr') as NodeListOf<HTMLTableRowElement>;
       await wrapper.vm.$nextTick(() => {})
 
       expect(tr.classList.contains('current-row')).toBeFalsy()
@@ -251,10 +254,10 @@ describe('table', () => {
         }
       })
 
-      const wrapper = mount(tableDemo, { localVue: localVueElement })
+      const wrapper = mount<any>(tableDemo, { localVue: localVueElement })
       await wrapper.vm.$nextTick(() => {})
 
-      wrapper.vm.$el.querySelector('.el-checkbox').click();
+      (wrapper.vm.$el.querySelector('.el-checkbox') as HTMLInputElement).click();
       await wrapper.vm.$nextTick(() => {})
       setTimeout(() => {
         expect(wrapper.vm.selected).toHaveLength(0);
