@@ -40,7 +40,7 @@ export function useCascader<T extends ObjectLike>(
         ref: handleRef,
         props: createProps(),
         on,
-        scopedSlots: scopedSlots
+        scopedSlots
       }, renderChildren && [renderChildren()])
     }
   }
