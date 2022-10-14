@@ -49,5 +49,9 @@ export const buttonBaseProps = {
 
 export const buttonProps = {
   ...buttonBaseProps,
-  ...globalButtonProps
+  ...globalButtonProps,
+  onClick: {
+    type: Function,
+    default: empty
+  }
 }
