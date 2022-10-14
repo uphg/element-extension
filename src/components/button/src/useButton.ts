@@ -14,7 +14,7 @@ export function useButton<T extends ObjectLike>(
   const globalPropNames = keys(globalButtonProps)
   const propNames = keys(buttonBaseProps)
   const { createProps } = useComponentProps(props, 'button', { propNames, globalPropNames, handleProps })
-  const on = context?.emit && { click(event: MouseEvent) { context.emit('click', event) } }
+  const on = props.onClick ? { click: props.onClick } : context?.emit && { click(event: MouseEvent) { context.emit('click', event) } }
   const renderChildren = _renderChildren ? _renderChildren : (context?.slots?.default && (() => context.slots.default?.()))
 
   const render = () => h(Button, {
