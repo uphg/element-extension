@@ -1,5 +1,6 @@
 <template>
   <div style="max-width: 320px;">
+    <input ref="inputRef" v-model="input1" />
     <e-input placeholder="请选择日期" v-model="input3">
       <i slot="suffix" class="el-input__icon el-icon-date"></i>
     </e-input>
@@ -27,7 +28,15 @@ export default {
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+const inputRef = ref(null)
+const input1 = ref('')
 const input3 = ref('')
 const input4 = ref('')
 const username = ref('')
+
+console.log('inputRef')
+console.log(inputRef)
+
+input1.value = 'hi'
 </script>

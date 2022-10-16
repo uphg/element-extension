@@ -7,9 +7,10 @@
     <TestInput />
     <!-- <e-switch v-model="value" /> -->
     <!-- <TestForm /> -->
-    <e-form>
+    <!-- <TestButton></TestButton> -->
+    <!-- <e-form>
       <e-form-item type="switch" v-model="value" />
-    </e-form>
+    </e-form> -->
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import TestSelect from './select.vue'
 import TestTransition from './transition.vue'
 import TestInput from './input.vue'
 import TestForm from './form.vue'
+import TestButton from './button.vue'
 import { ref } from 'vue'
 const value = ref(false)
 </script>
