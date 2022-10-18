@@ -19,7 +19,7 @@ import { Pagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup } from './staggered-transition-group/index'
 import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
-const components = [Button, RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+const components = [Button, RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, DatePicker, TimePicker, TimeSelect, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
