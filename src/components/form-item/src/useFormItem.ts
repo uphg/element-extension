@@ -26,8 +26,13 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   const globalProps = useGlobalProps<GlobalFormItemProps>('formItem')
   const type = handleType(props.type, globalProps?.type)
 
-  const { render: renderInput, expose: customInputExpose } = (context && type) && useCustomInput(props, { context, type }) || {}
-  const slotDefault = context?.slots.default && (props.type === 'text' || !props.type) ? context.slots.default : renderInput
+  const { render: renderInput, expose: customInputExpose } = (
+    context
+      && type
+      && !(type === 'text' && context.slots.default))
+      && useCustomInput(props, { context, type }
+    ) || {}
+
 
   const expose = {
     ...(customInputExpose || {}),
@@ -36,21 +41,24 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
   }
 
   const handleRef = ((el: ElFormItem) => elFormItem.value = el) as unknown as string
-  const renderChildren = context?.slots && (() => [
-    renderSlot(context, 'label'),
-    context.slots.itemPrefix?.(),
-    slotDefault?.(),
-    context.slots.itemSuffix?.(),
-  ])
 
   return {
     expose,
-    render: () => h(FormItem, {
-      ref: handleRef,
-      props: pick(props, propNames),
-      scopedSlots: {
-        error: context?.slots?.error && ((params) => context.slots.error?.(params)),
-      }
-    }, renderChildren && renderChildren())
+    render: () =>  {
+      const slotDefault = context?.slots.default && (props.type === 'text' || !props.type) ? context.slots.default : renderInput
+
+      return h(FormItem, {
+        ref: handleRef,
+        props: pick(props, propNames),
+        scopedSlots: {
+          error: context?.slots?.error && ((params) => context.slots.error?.(params)),
+        }
+      }, context?.slots && [
+        renderSlot(context, 'label'),
+        context.slots.itemPrefix?.(),
+        slotDefault?.(),
+        context.slots.itemSuffix?.(),
+      ])
+    }
   }
 }
