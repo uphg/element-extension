@@ -256,12 +256,12 @@ describe('table', () => {
 
       const wrapper = mount<any>(tableDemo, { localVue: localVueElement })
       await wrapper.vm.$nextTick(() => {})
-
-      (wrapper.vm.$el.querySelector('.el-checkbox') as HTMLInputElement).click();
+      const checkbox = wrapper.vm.$el.querySelector('.el-checkbox') as HTMLInputElement
+      checkbox.click();
       await wrapper.vm.$nextTick(() => {})
       setTimeout(() => {
         expect(wrapper.vm.selected).toHaveLength(0);
-      }, 100)
+      }, 1000)
 
       vi.clearAllTimers()
     });
