@@ -21,6 +21,7 @@ import { ConfigProvider, configProviderProps, useConfigProvider } from './config
 
 // utils
 import { renderSlot, renderSlots } from '../utils/renderSlot'
+import { useGlobalProps } from '../composables/useGlobalProps'
 
 const components = [Button, RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, DatePicker, TimePicker, TimeSelect, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
 
@@ -96,5 +97,6 @@ export {
 
   // utlis
   renderSlot,
-  renderSlots
+  renderSlots,
+  useGlobalProps
 }

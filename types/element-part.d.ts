@@ -63,3 +63,4 @@ export { useConfigProvider, configProviderProps } from '../src/components/config
 
 // utils
 export { renderSlot, renderSlots } from '../src/utils/renderSlot'
+export { useGlobalProps } from '../src/composables/useGlobalProps'
