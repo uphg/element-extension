@@ -60,3 +60,7 @@ export { useTable, tableProps } from '../src/components/table'
 export { useTableColumn, tableColumnProps } from '../src/components/table-column'
 export { usePagination, paginationProps } from '../src/components/pagination'
 export { useConfigProvider, configProviderProps } from '../src/components/config-provider'
+
+// utils
+export { renderSlot, renderSlots } from '../src/utils/renderSlot'
+export { useGlobalProps } from '../src/composables/useGlobalProps'

@@ -9,11 +9,11 @@ DatePicker.install = function (Vue) {
 }
 
 TimePicker.install = function (Vue) {
-  Vue.component(DatePicker.name, DatePicker);
+  Vue.component(TimePicker.name, TimePicker);
 }
 
 TimeSelect.install = function (Vue) {
-  Vue.component(DatePicker.name, DatePicker);
+  Vue.component(TimeSelect.name, TimeSelect);
 }
 
 export {
