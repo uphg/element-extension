@@ -1,5 +1,4 @@
 import { VueConstructor } from "vue"
+import { Plugin } from "@vue/runtime-dom"
 
-export declare type ElementPartComponent<T> = {
-  install: (Vue: VueConstructor) => void
-} & T
+type SFCWithInstall<T> = T & Plugin
