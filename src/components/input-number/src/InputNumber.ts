@@ -1,9 +1,8 @@
 import { defineComponent } from "vue"
-import { inputNumberProps } from "./inputNumberProps";
-import { useInputNumber } from "./useInputNumber";
-import { ElementPartComponent } from "../../../../types/component"
+import { inputNumberProps } from "./inputNumberProps"
+import { useInputNumber } from "./useInputNumber"
 
-const EInputNumber = defineComponent({
+export default defineComponent({
   name: 'EInputNumber',
   props: inputNumberProps,
   inheritAttrs: false,
@@ -13,5 +12,3 @@ const EInputNumber = defineComponent({
     return render
   }
 })
-
-export default EInputNumber as ElementPartComponent<typeof EInputNumber>

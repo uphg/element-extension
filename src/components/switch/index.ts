@@ -1,9 +1,8 @@
 import Switch from './src/Switch'
 import { switchProps } from './src/switchProps'
 import { useSwitch } from './src/useSwitch'
+import { withInstall } from '../../utils'
 
-Switch.install = function (Vue) {
-  Vue.component(Switch.name, Switch);
-}
+const ESwitch = withInstall(Switch)
 
-export { Switch, switchProps, useSwitch }
+export { Switch, ESwitch, switchProps, useSwitch }

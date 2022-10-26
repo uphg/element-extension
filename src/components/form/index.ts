@@ -1,9 +1,8 @@
 import Form from './src/Form'
 import { formProps } from './src/formProps'
 import { useForm } from './src/useForm'
+import { withInstall } from '../../utils'
 
-Form.install = function (Vue) {
-  Vue.component(Form.name, Form);
-}
+const EForm = withInstall(Form)
 
-export { Form, formProps, useForm }
+export { Form, EForm, formProps, useForm }

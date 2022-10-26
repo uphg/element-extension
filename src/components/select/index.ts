@@ -1,9 +1,8 @@
 import Select from './src/Select'
 import { selectProps } from './src/selectProps'
 import { useSelect } from './src/useSelect'
+import { withInstall } from '../../utils'
 
-Select.install = function (Vue) {
-  Vue.component(Select.name, Select);
-}
+const ESelect = withInstall(Select)
 
-export { Select, selectProps, useSelect }
+export { Select, ESelect, selectProps, useSelect }

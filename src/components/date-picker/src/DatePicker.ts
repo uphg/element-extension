@@ -1,9 +1,8 @@
-import { defineComponent } from "vue";
-import { datePickerProps } from "./dateProps";
-import { useDatePicker } from "./useDatePicker";
-import { ElementPartComponent } from "../../../../types/component"
+import { defineComponent } from "vue"
+import { datePickerProps } from "./dateProps"
+import { useDatePicker } from "./useDatePicker"
 
-const EDatePicker = defineComponent({
+export default defineComponent({
   name: 'EDatePicker',
   props: datePickerProps,
   setup(props, context) {
@@ -12,5 +11,3 @@ const EDatePicker = defineComponent({
     return render
   }
 })
-
-export default EDatePicker as ElementPartComponent<typeof EDatePicker>

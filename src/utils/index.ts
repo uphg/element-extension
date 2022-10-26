@@ -9,7 +9,8 @@ export { default as isUndefined } from './isUndefined'
 export { default as keys } from './keys'
 export { default as each } from './each'
 export { default as createNames } from './createNames'
-export { withDefaultProps } from "./withDefaultProps";
+export { withInstall } from './withInstall'
+export { withDefaultProps } from "./withDefaultProps"
 export { generateEmits } from './generateEmits'
 export { createExclude } from './createExclude'
 export * from './dom'

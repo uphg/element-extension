@@ -1,7 +1,6 @@
 import StaggeredTransitionGroup from './StaggeredTransitionGroup'
+import { withInstall } from '../../utils'
 
-StaggeredTransitionGroup.install = function (Vue) {
-  Vue.component(StaggeredTransitionGroup.name, StaggeredTransitionGroup);
-}
+const EStaggeredTransitionGroup = withInstall(StaggeredTransitionGroup)
 
-export { StaggeredTransitionGroup }
+export { StaggeredTransitionGroup, EStaggeredTransitionGroup }

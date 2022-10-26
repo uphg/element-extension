@@ -1,9 +1,8 @@
 import Upload from './src/Upload'
 import { useUpload } from './src/useUpload'
 import { uploadProps } from './src/uploadProps'
+import { withInstall } from '../../utils'
 
-Upload.install = function (Vue) {
-  Vue.component(Upload.name, Upload);
-}
+const EUpload = withInstall(Upload)
 
-export { Upload, uploadProps, useUpload }
+export { Upload, EUpload, uploadProps, useUpload }

@@ -3,22 +3,15 @@ import TimePicker from './src/TimePicker'
 import TimeSelect from './src/TimeSelect'
 import { datePickerProps, timePickerProps, timeSelectProps } from './src/dateProps'
 import { useDatePicker } from './src/useDatePicker'
+import { withInstall } from '../../utils'
 
-DatePicker.install = function (Vue) {
-  Vue.component(DatePicker.name, DatePicker);
-}
-
-TimePicker.install = function (Vue) {
-  Vue.component(TimePicker.name, TimePicker);
-}
-
-TimeSelect.install = function (Vue) {
-  Vue.component(TimeSelect.name, TimeSelect);
-}
+const EDatePicker = withInstall(DatePicker)
+const ETimePicker = withInstall(TimePicker)
+const ETimeSelect = withInstall(TimeSelect)
 
 export {
-  DatePicker, datePickerProps,
-  TimePicker, timePickerProps,
-  TimeSelect, timeSelectProps,
+  DatePicker, EDatePicker, datePickerProps,
+  TimePicker, ETimePicker, timePickerProps,
+  TimeSelect, ETimeSelect, timeSelectProps,
   useDatePicker
 }

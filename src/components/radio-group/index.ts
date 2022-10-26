@@ -1,9 +1,8 @@
 import RadioGroup from './src/RadioGroup'
 import { radioGroupProps } from './src/radioGroupProps'
 import { useRadioGroup } from './src/useRadioGroup'
+import { withInstall } from '../../utils'
 
-RadioGroup.install = function (Vue) {
-  Vue.component(RadioGroup.name, RadioGroup);
-}
+const ERadioGroup = withInstall(RadioGroup)
 
-export { RadioGroup, radioGroupProps, useRadioGroup }
+export { RadioGroup, ERadioGroup, radioGroupProps, useRadioGroup }

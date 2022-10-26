@@ -1,9 +1,8 @@
 import TableColumn from './src/TableColumn'
 import { tableColumnProps } from './src/tableColumnProps'
 import { useTableColumn } from './src/useTableColumn'
+import { withInstall } from '../../utils'
 
-TableColumn.install = function (Vue) {
-  Vue.component(TableColumn.name, TableColumn);
-}
+const ETableColumn = withInstall(TableColumn)
 
-export { TableColumn, tableColumnProps, useTableColumn }
+export { TableColumn, ETableColumn, tableColumnProps, useTableColumn }

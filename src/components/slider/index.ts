@@ -1,9 +1,8 @@
 import Slider from './src/Slider'
 import { sliderProps } from './src/sliderProps'
 import { useSlider } from './src/useSlider'
+import { withInstall } from '../../utils'
 
-Slider.install = function (Vue) {
-  Vue.component(Slider.name, Slider);
-}
+const ESlider = withInstall(Slider)
 
-export { Slider, sliderProps, useSlider }
+export { Slider, ESlider, sliderProps, useSlider }

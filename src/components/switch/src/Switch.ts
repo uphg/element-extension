@@ -1,9 +1,8 @@
-import { defineComponent } from "vue";
+import { defineComponent } from "vue"
 import { useSwitch } from './useSwitch'
-import { switchProps } from "./switchProps";
-import { ElementPartComponent } from "../../../../types/component"
+import { switchProps } from "./switchProps"
 
-const ESwitch = defineComponent({
+export default defineComponent({
   name: 'ESwitch',
   props: switchProps,
   setup(props, context) {
@@ -12,5 +11,3 @@ const ESwitch = defineComponent({
     return render
   }
 })
-
-export default ESwitch as ElementPartComponent<typeof ESwitch>

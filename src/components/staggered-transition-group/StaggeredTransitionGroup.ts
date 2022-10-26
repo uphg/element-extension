@@ -1,7 +1,6 @@
 import { defineComponent, h } from "vue"
 import { VNodeData } from "vue/types/umd"
 import { addClass, removeClass, setStyle } from "../../utils"
-import { ElementPartComponent } from "../../../types/component"
 
 const staggeredProps = {
   tag: {
@@ -39,7 +38,7 @@ function getInterval(el: HTMLElement) {
   return Number(el.getAttribute('data-index')) * interval
 }
 
-const EStaggeredTransitionGroup = defineComponent({
+export default defineComponent({
   name: 'EStaggeredTransitionGroup',
   props: staggeredProps,
   setup(props, context) {
@@ -106,5 +105,3 @@ const EStaggeredTransitionGroup = defineComponent({
     }
   }
 })
-
-export default EStaggeredTransitionGroup as ElementPartComponent<typeof EStaggeredTransitionGroup>

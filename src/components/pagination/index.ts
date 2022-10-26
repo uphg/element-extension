@@ -1,9 +1,8 @@
 import Pagination from './src/Pagination'
 import { paginationProps } from './src/paginationProps'
 import { usePagination } from './src/usePagination'
+import { withInstall } from '../../utils'
 
-Pagination.install = function (Vue) {
-  Vue.component(Pagination.name, Pagination);
-}
+const EPagination = withInstall(Pagination)
 
-export { Pagination, paginationProps, usePagination }
+export { Pagination, EPagination, paginationProps, usePagination }

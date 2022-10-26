@@ -1,9 +1,8 @@
 import Cascader from './src/Cascader'
 import { cascaderProps } from './src/cascaderProps'
 import { useCascader } from './src/useCascader'
+import { withInstall } from '../../utils'
 
-Cascader.install = function (Vue) {
-  Vue.component(Cascader.name, Cascader);
-}
+const ECascader = withInstall(Cascader)
 
-export { Cascader, cascaderProps, useCascader }
+export { Cascader, ECascader, cascaderProps, useCascader }

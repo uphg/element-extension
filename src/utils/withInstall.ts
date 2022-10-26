@@ -5,8 +5,8 @@ interface extendsName {
 }
 
 export const withInstall = <T extends extendsName>(component: T) => {
-  (component as SFCWithInstall<T>).install = function(Vue) {
-    Vue.component(component.name, component)
+  (component as SFCWithInstall<T>).install = function(app) {
+    app.component(component.name, component)
   }
   return component as SFCWithInstall<T>
 }

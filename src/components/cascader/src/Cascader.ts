@@ -1,9 +1,8 @@
-import { ElementPartComponent } from "../../../../types/component"
 import { defineComponent } from "vue"
 import { cascaderProps } from "./cascaderProps"
 import { useCascader } from "./useCascader"
 
-const ECascader = defineComponent({
+export default defineComponent({
   name: 'ECascader',
   props: cascaderProps,
   setup(props, context) {
@@ -12,5 +11,3 @@ const ECascader = defineComponent({
     return render
   }
 })
-
-export default ECascader as ElementPartComponent<typeof ECascader>

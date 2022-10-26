@@ -1,9 +1,8 @@
 import InputNumber from './src/InputNumber'
 import { inputNumberProps } from './src/inputNumberProps'
 import { useInputNumber } from './src/useInputNumber'
+import { withInstall } from '../../utils'
 
-InputNumber.install = function (Vue) {
-  Vue.component(InputNumber.name, InputNumber);
-}
+const EInputNumber = withInstall(InputNumber)
 
-export { InputNumber, inputNumberProps, useInputNumber }
+export { InputNumber, EInputNumber, inputNumberProps, useInputNumber }

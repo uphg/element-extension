@@ -1,9 +1,8 @@
 import FormItem from './src/FormItem'
 import { formItemProps } from './src/formItemProps'
 import { useFormItem } from './src/useFormItem'
+import { withInstall } from '../../utils'
 
-FormItem.install = function (Vue) {
-  Vue.component(FormItem.name, FormItem);
-}
+const EFormItem = withInstall(FormItem)
 
-export { FormItem, formItemProps, useFormItem }
+export { FormItem, EFormItem, formItemProps, useFormItem }

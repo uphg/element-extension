@@ -1,29 +1,29 @@
 import { VueConstructor } from 'vue/types/vue'
-import { Button, buttonProps, useButton } from './button'
-import { RadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
-import { CheckboxGroup, checkboxGroupProps, useCheckboxGroup } from './checkbox-group'
-import { Input, inputProps, useInput } from './input'
-import { InputNumber, inputNumberProps, useInputNumber } from './input-number'
-import { Select, selectProps, useSelect } from './select'
-import { Cascader, cascaderProps, useCascader } from './cascader'
-import { Switch, switchProps, useSwitch } from './switch'
-import { Slider, sliderProps, useSlider } from './slider'
-import { DatePicker, datePickerProps, TimePicker, timePickerProps, TimeSelect, timeSelectProps, useDatePicker } from './date-picker'
-import { Upload, uploadProps, useUpload } from './upload'
-import { Form, formProps, useForm } from './form'
-import { FormItem, formItemProps, useFormItem } from './form-item'
-import { Formulate, formulateProps, useFormulate } from './formulate'
-import { Table, tableProps, useTable } from './table'
-import { TableColumn, tableColumnProps, useTableColumn } from './table-column'
-import { Pagination, paginationProps, usePagination } from './pagination'
-import { StaggeredTransitionGroup } from './staggered-transition-group/index'
-import { ConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
+import { Button, EButton, buttonProps, useButton } from './button'
+import { RadioGroup, ERadioGroup, radioGroupProps, useRadioGroup } from './radio-group'
+import { CheckboxGroup, ECheckboxGroup, checkboxGroupProps, useCheckboxGroup } from './checkbox-group'
+import { Input, EInput, inputProps, useInput } from './input'
+import { InputNumber, EInputNumber, inputNumberProps, useInputNumber } from './input-number'
+import { Select, ESelect, selectProps, useSelect } from './select'
+import { Cascader, ECascader, cascaderProps, useCascader } from './cascader'
+import { Switch, ESwitch, switchProps, useSwitch } from './switch'
+import { Slider, ESlider, sliderProps, useSlider } from './slider'
+import { DatePicker, EDatePicker, datePickerProps, TimePicker, ETimePicker, timePickerProps, TimeSelect, ETimeSelect, timeSelectProps, useDatePicker } from './date-picker'
+import { Upload, EUpload, uploadProps, useUpload } from './upload'
+import { Form, EForm, formProps, useForm } from './form'
+import { FormItem, EFormItem, formItemProps, useFormItem } from './form-item'
+import { Formulate, EFormulate, formulateProps, useFormulate } from './formulate'
+import { Table, ETable, tableProps, useTable } from './table'
+import { TableColumn, ETableColumn, tableColumnProps, useTableColumn } from './table-column'
+import { Pagination, EPagination, paginationProps, usePagination } from './pagination'
+import { StaggeredTransitionGroup  EStaggeredTransitionGroup,} from './staggered-transition-group/index'
+import { ConfigProvider, EConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
 // utils
 import { renderSlot, renderSlots } from '../utils/renderSlot'
 import { useGlobalProps } from '../composables/useGlobalProps'
 
-const components = [Button, RadioGroup, CheckboxGroup, Input, InputNumber, Select, Cascader, Switch, Slider, DatePicker, TimePicker, TimeSelect, Form, FormItem, Formulate, Table, TableColumn, Pagination, StaggeredTransitionGroup, Upload, ConfigProvider]
+const components = [EButton, ERadioGroup, ECheckboxGroup, EInput, EInputNumber, ESelect, ECascader, ESwitch, ESlider, EDatePicker, ETimePicker, ETimeSelect, EUpload, EForm, EFormItem, EFormulate, ETable, ETableColumn, EPagination, EStaggeredTransitionGroup, EConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
@@ -34,26 +34,47 @@ function install(Vue: VueConstructor) {
 export {
   install,
   Button,
+  EButton,
   RadioGroup,
+  ERadioGroup,
   CheckboxGroup,
+  ECheckboxGroup,
   Input,
+  EInput,
   InputNumber,
+  EInputNumber,
   Select,
+  ESelect,
   Cascader,
+  ECascader,
   Switch,
+  ESwitch,
   Slider,
+  ESlider,
   DatePicker,
+  EDatePicker,
   TimePicker,
+  ETimePicker,
   TimeSelect,
+  ETimeSelect,
   Upload,
+  EUpload,
   Form,
+  EForm,
   FormItem,
+  EFormItem,
   Formulate,
+  EFormulate,
   Table,
+  ETable,
   TableColumn,
+  ETableColumn,
   Pagination,
+  EPagination,
   StaggeredTransitionGroup,
+  EStaggeredTransitionGroup,
   ConfigProvider,
+  EConfigProvider,
 
   useButton,
   useRadioGroup,

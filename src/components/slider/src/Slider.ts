@@ -1,9 +1,8 @@
 import { defineComponent } from "vue"
 import { sliderProps } from "./sliderProps"
 import { useSlider } from "./useSlider"
-import { ElementPartComponent } from "../../../../types/component"
 
-const ESlider = defineComponent({
+export default defineComponent({
   name: 'ESlider',
   props: sliderProps,
   setup(props, context) {
@@ -13,5 +12,3 @@ const ESlider = defineComponent({
     return render
   }
 })
-
-export default ESlider as ElementPartComponent<typeof ESlider>

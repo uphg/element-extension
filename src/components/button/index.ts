@@ -1,9 +1,8 @@
 import Button from './src/Button'
 import { buttonProps } from './src/buttonProps'
 import { useButton } from './src/useButton'
+import { withInstall } from '../../utils'
 
-Button.install = function (Vue) {
-  Vue.component(Button.name, Button);
-}
+const EButton = withInstall(Button)
 
-export { Button, buttonProps, useButton }
+export { Button, EButton, buttonProps, useButton }

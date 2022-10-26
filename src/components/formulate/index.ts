@@ -1,9 +1,8 @@
 import Formulate from './src/Formulate'
 import { formulateProps } from './src/formulateProps'
 import { useFormulate } from './src/useFormulate'
+import { withInstall } from '../../utils'
 
-Formulate.install = function (Vue) {
-  Vue.component(Formulate.name, Formulate);
-}
+const EFormulate = withInstall(Formulate)
 
-export { Formulate, formulateProps, useFormulate }
+export { Formulate, EFormulate, formulateProps, useFormulate }

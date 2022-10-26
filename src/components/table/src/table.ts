@@ -1,9 +1,8 @@
 import { defineComponent } from "vue"
 import { tableProps } from "./tableProps"
 import { useTable } from "./useTable"
-import { ElementPartComponent } from "../../../../types/component"
 
-const ETable = defineComponent({
+export default defineComponent({
   name: 'ETable',
   props: tableProps,
   setup(props, context) {
@@ -13,6 +12,3 @@ const ETable = defineComponent({
     return render
   }
 })
-
-export default ETable as ElementPartComponent<typeof ETable>
-
