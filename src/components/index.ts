@@ -16,7 +16,7 @@ import { Formulate, EFormulate, formulateProps, useFormulate } from './formulate
 import { Table, ETable, tableProps, useTable } from './table'
 import { TableColumn, ETableColumn, tableColumnProps, useTableColumn } from './table-column'
 import { Pagination, EPagination, paginationProps, usePagination } from './pagination'
-import { StaggeredTransitionGroup  EStaggeredTransitionGroup,} from './staggered-transition-group/index'
+import { StaggeredTransitionGroup, EStaggeredTransitionGroup } from './staggered-transition-group/index'
 import { ConfigProvider, EConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 
 // utils
