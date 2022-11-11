@@ -20,11 +20,11 @@ export function useForm(
   const handleRef = (_handleRef || ((el: ElForm) => elForm.value = el)) as unknown as string
   const scopedSlots = handleScopedSlots?.(context?.slots)
 
-  const on = context?.emit ? {
+  const on = options?.on ? options.on : context?.emit ? {
     validate(prop: string, errors: boolean, validateMessage: string | null) {
       context.emit('validate', prop, errors, validateMessage)
     }
-  } : options?.on
+  } : {}
 
   const renderChildren = _renderChildren ? _renderChildren : (!scopedSlots && context?.slots?.default && (() => context.slots.default?.()))
 

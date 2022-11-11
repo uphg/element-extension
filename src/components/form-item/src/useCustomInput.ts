@@ -11,9 +11,10 @@ import { useSwitch } from "../../switch";
 import { useSlider } from "../../slider";
 import { useDatePicker } from "../../date-picker";
 import { useUpload } from "../../upload";
-import { pick, withDefaultProps } from "../../../utils";
+import { generateEmits, pick, withDefaultProps } from "../../../utils";
 import { empty } from "../../../shared/commonProps";
 import { ObjectLike } from "../../../../types/_common";
+import { useOnInput } from "../../../composables/useOnInput";
 
 const globalDateAttrNames = ['id', 'name', 'placeholder']
 const globalDatePropNames = ['pickerOptions', 'validateEvent', 'size', 'clearable', 'format']
@@ -27,7 +28,14 @@ type CustomInputReturn = {
   expose?: ObjectLike;
 }
 
-export function useCustomInput<T extends FormItemProps>(props: T, _options: { context: SetupContext<{}>, type: FormItemType }): CustomInputReturn | undefined {
+export function useCustomInput<T extends FormItemProps>(
+  props: T,
+  _options: {
+    context: SetupContext<{}>,
+    type: FormItemType,
+    defaultValue?: ObjectLike
+  }
+): CustomInputReturn | undefined {
   const { context, type } = _options
   switch(type) {
     case 'radio':

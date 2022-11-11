@@ -3,7 +3,7 @@ import { FormItem } from 'element-ui'
 import { useCustomInput } from './useCustomInput'
 import { useElFormItem } from '../../../composables/useElFormItem'
 import { ElFormItem } from "../../../../types/_element-ui"
-import { formItemBaseProps, FormItemProps, FormItemType, GlobalFormItemProps } from "./formItemProps"
+import { elFormItemProps, FormItemProps, FormItemType, GlobalFormItemProps } from "./formItemProps"
 import { pick, isUndefined, renderSlot, keys } from '../../../utils'
 import { useGlobalProps } from '../../../composables/useGlobalProps'
 
@@ -13,16 +13,9 @@ function handleType(type: FormItemType | undefined, globalType?: string) {
   return result as (FormItemType | undefined)
 }
 
-export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
+export function useFormItem(props: FormItemProps & { placeholder: string }, context?: SetupContext<{}>) {
   const { elFormItem, clearValidate } = useElFormItem()
-  // const { render, expose: customInputExpose } = useCustomInput(props, context, {
-  //   onKeyup(event) {
-  //     if (event.keyCode === 13) {
-  //       // enter
-  //     }
-  //   }
-  // })
-  const propNames = keys(formItemBaseProps)
+  const propNames = keys(elFormItemProps)
   const globalProps = useGlobalProps<GlobalFormItemProps>('formItem')
   const type = handleType(props.type, globalProps?.type)
 
@@ -30,9 +23,7 @@ export function useFormItem(props: FormItemProps, context?: SetupContext<{}>) {
     context
       && type
       && !(type === 'text' && context.slots.default))
-      && useCustomInput(props, { context, type }
-    ) || {}
-
+      && useCustomInput(props, { context, type }) || {}
 
   const expose = {
     ...(customInputExpose || {}),

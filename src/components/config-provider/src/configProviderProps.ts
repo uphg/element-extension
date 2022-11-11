@@ -8,17 +8,24 @@ import { GlobalPaginationProps } from "../../pagination/src/paginationProps";
 import { GlobalRadioGroupProps } from "../../radio-group/src/radioGroupProps";
 import { GlobalSelectProps } from "../../select/src/selectProps";
 import { GlobalSwitchProps } from "../../switch/src/switchProps";
-import { GlobalCascaderProps } from "../../cascader/src/cascaderProps";
-import { GlobalTableProps } from "../../table/src/tableProps";
-import { GlobalUploadProps } from "../../upload/src/uploadProps";
-import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
-import { GlobalSliderProps } from "../../slider/src/sliderProps";
+import { GlobalCascaderProps } from "../../cascader/src/cascaderProps"
+import { GlobalTableProps } from "../../table/src/tableProps"
+import { GlobalUploadProps } from "../../upload/src/uploadProps"
+import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps"
+import { GlobalSliderProps } from "../../slider/src/sliderProps"
 import { GlobalFormItemProps } from '../../form-item/src/formItemProps'
-import { GlobalButtonProps } from "../../button/src/buttonProps";
+import { GlobalButtonProps } from "../../button/src/buttonProps"
+import { en } from "../../../lang"
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
+export type ConfigProviderLocale = typeof en
+
 export const configProviderProps = {
+  locale: {
+    type: Object as PropType<ConfigProviderLocale>,
+    default: empty
+  },
   button: {
     type: Object as PropType<GlobalButtonProps>,
     default: empty

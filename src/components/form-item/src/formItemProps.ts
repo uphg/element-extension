@@ -242,6 +242,18 @@ export const formItemBaseProps = {
   withButton: {
     type: booleanProp,
     default: empty
+  },
+  labelToPlaceholder: {
+    type: booleanProp,
+    default: empty
+  },
+  labelToVerifyMessage: {
+    type: booleanProp,
+    default: empty
+  },
+  textType: {
+    type: String as PropType<'amount' | 'percent' | 'number'>,
+    default: empty
   }
 }
 

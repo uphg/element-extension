@@ -18,6 +18,7 @@ import { TableColumn, ETableColumn, tableColumnProps, useTableColumn } from './t
 import { Pagination, EPagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup, EStaggeredTransitionGroup } from './staggered-transition-group/index'
 import { ConfigProvider, EConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
+import { zhCN, en } from '../lang/index'
 
 // utils
 import { renderSlot, renderSlots } from '../utils/renderSlot'
@@ -119,5 +120,8 @@ export {
   // utlis
   renderSlot,
   renderSlots,
-  useGlobalProps
+  useGlobalProps,
+
+  // lang
+  zhCN, en
 }

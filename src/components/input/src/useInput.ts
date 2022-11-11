@@ -65,10 +65,10 @@ export function useInput<T extends ObjectLike>(
   const { elInput, focus, blur, select } = useElInput()
   const handleRef = (options?.handleRef || ((el: ElInput) => elInput.value = el)) as unknown as string
 
-  const on = context?.emit ? {
+  const on = options?.on ? options.on : context?.emit ? {
     input: useOnInput(props, context),
     ...generateEmits(context.emit, otherEmitNames)
-  } : options?.on
+  } : {}
 
   const { createProps, createAttrs } = useInputProps(props, context, options)
   const expose = { focus, blur, select, get elInput() { return elInput.value } }
