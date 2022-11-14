@@ -13,7 +13,7 @@ import { globalTableProps } from "../components/table/src/tableProps"
 import { globalTableColumnProps } from "../components/table-column/src/tableColumnProps"
 import { globalPaginationProps } from "../components/pagination/src/paginationProps"
 import { globalFormProps } from "../components/form/src/formProps"
-import { globalFormItemProps } from "../components/form-item/src/formItemProps"
+// import { globalFormItemProps } from "../components/form-item/src/formItemProps"
 import { globalButtonProps } from "../components/button/src/buttonProps"
 
 export type ConfigPropertyMap = typeof configPropertyMap
@@ -51,7 +51,7 @@ export const globalSliderPropNames = keys(globalSliderProps)
 export const globalDatePropNames = keys(globalDateProps)
 export const globalUploadPropNames = keys(globalUploadProps)
 export const globalFormPropNames = keys(globalFormProps)
-export const globalFormItemPropNames = keys(globalFormItemProps)
+// export const globalFormItemPropNames = keys(globalFormItemProps)
 export const globalTablePropNames = keys(globalTableProps)
 export const globalTableColumnPropNames = keys(globalTableColumnProps)
 export const globalPaginationPropNames = keys(globalPaginationProps)
@@ -113,10 +113,10 @@ export const configPropertyMap = {
     key: globalFormKey,
     propNames: globalFormPropNames
   },
-  formItem: {
-    key: globalFormItemKey,
-    propNames: globalFormItemPropNames
-  },
+  // formItem: {
+  //   key: globalFormItemKey,
+  //   propNames: globalFormItemPropNames
+  // },
   table: {
     key: globalTableKey,
     propNames: globalTablePropNames

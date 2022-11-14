@@ -30,5 +30,9 @@ export const elFormItemProps = {
 }
 
 export const formItemProps = {
-  ...elFormItemProps
+  ...elFormItemProps,
+  textType: {
+    type: String,
+    default: ''
+  }
 }

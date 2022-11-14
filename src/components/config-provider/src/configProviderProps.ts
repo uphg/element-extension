@@ -13,7 +13,7 @@ import { GlobalTableProps } from "../../table/src/tableProps"
 import { GlobalUploadProps } from "../../upload/src/uploadProps"
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps"
 import { GlobalSliderProps } from "../../slider/src/sliderProps"
-import { GlobalFormItemProps } from '../../form-item/src/formItemProps'
+// import { GlobalFormItemProps } from '../../form-item/src/formItemProps'
 import { GlobalButtonProps } from "../../button/src/buttonProps"
 import { en } from "../../../lang"
 
@@ -70,10 +70,10 @@ export const configProviderProps = {
     type: Object as PropType<GlobalFormProps>,
     default: empty
   },
-  formItem: {
-    type: Object as PropType<GlobalFormItemProps>,
-    default: empty
-  },
+  // formItem: {
+  //   type: Object as PropType<GlobalFormItemProps>,
+  //   default: empty
+  // },
   table: {
     type: Object as PropType<GlobalTableProps>,
     default: empty
