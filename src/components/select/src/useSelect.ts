@@ -30,7 +30,8 @@ export function useSelect<T extends ObjectLike>(
         renderSlot(context, 'prefix'),
         renderSlot(context, 'empty'),
       ]
-      return h(Select, { ref: handleRef, props: createProps(), on }, [namedSlots, ...renderSelectOptions(props, context)!])
+      const renderOptions = renderSelectOptions?.(props, context) || []
+      return h(Select, { ref: handleRef, props: createProps(), on }, [namedSlots, ...renderOptions])
     }
   }
 }
