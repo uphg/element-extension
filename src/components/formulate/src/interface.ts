@@ -8,7 +8,7 @@ import { ElFormRule } from "../../../../types/_element-ui"
 import { SelectOptions, SelectProps } from "../../select/src/selectProps"
 import { RadioGroupOptions, RadioGroupProps } from "../../radio-group/src/radioGroupProps"
 import { CheckboxGroupOptions, CheckboxGroupProps } from "../../checkbox-group/src/checkboxGroupProps"
-import { FormItemProps, FormItemType } from "../../form-item/src/formItemProps"
+import { FormItemProps } from "../../form-item/src/formItemProps"
 import { InputProps } from "../../input/src/inputProps"
 import { InputNumberProps } from "../../input-number/src/inputNumberProps"
 import { DatePickerProps, TimePickerProps, TimeSelectProps } from "../../date-picker/src/dateProps"
@@ -20,6 +20,11 @@ import { UploadProps } from "../../upload/src/uploadProps"
 export interface FormulateFields {
   [key: string]: FormulateField
 }
+
+export type inputType = 'radio' | 'radio-group' | 'checkbox' | 'checkbox-group' | 'input' | 'text' | 'password' | 'textarea' | 'number' | 'input-number' | 'select' | 'cascader'
+| 'date' | 'date-picker' | 'year' | 'month' | 'dates' | 'months' | 'years' | 'week' | 'daterange' | 'monthrange' | 'datetime' | 'datetimerange'
+| 'time' | 'time-select' | 'time-picker' | 'switch' | 'slider' | 'file' | 'upload'
+
 
 export type FormulateField =  {
   label?: string;
@@ -33,7 +38,7 @@ export type FormulateField =  {
   itemSuffix?: () => VNodeChildren;
 
   // custom input
-  type?: FormItemType;
+  type?: inputType;
   ref?: HandleRef;
   default?: CustomInputValue;
   vIf?(formData: { [key: string]: CustomInputValue }): boolean | undefined;
