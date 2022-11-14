@@ -64,19 +64,24 @@ export function useInput<T extends ObjectLike>(
   const { renderChildren: _renderChildren } = options || {}
   const { elInput, focus, blur, select } = useElInput()
   const handleRef = (options?.handleRef || ((el: ElInput) => elInput.value = el)) as unknown as string
+  const { createProps, createAttrs } = useInputProps(props, context, options)
 
   const on = options?.on ? options.on : context?.emit ? {
     input: useOnInput(props, context),
     ...generateEmits(context.emit, otherEmitNames)
   } : {}
 
-  const { createProps, createAttrs } = useInputProps(props, context, options)
-  const expose = { focus, blur, select, get elInput() { return elInput.value } }
-
   const renderChildren = _renderChildren ? _renderChildren : context?.slots && (() => renderSlots(context, slotNames))
+
+  const expose = { focus, blur, select, get elInput() { return elInput.value } }
 
   return {
     expose,
-    render: () => h(Input, { ref: handleRef, props: createProps(), attrs: createAttrs(), on }, renderChildren && [renderChildren()])
+    render: () => h(Input, {
+      ref: handleRef,
+      props: createProps(),
+      attrs: createAttrs(),
+      on
+    }, renderChildren && [renderChildren()])
   }
 }
