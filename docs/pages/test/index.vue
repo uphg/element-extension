@@ -4,9 +4,9 @@
     <!-- <TestTransition /> -->
     <!-- <TestUpload /> -->
     <!-- <TestSelect /> -->
-    <TestInput />
+    <!-- <TestInput /> -->
     <!-- <e-switch v-model="value" /> -->
-    <!-- <TestForm /> -->
+    <TestForm />
     <!-- <TestButton></TestButton> -->
     <!-- <e-form>
       <e-form-item type="switch" v-model="value" />
