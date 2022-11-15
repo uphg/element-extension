@@ -12,16 +12,32 @@ import { ObjectLike, Fn } from "../../../../types/_common";
 export type GlobalTableProps = ExtractPropTypes<typeof globalTableProps>
 export type TableProps = ExtractPropTypes<typeof tableProps>
 
-export type TableColumnChildrenProps = {
-  type: 'button' | 'link';
+export type TableColumnChildrenProps = Partial<{
+  type: 'button' | 'link' | 'tag';
   text: string;
   hue: ButtonType;
   size: ElementUIComponentSize;
-  onClick: (scope: RowCallbackParams) => void
-}
+  underline: boolean;
+  href: string;
+  icon: string;
+  disabled: boolean;
+  loading: boolean;
+  nativeType: string;
+  plain: boolean;
+  autofocus: boolean;
+  round: boolean;
+  circle: boolean;
+  closable: boolean;
+  hit: boolean;
+  disableTransitions: boolean;
+  color: string;
+  effect: string;
+  onClick: (scope: RowCallbackParams, event?: MouseEvent) => void
+  onClose: (scope: RowCallbackParams, event?: MouseEvent) => void
+}>
 
 export type TableObjectColumnProps = {
-  renderChildren?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
+  children?: TableColumnChildrenProps[] | ((scope: { row: RowCallbackParams['row'], column: TableColumn, $index: number }) => VNode);
   scopedSlots?: { [key: string]: ScopedSlot | undefined };
 } & TableColumnProps
 

@@ -18,7 +18,7 @@ export function useTable(
   const { handleProps, handleRef: _handleRef } = options || {}
   const { elTable, clearSelection, toggleRowSelection, toggleAllSelection, toggleRowExpansion, setCurrentRow, clearSort, clearFilter, doLayout, sort, load } = useElTable()
   const handleRef = (_handleRef || ((el: ElTable) => elTable.value = el)) as unknown as string
-  const on = context?.emit ? useElTableEmit(context.emit) : options?.on
+  const on = options?.on ? options?.on : context && useElTableEmit(context.emit) 
   const propNames = keys(tableBaseProps)
   const globalPropNames = keys(globalTableProps)
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })

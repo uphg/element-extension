@@ -17,13 +17,16 @@ export function useLink<T extends ObjectLike>(
   const globalPropNames = keys(globalLinkProps)
   const propNames = keys(linkProps)
   const { createProps } = useComponentProps(props, 'link', { propNames, globalPropNames, handleProps })
-  const on = props.onClick ? { click: props.onClick } : context?.emit && { click(event: MouseEvent) { context.emit('click', event) } }
+  const on = options?.on ? options.on : {
+    click: props.onClick || context && ((event: MouseEvent) => { context.emit('click', event) })
+  }
+  const renderChildren = _renderChildren ? _renderChildren : context && (() => renderSlots(context, slotNames))
 
   return {
     render: () => h(Link, {
       ref: (handleRef as unknown as string),
       props: createProps(),
       on
-    }, [_renderChildren ? _renderChildren() : context && renderSlots(context, slotNames)])
+    }, [renderChildren?.()])
   }
 }

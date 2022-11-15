@@ -15,16 +15,18 @@ export function useTag<T extends ObjectLike>(
   const globalPropNames = keys(globalTagProps)
   const elPropNames = keys(elTagProps)
   const { createProps } = useComponentProps(props, 'tag', { propNames: elPropNames, globalPropNames, handleProps })
-  const on = context?.emit && {
+  const on = options?.on ? options.on : context?.emit && {
     click: props.onClick || ((event: MouseEvent) => { context.emit('click', event) }),
     close: props.onClose || ((event: MouseEvent) => { context.emit('close', event) })
   }
+
+  const renderChildren = _renderChildren ? _renderChildren : context?.slots?.default
 
   return {
     render: () => h(Tag, {
       ref: (handleRef as unknown as string),
       props: createProps(),
       on
-    }, [_renderChildren ? _renderChildren() : context?.slots?.default?.()])
+    }, [renderChildren?.()])
   }
 }
