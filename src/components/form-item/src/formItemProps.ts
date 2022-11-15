@@ -4,29 +4,40 @@ import { empty, booleanProp, stringProp } from "../../../shared/commonProps";
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
-const emptyStringProp = {
-  type: stringProp,
-  default: ''
+export const globalFormItemProps = {
+  labelWidth: {
+    type: stringProp,
+    default: empty
+  },
+  inlineMessage: {
+    type: booleanProp,
+    default: empty
+  },
+  showMessage: {
+    type: booleanProp, 
+    default: empty // true
+  },
+  size: {
+    type: String as PropType<'medium' | 'small' | 'mini'>,
+    default: empty
+  }
 }
 
 export const elFormItemProps = {
-  label: emptyStringProp,
-  labelWidth: emptyStringProp,
-  prop: stringProp,
+  label: {
+    type: stringProp,
+    default: ''
+  },
   required: {
     type: booleanProp,
     default: empty
   },
+  prop: stringProp,
   rules: [Object, Array] as PropType<ObjectLike | ObjectLike[]>,
   error: stringProp,
   validateStatus: stringProp,
   for: stringProp,
-  inlineMessage: booleanProp,
-  showMessage: {
-    type: booleanProp,
-    default: true
-  },
-  size: String as PropType<'medium' | 'small' | 'mini'>
+  ...globalFormItemProps
 }
 
 export const formItemProps = {

@@ -17,6 +17,8 @@ import { Table, ETable, tableProps, useTable } from './table'
 import { TableColumn, ETableColumn, tableColumnProps, useTableColumn } from './table-column'
 import { Pagination, EPagination, paginationProps, usePagination } from './pagination'
 import { StaggeredTransitionGroup, EStaggeredTransitionGroup } from './staggered-transition-group/index'
+import { Link, ELink, linkProps, useLink } from './link'
+import { Tag, ETag, tagProps, useTag } from './tag'
 import { ConfigProvider, EConfigProvider, configProviderProps, useConfigProvider } from './config-provider'
 import { zhCN, en } from '../lang/index'
 
@@ -24,7 +26,7 @@ import { zhCN, en } from '../lang/index'
 import { renderSlot, renderSlots } from '../utils/renderSlot'
 import { useGlobalProps } from '../composables/useGlobalProps'
 
-const components = [EButton, ERadioGroup, ECheckboxGroup, EInput, EInputNumber, ESelect, ECascader, ESwitch, ESlider, EDatePicker, ETimePicker, ETimeSelect, EUpload, EForm, EFormItem, EFormulate, ETable, ETableColumn, EPagination, EStaggeredTransitionGroup, EConfigProvider]
+const components = [EButton, ERadioGroup, ECheckboxGroup, EInput, EInputNumber, ESelect, ECascader, ESwitch, ESlider, EDatePicker, ETimePicker, ETimeSelect, EUpload, EForm, EFormItem, EFormulate, ETable, ETableColumn, EPagination, EStaggeredTransitionGroup, ELink, ETag, EConfigProvider]
 
 function install(Vue: VueConstructor) {
   components.forEach((item) => {
@@ -74,6 +76,10 @@ export {
   EPagination,
   StaggeredTransitionGroup,
   EStaggeredTransitionGroup,
+  Link,
+  ELink,
+  Tag,
+  ETag,
   ConfigProvider,
   EConfigProvider,
 
@@ -94,6 +100,8 @@ export {
   useTable,
   useTableColumn,
   usePagination,
+  useLink,
+  useTag,
   useConfigProvider,
 
   buttonProps,
@@ -115,6 +123,8 @@ export {
   tableProps,
   tableColumnProps,
   paginationProps,
+  linkProps,
+  tagProps,
   configProviderProps,
 
   // utlis

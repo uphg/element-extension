@@ -16,6 +16,8 @@ import { GlobalSliderProps } from "../../slider/src/sliderProps"
 // import { GlobalFormItemProps } from '../../form-item/src/formItemProps'
 import { GlobalButtonProps } from "../../button/src/buttonProps"
 import { en } from "../../../lang"
+import { GlobalLinkProps } from "src/components/link/src/linkProps";
+import { GlobalTagProps } from "src/components/tag/src/tagProps";
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>
 
@@ -84,6 +86,14 @@ export const configProviderProps = {
   },
   pagination: {
     type: Object as PropType<GlobalPaginationProps>,
+    default: empty
+  },
+  link: {
+    type: Object as PropType<GlobalLinkProps>,
+    default: empty
+  },
+  tag: {
+    type: Object as PropType<GlobalTagProps>,
     default: empty
   }
 }

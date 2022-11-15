@@ -13,8 +13,10 @@ import { globalTableProps } from "../components/table/src/tableProps"
 import { globalTableColumnProps } from "../components/table-column/src/tableColumnProps"
 import { globalPaginationProps } from "../components/pagination/src/paginationProps"
 import { globalFormProps } from "../components/form/src/formProps"
-// import { globalFormItemProps } from "../components/form-item/src/formItemProps"
+import { globalFormItemProps } from "../components/form-item/src/formItemProps"
 import { globalButtonProps } from "../components/button/src/buttonProps"
+import { globalLinkProps } from "../components/link/src/linkProps"
+import { globalTagProps } from "../components/tag/src/tagProps"
 
 export type ConfigPropertyMap = typeof configPropertyMap
 export type ConfigPropertyName = keyof (typeof configPropertyMap)
@@ -37,6 +39,8 @@ export const globalFormItemKey = Symbol('config-form-item')
 export const globalTableKey = Symbol('config-table')
 export const globalTableColumnKey = Symbol('config-table-column')
 export const globalPaginationKey = Symbol('config-pagination')
+export const globalLinkKey = Symbol('config-link')
+export const globalTagKey = Symbol('config-tag')
 
 export const globalButtonPropNames = keys(globalButtonProps)
 export const globalRadioGroupPropNames = keys(globalRadioGroupBaseProps)
@@ -51,10 +55,12 @@ export const globalSliderPropNames = keys(globalSliderProps)
 export const globalDatePropNames = keys(globalDateProps)
 export const globalUploadPropNames = keys(globalUploadProps)
 export const globalFormPropNames = keys(globalFormProps)
-// export const globalFormItemPropNames = keys(globalFormItemProps)
+export const globalFormItemPropNames = keys(globalFormItemProps)
 export const globalTablePropNames = keys(globalTableProps)
 export const globalTableColumnPropNames = keys(globalTableColumnProps)
 export const globalPaginationPropNames = keys(globalPaginationProps)
+export const globalLinkPropNames = keys(globalLinkProps)
+export const globalTagPropNames = keys(globalTagProps)
 
 export const configPropertyMap = {
   button: {
@@ -128,5 +134,14 @@ export const configPropertyMap = {
   pagination: {
     key: globalPaginationKey,
     propNames: globalPaginationPropNames
+  },
+  link: {
+    key: globalLinkKey,
+    propNames: globalLinkPropNames
+  },
+  tag: {
+    key: globalTagKey,
+    propNames: globalTagPropNames
   }
 }
+

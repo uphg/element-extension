@@ -298,6 +298,27 @@ config-provider/inherit
 | next-text           | 替代图标显示的下一页文字                 | string   | —                                                            | —                                      |
 | hide-on-single-page | 只有一页时是否隐藏                       | boolean  | —                                                            | -                                      |
 
+### Link 链接
+
+| 参数      | 说明           | 类型    | 可选值                                      | 默认值  |
+| :-------- | :------------- | :------ | :------------------------------------------ | :------ |
+| type      | 类型           | string  | primary / success / warning / danger / info | default |
+| underline | 是否下划线     | boolean | —                                           | true    |
+| href      | 原生 href 属性 | string  | —                                           | -       |
+| icon      | 图标类名       | string  | —                                           | -       |
+
+### Tag 标签
+
+| 参数                | 说明             | 类型    | 可选值                      | 默认值 |
+| :------------------ | :--------------- | :------ | :-------------------------- | :----- |
+| type                | 类型             | string  | success/info/warning/danger | —      |
+| closable            | 是否可关闭       | boolean | —                           | false  |
+| disable-transitions | 是否禁用渐变动画 | boolean | —                           | false  |
+| hit                 | 是否有边框描边   | boolean | —                           | false  |
+| color               | 背景色           | string  | —                           | —      |
+| size                | 尺寸             | string  | medium / small / mini       | —      |
+| effect              | 主题             | string  | dark / light / plain        | light  |
+
 <script setup lang="ts">
 import ConfigProviderBase from 'docs/demo/config-provider/base.vue'
 import ConfigProviderInherit from 'docs/demo/config-provider/inherit.vue'

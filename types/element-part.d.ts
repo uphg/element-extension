@@ -19,6 +19,8 @@ import { ETableColumn } from './table-column'
 import { EPagination } from './pagination'
 import { EStaggeredTransitionGroup } from './staggered-transition-group'
 import { EConfigProvider } from './config-provider'
+import { ELink } from './link'
+import { ETag } from './tag'
 
 export class Button extends EButton {}
 export class RadioGroup extends ERadioGroup {}
@@ -40,6 +42,8 @@ export class Table extends ETable {}
 export class TableColumn extends ETableColumn {}
 export class Pagination extends EPagination {}
 export class StaggeredTransitionGroup extends EStaggeredTransitionGroup {}
+export class Link extends ELink {}
+export class Tag extends ETag {}
 export class ConfigProvider extends EConfigProvider {}
 
 export { EButton, useButton, buttonProps } from '../src/components/button'
@@ -60,6 +64,8 @@ export { ETable, useTable, tableProps } from '../src/components/table'
 export { ETableColumn, useTableColumn, tableColumnProps } from '../src/components/table-column'
 export { EPagination, usePagination, paginationProps } from '../src/components/pagination'
 export { EStaggeredTransitionGroup } from '../src/components/staggered-transition-group'
+export { ELink, useLink, linkProps } from '../src/components/link'
+export { ETag, useTag, tagProps } from '../src/components/tag'
 export { EConfigProvider, useConfigProvider, configProviderProps } from '../src/components/config-provider'
 
 // utils
