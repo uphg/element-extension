@@ -1,20 +1,8 @@
 # Form 表单
 
-将常用组件与 `<el-form-item>` 组件结合，添加常用属性
-
-**注意**
-
-本页面中的所有 FormItem 组件均已在全局配置 `type="text"`，所以 FormItem 的 type 属性默认均为 `"text"`，配置示例
-
-```vue
-<e-config-provider :form-item="{ type: 'text' }">
-  <!-- 表单示例组件 -->
-</e-config-provider>
-```
+附带默认配置的 form 组件
 
 ## 基本用法
-
-添加 input 输入框只需要 绑定 `v-model`
 
 ::: demo
 

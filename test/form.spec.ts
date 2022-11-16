@@ -1,8 +1,6 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import { VueConstructor } from 'vue'
 import ElementPart from '../src/index'
 import { EForm } from '../types/form'
-import { ElFormItem } from '../types/_element-ui'
 import { EFormItem } from '../types/form-item'
 
 const localVue = createLocalVue()
@@ -19,7 +17,9 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form label-width="80px">
-          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
         </e-form>
       `,
       data() {
@@ -43,8 +43,12 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form label-width="auto">
-          <e-form-item label="活动名称" v-model="form.name"/>
-          <e-form-item label="活动备注内容" v-model="form.remark"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
+          <e-form-item label="活动备注内容">
+            <e-input v-model="form.remark"/>
+          </e-form-item>
         </e-form>
       `,
       data() {
@@ -68,10 +72,11 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form label-width="80px">
-          <e-form-item v-model="form.name">
+          <e-form-item>
             <template v-slot:label>
               <span class="label-slot">活动名称</span>
             </template>
+            <e-input v-model="form.name"/>
           </e-form-item>
         </e-form>
       `,
@@ -95,8 +100,12 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form inline>
-          <e-form-item label="活动名称" v-model="form.name"/>
-          <e-form-item label="活动备注内容" v-model="form.remark"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
+          <e-form-item label="活动备注内容">
+            <e-input v-model="form.remark"/>
+          </e-form-item>
         </e-form>
       `,
       data() {
@@ -116,8 +125,12 @@ describe('form', () => {
     const formDemo1 = {
       template: `
         <e-form label-position="top" ref="labelTop">
-          <e-form-item label="活动名称" v-model="form.name"/>
-          <e-form-item label="活动备注内容" v-model="form.remark"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
+          <e-form-item label="活动备注内容">
+            <e-input v-model="form.remark"/>
+          </e-form-item>
         </e-form>
       `,
       data: () => ({
@@ -131,8 +144,12 @@ describe('form', () => {
     const formDemo2 = {
       template: `
         <e-form label-position="left" ref="labelLeft">
-          <e-form-item label="活动名称" v-model="form.name"/>
-          <e-form-item label="活动备注内容" v-model="form.remark"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
+          <e-form-item label="活动备注内容">
+            <e-input v-model="form.remark"/>
+          </e-form-item>
         </e-form>
       `,
       data: () => ({
@@ -154,7 +171,9 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form size="mini">
-          <e-form-item label="活动名称" v-model="form.name"/>
+          <e-form-item label="活动名称">
+            <e-input v-model="form.name"/>
+          </e-form-item>
         </e-form>
       `,
       data: () => ({
@@ -168,17 +187,19 @@ describe('form', () => {
     expect(wrapper.find('.el-form-item--mini').exists()).toBeTruthy()
   });
 
-  it('show message', () => {
+  it('show message', async () => {
     const formDemo = {
       template: `
         <e-form ref="formRef">
-          <e-form-item label="活动名称" v-model="form.name" :rules="{
+          <e-form-item label="活动名称" :rules="{
             required: true,
             message: '请输入活动名称',
             trigger: 'change',
             min: 3,
             max: 6
-          }"/>
+          }">
+            <e-input v-model="form.name"/>
+          </e-form-item>
         </e-form>
       `,
       data: () => ({
@@ -201,9 +222,15 @@ describe('form', () => {
     const formDemo = {
       template: `
         <e-form ref="formRef" :model="form" :rules="rules">
-          <e-form-item label="活动名称" prop="name" v-model="form.name"/>
-          <e-form-item label="活动区域" prop="address" v-model="form.address"/>
-          <e-form-item label="活动性质" prop="checkbox" v-model="form.type" type="checkbox" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])"/>
+          <e-form-item label="活动名称" prop="name">
+            <e-input v-model="form.name"/>
+          </e-form-item>
+          <e-form-item label="活动区域" prop="address">
+            <e-input v-model="form.address"/>
+          </e-form-item>
+          <e-form-item label="活动性质" prop="checkbox"/>
+            <e-checkbox-group v-model="form.type" :options="withOptions(['美食/餐厅线上活动', '地推活动', '线下主题活动', '单纯品牌曝光'])"/>
+          </e-form-item>
         </e-form>
       `,
       data: () => ({
@@ -249,9 +276,13 @@ describe('form', () => {
       template: `
         <e-form ref="formRef" :model="form" :rules="rules">
           <e-form-item label="活动时间" required>
-            <e-form-item prop="date1" type="date" placeholder="选择日期" v-model="form.date1"/>
+            <e-form-item prop="date1">
+              <e-date-picker placeholder="选择日期" v-model="form.date1"/>
+            </e-form-item>
             <span>-</span>
-            <e-form-item prop="date2" type="time" placeholder="选择时间" v-model="form.date2"/>
+            <e-form-item prop="date2">
+              <e-time-picker placeholder="选择时间" v-model="form.date2"/>
+            </e-form-item>
           </e-form-item>
         </e-form>
       `,
@@ -282,7 +313,9 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form :model="form" :rules="rules" ref="formRef">
-            <e-form-item label="活动名称" type="text" prop="name" v-model="form.name" ref="formItemRef"/>
+            <e-form-item label="活动名称" prop="name" ref="formItemRef">
+              <e-input v-model="form.name"/>
+            </e-form-item>
           </e-form>
         `,
         data: () => ({
@@ -325,7 +358,9 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form :model="form" :rules="rules" ref="formRef">
-            <e-form-item label="活动名称" type="textarea" prop="name" v-model="form.name" ref="formItemRef"/>
+            <e-form-item label="活动名称" prop="name" ref="formItemRef">
+              <e-input type="textarea" v-model="form.name"/>
+            </e-form-item>
           </e-form>
         `,
         data() {
@@ -371,15 +406,14 @@ describe('form', () => {
           <e-form :model="form" :rules="rules" ref="formRef">
             <e-form-item
               label="活动区域"
-              type="select"
               prop="region"
-              v-model="form.region"
-              :options="[
+              ref="formItemRef"
+            >
+              <e-select v-model="form.region" :options="[
                 { label: '区域一', value: 0 },
                 { label: '区域二', value: 1 }
-              ]"
-              ref="formItemRef"
-            />
+              ]"/>
+            </e-form-item>
           </e-form>
         `,
         data() {
@@ -418,14 +452,9 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form :model="form" :rules="rules" ref="formRef">
-            <e-form-item
-              label="活动日期"
-              type="date"
-              prop="date"
-              v-model="form.date"
-              ref="formItemRef"
-              placeholder="选择日期"
-            />
+            <e-form-item label="活动日期" prop="date" ref="formItemRef">
+              <e-date-picker type="date" v-model="form.date" placeholder="选择日期"/>
+            </e-form-item>
           </e-form>
         `,
         data() {
@@ -464,14 +493,9 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form :model="form" :rules="rules" ref="formRef">
-            <e-form-item
-              label="活动时间"
-              type="time"
-              prop="time"
-              v-model="form.time"
-              ref="formItemRef"
-              placeholder="选择时间"
-            />
+            <e-form-item label="活动时间" prop="time" ref="formItemRef">
+              <e-time-picker type="time" v-model="form.time" placeholder="选择时间"/>
+            </e-form-item>
           </e-form>
         `,
         data() {
@@ -509,59 +533,16 @@ describe('form', () => {
 
   describe('components additional features', () => {
 
-    it('form item prefix', () => {
-      const formDemo = {
-        template: `
-          <e-form>
-            <e-form-item label="活动名称" v-model="form.name">
-              <template #itemPrefix>
-                <span class="item-prefix">我是前缀</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: { name: '' }
-        })
-      }
-
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.item-prefix').exists()).toBeTruthy()
-    })
-
-    it('form item suffix', () => {
-      const formDemo = {
-        template: `
-          <e-form>
-            <e-form-item label="活动名称" v-model="form.name">
-              <template #itemSuffix>
-                <span class="item-suffix">我是后缀</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: { name: '' }
-        })
-      }
-
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.item-suffix').exists()).toBeTruthy()
-    })
-
     it('select options group', () => {
       const formDemo = {
         template: `
           <e-form ref="formRef">
-            <e-form-item
-              type="select"
-              label="活动区域"
-              v-model="select"
-              :option-groups="options"
-            >
-              <template v-slot:options="slotProps">
-                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
-              </template>
+            <e-form-item label="活动区域">
+              <e-select v-model="select" :option-groups="options">
+                <template v-slot:options="slotProps">
+                  <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
+                </template>
+              </e-select>
             </e-form-item>
           </e-form>
         `,
@@ -600,102 +581,13 @@ describe('form', () => {
       expect(wrapper.find('.custom-options').text()).toBe('上海-Shanghai')
     })
 
-    it('select options scopedSlots', () => {
-      const formDemo = {
-        template: `
-          <e-form ref="formRef">
-            <e-form-item
-              type="select"
-              label="活动区域"
-              v-model="form.region"
-              :options="[{
-                value: 'Shanghai',
-                label: '上海'
-              }, {
-                value: 'Beijing',
-                label: '北京'
-              }]"
-            >
-              <template v-slot:options="slotProps">
-                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: {
-            region: ''
-          }
-        })
-      }
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').text()).toBe('上海-Shanghai')
-    })
-
-    it('radio options scopedSlots', () => {
-      const formDemo = {
-        template: `
-          <e-form ref="formRef">
-            <e-form-item
-              type="radio"
-              label="活动区域"
-              v-model="form.region"
-              :options="withOptions(['区域一'])"
-            >
-              <template v-slot:options="slotProps">
-                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: {
-            region: ''
-          }
-        }),
-        methods: { withOptions }
-      }
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.el-radio-group').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
-    })
-
-    it('checkbox options scopedSlots', () => {
-      const formDemo = {
-        template: `
-          <e-form ref="formRef">
-            <e-form-item
-              type="checkbox"
-              label="活动区域"
-              v-model="form.region"
-              :options="withOptions(['区域一'])"
-            >
-              <template v-slot:options="slotProps">
-                <span class="custom-options">{{ slotProps.label + '-' + slotProps.value }}</span>
-              </template>
-            </e-form-item>
-          </e-form>
-        `,
-        data: () => ({
-          form: {
-            region: ''
-          }
-        }),
-        methods: { withOptions }
-      }
-      const wrapper = mount(formDemo, { localVue })
-      expect(wrapper.find('.el-checkbox-group').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').exists()).toBeTruthy()
-      expect(wrapper.find('.custom-options').text()).toBe('区域一-0')
-    })
-
     it('input extends', () => {
       const formDemo = {
         template: `
           <e-form>
-            <e-form-item label="活动名称" type="text" v-model="form.name" :extends="{ prefixIcon: 'el-icon-search' }"/>
+            <e-form-item label="活动名称">
+              <e-input v-model="form.name" prefix-icon="el-icon-search"/>
+            </e-form-item>
           </e-form>
         `,
         data: () => ({
@@ -711,10 +603,12 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form>
-            <e-form-item label="活动名称" type="text" v-model="form.name">
-              <template v-slot:prefix>
-                <i class="el-input__icon el-icon-search"></i>
-              </template>
+            <e-form-item label="活动名称">
+              <e-input v-model="form.name">
+                <template v-slot:prefix>
+                  <i class="el-input__icon el-icon-search"></i>
+                </template>
+              </e-input>
             </e-form-item>
           </e-form>
         `,
@@ -731,8 +625,10 @@ describe('form', () => {
       const formDemo = {
         template: `
           <e-form>
-            <e-form-item type="file" action="https://jsonplaceholder.typicode.com/posts/">
-              <span class="slot-default">hi</span>
+            <e-form-item>
+              <e-upload action="https://jsonplaceholder.typicode.com/posts/">
+                <span class="slot-default">hi</span>
+              </e-upload>
             </e-form-item>
           </e-form>
         `
