@@ -2,7 +2,7 @@ import { h, SetupContext, VNodeChildren } from "vue"
 import { VNode, VNodeData } from "vue/types/umd";
 import { Input } from "element-ui"
 import { ElInput } from "element-ui/types/input";
-import { InputProps, GlobalInputProps, globalInputAttrs, inputBaseProps } from "./inputProps";
+import { InputProps, globalInputProps, GlobalInputProps, globalInputAttrs, inputBaseProps } from "./inputProps";
 import { useOnInput } from "../../../composables/useOnInput";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { useElInput } from "../../../composables/useElInput";
@@ -30,23 +30,23 @@ export function useInputProps(
   options?: UseInputOptins
 ) {
   const { handleProps, handleAttrs } = options || {}
-  const globalInputProps = useGlobalProps<GlobalInputProps>('input')
+  const globalProps = useGlobalProps<GlobalInputProps>('input')
   const propNames = createNames(inputBaseProps, options?.status)
   const globalPropNames = keys(globalInputProps)
   const globalAttrNames = keys(globalInputAttrs)
 
   const createProps = handleProps
-    ? handleProps(props, globalInputProps, { propNames, globalPropNames })
+    ? handleProps(props, globalProps, { propNames, globalPropNames })
     : () => ({
-        ...pick(props, propNames),
-        ...withDefaultProps(props, globalInputProps, globalPropNames)
-      })
+      ...pick(props, propNames),
+      ...withDefaultProps(props, globalProps, globalPropNames)
+    })
 
   const createAttrs = handleAttrs
-    ? handleAttrs(props, globalInputProps, { attrNames, globalAttrNames })
+    ? handleAttrs(props, globalProps, { attrNames, globalAttrNames })
     : () => (context?.slots && {
       ...pick(context.attrs, attrNames),
-      ...withDefaultProps(context.attrs, globalInputProps, globalAttrNames)
+      ...withDefaultProps(context.attrs, globalProps, globalAttrNames)
     })
 
   return {

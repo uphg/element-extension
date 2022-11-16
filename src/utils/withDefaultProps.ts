@@ -1,6 +1,5 @@
 import { ObjectLike } from "../../types/_common"
-
-const empty = void 0
+import { empty } from "../shared/commonProps"
 
 export function withDefaultProps<T extends ObjectLike>(props: ObjectLike, _defaults: T | undefined, keys?: string[]) {
   const result: T | ObjectLike = {}
