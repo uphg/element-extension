@@ -39,10 +39,8 @@ export const globalTagProps = {
   }
 }
 
-export const elTagProps = globalTagProps
-
 export const tagProps = {
-  ...elTagProps,
+  ...globalTagProps,
   onClick: Function,
   onClose: Function,
 }

@@ -1,4 +1,4 @@
-import { h, SetupContext } from "vue"
+import { computed, h, SetupContext } from "vue"
 import { Table, TableColumn } from "element-ui"
 import { TableProps, GlobalTableProps, tableBaseProps, globalTableProps } from "./tableProps"
 import { handleColumnsData } from "./handleColumnsData";
@@ -9,6 +9,10 @@ import { useGlobalProps } from "../../../composables/useGlobalProps";
 import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
 import { ObjectLike } from "../../../../types/_common";
 import { ElTable } from "element-ui/types/table";
+
+function createKey() {
+  return Symbol()
+}
 
 export function useTable(
   props: TableProps,
@@ -23,11 +27,16 @@ export function useTable(
   const globalPropNames = keys(globalTableProps)
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
-  const renderChildren = context?.slots && (() => (
+  const renderChildren = computed(() => context && (
     [...props.columns?.length
-      ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
+      ? props.columns.map((item) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, createKey())))
       : [context.slots.default?.()]]
   ).concat([renderSlot(context, 'append')]))
+  // const renderChildren = context?.slots && (() => (
+  //   [...props.columns?.length
+  //     ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
+  //     : [context.slots.default?.()]]
+  // ).concat([renderSlot(context, 'append')]))
 
   return {
     expose: {
@@ -36,6 +45,6 @@ export function useTable(
         return elTable.value
       }
     },
-    render: () => h(Table, { ref: handleRef, props: createProps(), on }, renderChildren && renderChildren())
+    render: () => h(Table, { ref: handleRef, props: createProps(), on }, renderChildren.value)
   }
 }

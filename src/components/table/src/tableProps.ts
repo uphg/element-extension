@@ -3,7 +3,7 @@ import { ScopedSlot } from "vue/types/vnode";
 import { ButtonType } from "element-ui/types/button";
 import { ElementUIComponentSize } from "element-ui/types/component";
 import { empty, booleanProp, stringProp, numberProp, objectProp, functionProp, sizeProp } from "../../../shared/commonProps";
-import { VNode } from "vue/types/umd";
+import { VNode, VNodeData } from "vue/types/umd";
 import { RowCallbackParams } from "../../../../types/_element-ui";
 import { TableColumnProps } from "../../../components/table-column/src/tableColumnProps";
 import { TableColumn } from "element-ui";
@@ -13,6 +13,8 @@ export type GlobalTableProps = ExtractPropTypes<typeof globalTableProps>
 export type TableProps = ExtractPropTypes<typeof tableProps>
 
 export type TableColumnChildrenProps = Partial<{
+  class: VNodeData['class'];
+  style: VNodeData['style'];
   type: 'button' | 'link' | 'tag';
   text: string;
   hue: ButtonType;

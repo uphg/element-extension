@@ -1,6 +1,6 @@
 import { h, SetupContext } from "vue";
 import { Tag } from "element-ui";
-import { elTagProps, globalTagProps, GlobalTagProps, TagProps } from "./tagProps";
+import { globalTagProps, GlobalTagProps, TagProps } from "./tagProps";
 import { keys } from "../../../utils";
 import { ObjectLike } from "../../../../types/_common";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
@@ -13,8 +13,7 @@ export function useTag<T extends ObjectLike>(
 
   const { handleProps, handleRef, renderChildren: _renderChildren } = options || {}
   const globalPropNames = keys(globalTagProps)
-  const elPropNames = keys(elTagProps)
-  const { createProps } = useComponentProps(props, 'tag', { propNames: elPropNames, globalPropNames, handleProps })
+  const { createProps } = useComponentProps(props, 'tag', { propNames: [], globalPropNames, handleProps })
   const on = options?.on ? options.on : context?.emit && {
     click: props.onClick || ((event: MouseEvent) => { context.emit('click', event) }),
     close: props.onClose || ((event: MouseEvent) => { context.emit('close', event) })

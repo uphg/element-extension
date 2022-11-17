@@ -23,12 +23,12 @@ export const globalLinkProps = {
   }
 }
 
-export const elLinkProps = {
-  ...globalLinkProps,
+export const linkBaseProps = {
   disabled: Boolean,
 }
 
 export const linkProps = {
-  ...elLinkProps,
+  ...globalLinkProps,
+  ...linkBaseProps,
   onClick: Function
 }

@@ -1,6 +1,6 @@
 import { h, SetupContext } from "vue";
 import { Link } from "element-ui";
-import { GlobalLinkProps, globalLinkProps, LinkProps, linkProps } from "./linkProps";
+import { GlobalLinkProps, globalLinkProps, linkBaseProps, LinkProps } from "./linkProps";
 import { keys, renderSlots } from "../../../utils";
 import { ObjectLike } from "../../../../types/_common";
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
@@ -15,7 +15,7 @@ export function useLink<T extends ObjectLike>(
 
   const { handleProps, handleRef, renderChildren: _renderChildren } = options || {}
   const globalPropNames = keys(globalLinkProps)
-  const propNames = keys(linkProps)
+  const propNames = keys(linkBaseProps)
   const { createProps } = useComponentProps(props, 'link', { propNames, globalPropNames, handleProps })
   const on = options?.on ? options.on : {
     click: props.onClick || context && ((event: MouseEvent) => { context.emit('click', event) })

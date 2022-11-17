@@ -3,7 +3,7 @@ import { Key } from './internal/interfaces';
 import isNil from './isNil';
 
 function pick(object: unknown, includes: Key[]) {
-  return isNil(object) ? {} : basePick(object, includes)
+  return isNil(object) || !includes?.length ? {} : basePick(object, includes)
 }
 
 export default pick

@@ -4,13 +4,14 @@
     <!-- <TestTransition /> -->
     <!-- <TestUpload /> -->
     <!-- <TestSelect /> -->
-    <TestInput />
+    <!-- <TestInput /> -->
     <!-- <e-switch v-model="value" /> -->
     <!-- <TestForm /> -->
     <!-- <TestButton></TestButton> -->
     <!-- <e-form>
       <e-form-item type="switch" v-model="value" />
     </e-form> -->
+    <TestTable />
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import TestTransition from './transition.vue'
 import TestInput from './input.vue'
 import TestForm from './form.vue'
 import TestButton from './button.vue'
+import TestTable from './table.vue'
 import { ref } from 'vue'
 const value = ref(false)
 </script>

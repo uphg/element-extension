@@ -1,12 +1,14 @@
 import { h } from "vue"
 import type { VNodeData } from "vue"
 import { Link, Button, Tag } from "element-ui"
-import { isArray } from "../../../utils"
+import { isArray, pick } from "../../../utils"
 import { extendColumnTypes } from '../../table-column/src/tableColumnProps'
 import { TableObjectColumnProps, TableColumnChildrenProps } from "./tableProps"
 import { RowCallbackParams } from "../../../../types/_element-ui"
 import { handleColumnType } from "../../table-column/src/handleColumnType";
 import { createDateFormat } from "../../table-column/src/createDateFormat"
+
+const columnPropNames = ['label', 'className', 'labelClassName', 'property', 'prop', 'width', 'minWidth', 'renderHeader', 'sortable', 'sortMethod', 'sortBy', 'resizable', 'columnKey', 'align', 'headerAlign', 'showTooltipWhenOverflow', 'showOverflowTooltip', 'fixed', 'formatter', 'selectable', 'reserveSelection', 'filterMethod', 'filteredValue', 'filters', 'filterPlacement', 'filterMultiple', 'index', 'sortOrders']
 
 function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackParams) {
   const { hue, size } = item
@@ -20,6 +22,8 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
         icon: item.icon,
         disabled: item.disabled
       },
+      class: item.class,
+      style: item.style,
       on: { click: onClick! }
     }, [item.text])
   } else if (item.type === 'button') {
@@ -36,6 +40,8 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
         disabled: item.disabled,
         size,
       },
+      class: item.class,
+      style: item.style,
       on: {
         click: onClick!
       }
@@ -53,6 +59,8 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
         effect: item.effect,
         size,
       },
+      class: item.class,
+      style: item.style,
       on: {
         click: onClick!,
         close: onClose!,
@@ -61,40 +69,13 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
   }
 }
 
-export function handleColumnsData(props: TableObjectColumnProps, key: string | number) {
+export function handleColumnsData(props: TableObjectColumnProps, key: string | number | symbol) {
   if (!props) return
   const data: VNodeData = {
-    key: key,
+    key: key as unknown as string,
     props: {
       type: handleColumnType(props.type),
-      label: props.label,
-      className: props.className,
-      labelClassName: props.labelClassName,
-      property: props.property,
-      prop: props.prop,
-      width: props.width,
-      minWidth: props.minWidth,
-      renderHeader: props.renderHeader,
-      sortable: props.sortable,
-      sortMethod: props.sortMethod,
-      sortBy: props.sortBy,
-      resizable: props.resizable,
-      columnKey: props.columnKey,
-      align: props.align,
-      headerAlign: props.headerAlign,
-      showTooltipWhenOverflow: props.showTooltipWhenOverflow,
-      showOverflowTooltip: props.showOverflowTooltip,
-      fixed: props.fixed,
-      formatter: props.formatter,
-      selectable: props.selectable,
-      reserveSelection: props.reserveSelection,
-      filterMethod: props.filterMethod,
-      filteredValue: props.filteredValue,
-      filters: props.filters,
-      filterPlacement: props.filterPlacement,
-      filterMultiple: props.filterMultiple,
-      index: props.index,
-      sortOrders: props.sortOrders,
+      ...pick(props, columnPropNames)
     }
   }
 
