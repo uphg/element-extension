@@ -23,7 +23,7 @@ import { ConfigProvider, EConfigProvider, configProviderProps, useConfigProvider
 import { zhCN, en } from '../lang/index'
 
 // utils
-import { renderSlot, renderSlots } from '../utils/renderSlot'
+import { renderSlot, renderSlots, withDefaultProps } from '../utils'
 import { useGlobalProps } from '../composables/useGlobalProps'
 
 const components = [EButton, ERadioGroup, ECheckboxGroup, EInput, EInputNumber, ESelect, ECascader, ESwitch, ESlider, EDatePicker, ETimePicker, ETimeSelect, EUpload, EForm, EFormItem, EFormulate, ETable, ETableColumn, EPagination, EStaggeredTransitionGroup, ELink, ETag, EConfigProvider]
@@ -131,6 +131,7 @@ export {
   renderSlot,
   renderSlots,
   useGlobalProps,
+  withDefaultProps,
 
   // lang
   zhCN, en
