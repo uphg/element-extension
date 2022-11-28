@@ -69,5 +69,5 @@ export { ETag, useTag, tagProps } from '../src/components/tag'
 export { EConfigProvider, useConfigProvider, configProviderProps } from '../src/components/config-provider'
 
 // utils
-export { renderSlot, renderSlots } from '../src/utils/renderSlot'
+export { renderSlot, renderSlots, withDefaultProps, generateEmits } from '../src/utils'
 export { useGlobalProps } from '../src/composables/useGlobalProps'
