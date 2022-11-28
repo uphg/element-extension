@@ -119,10 +119,10 @@ export const configPropertyMap = {
     key: globalFormKey,
     propNames: globalFormPropNames
   },
-  // formItem: {
-  //   key: globalFormItemKey,
-  //   propNames: globalFormItemPropNames
-  // },
+  formItem: {
+    key: globalFormItemKey,
+    propNames: globalFormItemPropNames
+  },
   table: {
     key: globalTableKey,
     propNames: globalTablePropNames

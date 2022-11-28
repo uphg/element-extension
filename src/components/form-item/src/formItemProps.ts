@@ -2,6 +2,7 @@ import { ExtractPropTypes, PropType } from "vue";
 import { ObjectLike } from "../../../../types/_common";
 import { empty, booleanProp, stringProp } from "../../../shared/commonProps";
 
+export type GlobalFormItemProps = ExtractPropTypes<typeof globalFormItemProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
 export const globalFormItemProps = {
@@ -23,7 +24,7 @@ export const globalFormItemProps = {
   }
 }
 
-export const elFormItemProps = {
+export const baseFormItemProps = {
   label: {
     type: stringProp,
     default: ''
@@ -37,13 +38,10 @@ export const elFormItemProps = {
   error: stringProp,
   validateStatus: stringProp,
   for: stringProp,
-  ...globalFormItemProps
+  
 }
 
 export const formItemProps = {
-  ...elFormItemProps,
-  textType: {
-    type: String,
-    default: ''
-  }
+  ...baseFormItemProps,
+  ...globalFormItemProps
 }

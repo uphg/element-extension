@@ -1,17 +1,25 @@
 import { h, SetupContext } from 'vue'
 import { FormItem } from 'element-ui'
+import { baseFormItemProps, FormItemProps, globalFormItemProps, GlobalFormItemProps } from "./formItemProps"
+import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps"
 import { useElFormItem } from '../../../composables/useElFormItem'
+import { renderSlot, keys } from '../../../utils'
 import { ElFormItem } from "../../../../types/_element-ui"
-import { elFormItemProps, FormItemProps } from "./formItemProps"
-import { pick, renderSlot, keys } from '../../../utils'
+import { ObjectLike } from '../../../../types/_common'
 
 export function useFormItem(
   props: FormItemProps,
-  context?: SetupContext<{}>
+  context?: SetupContext<{}>,
+  options?: UseComponentParamsOptions<FormItemProps | ObjectLike, GlobalFormItemProps>
 ) {
+  const { handleProps, handleRef: _handleRef, handleScopedSlots, renderChildren: _renderChildren } = options || {}
   const { elFormItem, clearValidate } = useElFormItem()
-  const propNames = keys(elFormItemProps)
-  const handleRef = ((el: ElFormItem) => elFormItem.value = el) as unknown as string
+
+  const propNames = keys(baseFormItemProps)
+  const globalPropNames = keys(globalFormItemProps)
+  const { createProps } = useComponentProps(props, 'formItem', { propNames, globalPropNames, handleProps })
+  const handleRef = (_handleRef || ((el: ElFormItem) => elFormItem.value = el)) as unknown as string
+  const scopedSlots = handleScopedSlots?.(context?.slots)
 
   return {
     expose: {
@@ -20,8 +28,8 @@ export function useFormItem(
     },
     render: () => h(FormItem, {
       ref: handleRef,
-      props: pick(props, propNames),
-      scopedSlots: {
+      props: createProps(),
+      scopedSlots: scopedSlots || {
         error: context?.slots?.error && ((params) => context.slots.error?.(params)),
       }
     }, context?.slots && [renderSlot(context, 'label'), context.slots.default?.()])
