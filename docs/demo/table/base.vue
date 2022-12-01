@@ -48,9 +48,10 @@ const tableColumns = [{
   formatter: (row: RowCallbackParams['row']) => row.sex ? '女' : '男'
 }, {
   label: '地址',
-  width: '260',
+  width: '160',
   children: (scope: RowCallbackParams) => [h('i', { class: 'el-icon-s-flag' }), scope.row.address]
 }, {
+  label: '操作',
   children: [{
     type: 'link',
     text: '编辑',

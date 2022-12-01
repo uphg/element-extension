@@ -1,18 +1,17 @@
 import { computed, h, SetupContext } from "vue"
 import { Table, TableColumn } from "element-ui"
-import { TableProps, GlobalTableProps, tableBaseProps, globalTableProps } from "./tableProps"
+import { TableProps, GlobalTableProps, tableBaseProps, globalTableProps, TableObjectColumnProps } from "./tableProps"
 import { handleColumnsData } from "./handleColumnsData";
 import { useElTable, useElTableEmit } from "../../../composables/useElTable"
-import { keys, renderSlot } from '../../../utils'
+import { keys, pick, renderSlot, withDefaultProps } from '../../../utils'
 import { UseComponentParamsOptions, useComponentProps } from "../../../composables/useComponentProps";
 import { useGlobalProps } from "../../../composables/useGlobalProps";
-import { GlobalTableColumnProps } from "../../table-column/src/tableColumnProps";
+import { GlobalTableColumnProps, tableColumnBaseProps, tableColumnProps, globalTableColumnProps as _globalTableColumnProps } from "../../table-column/src/tableColumnProps";
 import { ObjectLike } from "../../../../types/_common";
 import { ElTable } from "element-ui/types/table";
+import { VNode } from "vue/types/umd";
 
-function createKey() {
-  return Symbol()
-}
+const createKey = () => Symbol()
 
 export function useTable(
   props: TableProps,
@@ -25,18 +24,23 @@ export function useTable(
   const on = options?.on ? options?.on : context && useElTableEmit(context.emit) 
   const propNames = keys(tableBaseProps)
   const globalPropNames = keys(globalTableProps)
+  const columnPropNames = keys(tableColumnBaseProps)
+  const columnGlobalPropNames = keys(_globalTableColumnProps)
   const { createProps } = useComponentProps(props, 'table', { propNames, globalPropNames, handleProps })
   const globalTableColumnProps = useGlobalProps<GlobalTableColumnProps>('tableColumn')
-  const renderChildren = computed(() => context && (
-    [...props.columns?.length
-      ? props.columns.map((item) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, createKey())))
-      : [context.slots.default?.()]]
-  ).concat([renderSlot(context, 'append')]))
-  // const renderChildren = context?.slots && (() => (
-  //   [...props.columns?.length
-  //     ? props.columns.map((item, index) => h(TableColumn, handleColumnsData(globalTableColumnProps ? {...item, ...globalTableColumnProps} : item, index)))
-  //     : [context.slots.default?.()]]
-  // ).concat([renderSlot(context, 'append')]))
+
+  function renderColumns(item: TableObjectColumnProps | (() => VNode)) {
+    const props = {
+      ...pick(item, columnPropNames),
+      ...withDefaultProps(item, globalTableColumnProps, columnGlobalPropNames),
+      ...(item as TableObjectColumnProps).children ? { children: (item as TableObjectColumnProps).children } : {}
+    } as TableObjectColumnProps
+
+    return typeof item === 'function'
+      ? item?.()
+      : h(TableColumn, handleColumnsData(globalTableColumnProps ? props : item, createKey())
+    )
+  }
 
   return {
     expose: {
@@ -45,6 +49,10 @@ export function useTable(
         return elTable.value
       }
     },
-    render: () => h(Table, { ref: handleRef, props: createProps(), on }, renderChildren.value)
+    render: () => h(Table, { ref: handleRef, props: createProps(), on }, context && (
+      [...props.columns?.length
+        ? props.columns.map(renderColumns)
+        : [context.slots.default?.()]]
+    ).concat([renderSlot(context, 'append')]))
   }
 }

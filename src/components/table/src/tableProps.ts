@@ -190,10 +190,10 @@ export const tableBaseProps = {
 
 export const tableProps = {
   ...tableBaseProps,
+  ...globalTableProps,
   // custom props
   columns: {
-    type: Array as PropType<Array<TableObjectColumnProps>>,
+    type: Array as PropType<Array<TableObjectColumnProps | (() => VNode)>>,
     default: () => []
   },
-  ...globalTableProps
 }

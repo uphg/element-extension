@@ -1,5 +1,5 @@
 <template>
-  <e-config-provider :form-item="{ type: 'text' }">
+  <e-config-provider :form-item="{ type: 'text' }" :table-column="{ showOverflowTooltip: true }">
     <div class="layout">
     <!-- <Navbar /> -->
     <Sidebar />

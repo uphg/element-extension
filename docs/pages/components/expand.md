@@ -78,13 +78,15 @@ table/base
 
 :::
 
-拓展了 `<el-table-column>` 的 `type` 属性，支持时间格式化（调用 Element 组件内部方法格式化）
+<!-- 拓展了 `<el-table-column>` 的 `type` 属性，支持时间格式化（调用 Element 组件内部方法格式化）
+
+在 `columns` 数组中，传入函数体效果类似 render 函数
 
 ::: demo
 
 table/type
 
-:::
+::: -->
 
 **type 属性时间格式列表**
 
