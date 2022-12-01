@@ -70,8 +70,6 @@ function renderChildrenNode(item: TableColumnChildrenProps, scope: RowCallbackPa
 }
 
 export function handleColumnsData(props: TableObjectColumnProps, key: string | number | symbol) {
-  console.log('handleColumnsData - props')
-  console.log(props)
   if (!props) return
   const data: VNodeData = {
     key: key as unknown as string,
@@ -82,14 +80,11 @@ export function handleColumnsData(props: TableObjectColumnProps, key: string | n
   }
 
   if (props.children) {
-    console.log('渲染')
     if (isArray(props.children)) {
       data.scopedSlots = {
         default: (scope) => (props.children as TableColumnChildrenProps[])?.map((item) => renderChildrenNode(item, scope))
       }
     } else {
-      console.log('props.children')
-      console.log(props.children)
       data.scopedSlots = {
         default: props.children
       }
