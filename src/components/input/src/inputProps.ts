@@ -54,6 +54,7 @@ export const globalInputProps = {
 }
 
 export const globalInputAttrs = {
+  placeholder: stringEmptyProp,
   name: stringEmptyProp,
   step: stringEmptyProp,
   autofocus: {
