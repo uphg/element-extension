@@ -4,7 +4,7 @@
 
 ## 基本用法
 
-通过 ConfigProvider 可以配置组件属性的默认值（只支持当前库重写的组件）
+全局化配置设置内部组件的属性默认值（只支持当前库重写的组件）
 
 ::: demo
 
@@ -12,9 +12,9 @@ config-provider/base
 
 :::
 
-## 继承
+## 模块化
 
-ConfigProvider 可以嵌套使用，继承自最近的 ConfigProvider 组件
+ConfigProvider 可以模块化使用，根据最近的 ConfigProvider 组件配置默认值
 
 ::: demo
 
@@ -326,7 +326,6 @@ import ConfigProviderInherit from 'docs/demo/config-provider/inherit.vue'
 
 <style>
 .demo-config-provider .el-input {
-  max-width: 240px;
-  margin-bottom: 20px;
+  max-width: 220px;
 }
 </style>

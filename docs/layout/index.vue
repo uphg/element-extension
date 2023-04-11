@@ -2,8 +2,8 @@
   <e-config-provider :form-item="{ type: 'text' }" :table-column="{ showOverflowTooltip: true }">
     <div class="layout">
     <!-- <Navbar /> -->
-    <Sidebar />
-    <Content />
+      <Sidebar />
+      <Content />
     </div>
   </e-config-provider>
 </template>

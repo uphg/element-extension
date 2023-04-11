@@ -1,9 +1,9 @@
 import Vue, { computed, getCurrentInstance, h } from 'vue'
-import VueRouter, { type RouteConfig } from 'vue-router';
+import VueRouter from 'vue-router';
 import Layout from 'docs/layout/index.vue'
 Vue.use(VueRouter)
 
-const routes: RouteConfig[] = [
+const routes = [
   {
     path: '/',
     component: Layout,
@@ -41,6 +41,11 @@ const routes: RouteConfig[] = [
     redirect: '/components/hello-world',
     children: [
       {
+        path: 'config-provider',
+        name: 'ComponentsConfigProvider',
+        component: () => import('docs/pages/components/config-provider.md')
+      },
+      {
         path: 'expand',
         name: 'ComponentsExpand',
         component: () => import('docs/pages/components/expand.md')
@@ -54,11 +59,6 @@ const routes: RouteConfig[] = [
         path: 'formulate',
         name: 'ComponentsFormulate',
         component: () => import('docs/pages/components/formulate.md')
-      },
-      {
-        path: 'config-provider',
-        name: 'ComponentsConfigProvider',
-        component: () => import('docs/pages/components/config-provider.md')
       }
     ]
   }

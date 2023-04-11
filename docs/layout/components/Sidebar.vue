@@ -34,24 +34,24 @@ const sidebars = [
     title: '组件',
     children: [
       {
+        title: 'ConfigProvider',
+        name: 'ComponentsConfigProvider',
+        link: '/components/config-provider'
+      },
+      {
         title: '功能拓展',
         name: 'ComponentsExpand',
         link: '/components/expand'
       },
-      {
-        title: 'Form 表单',
-        name: 'ComponentsForm',
-        link: '/components/form'
-      },
+      // {
+      //   title: 'Form 表单',
+      //   name: 'ComponentsForm',
+      //   link: '/components/form'
+      // },
       {
         title: 'Formulate 定制表单',
         name: 'ComponentsFormulate',
         link: '/components/formulate'
-      },
-      {
-        title: 'ConfigProvider 配置',
-        name: 'ComponentsConfigProvider',
-        link: '/components/config-provider'
       }
     ]
   }
