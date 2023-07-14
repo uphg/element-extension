@@ -35,7 +35,7 @@ const route = useRoute()
 }
 .link {
   display: block;
-  padding: 6px 16px;
+  padding: 6px 32px;
   color: var(--c-text-light-2);
   &.active {
     color: #409EFF;
